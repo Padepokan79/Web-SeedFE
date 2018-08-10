@@ -38,9 +38,12 @@ export class SdmAssignmentComponent implements OnInit {
     this.inputForm = this._factory.inputForm({
       formControls: {
         sdmassign_id: '',
-        sdmassign_picclient: '',
-        client_name: '',
         sdmassign_loc: '',
+        sdmassign_picclient: '',
+        client_id: '',
+        client_name: '',
+        method_id: '',
+        method_name: '',
       }
       // validationMessages: {
       //   task_id: {
@@ -57,21 +60,6 @@ export class SdmAssignmentComponent implements OnInit {
     this.dataTable = this._factory.dataTable({
       serverSide : true,
       pagingParams : {
-        // filter: {
-        //   operator: CONJUNCTION_OPERATOR.AND,
-        //   component: [
-        //       {
-        //           field: 'skilltype_id',
-        //           operator: COMPARISON_OPERATOR.EQ,
-        //           value: Session.getUserData('skilltype_id')
-        //       }
-              // {
-              //     field: 'kddati2',
-              //     operator: COMPARISON_OPERATOR.EQ,
-              //     value: Session.getUserData('kddati2')
-              // }
-        //   ]
-        // },
         limit : 10
       },
       searchCriteria : [
@@ -104,7 +92,7 @@ export class SdmAssignmentComponent implements OnInit {
   }
 
   public navigateEditMenu(id) {
-    this.router.navigate(['/pages/sdm-assignment-update', { id }]);
+    this.router.navigate(['/pages/pja/PJA011', { id }]);
   }
 
 }

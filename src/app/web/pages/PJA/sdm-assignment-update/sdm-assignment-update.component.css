@@ -1,14 +1,14 @@
-.textColor{
+.nx-text-color{
     color: #3c3c3c;
 }
-.textBody{
+.nx-text-body{
     -moz-text-size-adjust: 20px;
     text-align: left;
     color: #3c3c3c;
     padding-left: 30px;
     position: relative;
 }
-.textHeader{
+.nx-text-header{
     text-decoration-color: #3c3c3c;
     text-align: left;
     color: #3c3c3c;
@@ -17,21 +17,21 @@
 .nx-size-pos{
     margin: 1.3%;
 }
-.labelClass{
+.nx-label-class{
     width: 150px;
     margin-left: 50px;
 }
 .nx-class-data{
     width: 500px;
 }
-.classList{
+.nx-class-list{
     margin-left: 150px;
 }
-.button{
+.nx-button{
     margin-top: 20px;
     margin-left: 688px;
 }
-.breadcrumb{
+.nx-bread-crumb{
     font-size: 15px;
     color: black;
     background: white;
@@ -39,13 +39,12 @@
     padding-top: 20px;
 }
 .nx-class-table{
-    margin: auto;
+    margin-left: 225px;
 }
 .nx-save-button{
     background-color: royalblue;
     color: white;
     text-transform: capitalize;
-  
 }
 .nx-cancel-button{
     background-color: lightgray;
@@ -90,12 +89,12 @@
 .nx-table-left-align {
     text-align: left;
 }
-.form-body{
+.nx-form-body{
    border: 2px solid #000000;
    padding: 50px 0px 25px 10px;
    margin-bottom: 30px;
 }
-.form-title{
+.nx-form-title{
    background: rgb(89, 89, 235);
    color:#fff;
    padding: 10px 10px 10px 10px;
@@ -107,6 +106,6 @@
    margin-top: 20px;
    /* position: absolute; */
 }
-.posisi {
+.nx-pos-pad {
    padding: 15px 0px 15px 80px;
 }

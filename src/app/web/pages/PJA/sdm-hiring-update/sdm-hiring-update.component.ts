@@ -40,9 +40,12 @@ export class SdmHiringUpdateComponent implements OnInit {
     console.log('Selected ID : ' + this.selectedId);
     this.inputForm = this._factory.inputForm({
       formControls: {
-        client_name: '',
+        sdmhiring_id: '',
         sdm_name: '',
+        client_name: '',
         hirestat_name: '',
+        method_id: '',
+        method_name: '',
       }
       // validationMessages: {
       //   task_id: {
@@ -53,39 +56,6 @@ export class SdmHiringUpdateComponent implements OnInit {
       //     required: 'Silahkan masukkan User ID'
       //   }
       // }
-    });
-
-    // First Data Table Initialization
-    this.dataTable = this._factory.dataTable({
-      serverSide : true,
-      pagingParams : {
-        // filter: {
-        //   operator: CONJUNCTION_OPERATOR.AND,
-        //   component: [
-        //       {
-        //           field: 'skilltype_id',
-        //           operator: COMPARISON_OPERATOR.EQ,
-        //           value: Session.getUserData('skilltype_id')
-        //       }
-              // {
-              //     field: 'kddati2',
-              //     operator: COMPARISON_OPERATOR.EQ,
-              //     value: Session.getUserData('kddati2')
-              // }
-        //   ]
-        // },
-        limit : 10
-      },
-      // searchCriteria : [
-        // { viewValue: 'skilltype_id', viewKey: 'skilltype_id', type: TYPE.NUMBER },
-        // { viewValue: 'skilltype_name', viewKey: 'skilltype_name', type: TYPE.NUMBER }
-      // ],
-      // tableColumns : [
-        // { prop: 'skilltype_id', name: 'Skill ID', width: 100, sortable: false },
-        // { prop: 'skilltype_name', name: 'Skill Type Name', width: 100, sortable: false },
-        // { prop: 'id', name: 'Action', width: 100,
-        //   cellTemplate: this.tableActionTemplate, sortable: false }
-      // ]
     });
 
     this.action = this._factory.actions({

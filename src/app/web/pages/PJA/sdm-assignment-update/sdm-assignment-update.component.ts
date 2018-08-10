@@ -40,6 +40,7 @@ export class SdmAssignmentUpdateComponent implements OnInit {
     console.log('Selected ID : ' + this.selectedId);
     this.inputForm = this._factory.inputForm({
       formControls: {
+        sdmassign_id: '',
         sdm_name: '',
         sdm_phone: '',
         sdmassign_startdate: '',
@@ -47,6 +48,7 @@ export class SdmAssignmentUpdateComponent implements OnInit {
         sdmassign_loc: '',
         sdmassign_picclient: '',
         sdmassign_picclientphone: '',
+        method_id: '',
         method_name: '',
       }
       // validationMessages: {
@@ -83,7 +85,7 @@ export class SdmAssignmentUpdateComponent implements OnInit {
 
     this._factory.http().get(readAllApi).subscribe((res: any) => {
       console.log(res);
-      this.action.patchFormData(res.data.items[(this.selectedId - 1)]);
+      this.action.patchFormData(res.data.items[0]);
     });
 
     setInterval(() => {

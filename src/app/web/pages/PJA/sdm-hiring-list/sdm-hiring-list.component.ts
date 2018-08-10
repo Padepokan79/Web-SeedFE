@@ -15,13 +15,6 @@ import { Router } from '@angular/router';
 export class SdmHiringListComponent implements OnInit {
 
   public selectedValue: string;
-
-  // public foods: Food[] = [
-  //   {value: 'steak-0', viewValue: 'Steak'},
-  //   {value: 'pizza-1', viewValue: 'Pizza'},
-  //   {value: 'tacos-2', viewValue: 'Tacos'}
-  // ];
-
   public time: Date = new Date();
 
   @ViewChild('viewAsDateTemplate')
@@ -56,29 +49,14 @@ export class SdmHiringListComponent implements OnInit {
         }
       }
     });
+    
     this.dataTable = this._factory.dataTable({
       serverSide : true,
       pagingParams : {
-        // filter : {
-        //   operator : CONJUNCTION_OPERATOR.AND,
-        //   component : [
-        //     {
-        //       field : 'kddati1',
-        //       operator : COMPARISON_OPERATOR.EQ,
-        //       value : Session.getUserData('kddati1')
-        //     },
-        //     {
-        //       field : 'kddati2',
-        //       operator : COMPARISON_OPERATOR.EQ,
-        //       value : Session.getUserData('kddati2')
-        //     }
-        //   ]
-        // },
         limit : 10
       },
       searchCriteria : [
         { viewValue: 'Client Name', viewKey: 'client_name', type: TYPE.STRING}
-        // { viewValue: 'Client id', viewKey: 'client_id', type: TYPE.NUMBER}
       ],
       tableColumns : [
         { prop: 'sdmhiring_id', name: 'No', width: 40, sortable: false },
@@ -89,6 +67,7 @@ export class SdmHiringListComponent implements OnInit {
           cellTemplate: this.tableActionTemplate, sortable: false }
       ]
     });
+
     this.action = this._factory.actions({
       api: 'project/mengelolaHiring',
       inputForm: this.inputForm,
@@ -106,7 +85,6 @@ export class SdmHiringListComponent implements OnInit {
 
   public navigateEditMenu(id) {
     this.router.navigate(['pages/pja/PJA008', { id }]);
-    console.log('Selected IDX : ' + id);
   }
 
 }
