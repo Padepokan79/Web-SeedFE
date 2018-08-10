@@ -1,0 +1,30 @@
+<!-- [formGroup]="action?.formControls()" -->
+<form class="io-form-body"  [formGroup]="action?.formControls()">
+  <div style="width: 100%; padding-left: 20px; padding-right: 20px">
+  <!-- <label>Pilih Bahasa:</label><br> -->
+  <!-- <div *ngFor="let language of lovLanguage.data;let inc =index"> -->
+      <!-- <mat-checkbox [checked]="language.checked" (change)="onChange($event, i, language)" formControlName="language_id" name="language_id{{inc}}" id="language_id{{inc}}" [value]="language.key">{{language.value}} <br> </mat-checkbox><br> -->
+  <!-- <mat-checkbox formControlName="language_id" name="language_id{{inc}}" id="language_id{{inc}}" [value]="language.key">{{language.value}} <br> </mat-checkbox><br> -->
+  <!-- <mat-checkbox ( name="language_id{{inc}}" id="language_id{{inc}}" [value]="language.key">{{language.value}} <br> </mat-checkbox><br> -->
+  <!-- </div> -->
+  <table style="width: 100%">
+    <tr>
+        <td>Bahasa</td>
+        <td>:</td>
+        <td>
+            <mat-form-field class="sdw-full-size">
+                <mat-select placeholder="" formControlName="language_id" name="language_id" required>
+                <mat-option *ngFor="let language of lovLanguage.data" [value]="language.key">
+                    {{language.value}}
+                </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </td>
+    </tr>
+  </table>
+  <div class="col-md-6 pos" style="float:right">
+      <button mat-raised-button style="margin: 10px 0px" (click)="action.onSave()" *ngIf=" form == 1 ">Submit</button>
+      <button mat-raised-button style="margin: 10px 0px" (click)="action.onEdit()" *ngIf=" form == 2 ">Update</button>
+  </div>
+  </div>
+</form>

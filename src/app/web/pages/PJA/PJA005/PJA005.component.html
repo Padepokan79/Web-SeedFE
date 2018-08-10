@@ -1,0 +1,96 @@
+<!-- Created by : Hendra Kurniawan
+Date       : 2-08-2018
+Modified   : 3-08-2018 by Hendra Kurniawan -->
+<io-form *ngIf="action?.form()">
+  <div class="io-form-header">
+    <span><i class="fa fa-home"></i></span>  
+    <a [routerLink]="['/pages/dashboard']">Dashboard</a><b> > </b><a [routerLink]="['']">Project Assigment</a><b> > </b><a [routerLink]="['/pages/PJA005']">Input Client</a>
+    <span class="time">{{ time }}</span> 
+  </div>
+  <form class="io-form-body" [formGroup]="action?.formControls()">
+
+    <span class="form-title">
+      Form Input Client
+    </span>
+    <div class="form-body">
+      <div class="posisi">
+        <table style="width: 100%">
+          <tr >
+            <td style="width: 20%">
+              <p><b>Client Name</b></p>
+            </td>
+          <td><mat-form-field class="sdw-full-size">
+              <input matInput placeholder="" formControlName="client_name" name="client_name" required>
+              <mat-hint *ngIf="action.formErrors.client_name" [ngStyle]="{'color': 'red'}">
+                {{action.formErrors.client_name}}
+              </mat-hint>
+            </mat-form-field></td>
+          </tr>
+          <tr>
+              <td>
+                <p><b>PIC Handler</b></p>
+              </td>
+            <td><mat-form-field class="sdw-full-size">
+                <input matInput placeholder="" formControlName="client_picclient" name="client_picclient" required>
+                <mat-hint *ngIf="action.formErrors.client_picclient" [ngStyle]="{'color': 'red'}">
+                  {{action.formErrors.client_picclient}}
+                </mat-hint>
+              </mat-form-field>
+            </td>
+            </tr>
+            <tr>
+                <td>
+                  <p><b>Contact Person</b></p>
+                </td>
+              <td><mat-form-field class="sdw-full-size">
+                  <input matInput placeholder="" formControlName="client_mobileclient" name="client_mobileclient" required>
+                  <mat-hint *ngIf="action.formErrors.client_mobileclient" [ngStyle]="{'color': 'red'}">
+                    {{action.formErrors.client_mobileclient}}
+                  </mat-hint>
+                </mat-form-field></td>
+              </tr>
+              <tr>
+                  <td>
+                    <p><b>Client Address</b></p>
+                  </td>
+                <td><mat-form-field class="sdw-full-size">
+                    <input matInput placeholder="" formControlName="client_address" name="client_address" required>
+                    <mat-hint *ngIf="action.formErrors.client_address" [ngStyle]="{'color': 'red'}">
+                      {{action.formErrors.client_address}}
+                    </mat-hint>
+                  </mat-form-field>
+                </tr>
+        </table>
+        <div class="pos">
+          <a [routerLink]="['/pages/PJA004']"><button class="btn btn-danger btn-sip" style="font-size: 18px" >Back</button></a>
+          <button class="btn btn-primary" (click)="action.onSave()" style="font-size: 18px" >Submit</button>
+          
+          <!-- <io-form-action [action]="action" ></io-form-action> -->
+      </div>
+        <!-- <div class="col-md-6 pos" style="float:right">
+          <ul>
+              <li class="action-btn" ><button [routerLink]="['/pages/dashboard']" class="btn-sip">Back</button></li>
+              <li class="action-btn" style="margin-left: 95px"><button class="btn-sip" (click)="action.onSave()">Submit</button></li>
+            <li class="action-btn" style="margin-left: 95px"><io-form-action [action]="action"></io-form-action></li>
+             <a [routerLink]="['/pages/operator']">Operator</a>/<a [routerLink]="['/pages/data-kepegawaian']">Data Pegawai</a>
+            </ul>
+        </div> -->
+       </div>
+    </div>
+    
+   
+  </form>
+</io-form>
+
+<!-- <io-table *ngIf="action?.table()" [action]="action">
+    <div class="io-table-header">
+      <h3>List Task</h3>
+    </div>
+  </io-table>
+
+<ng-template #tableActionTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
+    <button type="button" class="btn btn-primary btn-mm btn-icon" (click)="action.onEdit(row)">
+      <i class="glyphicon glyphicon-pencil"></i>
+    </button>
+  </ng-template> -->
+

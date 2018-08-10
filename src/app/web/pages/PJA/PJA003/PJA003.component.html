@@ -1,0 +1,97 @@
+<io-form *ngIf="action?.form()">
+  <div class="io-form-header">
+    <div class="formheader">
+    <i class="glyphicon glyphicon-home">&emsp;</i> 
+    <a [routerLink]="['/pages/dashboard']"><span>Dashboard</span></a><b> > </b>
+    <a href=""><span>Project Assigment</span></a><b> > </b>
+    <span>List Detail SDM</span>
+    <span class="time">{{ time | date: 'medium'}}</span>
+    </div>
+  </div>
+  
+  <form class="io-form-body" [formGroup]="action?.formControls()">
+    <table>
+      <!-- Name -->
+      <tr>
+        <td>
+          <div>
+            <label>Name : </label>
+          </div>
+        </td>
+        <td>
+          <div class="name">
+              <mat-form-field>
+                  <input matInput placeholder=""  [matAutocomplete]="sdmName" formControlName="sdm_id" (onkeyup)="selectSdm($event,lovSdm)">
+                    <mat-autocomplete #sdmName="matAutocomplete" >
+                      <mat-option *ngFor="let lov of lovSdm?.data" [value]="lov.value">
+                        {{lov.value}}
+                      </mat-option>
+                    </mat-autocomplete>
+              </mat-form-field>
+          </div>
+        </td>
+      </tr>
+      <!-- Project Name -->
+      <tr>
+        <td>
+          <div>
+              <label>Project Name : </label>
+          </div>
+        </td>
+        <td>
+          <div class="name-project">
+              <mat-form-field appearance="outline">
+                  <input matInput placeholder="" formControlName="project_id" [matAutocomplete]="projectName" name="project_id" (keydown)="action.onSearch($event)">
+                    <mat-autocomplete #projectName="matAutocomplete">
+                      <mat-option *ngFor="let lov of lovProject.data" [value]="lov.value">
+                     {{lov.value}}
+                    </mat-option>
+                  </mat-autocomplete>
+              </mat-form-field>
+          </div>
+        </td>
+      </tr>
+      <!-- Date picker -->
+      <tr>
+        <td>
+          <div>
+              <label>Date : </label>
+          </div>
+        </td>
+        <td>
+          <div class="date-picker">
+              <mat-form-field>
+                <input matInput [matDatepicker]="pickerEndDate" (click)="pickerEndDate.open()" placeholder="" formControlName="end_date_time">
+                <mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
+                <mat-datepicker #pickerEndDate></mat-datepicker>
+              </mat-form-field>
+          </div>
+        </td>
+        <td>
+            <button mat-raised-button placeholder="" class="sdw-btn-success" (click)="action?.onSearch()">Filter</button>
+        </td>
+      </tr>
+    </table>     
+  </form>
+</io-form>
+
+<io-table *ngIf="action?.table()" [action]="action" class="sdw-table">
+</io-table>
+
+<!-- Contoh Template Untuk meng-Override field "Action" -->
+<ng-template #tableActionTemplate let-row="row" let-value="value" ngx-datatable-cell-template id="t01">
+    <button type="button" class="btn btn-primary btn-mm btn-icon" (click)="navigateEditMenu(row.project_id)">
+      <i class="glyphicon glyphicon-pencil"></i>
+    </button>
+    <button type="button" class="btn btn-danger btn-mm btn-icon" (click)="action.onDelete(row)">
+      <i class="glyphicon glyphicon-trash"></i>
+    </button>
+  </ng-template>
+
+  <ng-template #tableActionNotification let-row="row" let-value="value" ngx-datatable-cell-template>
+    <i class="glyphicon glyphicon-alert"></i>
+  </ng-template>
+
+  <ng-template #viewAsDateTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
+      {{value | date:'yyyy-MM-dd'}}
+    </ng-template>

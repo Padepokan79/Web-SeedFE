@@ -1,0 +1,81 @@
+<io-form *ngIf="action?.form()">
+  <div class="io-form-header">  
+    <h3>Master User Input</h3>
+  </div>
+  <form class="io-form-body" [formGroup]="action?.formControls()">  
+      <div class="col-md-3">
+        <mat-form-field class="sdw-full-size">
+          <mat-select placeholder="Parent Task" formControlName="tas_task_id" name="tas_task_id" required>
+            <mat-option *ngFor="let lov of lovTask.data" [value]="lov.key">
+              {{lov.value}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-3">
+        <mat-form-field class="sdw-full-size">
+          <input matInput placeholder="Task ID" formControlName="task_id" name="task_id" pattern="^0$|^((?!(0))[0-9]{0,9})$" required>
+          <mat-hint *ngIf="action.formErrors.task_id" [ngStyle]="{'color': 'red'}">
+            {{action.formErrors.task_id}}
+          </mat-hint>
+        </mat-form-field>
+      </div>
+      <div class="col-md-3">
+        <mat-form-field class="sdw-full-size">
+          <input matInput placeholder="Task Description" formControlName="description" name="description" required>
+          <mat-hint *ngIf="action.formErrors.description" [ngStyle]="{'color': 'red'}">
+            {{action.formErrors.description}}
+          </mat-hint>
+        </mat-form-field>
+      </div>
+      <div class="col-md-3">
+        <mat-form-field class="sdw-full-size">
+          <input matInput [matDatepicker]="pickerStartDate" (click)="pickerStartDate.open()" placeholder="Start Date" formControlName="start_date_time">
+          <mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
+          <mat-datepicker #pickerStartDate></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="col-md-3">
+        <mat-form-field class="sdw-full-size">
+          <input matInput [matDatepicker]="pickerEndDate" (click)="pickerEndDate.open()" placeholder="End Date" formControlName="end_date_time">
+          <mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
+          <mat-datepicker #pickerEndDate></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="col-md-3">
+        <mat-form-field class="sdw-full-size">
+          <mat-select placeholder="Assign To" formControlName="user_id" name="user_id" required>
+            <mat-option *ngFor="let lov of lovUser.data" [value]="lov.key">
+              {{lov.value}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-12" *ngIf="action.actionMode != 'Create'">
+        <mat-checkbox (change)="action.adjustValue($event)" formControlName="is_deleted" name="is_deleted"> Is Deleted </mat-checkbox>
+      </div>
+      <div class="col-md-12" *ngIf="action.actionMode != 'Create'">
+        <mat-checkbox (change)="action.adjustValue($event)" formControlName="is_complete" name="is_complete"> Is Completed </mat-checkbox>
+      </div>
+    <br>
+    <io-form-action [action]="action"></io-form-action>
+  </form>
+</io-form>
+
+<io-table *ngIf="action?.table()" [action]="action">
+  <div class="io-table-header">
+    <h3>List Task</h3>
+  </div>
+</io-table>
+
+<!-- Contoh Template Untuk meng-Override field "Action" -->
+<ng-template #tableActionTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
+  <button type="button" class="btn btn-primary btn-mm btn-icon" (click)="action.onEdit(row)">
+    <i class="glyphicon glyphicon-pencil"></i>
+  </button>
+</ng-template>
+
+<ng-template #viewAsDateTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
+  {{value | date:'yyyy-MM-dd'}}
+</ng-template>
+

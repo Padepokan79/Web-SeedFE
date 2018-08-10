@@ -1,0 +1,275 @@
+<p></p>
+
+<form class="io-form-body" [formGroup]="action?.formControls()"> 
+
+    <div style="width: 100%; padding-left: 20px; padding-right: 20px">
+    <!-- KONTEN DATA PRIBADI-->
+    <!-- <input type="file" (change)="onFileSelected($event)> -->
+    <table style="width: 100%">
+
+    <!-- NAMA LENGKKAP -->
+    <tr>
+        <td style="width: 20%">Nama Lengkap</td>
+        <td style="width: 5px">:</td>
+        <td style="width: 80%">
+            <mat-form-field class="sdw-full-size">
+                <input matInput placeholder="" formControlName="sdm_name" name="sdm_name" required>
+                <mat-hint *ngIf="action.formErrors.sdm_name" [ngStyle]="{'color': 'red'}">
+                {{action.formErrors.sdm_name}}
+                </mat-hint>
+            </mat-form-field>
+        </td>
+        <td rowspan="7">
+            <div style="margin-left: 50px">
+                <!-- <img mat-card-image style="width: 200px" src="http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png" alt="Photo of a Shiba Inu"><br> -->
+                <img mat-card-image style="width: 200px"  [src]="imageUrl" ><br>
+                <label for="singleFile">Browse Image</label>
+                <!-- <input id="singleFile" type="file"> -->
+                <input type="file" #Image accept="image/*" (change)="handleFileInput($event.target.files)" formControlName="sdm_image" name="sdm_image">
+
+            </div>
+        </td>
+    </tr>
+
+    <!-- NIK -->
+    <tr>
+        <td >NIK</td>
+        <td >:</td>
+        <td >
+            <mat-form-field class="sdw-full-size">
+                <input matInput placeholder="" formControlName="sdm_nik" name="sdm_nik" pattern="^0$|^((?!(0))[0-9]{0,9})$" >
+                <mat-hint *ngIf="action.formErrors.sdm_nik" [ngStyle]="{'color': 'red'}">
+                    {{action.formErrors.sdm_nik}}
+                </mat-hint>
+                </mat-form-field>
+        </td>
+    </tr>
+    <!-- NO KTP -->
+    <tr>
+        <td>No. KTP</td>
+        <td>:</td>
+        <td>
+            <mat-form-field class="sdw-full-size">
+                <input matInput placeholder="" formControlName="sdm_ktp" name="sdm_ktp" pattern="^0$|^((?!(0))[0-9]{0,9})$" >
+                <mat-hint *ngIf="action.formErrors.sdm_ktp" [ngStyle]="{'color': 'red'}">
+                {{action.formErrors.sdm_ktp}}
+                </mat-hint>
+            </mat-form-field>
+        </td>
+    </tr>
+
+    <!-- Jenis Kelamin -->
+    <tr>
+        <td>Jenis Kelamin</td>
+        <td>:</td>
+        <td>
+            <mat-radio-group class="margin-field" formControlName="gender_id" name="gender_id" >
+            <mat-radio-button value="1">Laki-laki</mat-radio-button>
+            <mat-radio-button value="2">Perempuan</mat-radio-button>
+            </mat-radio-group>
+        </td>
+    </tr>
+
+    <!-- Tempat Lahir -->
+    <tr>
+        <td>Tempat Lahir</td>
+        <td>:</td>
+        <td>
+            <mat-form-field class="sdw-full-size">
+                <input matInput placeholder="" formControlName="sdm_placebirth" name="sdm_placebirth">
+            </mat-form-field>
+        </td>
+    </tr>
+
+    <!-- tanggal lahir -->
+    <tr>
+        <td class="td1">Tanggal Lahir</td>
+        <td class="td2">:</td>
+        <td class="td3">
+            <mat-form-field class="sdw-full-size">
+                <input matInput [matDatepicker]="picker" (click)="pickerStartDate.open()" placeholder="" formControlName="sdm_datebirth">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </td>
+    </tr>
+
+    <!-- Alamat -->
+    <tr>
+        <td>Alamat</td>
+        <td>:</td>
+        <td>
+            <mat-form-field class="sdw-full-size"  >
+            <textarea matInput placeholder="" formControlName="sdm_address"></textarea>
+            </mat-form-field>
+        </td>
+    </tr>
+
+    <!-- KODE POS -->
+    <tr>
+        <td>Kode POS</td>
+        <td>:</td>
+        <td>
+            <mat-form-field class="sdw-full-size">
+                <input matInput placeholder="" formControlName="sdm_postcode" name="sdm_postcode" pattern="^0$|^((?!(0))[0-9]{0,9})$" >
+                <mat-hint *ngIf="action.formErrors.sdm_postcode" [ngStyle]="{'color': 'red'}">
+                {{action.formErrors.sdm_postcode}}
+                </mat-hint>
+            </mat-form-field>
+        </td>
+    </tr>
+
+    <!-- NO TELEPON -->
+    <tr>
+        <td>No. Telepon</td>
+        <td>:</td>
+        <td>
+            <mat-form-field class="sdw-full-size">
+                <input matInput placeholder="" formControlName="sdm_phone" name="sdm_phone" >
+            </mat-form-field>
+        </td>
+    </tr>
+
+    <!-- EMAIL -->
+    <tr>
+        <td>Email</td>
+        <td>:</td>
+        <td>
+            <div class="example-container">
+            <mat-form-field class="sdw-full-size">
+                <input matInput placeholder="" formControlName="sdm_email" name="sdm_email">
+                <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+            </mat-form-field>
+            </div>
+        </td>
+    </tr>
+
+    <!-- LINKED IN -->
+    <tr>
+        <td>LinkedIn</td>
+        <td>:</td>
+        <td>
+            <mat-form-field class="sdw-full-size">
+                <input matInput placeholder="" formControlName="sdm_linkedin" name="sdm_linkedin" >
+                </mat-form-field>
+        </td>
+    </tr>
+
+    <!-- AGAMA -->
+    <tr>
+        <td>Agama</td>
+        <td>:</td>
+        <td>
+            <mat-form-field class="sdw-full-size">
+                <mat-select placeholder="" formControlName="religion_id" name="religion_id" >
+                <!-- <mat-option></mat-option> -->
+                <mat-option *ngFor="let lov of lovReligion.data" [value]="lov.key">
+                    {{lov.value}}
+                </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </td>
+    </tr>
+
+    <!-- KESEHATAN -->
+    <tr>
+        <td>Kesehatan</td>
+        <td>:</td>
+        <td>
+            <mat-form-field class="sdw-full-size">
+                <mat-select placeholder="" formControlName="health_id" name="health_id" required>
+                <mat-option *ngFor="let lov of lovHealth.data" [value]="lov.key">
+                    {{lov.value}}
+                </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </td>
+    </tr>
+
+    <!-- OBJECTIF -->
+    <tr>
+        <td>Objektif</td>
+        <td>:</td>
+        <td>
+            <mat-form-field class="sdw-full-size">
+                <input matInput placeholder="" formControlName="sdm_objective" name="sdm_objective">
+                </mat-form-field>
+        </td>
+    </tr>
+
+    <!-- LEVEL -->
+    <tr>
+        <td>Level</td>
+        <td>:</td>
+        <td>
+            <mat-form-field class="sdw-full-size">
+                <mat-select placeholder="" formControlName="sdmlvl_id" name="sdmlvl_id" required>
+                <mat-option *ngFor="let lov of lovLevel.data" [value]="lov.key">
+                    {{lov.value}}
+                </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </td>
+    </tr>
+
+    <!-- STATUS -->
+    <tr>
+        <td>Status</td>
+        <td>:</td>
+        <td>
+            <mat-form-field class="sdw-full-size">
+                <mat-select placeholder="" formControlName="contracttype_id" name="contracttype_id" required>
+                <mat-option *ngFor="let lov of lovStatus.data" [value]="lov.key">
+                    {{lov.value}}
+                </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </td>
+    </tr>
+
+    <!-- PENEMPATAN -->
+    <tr>
+        <td>Penempatan</td>
+        <td>:</td>
+        <td>
+            <mat-form-field class="sdw-full-size">
+                <input matInput placeholder="" formControlName="sdm_contractloc" name="sdm_contractloc">
+                </mat-form-field>
+        </td>
+    </tr>
+
+    <!-- AWAL KONTRAK -->
+    <tr>
+        <td>Awal Kontrak</td>
+        <td>:</td>
+        <td>
+            <mat-form-field class="sdw-full-size">
+                <input matInput [matDatepicker]="pickerStartDate" (click)="pickerStartDate.open()" placeholder="" formControlName="sdm_startcontract">
+                <mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
+                <mat-datepicker #pickerStartDate></mat-datepicker>
+                </mat-form-field>
+        </td>
+    </tr>
+
+    <!-- AKHIR KONTRAK -->
+    <tr>
+        <td>Akhir Kontrak</td>
+        <td>:</td>
+        <td>
+            <mat-form-field class="sdw-full-size">
+                <input matInput [matDatepicker]="pickerEndDate" (click)="pickerEndDate.open()" placeholder="" formControlName="sdm_endcontract">
+                <mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
+                <mat-datepicker #pickerEndDate></mat-datepicker>
+                </mat-form-field>
+        </td>
+    </tr>
+    </table>
+    </div>
+    <!-- <div class="col-md-3" *ngIf=" form == 2 ">
+        <io-form-action [action]="action"></io-form-action>
+    </div> -->
+    <div class="col-md-6 pos" style="float:right">
+    <button mat-raised-button style="margin: 10px 0px" (click)="action.onSave()" *ngIf=" form == 1 ">Submit</button>
+    <button mat-raised-button style="margin: 10px 0px" (click)="action.onEdit()" *ngIf=" form == 2 ">Update</button>
+    </div>
+</form>

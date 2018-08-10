@@ -1,0 +1,57 @@
+<mat-card>
+  <div class="io-form-header">  
+      <span><i class="fa fa-home"></i></span>
+      <a href=""><span> Dashboard</span></a><span> > </span> <a href=""><span>Project Assignment</span></a> <span> > Hiring SDM</span>
+      <span class="time">{{ time | date:'medium'}}</span>  
+  </div>
+</mat-card>
+
+<mat-card class="sizePos">
+  <mat-list>
+    <mat-list-item>
+      <mat-label class="labelClass">Client</mat-label>
+      <mat-form-field class="classData">
+        <mat-select placeholder="Select Client" [(ngModel)]="selectedValue" name="client_name">
+          <mat-option *ngFor="let lov of lovClients.data" [value]="lov.key">
+            {{lov.value}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>            
+    </mat-list-item>
+    <mat-list-item>
+      <mat-label class="labelClass">PIC Handler</mat-label>
+      <mat-label class="classData">: {{selectedValue}}</mat-label>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-label class="labelClass">Contact</mat-label>
+      <mat-label class="classData">: {{selectedValue}}</mat-label>
+    </mat-list-item>
+    <mat-list-item>
+      <div class="button">
+        <button mat-raised-button class="saveButton">Hire SDM</button>
+      </div>
+    </mat-list-item>
+  </mat-list>
+  
+</mat-card>
+
+<io-table style="margin-bottom:40px" *ngIf="action?.table()" [action]="action">
+  <div class="io-table-header">
+    <h3>List Task</h3>
+  </div>
+</io-table>
+
+<div class="button">
+  <button mat-raised-button class="cancelButton">Back</button>
+  <button mat-raised-button class="saveButton">Save</button>
+</div>
+
+<ng-template #tableActionTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
+  <button type="button" class="btn btn-primary btn-mm btn-icon" (click)="navigateEditMenu(row.sdmhiring_id)">
+    <i class="glyphicon glyphicon-pencil"></i>
+  </button>
+  <button type="button" class="btn btn-primary btn-mm btn-icon" (click)="action.onDelete(row)">
+    <i class="glyphicon glyphicon-trash"></i>
+  </button>
+</ng-template>
+<!-- here -->

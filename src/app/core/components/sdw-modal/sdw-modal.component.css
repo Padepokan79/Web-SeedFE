@@ -1,0 +1,11 @@
+.modal {
+      background: rgba(0,0,0,0.6);
+      z-index: 100;
+    }
+
+@media (max-width: 768px){
+  .modal-dialog{
+    width: 300px;
+    /*margin:30% auto;*/
+  }
+}

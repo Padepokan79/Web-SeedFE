@@ -1,0 +1,23 @@
+<mat-card style="height: 60px">
+  <div class="title-header">
+    <span><i class="fa fa-home"></i></span>
+    <a href=""><span>Dashboard</span></a><b> > </b>
+    <a href=""><span>SDM</span></a><b> > </b>
+    <a href=""><span>Historis SDM</span></a>
+    <span class="time">{{time | date:'medium'}}</span>
+  </div>
+</mat-card>
+<io-table *ngIf="action?.table()" [action]="action" style="margin-top:20px">
+  <div class="io-table-header">
+    <h3>List Task</h3>
+  </div>
+</io-table>
+
+<ng-template #tableActionTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
+  <button type="button" class="btn btn-info btn-mm btn-icon">
+    <i class="glyphicon glyphicon-eye-open"></i>
+  </button>
+</ng-template>
+<ng-template #viewAsDateTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
+  {{value | date:'yyyy-MM-dd'}}
+</ng-template>

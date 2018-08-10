@@ -1,0 +1,14 @@
+{
+   "apps":[
+      {
+         "root":"src",
+         "prefix":"io"
+      }
+   ],
+   "defaults":{
+      "styleExt":"scss"
+   },
+   "scripts": [
+       "../node_modules/jquery/dist/jquery.min.js"
+   ]
+}

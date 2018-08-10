@@ -1,0 +1,77 @@
+<io-form *ngIf="action?.form()">
+  <div class="io-form-header">
+    <div class="nx-brc-header">
+      <i class="glyphicon glyphicon-home"></i>
+      <a [routerLink]="['/pages/dashboard']">Dashboard</a>><a [routerLink]="['/pages/sdm-assignment']">SDM Assignment</a>><a [routerLink]="['/pages/sdm-hiring']">Update SDM Hiring</a>
+    </div>
+  </div>
+  <form class="io-form-body" [formGroup]="action?.formControls()">
+    <table style="margin: 5px">
+
+      <tr>
+        <td class="nx-table-range">
+          <mat-label>Client Name</mat-label>
+        </td>
+        <td>
+          <mat-label>:</mat-label>
+        </td>
+        <td class="nx-table-range">
+          <mat-form-field class="sdw-full-size">
+            <!-- <mat-label> Nama Client > {{dataClient?.client_name}}</mat-label> -->
+            <input matInput placeholder="" formControlName="client_name" name="client_name" readonly>
+          </mat-form-field>
+        </td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td class="nx-table-range">
+          <mat-label>SDM Name</mat-label>
+        </td>
+        <td>
+          <mat-label>:</mat-label>
+        </td>
+        <td class="nx-table-range">
+          <!-- <mat-label> Nama Client > {{res.data.items.sdm_name}}</mat-label> -->
+          <mat-form-field class="sdw-full-size">
+            <input matInput placeholder="" formControlName="sdm_name" name="sdm_name" readonly>
+          </mat-form-field>
+        </td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td class="nx-table-range"  style="width: 100px">
+          <mat-label>Status</mat-label>
+        </td>
+        <td>
+          <mat-label>:</mat-label>
+        </td>
+        <td class="nx-table-range" style="width: 100px">
+          <mat-form-field class="sdw-full-size">
+            <input matInput placeholder="" formControlName="hirestat_name" name="hirestat_name" readonly>
+          </mat-form-field>
+          <!-- <mat-form-field class="sdw-full-size">
+            <mat-select placeholder="- Select -" formControlName="sdmassign_picclient" name="sdmassign_picclient">
+            <mat-option *ngFor="let client of clients" [value]="client.value">
+              {{client.viewValue}}
+            </mat-option>
+          </mat-form-field> -->
+        </td>
+        <td class="nx-table-range"  style="width: 100px">
+          <mat-form-field>
+            <mat-select placeholder="" formControlName="hirestat_name" name="hirestat_name">
+              <mat-option *ngFor="let lov of lovHiring.data" [value]="lov.key">
+                {{lov.value}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
+      </tr>
+    </table>
+    <div style="margin-bottom: 10px">
+    	<button mat-raised-button class="action-btn" (click)="action.onEdit()">Update</button>
+    	<button mat-raised-button class="action-btn" [routerLink]="['/pages/pja/PJA007']">Cancel</button>
+    </div>
+  </form>
+</io-form>

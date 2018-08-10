@@ -1,0 +1,46 @@
+import { SDM001Component } from './mengelola-sdm/SDM001/SDM001.component';
+import { NgModule } from '../../../../../node_modules/@angular/core';
+import { PAGES_MODULE_PROVIDERS } from '../../../app.providers';
+import { routing } from '../pages.routing';
+import { TabCourseComponent } from './mengelola-sdm/tab-course/tab-course.component';
+import { TabDatapribadiComponent } from './mengelola-sdm/tab-datapribadi/tab-datapribadi.component';
+import { TabEducationComponent } from './mengelola-sdm/tab-education/tab-education.component';
+import { TabEmploymentComponent } from './mengelola-sdm/tab-employment/tab-employment.component';
+import { TabLanguageComponent } from './mengelola-sdm/tab-language/tab-language.component';
+import { TabProfilComponent } from './mengelola-sdm/tab-profil/tab-profil.component';
+import { SDM003Component } from './mengelola-sdm/SDM003/SDM003.component';
+import { SDM002Component } from './mengelola-sdm/SDM002/SDM002.component';
+import { SDM006Component } from './SDM006/SDM006.component';
+import { SDM007Component } from './SDM007/SDM007.component';
+import { SDM008Component } from './SDM008/SDM008.component';
+import { SDM004Component } from './SDM004/SDM004.component';
+
+const SDM_COMPONENTS = [
+    SDM001Component,
+    TabCourseComponent,
+    TabDatapribadiComponent,
+    TabEducationComponent,
+    TabEmploymentComponent,
+    TabLanguageComponent,
+    TabProfilComponent,
+    SDM002Component,
+    SDM003Component,
+    SDM004Component,
+    SDM006Component,
+    SDM007Component,
+    SDM008Component
+];
+
+@NgModule({
+  imports: [
+    ...PAGES_MODULE_PROVIDERS,
+    routing
+  ],
+  exports: [
+    ...SDM_COMPONENTS
+  ],
+  declarations: [
+    ...SDM_COMPONENTS
+]
+})
+export class SDMModule { }

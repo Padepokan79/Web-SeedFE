@@ -1,0 +1,84 @@
+<mat-card style="height: 60px">
+  <div class="title-header">
+    <span><i class="fa fa-home"></i></span>
+    <a href=""><span>Dashboard</span></a><b> > </b>
+    <a href=""><span>SDM</span></a><b> > </b>
+    <a href=""><span>List SDM</span></a>
+    <span class="time">{{time | date:'medium'}}</span>
+  </div>
+</mat-card>
+<br>
+<mat-card style="margin:16px">
+    <mat-list>
+      <mat-list-item>
+        <mat-label class="panjang">Level</mat-label>
+        <mat-form-field class="sdw-full-size" style="width : 200px">
+          <mat-select placeholder="Parent Task" formControlName="sdmlvl_id" name="sdmlvl_id">
+            <mat-option *ngFor="let lov of lovSdmLvl.data" [value]="lov.key">
+              {{lov.value}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-label class="panjang">Name</mat-label>
+        <mat-form-field class="example-full-width">
+          <input type="text" placeholder="Pick one" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let lov of lovSdm.data" [value]="lov.key">
+              {{lov.value}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <!-- <mat-form-field>
+          <input matInput type="search">
+        </mat-form-field> -->
+      </mat-list-item>
+      <mat-list-item>
+        <mat-label class="panjang">Akhir Kontrak</mat-label>
+        <mat-form-field>
+          <input matInput [matDatepicker]="picker">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <div class="col-md-3" style="float:right">
+          <button mat-flat-button>
+              <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Filter</button>
+          <button mat-flat-button>
+              <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Clear</button>
+        </div>
+      </mat-list-item>
+    </mat-list>
+    <div class="col-md-2" style="float:right;margin-top:-41px">
+      <button mat-flat-button style="float:right" (click)="navigate()">
+          <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> New
+      </button>
+    </div>
+</mat-card>
+<io-table *ngIf="action?.table()" [action]="action" style="margin-top:20px">
+  <div class="io-table-header" style="background: white">
+    <h3>List Task</h3>
+  </div>
+</io-table>
+
+<ng-template #tableActionTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
+  <button matTooltip="Preview CV" type="button" class="btn btn-primary btn-mm btn-icon" (click)="action.onEdit(row)">
+    <i class="glyphicon glyphicon-file"></i>
+  </button>
+  <button matTooltip="Print CV" type="button" class="btn btn-primary btn-mm btn-icon" (click)="onPrintReportPDF(row.sdm_id)">
+    <i class="glyphicon glyphicon-print"></i>
+  </button>
+  <button matTooltip="Edit data SDM" type="button" class="btn btn-primary btn-mm btn-icon" (click)="navigateEditMenu(row.sdm_id)">
+    <i class="glyphicon glyphicon-edit"></i>
+  </button>
+  <button matTooltip="Detail data SDM" type="button" class="btn btn-primary btn-mm btn-icon" (click)="navigateEditMenu(row.sdm_id)">
+    <i class="glyphicon glyphicon-eye-open"></i>
+  </button>
+</ng-template>
+<ng-template #notif let-row="row" let-value="value" ngx-datatable-cell-template>
+    <i matTooltip="Non-Aktif" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:black; font-size: 30px" *ngIf="row.sdm_notification == 'black'"></i>
+    <i matTooltip="Sisa 1 bulan" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:red; font-size: 30px" *ngIf="row.sdm_notification == 'red'"></i>
+    <i matTooltip="Sisa 2 bulan" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:#f5f515; font-size: 30px" *ngIf="row.sdm_notification == 'yellow'"></i>
+    <i matTooltip="Sisa 4 bulan" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:#00da00; font-size: 30px" *ngIf="row.sdm_notification == 'green'"></i>
+    <i matTooltip="Sisa lebih dari 4 bulan" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:#b3b3b3; font-size: 30px" *ngIf="row.sdm_notification == 'grey'"></i>
+ </ng-template>

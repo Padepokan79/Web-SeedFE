@@ -1,0 +1,6 @@
+{
+    "URL" : {
+        "BE_SERVER" : "http://localhost:7979/",
+        "RESOURCE_SERVER" : "http://localhost:7979/"
+    }
+}      

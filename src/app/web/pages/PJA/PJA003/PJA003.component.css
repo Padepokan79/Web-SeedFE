@@ -1,0 +1,17 @@
+@import '../../../../../core/sass/data-table/theme/sdw-table';
+
+.name{
+    width: 20%;
+}
+.formheader{
+    margin: 12px;
+}
+table{
+    width: 40%;
+}
+.io-table{
+    width: auto;
+}
+.time{
+    float: right;
+}

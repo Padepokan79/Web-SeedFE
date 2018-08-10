@@ -1,0 +1,63 @@
+/* breadcrumbs */
+ul.breadcrumb li {
+    display: inline;
+    font-size: 18px;
+}
+
+ul.breadcrumb li+li:before {
+    padding: 8px;
+    color: black;
+    content: ">\00a0";
+}
+
+ul.breadcrumb li {
+    color: #202020;
+    text-decoration: none;
+}
+
+ul.breadcrumb li a {
+    color: #0275d8;
+    text-decoration: none;
+}
+
+ul.breadcrumb li a:hover {
+    color: #01447e;
+    text-decoration: underline;
+}
+
+ng-template {
+    padding: 0 auto;
+}
+
+.blacky {
+    color: #202020;
+}
+
+/* filter-contents */
+ul {
+    list-style: none;
+}
+
+li.list-filter {
+    width: 300px;
+    text-align: center;
+}
+
+div.go-tight {
+    margin-bottom: -1em;
+}
+
+.btn-flat {
+    background-color: #FEFEFE;
+    color: #242424;
+}
+
+.btn-filter {
+    background: linear-gradient(to bottom right, #23AB14, #31AD18);
+    color: #FEFEFE;
+    margin-top: 10px;
+}
+
+.position-li {
+    margin: 10px 20% -10px 20%;
+}

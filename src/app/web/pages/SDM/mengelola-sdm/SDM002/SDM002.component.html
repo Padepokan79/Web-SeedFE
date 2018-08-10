@@ -1,0 +1,37 @@
+
+<io-form >
+  <div class="io-form-header">  
+      <span><i class="fa fa-home"></i></span> 
+      <a href=""><span> Dashboard</span></a><span> > </span> <a href=""><span>Mengelola Data SDM</span></a> <span *ngIf="form == 1"> > Input Data SDM</span><span *ngIf="form == 2"> > Update Data SDM</span>
+      <span class="time">{{ time | date:'medium' }}</span>  
+  </div>
+
+  <div class="judul">Input Data SDM</div>
+
+  <form class="io-form-body"> 
+   
+      <div class="margin-padding-div">
+          <mat-tab-group>
+            <mat-tab label="Data Pribadi">
+                <app-tab-datapribadi [form]="form" [id]="id"></app-tab-datapribadi>
+            </mat-tab>
+            <mat-tab label="Pendidikan">
+                <app-tab-education [form]="form" [id]="id"></app-tab-education>
+            </mat-tab>
+            <mat-tab label="Kursus">
+                <app-tab-course [form]="form" [id]="id"></app-tab-course>
+            </mat-tab>
+            <mat-tab label="Pekerjaan">
+              <app-tab-employment [form]="form" [id]="id"></app-tab-employment>
+            </mat-tab>
+            <mat-tab label="Profil">
+              <app-tab-profil [form]="form" [id]="id"></app-tab-profil>
+            </mat-tab>
+            <mat-tab label="Bahasa">
+              <app-tab-language [form]="form" [id]="id"></app-tab-language>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+
+  </form>
+</io-form>

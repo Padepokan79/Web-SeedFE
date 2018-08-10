@@ -1,0 +1,75 @@
+<io-form *ngIf="action?.form()">
+  <div class="io-form-header">
+    <br>  
+    <div class="title-header">
+     <span style="color: #181818;"><i class="fa fa-home"></i></span>
+     <a [routerLink]="['/pages/dashboard']"><span>SDM Allocation > </span></a>
+     <a [routerLink]="['/pages/SdmSkill']"><span>List Sdm Skill > </span></a>
+     <span style="color: #181818;">Input Sdm Skill</span>
+   </div>
+  </div>
+  <form class="io-form-body" [formGroup]="action?.formControls()">  
+        <div class="col-md-3">
+          <mat-form-field class="sdw-full-size">
+            <mat-select placeholder="Sdm Name" [(value)]="selected" formControlName="sdm_id" name="sdm_id" required>
+              <mat-option *ngFor="let lov of lovSdm.data" [value]="lov.key">
+                {{lov.value}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <!-- ini nik -->
+          <div class="col-md-3">
+            <mat-form-field class="sdw-full-size">
+              <input matInput placeholder = "Nik" value = "{{ selected }}" disabled>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3" style="padding-top: 15px;">
+            <button class="btn btn-success" (click)="inputSkillValue()"><i class="fa fa-plus"></i></button>
+          </div>
+      
+      <ul style="list-style: none;">
+        <li style="list-style: none;" *ngFor="let inputSkill of listinputSkill; let inc = index">
+          <div class="add" [(ngModel)]="inputSkill.value" style="margin-left: -3.8%; width: 100%; background-color: transparent; float: left;">
+            <div class="col-md-3">
+              <mat-form-field class="sdw-full-size">
+                <mat-select placeholder="Type Skill" formControlName="skilltype_id" name="skilltype_id" required>
+                  <mat-option *ngFor="let lov of inputSkill.lovSkillType.data" [value]="lov.key" (onSelectionChange)="inputSkill.selectedSkill($event, lov)">
+                    {{lov.value}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field class="sdw-full-size">
+                  <mat-select placeholder="Choose Skill" name="skill_id" formControlName="skill_id" required>
+                    <mat-option *ngFor="let lov of inputSkill.lovSkill?.data" [value]="lov.key">
+                      {{lov.value}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            <div class="col-md-3">
+              <mat-form-field class="sdw-full-size">
+                <input type="number" matInput placeholder="Value Skill" formControlName="sdmskill_value" name="sdmskill_value">
+                <mat-hint *ngIf="action.formErrors.sdmskill_value" [ngStyle]="{'color': 'red'}">
+                  {{action.formErrors.sdmskill_value}}
+                </mat-hint>
+              </mat-form-field>
+            </div>
+            <div class="col-md-3" style="padding-top: 15px;">
+              <button class="btn btn-danger" (click)="deleteSkillValue(inc, 1)">
+                <i class="fa fa-times"></i>
+              </button>
+            </div>
+          </div>
+        </li>
+      </ul>
+    <br><br><br><br><br><br><br><br>
+    <button class="btn btn-success save" (click)="action.onSave()">Save</button>
+    <a [routerLink]="['/pages/SdmSkill']">
+      <button class="btn btn-danger save">Back</button>
+    </a>
+    <!-- <io-form-action [action]="action"></io-form-action> -->
+  </form>
+</io-form>

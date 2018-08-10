@@ -1,0 +1,23 @@
+@import '../../../../core/sass/conf/conf';
+$height: 52px;
+
+.ba-back-top {
+  position: fixed;
+  width: $height;
+  height: $height;
+  cursor: pointer;
+  z-index: 9999;
+  display: none;
+  text-decoration: none;
+  right: 40px;
+  bottom: 40px !important;
+  font-size: 45px;
+  text-align: center;
+  color: $sidebar-text;
+  background-color: $sidebar;
+  border-radius: 50%;
+  line-height: 46px;
+  &:hover {
+  background-color: tint($sidebar,10%);
+  }
+}

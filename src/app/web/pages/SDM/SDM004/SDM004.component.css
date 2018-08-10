@@ -1,0 +1,10 @@
+mat-icon{
+    padding : 20px;
+    color: black;
+}
+mat-form-field{
+    padding : 20px;
+}
+.time{
+    float: right;
+}

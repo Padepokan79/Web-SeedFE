@@ -1,0 +1,87 @@
+<io-form *ngIf="action?.form()">
+  <div class="io-form-header">
+    <div class="nx-brc-header">
+      <i class="glyphicon glyphicon-home"></i>
+      <a [routerLink]="['/pages/dashboard']">Dashboard</a>>
+      <a>Project Assignment</a>>
+      <a [routerLink]="['/pages/sdm-assignment']">SDM Assignment</a>
+    </div>
+  </div>
+  <form class="io-form-body" [formGroup]="action?.formControls()">
+    <table class="nx-table-margin" style="width: 100%">
+      <tr>
+        <td class="nx-table-range"  style="width: 100px">
+          <mat-label>Client</mat-label>
+        </td>
+        <td style="width: 5px">
+          <mat-label>:</mat-label>
+        </td>
+        <td class="nx-table-range" style="width: 100px">
+          <mat-form-field>
+            <mat-select placeholder="- Select -" formControlName="client_name" name="client_name">
+              <mat-option *ngFor="let lov of lovClient.data" [value]="lov.key">
+                {{lov.value}}
+              </mat-option>
+            </mat-select>
+            <!-- <mat-select placeholder="- Select -" name="client">
+              <mat-option *ngFor="let client of clients" [value]="client.value">
+                {{client.viewValue}}
+              </mat-option>
+            </mat-select> -->
+          </mat-form-field>
+        </td>
+        <td>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="nx-table-range">
+          <mat-label>PIC Handler</mat-label>
+        </td>
+        <td>
+          <mat-label>:</mat-label>
+        </td>
+        <td class="nx-table-range">
+          <mat-label>Get Data</mat-label>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="nx-table-range">
+          <mat-label>PIC Contact</mat-label>
+        </td>
+        <td>
+          <mat-label>:</mat-label>
+        </td>
+        <td class="nx-table-range">
+          <mat-label>Get Data</mat-label>
+        </td>
+        <td>
+          <button class="btn btn-success btn-mm nx-button-range" [routerLink]="['/pages/assignment']">Assign</button>
+        </td>
+      </tr>
+
+    </table>
+  </form>
+</io-form>
+
+<io-table *ngIf="action?.table()" [action]="action">
+  <div class="io-table-header">
+    <h3>List Task</h3>
+  </div>
+</io-table>
+
+<!-- <button class="btn btn-success btn-mm nx-button-range" (click)="action.onSave()">Save</button> -->
+
+<!-- Contoh Template Untuk meng-Override field "Action" -->
+<ng-template #tableActionTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
+  <!-- <button type="button" class="btn btn-primary btn-mm btn-icon" (click)="action.onEdit(row); onPatchData(row);"> -->
+  <button type="button" class="btn btn-primary btn-mm btn-icon" (click)="navigateEditMenu(row.sdmassign_id)">
+    <i class="glyphicon glyphicon-pencil"></i>
+  </button>
+</ng-template>
+
+<!-- <ng-template #viewAsDateTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
+  {{value | date:'yyyy-MM-dd'}}
+</ng-template> -->
+

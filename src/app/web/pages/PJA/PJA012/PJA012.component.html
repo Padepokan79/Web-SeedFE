@@ -1,0 +1,69 @@
+<mat-toolbar>
+  SDM Assign
+</mat-toolbar>
+<div class="breadcrumbs">
+  <ul class="breadcrumb">
+    <li><a href="#">Dashboard</a></li>
+    <li><a href="#">Project Assignment</a></li>
+    <li><a href="#">SDM Assignment</a></li>
+    <li>Multifiltering SDM</li>
+  </ul>
+</div>
+<div class="filter-contents" align="center">
+  <form class="io-form-body">
+    <div id="filtering" class="row row-center">  
+      <ul class="list-filter">
+        <li *ngFor="let searchCriteria of listSearchCriteria; let inc = index" class="col-md-12 position-li">
+          <div class="col-md-2 go-tight">
+            <mat-form-field class="sdw-full-size">
+              <mat-select placeholder="Choose Category" [(ngModel)]="searchCriteria.skilltype_id" name="skilltype_id" required>
+                <mat-option *ngFor="let lov of searchCriteria.lovSkillType.data" [value]="lov.key" (onSelectionChange)="searchCriteria.selectedSkill($event, lov)">
+                  {{lov.value}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-md-2 go-tight">
+            <mat-form-field class="sdw-full-size">
+              <mat-select placeholder="Choose Skill" [(ngModel)]="searchCriteria.skill_id" name="skill_id" required>
+                <mat-option *ngFor="let lov of searchCriteria.lovSkill?.data" [value]="lov.key">
+                  {{lov.value}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-md-2 go-tight">
+            <mat-form-field class="sdw-full-size">
+              <input matInput type="number" min="1" max="10" placeholder="Value" [(ngModel)]="searchCriteria.value" name="sdmskill_value" class="blacky" required>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-2 text-left">
+            <button class="btn btn-flat btn-sm" *ngIf="inc>=0" (click)="addSearchCriteria()"><i class="fa fa-plus"></i></button>&nbsp;&nbsp;
+            <button class="btn btn-flat btn-sm" *ngIf="inc>0" (click)="removeSearchCriteria(inc,1)"><i class="fa fa-minus"></i></button>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <br>
+    <div class="action-filter col-md-12">
+      <button class="btn btn-filter btn-mm" (submit)="selectToAssign()">Filter</button>
+    </div>
+  </form>
+</div>
+<div class="contents">
+  <form class="io-form-body" [formGroup]="action?.formControls()" *ngIf="action?.form()">
+    <io-table *ngIf="action?.table()" [action]="action">
+    </io-table>
+    <div class="action-filter col-md-12">
+      <button [routerLink]="['/pages/dashboard']" class="btn btn-mm"> &lt; Back</button>
+      <button class="btn btn-primary btn-mm" (click)="action.onSave()">Submit</button>
+    </div>
+  </form>
+  <div align="center">
+  <ng-template #tableActionTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
+    <div class="col-md-12">
+      <mat-checkbox (change)="action.adjustValue($event)" name="select_sdm"></mat-checkbox>
+    </div>
+  </ng-template>
+  </div>
+</div>
