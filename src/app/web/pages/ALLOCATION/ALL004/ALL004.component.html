@@ -1,75 +1,71 @@
-<io-form *ngIf="action?.form()">
-  <div class="io-form-header">
-    <br>  
-    <div class="title-header">
-     <span style="color: #181818;"><i class="fa fa-home"></i></span>
-     <a [routerLink]="['/pages/dashboard']"><span>SDM Allocation > </span></a>
-     <a [routerLink]="['/pages/SdmSkill']"><span>List Sdm Skill > </span></a>
-     <span style="color: #181818;">Input Sdm Skill</span>
-   </div>
-  </div>
-  <form class="io-form-body" [formGroup]="action?.formControls()">  
-        <div class="col-md-3">
-          <mat-form-field class="sdw-full-size">
-            <mat-select placeholder="Sdm Name" [(value)]="selected" formControlName="sdm_id" name="sdm_id" required>
-              <mat-option *ngFor="let lov of lovSdm.data" [value]="lov.key">
-                {{lov.value}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <!-- ini nik -->
-          <div class="col-md-3">
+<!-- Created by : Vikri Ramdhani
+Date       : 2-08-2018
+Modified   : 10-08-2018 by Vikri Ramdhani -->
+<mat-toolbar>
+  Input Nilai Skill Sdm
+</mat-toolbar>
+<div class="breadcrumbs">
+  <ul class="breadcrumb">
+    <li><a href="#">SdmSkill</a></li>
+    <li><a href="#">Input Nilai Skill Sdm</a></li>
+  </ul>
+</div>
+<form class="io-form-body" style="background-color: white; padding-top: 10px;" [formGroup]="action?.formControls()">
+<div class="filter-contents" align="center">
+    <div id="filtering" class="row row-center"> 
+      <ul class="list-filter">
+      <div class="col-md-2 go-tight">
             <mat-form-field class="sdw-full-size">
-              <input matInput placeholder = "Nik" value = "{{ selected }}" disabled>
+              <mat-select placeholder="Choose Sdm" [(value)]="selected" formControlName="sdm_id" name="sdm_id" required>
+                  <mat-option *ngFor="let lov of lovSDM.data" [value]="lov.key">
+                    {{lov.value}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+         </div>
+         <div class="col-md-2 go-tight">
+            <mat-form-field class="sdw-full-size">
+              <input matInput placeholder="Nik" value="{{ selected }}" disabled>
             </mat-form-field>
           </div>
-          <div class="col-md-3" style="padding-top: 15px;">
-            <button class="btn btn-success" (click)="inputSkillValue()"><i class="fa fa-plus"></i></button>
+        <li *ngFor="let searchCriteria of listSearchCriteria; let inc = index" class="col-md-12">
+          <div class="col-md-2 go-tight">
+            <mat-form-field class="sdw-full-size">
+              <mat-select placeholder="Choose Category" formControlName="skilltype_id" [(ngModel)]="searchCriteria.skilltype_id" name="skilltype_id" required>
+                <mat-option *ngFor="let lov of searchCriteria.lovSkillType.data" [value]="lov.key" (onSelectionChange)="searchCriteria.selectedSkill($event, lov)">
+                  {{lov.value}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
           </div>
-      
-      <ul style="list-style: none;">
-        <li style="list-style: none;" *ngFor="let inputSkill of listinputSkill; let inc = index">
-          <div class="add" [(ngModel)]="inputSkill.value" style="margin-left: -3.8%; width: 100%; background-color: transparent; float: left;">
-            <div class="col-md-3">
-              <mat-form-field class="sdw-full-size">
-                <mat-select placeholder="Type Skill" formControlName="skilltype_id" name="skilltype_id" required>
-                  <mat-option *ngFor="let lov of inputSkill.lovSkillType.data" [value]="lov.key" (onSelectionChange)="inputSkill.selectedSkill($event, lov)">
-                    {{lov.value}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-            <div class="col-md-3">
-                <mat-form-field class="sdw-full-size">
-                  <mat-select placeholder="Choose Skill" name="skill_id" formControlName="skill_id" required>
-                    <mat-option *ngFor="let lov of inputSkill.lovSkill?.data" [value]="lov.key">
-                      {{lov.value}}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-            <div class="col-md-3">
-              <mat-form-field class="sdw-full-size">
-                <input type="number" matInput placeholder="Value Skill" formControlName="sdmskill_value" name="sdmskill_value">
-                <mat-hint *ngIf="action.formErrors.sdmskill_value" [ngStyle]="{'color': 'red'}">
-                  {{action.formErrors.sdmskill_value}}
-                </mat-hint>
-              </mat-form-field>
-            </div>
-            <div class="col-md-3" style="padding-top: 15px;">
-              <button class="btn btn-danger" (click)="deleteSkillValue(inc, 1)">
-                <i class="fa fa-times"></i>
-              </button>
-            </div>
+          <div class="col-md-2 go-tight">
+            <mat-form-field class="sdw-full-size">
+              <mat-select placeholder="Choose Skill" formControlName="skill_id" [(ngModel)]="searchCriteria.skill_id" name="skill_id" required>
+                <mat-option *ngFor="let lov of searchCriteria.lovSkill?.data" [value]="lov.key">
+                  {{lov.value}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-md-2 go-tight">
+            <mat-form-field class="sdw-full-size">
+              <input matInput type="number" min="1" max="10" formControlName="sdmskill_value" placeholder="Value" [(ngModel)]="searchCriteria.value" name="sdmskill_value" class="blacky" required>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-1">
+            <button class="btn btn-primary btn-sm" *ngIf="inc==0" (click)="addSearchCriteria()"><i class="fa fa-plus"></i></button>
+            <button class="btn btn-warning btn-sm" *ngIf="inc>0" (click)="removeSearchCriteria(inc,1)"><i class="fa fa-minus"></i></button>
           </div>
         </li>
       </ul>
-    <br><br><br><br><br><br><br><br>
-    <button class="btn btn-success save" (click)="action.onSave()">Save</button>
-    <a [routerLink]="['/pages/SdmSkill']">
+    </div>
+    <br>
+    <div class="action-filter col-md-12" style="width: 100%; background-color: white; float: left; padding-bottom: 10px;">
+      <!-- <button class="btn btn-primary btn-mm" (click)="addSearchCriteria()">+</button> -->
+      <button class="btn btn-success save" (click)="action.onSave()">Save</button>
+      <a [routerLink]="['/pages/all/ALL003']">
       <button class="btn btn-danger save">Back</button>
     </a>
-    <!-- <io-form-action [action]="action"></io-form-action> -->
-  </form>
-</io-form>
+    </div>
+</div>
+</form>
