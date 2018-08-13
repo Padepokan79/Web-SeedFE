@@ -13,7 +13,7 @@ export const ALL_ROUTES = [
         { path: 'ALL001', component: ALL001Component, canActivate: [AuthGuard] },
         { path: 'ALL002', component: ALL002Component, canActivate: [AuthGuard] },
         { path: 'ALL003', component: ALL003Component, canActivate: [AuthGuard] },
-        // { path: 'ALL004', component: ALL004Component, canActivate: [AuthGuard] },
+        { path: 'ALL004', component: ALL004Component, canActivate: [AuthGuard] },
         { path: 'ALL005', component: ALL005Component, canActivate: [AuthGuard] },
         // { path: 'inputskill', component: InputSkill, canActivate: [AuthGuard] },
       ]
