@@ -1,10 +1,13 @@
 import { TYPE, COMPARISON_OPERATOR, CONJUNCTION_OPERATOR } from 'app/core/constant/constant';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Session } from 'app/core/utils/session';
+
 import { ActionService } from '../../../../core/services/uninjectable/action.service';
-import { InputForm } from '../../../../core/models/input-form';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { LOVService } from '../../../../core/services/uninjectable/lov.service';
+import { SearchCriteria } from './SearchCriteria';
+import { DataTable } from '../../../../core/models/data-table';
+import { InputForm } from '../../../../core/models/input-form';
 import { CoreFactory } from '../../../../core/factory/core.factory';
-import { InputSkill } from './InputSkill';
 
 @Component({
   selector: 'io-ALL004',
@@ -13,33 +16,37 @@ import { InputSkill } from './InputSkill';
 })
 export class ALL004Component implements OnInit {
 
+  @ViewChild('viewAsDateTemplate')
+  public viewAsDateTemplate: any;
+  @ViewChild('tableActionTemplate')
+  public tableActionTemplate: any;
+
   public action: ActionService;
   public inputForm: InputForm;
+  public dataTable: DataTable;
+  public listSearchCriteria: SearchCriteria[] = [];
+  // public listSkillSelected: SkillSelected[] = [];
 
-  public lovSkill: LOVService;
+  public lovSDM: LOVService;
   public lovSkillType: LOVService;
-  public lovSdm: LOVService;
-
-  public listinputSkill: InputSkill[] = [];
+  public lovSkill: LOVService;
+  public lovSdmSkill: LOVService;
 
   constructor(private _factory: CoreFactory) {
-    this.listinputSkill.push(new InputSkill(_factory));
+    this.listSearchCriteria.push(new SearchCriteria(_factory));
   }
 
-  public inputSkillValue() {
-    const inputskillValue = {} as InputSkill;
-    const addSkill = this.listinputSkill;
-    addSkill.push(inputskillValue);
+  public addSearchCriteria() {
+    const searchCriteria = new SearchCriteria(this._factory);
+    this.listSearchCriteria.push(searchCriteria);
   }
 
-  public deleteSkillValue(inc) {
-    const inputskillValue = {} as InputSkill;
-    const addSkill = this.listinputSkill;
-    addSkill.splice(inc, 1);
+  public removeSearchCriteria(inc) {
+    this.listSearchCriteria.splice(inc, 1);
   }
 
   public ngOnInit() {
-    this.inputForm = this._factory.inputForm({
+   this.inputForm = this._factory.inputForm({
       formControls: {
         skilltype_id: '',
         skill_id: '',
@@ -47,25 +54,21 @@ export class ALL004Component implements OnInit {
         sdmskill_value: ''
       }
     });
-    this.action = this._factory.actions({
+   this.action = this._factory.actions({
       api: 'allocation/MengelolaSdmSkill/',
       inputForm: this.inputForm,
     });
 
-    // this.lovSkill = this._factory.lov({
-    //     api: 'lov/Skill',
-    //     initializeData: true
-    // });
-    // this.lovSkillType = this._factory.lov({
-    //   api: 'lov/SkillType',
-    //   initializeData: true
-
-    // });
-
-    this.lovSdm = this._factory.lov({
-      api: 'lov/Sdm',
-      initializeData: true
+   this.lovSDM = this._factory.lov({
+        api: 'lov/Sdm',
+        initializeData: true
     });
 
+    // this.lovSkill = this._factory.lov({
+    //   api: 'lov/Skill',
+    //   initializeData: true
+    // });
+
   }
+
 }

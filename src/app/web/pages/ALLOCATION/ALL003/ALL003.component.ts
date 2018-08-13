@@ -5,6 +5,7 @@ import { InputForm } from '../../../../core/models/input-form';
 import { DataTable } from '../../../../core/models/data-table';
 import { LOVService } from '../../../../core/services/uninjectable/lov.service';
 import { CoreFactory } from '../../../../core/factory/core.factory';
+import { Router } from '../../../../../../node_modules/@angular/router';
 
 @Component({
   selector: 'app-ALL003',
@@ -26,7 +27,7 @@ export class ALL003Component implements OnInit {
   public lovSkillType: LOVService;
   public lovSdm: LOVService;
 
-  constructor(private _factory: CoreFactory) { }
+  constructor(private _factory: CoreFactory, private router: Router) { }
 
   // tslint:disable-next-line:no-empty
   public ngOnInit() {
@@ -99,4 +100,7 @@ export class ALL003Component implements OnInit {
     });
   }
 
+  public navigateEditMenu(id) {
+    this.router.navigate(['pages/all/ALL005' , {id}]);
+  }
 }
