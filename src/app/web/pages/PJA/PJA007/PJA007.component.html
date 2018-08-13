@@ -20,7 +20,7 @@
         </td>
         <td class="nx-table-range" style="width: 100px">
           <mat-form-field class="classData">
-            <mat-select placeholder="Select Client" [(ngModel)]="selectedValue" name="client_name">
+            <mat-select placeholder="Select Client" name="client_name">
               <mat-option *ngFor="let lov of lovClients.data" [value]="lov.key">
                 {{lov.value}}
               </mat-option>

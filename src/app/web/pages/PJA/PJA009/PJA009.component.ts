@@ -41,9 +41,11 @@ export class PJA009Component implements OnInit {
     this.inputForm = this._factory.inputForm({
       formControls: {
         sdmhiring_id: '',
-        sdm_name: '',
-        client_name: '',
         hirestat_name: '',
+        sdm_id: '',
+        sdm_name: '',
+        client_id: '',
+        client_name: '',
         method_id: '',
         method_name: '',
       }
@@ -82,9 +84,19 @@ export class PJA009Component implements OnInit {
 
     this._factory.http().get(readAllApi).subscribe((res: any) => {
       console.log(res);
-      this.action.patchFormData(res.data.items[(this.selectedId - 1)]);
+      this.action.patchFormData(res.data.items[0]);
 
     });
 
   }
+
+  public onUpdate() {    const updateAPI = this._factory.api({
+    api: 'project/mengelolaHiring/update',
+    // params: {
+    // client_id: this.selectedId }
+   });                   this._factory.http().put(updateAPI + '?sdmassign_id=' + this.selectedId, this.action.getFormData()).subscribe((response: any) => {
+     console.log('Update Data Berhasil');
+   });
+ }
+ 
 }

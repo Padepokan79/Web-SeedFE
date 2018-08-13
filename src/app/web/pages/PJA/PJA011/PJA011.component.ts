@@ -40,6 +40,7 @@ export class PJA011Component implements OnInit {
     this.inputForm = this._factory.inputForm({
       formControls: {
         sdmassign_id: '',
+        sdm_id: '',
         sdm_name: '',
         sdm_phone: '',
         sdmassign_startdate: '',
