@@ -9,11 +9,11 @@ import { InputForm } from '../../../../core/models/input-form';
 import { ActionService } from '../../../../core/services/uninjectable/action.service';
 
 @Component({
-  selector: 'app-sdm-hiring-update',
-  templateUrl: './sdm-hiring-update.component.html',
-  styleUrls: ['./sdm-hiring-update.component.css']
+  selector: 'app-PJA009',
+  templateUrl: './PJA009.component.html',
+  styleUrls: ['./PJA009.component.css']
 })
-export class SdmHiringUpdateComponent implements OnInit {
+export class PJA009Component implements OnInit {
 
   @ViewChild('viewAsDateTemplate')
   public viewAsDateTemplate: any;

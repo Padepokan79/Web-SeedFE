@@ -1,4 +1,4 @@
-import { TYPE, CONJUNCTION_OPERATOR, COMPARISON_OPERATOR } from 'app/core/constant/constant';
+import { TYPE, CONJUNCTION_OPERATOR, COMPARISON_OPERATOR } from '../../../../core/constant/constant';
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { ActionService } from '../../../../core/services/uninjectable/action.service';
 import { InputForm } from '../../../../core/models/input-form';
@@ -9,12 +9,12 @@ import { Session } from '../../../../core/utils/session';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-sdm-assignment',
-  templateUrl: './sdm-assignment.component.html',
-  styleUrls: ['./sdm-assignment.component.css']
+  selector: 'app-PJA010',
+  templateUrl: './PJA010.component.html',
+  styleUrls: ['./PJA010.component.css']
 })
 
-export class SdmAssignmentComponent implements OnInit {
+export class PJA010Component implements OnInit {
 
   @ViewChild('viewAsDateTemplate')
   public viewAsDateTemplate: any;
@@ -104,7 +104,7 @@ export class SdmAssignmentComponent implements OnInit {
   }
 
   public navigateEditMenu(id) {
-    this.router.navigate(['/pages/sdm-assignment-update', { id }]);
+    this.router.navigate(['/pages/pja/PJA011', { id }]);
   }
 
 }

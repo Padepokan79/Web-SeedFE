@@ -6,14 +6,13 @@ import { ActionService } from '../../../../core/services/uninjectable/action.ser
 import { LOVService } from '../../../../core/services/uninjectable/lov.service';
 import { InputForm } from '../../../../core/models/input-form';
 
-
 @Component({
-  selector: 'app-sdm-assignment-update',
-  templateUrl: './sdm-assignment-update.component.html',
-  styleUrls: ['./sdm-assignment-update.component.css']
+  selector: 'app-PJA011',
+  templateUrl: './PJA011.component.html',
+  styleUrls: ['./PJA011.component.css']
 })
 
-export class SdmAssignmentUpdateComponent implements OnInit {
+export class PJA011Component implements OnInit {
 
   @ViewChild('viewAsDateTemplate')
   public viewAsDateTemplate: any;
@@ -96,7 +95,7 @@ export class SdmAssignmentUpdateComponent implements OnInit {
     api: 'project/SdmAssignment/update',
     // params: {
     // client_id: this.selectedId }
-   });    this._factory.http().put(updateAPI + '?sdmassign_id=' + this.selectedId, this.action.getFormData()).subscribe((response: any) => {
+   });                   this._factory.http().put(updateAPI + '?sdmassign_id=' + this.selectedId, this.action.getFormData()).subscribe((response: any) => {
      console.log('Update Data Berhasil');
    });
  }

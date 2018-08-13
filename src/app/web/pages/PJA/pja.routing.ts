@@ -10,6 +10,10 @@ import { PJA002Component } from './PJA002/PJA002.component';
 import { PJA012Component } from './PJA012/PJA012.component';
 import { SdmAssignmentComponent } from './sdm-assignment/sdm-assignment.component';
 import { SdmAssignmentUpdateComponent } from './sdm-assignment-update/sdm-assignment-update.component';
+import { PJA010Component } from './PJA010/PJA010.component';
+import { PJA011Component } from './PJA011/PJA011.component';
+import { PJA007Component } from './PJA007/PJA007.component';
+import { PJA009Component } from './PJA009/PJA009.component';
 
 export const PJA_ROUTES = [
     {
@@ -21,10 +25,10 @@ export const PJA_ROUTES = [
         { path: 'PJA005', component: PJA005Component, canActivate: [AuthGuard] },
         { path: 'PJA004', component: PJA004Component, canActivate: [AuthGuard] },
         { path: 'PJA006', component: PJA006Component, canActivate: [AuthGuard] },
-        { path: 'PJA007', component: SdmHiringListComponent, canActivate: [AuthGuard] },
-        { path: 'PJA008', component: SdmHiringUpdateComponent, canActivate: [AuthGuard] },
-        { path: 'PJA010', component: SdmAssignmentComponent, canActivate: [AuthGuard] },
-        { path: 'PJA011', component: SdmAssignmentUpdateComponent, canActivate: [AuthGuard] },
+        { path: 'PJA007', component: PJA007Component, canActivate: [AuthGuard] },
+        { path: 'PJA008', component: PJA009Component, canActivate: [AuthGuard] },
+        { path: 'PJA010', component: PJA010Component, canActivate: [AuthGuard] },
+        { path: 'PJA011', component: PJA011Component, canActivate: [AuthGuard] },
         { path: 'PJA012', component: PJA012Component, canActivate: [AuthGuard] },
       ]
     }

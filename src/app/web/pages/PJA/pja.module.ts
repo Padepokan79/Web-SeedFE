@@ -1,4 +1,4 @@
-import { NgModule } from '../../../../../node_modules/@angular/core';
+import { NgModule } from '@angular/core';
 import { PJA001Component } from './PJA001/PJA001.component';
 import { PAGES_MODULE_PROVIDERS } from '../../../app.providers';
 import { routing } from '../pages.routing';
@@ -13,6 +13,11 @@ import { SdmHiringUpdateComponent } from './sdm-hiring-update/sdm-hiring-update.
 import { SdmAssignmentComponent } from './sdm-assignment/sdm-assignment.component';
 import { SdmAssignmentUpdateComponent } from './sdm-assignment-update/sdm-assignment-update.component';
 import { SearchCriteria } from './PJA012/SearchCriteria';
+import { PJA010Component } from './PJA010/PJA010.component';
+import { PJA011Component } from './PJA011/PJA011.component';
+import { PJA007Component } from './PJA007/PJA007.component';
+import { PJA009Component } from './PJA009/PJA009.component';
+
 // import { SearchCriteria } from './PJA012/SearchCriteria';
 
 const PJA_COMPONENTS = [
@@ -23,11 +28,12 @@ const PJA_COMPONENTS = [
     PJA005Component,
     PJA006Component,
     PJA012Component,
-    SdmHiringListComponent,
-    SdmHiringUpdateComponent,
-    SdmAssignmentComponent,
-    SdmAssignmentUpdateComponent,
-    SearchCriteria
+    PJA007Component,
+    PJA009Component,
+    PJA010Component,
+    PJA011Component,
+    PJA012Component,
+    // SearchCriteria
 ];
 
 @NgModule({

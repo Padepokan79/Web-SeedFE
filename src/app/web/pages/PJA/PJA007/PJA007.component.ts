@@ -8,11 +8,11 @@ import { TYPE } from '../../../../core/constant/constant';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-sdm-hiring-list',
-  templateUrl: './sdm-hiring-list.component.html',
-  styleUrls: ['./sdm-hiring-list.component.css']
+  selector: 'app-PJA007',
+  templateUrl: './PJA007.component.html',
+  styleUrls: ['./PJA007.component.css']
 })
-export class SdmHiringListComponent implements OnInit {
+export class PJA007Component implements OnInit {
 
   public selectedValue: string;
 

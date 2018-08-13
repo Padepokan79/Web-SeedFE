@@ -12,7 +12,7 @@ const ALL_COMPONENTS = [
     ALL001Component,
     ALL002Component,
     ALL003Component,
-    // ALL004Component,
+    ALL004Component,
     ALL005Component
     // InputSkill
 ];
