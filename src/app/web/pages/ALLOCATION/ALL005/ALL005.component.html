@@ -37,16 +37,16 @@ Modified   : 3-08-2018 by Hendra Kurniawan -->
           <div class="col-md-12">
               <div class="col-md-4">
                   <mat-form-field class="sdw-full-size">
-                    <mat-select placeholder=">> Category" formControlName="skilltype_name" name="skilltype_name"  required>
-                      <!-- <mat-option *ngFor="let lov of lovCategory.data" [value]="lov.key">
+                    <mat-select placeholder=">> Category" formControlName="skilltype_id" name="skilltype_id"  required>
+                      <mat-option *ngFor="let lov of lovCategory.data" [value]="lov.key">
                         {{lov.value}}
-                      </mat-option> -->
+                      </mat-option>
                     </mat-select>
                   </mat-form-field>
                 </div> 
                 <div class="col-md-4">
                     <mat-form-field class="sdw-full-size">
-                      <mat-select placeholder=">> Skill" formControlName="skill_name" name="skill_name"  required>
+                      <mat-select placeholder=">> Skill" formControlName="skill_id" name="skill_id" required>
                         <mat-option *ngFor="let lov of lovSkill.data" [value]="lov.key">
                           {{lov.value}}
                         </mat-option>
@@ -63,8 +63,8 @@ Modified   : 3-08-2018 by Hendra Kurniawan -->
                 </div>
           </div>
               <div class="pos">
-                  <a [routerLink]="['/pages/ALL001']"><button class="btn btn-danger btn-sip" style="font-size: 18px" >Back</button></a>
-                  <button class="btn btn-primary" (click)="action.onEdit()" style="font-size: 18px" >Update</button>
+                  <a [routerLink]="['/pages/all/ALL003']"><button class="btn btn-danger btn-sip" style="font-size: 18px" >Back</button></a>
+                  <button class="btn btn-primary" (click)="onEdit()" style="font-size: 18px" >Update</button>
                   <!-- <io-form-action [action]="action" ></io-form-action> -->
               </div>
           </div>

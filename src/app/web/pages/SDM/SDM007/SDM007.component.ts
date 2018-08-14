@@ -4,9 +4,13 @@ import { ActionService } from '../../../../core/services/uninjectable/action.ser
 import { InputForm } from '../../../../core/models/input-form';
 import { DataTable } from '../../../../core/models/data-table';
 import { LOVService } from '../../../../core/services/uninjectable/lov.service';
-import { Observable } from '../../../../../../node_modules/rxjs';
 import { ActivatedRoute } from '../../../../../../node_modules/@angular/router';
 import { CoreFactory } from '../../../../core/factory/core.factory';
+
+export interface Option {
+  value: string;
+  viewValue: string;
+}
 
 @Component({
   selector: 'app-SDM007',
@@ -28,7 +32,6 @@ export class SDM007Component implements OnInit {
   public lovSdm: LOVService;
   public lovCondition: LOVService;
 
-  public psychology$: Observable<any>;
   private selectedId: string;
 
   constructor(private _factory: CoreFactory, private route: ActivatedRoute) {
@@ -42,11 +45,11 @@ export class SDM007Component implements OnInit {
     setInterval(() => {
       this.time = new Date();
     }, 1);
-    
     this.inputForm = this._factory.inputForm({
       formControls: {
         sdm_id: '',
         psyco_id: '',
+        sdmpsycological_id: '',
         sdmpsycological_desc: '',
         psycological_date: ''
       },
@@ -80,10 +83,10 @@ export class SDM007Component implements OnInit {
     });
 
     const readAllApi = this._factory.api ({
-      api: 'sdm/sdmPsycological',
+      api: 'sdm/sdmPsycological/readAll',
       pagingParams : {
         filter : {
-          field : 'psyco_id',
+          field : 'sdmpsycological_id',
           operator : COMPARISON_OPERATOR.EQ,
           value : this.selectedId
         }
@@ -91,9 +94,23 @@ export class SDM007Component implements OnInit {
     });
 
     this._factory.http().get(readAllApi).subscribe((res: any) => {
-      console.log(res);
+      // console.log(res);
       this.action.patchFormData(res.data.items[0]);
     });
+  }
+
+  public onEdit() {
+    const updateAPI = this._factory.api({
+      api : 'sdm/sdmPsycological/update',
+      // params : {
+      //   client_id : this.selectedId
+      // }
+    });
+
+    // tslint:disable-next-line:no-empty
+    this._factory.http().put(updateAPI + '?sdmpsycological_id=' + this.selectedId, this.action.getFormData()).subscribe((response: any) => {
+    });
+
   }
 
 }
