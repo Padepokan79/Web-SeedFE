@@ -1,128 +1,27 @@
-<!-- <mat-card>
-  <div class="io-form-header">  
-    <span><i class="fa fa-home"></i></span>
-    <a href=""><span> Dashboard</span></a><span> > </span> <a href=""><span>Project Assignment</span></a><span> > </span><span> <a href=""><span>SDM Assignment</span></a> > Update</span>
-    <span class="time">{{ time | date:'medium' }}</span>  
-  </div>
-</mat-card>
-  <mat-card class="sizePos" [formGroup]="action?.formControls()">
-      <mat-list class="classList">
-
-        <mat-list-item>
-          <mat-label class="labelClass">SDM Name</mat-label>
-          <mat-form-field class="classData">
-            <input matInput placeholder="" formControlName="sdm_name" name="sdm_name" readonly>
-          </mat-form-field>
-        </mat-list-item>
-
-        <mat-list-item>
-          <mat-label class="labelClass">Contact</mat-label>
-          <mat-form-field class="classData">
-            <input matInput placeholder="" formControlName="sdm_phone" name="sdm_phone" readonly>
-          </mat-form-field>
-        </mat-list-item>
-
-        <mat-list-item>
-          <mat-label class="labelClass">Start Date</mat-label>
-          <mat-form-field class="classData">
-            <input matInput [matDatepicker]="picker" placeholder="Choose a date">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
-        </mat-list-item>
-
-        <mat-list-item>
-          <mat-label class="labelClass">End Date</mat-label>
-          <mat-form-field class="classData">
-            <input matInput [matDatepicker]="picker1" placeholder="Choose a date">
-            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-            <mat-datepicker #picker1></mat-datepicker>
-          </mat-form-field>
-        </mat-list-item>
-        <mat-list-item>
-          <mat-label class="labelClass">Location</mat-label>
-            <form [formGroup]="stateForm">
-              <mat-form-field class="classData">
-                <input type="text" matInput placeholder="Location" formControlName="stateGroup" required [matAutocomplete]="autoGroup">
-                  <mat-autocomplete #autoGroup="matAutocomplete">
-                    <mat-optgroup *ngFor="let group of stateGroupOptions | async" [label]="group.letter">
-                      <mat-option *ngFor="let name of group.names" [value]="name">
-                        {{name}}
-                      </mat-option>
-                  </mat-optgroup>
-                </mat-autocomplete>
-              </mat-form-field>
-            </form>
-        </mat-list-item>
-        <mat-list-item>
-          <mat-label class="labelClass">Role Job</mat-label>
-            <form [formGroup]="roleForm">
-              <mat-form-field class="classData">
-                <input type="text" matInput placeholder="Role" formControlName="roleGroup" required [matAutocomplete]="autoGroup">
-                  <mat-autocomplete #autoGroup="matAutocomplete">
-                    <mat-optgroup *ngFor="let group of roleGroupOptions | async" [label]="group.letter">
-                      <mat-option *ngFor="let name of group.namess1" [value]="name">
-                        {{name}}
-                      </mat-option>
-                  </mat-optgroup>
-                </mat-autocomplete>
-              </mat-form-field>
-            </form>
-        </mat-list-item>
-        <mat-list-item>
-          <mat-label class="labelClass">Pic Handler</mat-label>
-          <mat-label>
-            <mat-form-field class="classData">
-              <input matInput placeholder="" formControlName="sdmassign_picclient" name="sdmassign_picclient" readonly>
-            </mat-form-field>
-          </mat-label>
-        </mat-list-item>
-        <mat-list-item>
-          <mat-label class="labelClass">Pic Contact</mat-label>
-          <mat-label>
-            <mat-form-field class="classData">
-              <input matInput placeholder="" formControlName="sdmassign_picclientphone" name="sdmassign_picclientphone" readonly>
-            </mat-form-field>
-          </mat-label>
-        </mat-list-item>
-        <mat-list-item>
-          <mat-label class="labelClass">Method</mat-label>
-          <mat-form-field class="classData">
-            <mat-select placeholder="Pilih Method">
-              <mat-option *ngFor="let food of foods" [value]="food.value">
-                {{food.viewValue}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </mat-list-item>
-      </mat-list>
-      <div class="button">
-        <button mat-raised-button class="cancelButton">Back</button>
-        <button mat-raised-button class="saveButton">save</button>
-      </div>  
-  </mat-card> -->
-
 <io-form *ngIf="action?.form()">
   <div class="io-form-header">
     <div class="nx-brc-header">
       <i class="glyphicon glyphicon-home"></i>
       <a [routerLink]="['/pages/dashboard']">Dashboard</a>>
       <a>Project Assignment</a>>
-      <a [routerLink]="['/pages/sdm-assignment']">SDM Assignment</a>>
-      <a [routerLink]="['/pages/sdm-assignment-update']">Update SDM Assignment</a>
+      <a [routerLink]="['/pages/PJA010']">SDM Assignment</a>>
+      <a [routerLink]="['/pages/PJA011']">Update SDM Assignment</a>
       <span class="nx-time">{{ time | date:'medium' }}</span>
     </div>
   </div>
 
   <form class="io-form-body" [formGroup]="action?.formControls()">
-    <span class="form-title">Form Update SDM Assignment</span>
-    <div class="form-body">
-      <div class="posisi">
+    <span class="nx-form-title">Form Update SDM Assignment</span>
+    <div class="nx-form-body">
+      <div class="nx-pos-pad">
         <table class="nx-class-table">
 
           <tr>
             <td class="nx-table-range">
               <mat-label>SDM Name</mat-label>
+            </td>
+            <td>
+              <mat-label>:</mat-label>
             </td>
             <td class="nx-table-range">
               <mat-form-field class="nx-class-data">
@@ -135,6 +34,9 @@
             <td class="nx-table-range">
               <mat-label>Contact</mat-label>
             </td>
+            <td>
+              <mat-label>:</mat-label>
+            </td>
             <td class="nx-table-range">
               <mat-form-field class="nx-class-data">
                 <input matInput placeholder="" formControlName="sdm_phone" name="sdm_phone" readonly>
@@ -145,6 +47,9 @@
           <!-- <tr>
             <td class="nx-table-range">
               <mat-label>Start Date</mat-label>
+            </td>
+            <td>
+              <mat-label>:</mat-label>
             </td>
             <td class="nx-table-range">
               <mat-form-field class="classData">
@@ -159,6 +64,9 @@
             <td class="nx-table-range">
               <mat-label>End Date</mat-label>
             </td>
+            <td>
+              <mat-label>:</mat-label>
+            </td>
             <td class="nx-table-range">
               <mat-form-field class="classData">
                 <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="sdmassign_enddate" name="sdmassign_enddate">
@@ -172,6 +80,9 @@
             <td class="nx-table-range">
               <mat-label>Location</mat-label>
             </td>
+            <td>
+              <mat-label>:</mat-label>
+            </td>
             <td class="nx-table-range">
               <mat-form-field class="nx-class-data">
                 <input matInput placeholder="" formControlName="sdmassign_loc" name="sdmassign_loc">
@@ -182,6 +93,9 @@
           <!-- <tr>
             <td class="nx-table-range">
               <mat-label>Role Job</mat-label>
+            </td>
+            <td>
+              <mat-label>:</mat-label>
             </td>
             <td class="nx-table-range">
               <mat-form-field class="nx-class-data">
@@ -194,6 +108,9 @@
             <td class="nx-table-range">
               <mat-label>PIC Handler</mat-label>
             </td>
+            <td>
+              <mat-label>:</mat-label>
+            </td>
             <td class="nx-table-range">
               <mat-form-field class="nx-class-data">
                 <input matInput placeholder="" formControlName="sdmassign_picclient" name="sdmassign_picclient">
@@ -204,6 +121,9 @@
           <tr>
             <td class="nx-table-range">
               <mat-label>PIC Contact</mat-label>
+            </td>
+            <td>
+              <mat-label>:</mat-label>
             </td>
             <td class="nx-table-range">
               <mat-form-field class="nx-class-data">
@@ -216,6 +136,9 @@
             <td class="nx-table-range">
               <mat-label>Method</mat-label>
             </td>
+            <td>
+              <mat-label>:</mat-label>
+            </td>
             <td class="nx-table-range">
               <mat-form-field class="nx-class-data">
                 <mat-select placeholder="" formControlName="method_name" name="method_name">
@@ -223,16 +146,16 @@
                     {{lov.value}}
                   </mat-option>
                 </mat-select>
-                <!-- <input matInput placeholder="" formControlName="method_name" name="method_name" readonly> -->
               </mat-form-field>
             </td>
           </tr>
 
           <tr>
             <td></td>
+            <td></td>
             <td class="nx-button-range">
               <button mat-raised-button class="action-btn nx-save-button" (click)="onUpdate()">Update</button>
-              <button mat-raised-button class="action-btn nx-cancel-button" [routerLink]="['/pages/sdm-assignment']">Cancel</button>  
+              <button mat-raised-button class="action-btn nx-cancel-button" [routerLink]="['/pages/pja/PJA010']">Cancel</button>  
             </td>
           </tr>
 
