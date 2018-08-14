@@ -8,6 +8,8 @@ import { DataTable } from '../../../../core/models/data-table';
 import { FormControl, FormGroup } from '../../../../../../node_modules/@angular/forms';
 import { ListOfValue } from '../../../../core/models/list-of-value';
 import { map, startWith } from '../../../../../../node_modules/rxjs/operators';
+import { DefaultNotificationService } from '../../../../core/services/default-notification.service';
+import { Router } from '../../../../../../node_modules/@angular/router';
 
 @Component({
   selector: 'app-SDM007',
@@ -32,7 +34,9 @@ export class SDM006Component implements OnInit {
   public sdmCtrl: FormControl;
   public filteredSdm: any;
 
-  constructor(private _factory: CoreFactory) {
+  constructor(
+    public _notif: DefaultNotificationService, private _factory: CoreFactory,
+    private router: Router) {
     this.sdmCtrl = new FormControl();
     this.filteredSdm = this.sdmCtrl.valueChanges
     .pipe(
@@ -104,5 +108,10 @@ export class SDM006Component implements OnInit {
   public filterSdm(val: string) {
     return val ? this.lovSdm.data.filter((s) => s.values.sdm_sdm_name.toLowerCase().indexOf(val.toLocaleLowerCase()) === 0) : [];
   }
+
+  public timeOut() {
+  // tslint:disable-next-line:align
+    setTimeout(() => this.router.navigate(['pages/sdm/SDM008']), 1000);
+ }
 
 }

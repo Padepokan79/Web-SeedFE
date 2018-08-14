@@ -1,9 +1,9 @@
 <io-form *ngIf="action?.form()">
   <div class="io-form-header">
     <span><i class="fa fa-home"></i></span>
-    <a href=""><span>Dashboard</span></a><b> > </b>
-    <a href=""><span>SDM</span></a><b> > </b>
-    <a href=""><span>Psychology</span></a><b> > </b>
+    <a [routerLink]="['/pages/dashboard']"><span>Dashboard</span></a><b> > </b>
+    <a><span>SDM</span></a><b> > </b>
+    <a [routerLink]="['/pages/sdm/SDM008']"><span>Psychology</span></a><b> > </b>
     <span>Input</span>
     <span class="time">{{time | date:'medium'}}</span>
   </div>
@@ -85,10 +85,10 @@
         <td></td>
         <td></td>
         <td align="right">
-          <button [routerLink]="['/pages/dashboard']" type="button" class="btn btn-primary btn-mm btn-icon">
+          <button [routerLink]="['/pages/sdm/SDM008']" type="button" class="btn btn-primary btn-mm btn-icon">
             Back
           </button>
-          <button type="button" class="btn btn-primary btn-mm btn-icon" (click)="action.onSave()">
+          <button type="button" class="btn btn-primary btn-mm btn-icon" (click)="action.onSave(timeOut())">
             Input
           </button>
         </td>
