@@ -22,11 +22,12 @@ UPDATE		:
 				</td>
 				<td> 
 			        <mat-form-field >
-			          <input matInput [(ngModel)]="selectedValue" [formControl]="skillCtrl" [matAutocomplete]="auto" formControlName="sdm_id" name="sdm_id" required>
+			         <input matInput formControlName="sdm_name" name="sdm_name" [formControl]="sdmCtrl" [matAutocomplete]="auto" required>
 			          <mat-autocomplete #auto="matAutocomplete">
-			          <mat-option *ngFor="let lov of filteredSkill" [value]="lov.value">
-			              {{lov.values.sdm_name}}
-			            </mat-option>
+			            <mat-option *ngFor="let dataSdm of filteredSdm | async" [value]="dataSdm.values.sdm_sdm_name" 
+			            (onSelectionChange)="setSdmValue(action?.formControls(), dataSdm);">
+			              {{ dataSdm.values.sdm_sdm_name }}
+			          	</mat-option>
 			          </mat-autocomplete>
 			          <mat-hint *ngIf="action.formErrors.sdm_id" [ngStyle]="{'color': 'red'}">
                       		{{action.formErrors.sdm_id}}
@@ -51,7 +52,7 @@ UPDATE		:
 				</td>
 				<td>
 					<mat-form-field>
-					    <input matInput formControlName="nip" name="nip" value="{{ selectedValue }}" readonly>
+					    <input matInput formControlName="sdm_n_i_k" name="sdm_n_i_k" required maxlength="10">
 					</mat-form-field>
 				</td>
 				<td id="td">
@@ -246,9 +247,9 @@ UPDATE		:
 				<td></td>
 				<td>
 				<button type="button" class="btn btn-primary btn-mm btn-icon" (click)="action.onSave()">
-						   <b>Perbarui</b>
+						   <b>Tambah</b>
 				</button>&emsp;
-				<button type="button" class="btn btn-danger btn-mm btn-icon" [routerLink]="['/pages/project']">
+				<button type="button" class="btn btn-danger btn-mm btn-icon">
 					   <b>Kembali</b>
 				</button>
 				</td>
