@@ -1,12 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { COMPARISON_OPERATOR } from '../../../../core/constant/constant';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CoreFactory } from '../../../../core/factory/core.factory';
 import { Observable } from 'rxjs/Observable';
 import { LOVService } from '../../../../core/services/uninjectable/lov.service';
 import { DataTable } from '../../../../core/models/data-table';
 import { InputForm } from '../../../../core/models/input-form';
 import { ActionService } from '../../../../core/services/uninjectable/action.service';
+import { DefaultNotificationService } from '../../../../core/services/default-notification.service';
 
 @Component({
   selector: 'app-PJA009',
@@ -28,8 +29,10 @@ export class PJA009Component implements OnInit {
   private selectedId: number;
 
   constructor(
+    public _notif: DefaultNotificationService,
     private _factory: CoreFactory,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     this.route.params.subscribe((param) => {
       this.selectedId = param.id;
@@ -42,6 +45,7 @@ export class PJA009Component implements OnInit {
       formControls: {
         sdmhiring_id: '',
         hirestat_name: '',
+        hirestat_id: '',
         sdm_id: '',
         sdm_name: '',
         client_id: '',
@@ -87,16 +91,20 @@ export class PJA009Component implements OnInit {
       this.action.patchFormData(res.data.items[0]);
 
     });
-
   }
 
   public onUpdate() {    const updateAPI = this._factory.api({
     api: 'project/mengelolaHiring/update',
     // params: {
     // client_id: this.selectedId }
-   });                   this._factory.http().put(updateAPI + '?sdmassign_id=' + this.selectedId, this.action.getFormData()).subscribe((response: any) => {
-     console.log('Update Data Berhasil');
+   });
+  this._factory.http().put(updateAPI + '?sdmhiring_id=' + this.selectedId, this.action.getFormData()).subscribe((response: any) => {
+    console.log('Update Data Berhasil');
+    this._notif.success({
+      message: 'Update Data Berhasil'
+    });
+    setTimeout(() => this.router.navigate(['pages/pja/PJA007']), 1000);
    });
  }
- 
+
 }

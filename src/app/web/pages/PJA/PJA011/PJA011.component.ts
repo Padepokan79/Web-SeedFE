@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CoreFactory } from '../../../../core/factory/core.factory';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { COMPARISON_OPERATOR } from '../../../../core/constant/constant';
 import { ActionService } from '../../../../core/services/uninjectable/action.service';
 import { LOVService } from '../../../../core/services/uninjectable/lov.service';
 import { InputForm } from '../../../../core/models/input-form';
+import { DefaultNotificationService } from '../../../../core/services/default-notification.service';
 
 @Component({
   selector: 'app-PJA011',
@@ -27,8 +28,10 @@ export class PJA011Component implements OnInit {
   private selectedId: number;
 
   constructor(
+    public _notif: DefaultNotificationService,
     private _factory: CoreFactory,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     this.route.params.subscribe((param) => {
       this.selectedId = param.id;
@@ -91,15 +94,18 @@ export class PJA011Component implements OnInit {
     setInterval(() => {
       this.time = new Date();
     }, 1);
-
   }
 
   public onUpdate() {    const updateAPI = this._factory.api({
     api: 'project/SdmAssignment/update',
     // params: {
     // client_id: this.selectedId }
-   });                   this._factory.http().put(updateAPI + '?sdmassign_id=' + this.selectedId, this.action.getFormData()).subscribe((response: any) => {
-     console.log('Update Data Berhasil');
+   });
+  this._factory.http().put(updateAPI + '?sdmassign_id=' + this.selectedId, this.action.getFormData()).subscribe((response: any) => {
+    this._notif.success({
+      message: 'Update Data Berhasil'
+    });
+    setTimeout(() => this.router.navigate(['pages/pja/PJA010']), 1000);
    });
  }
 

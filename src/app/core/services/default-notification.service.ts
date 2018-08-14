@@ -1,7 +1,7 @@
+import { NotificationsService } from 'angular2-notifications';
 import { INotification } from './../interfaces/main/i-notification';
 // import { IServerResponse } from './../interfaces/main/i-server-response';
 import { Injectable } from '@angular/core';
-import { NotificationsService } from 'angular2-notifications';
 
 @Injectable()
 export class DefaultNotificationService {
