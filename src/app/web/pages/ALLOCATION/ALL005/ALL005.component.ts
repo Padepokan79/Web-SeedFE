@@ -7,6 +7,7 @@ import { ActivatedRoute } from '../../../../../../node_modules/@angular/router';
 import { COMPARISON_OPERATOR, TYPE } from '../../../../core/constant/constant';
 import { DataTable } from '../../../../core/models/data-table';
 import { DefaultNotificationService } from '../../../../core/services/default-notification.service';
+import { SearchCriteria } from './SearchCriteria';
 
 @Component({
   selector: 'app-ALL005',
@@ -24,8 +25,9 @@ export class ALL005Component implements OnInit {
   public viewAsDateTemplate: any;
   @ViewChild('tableActionTemplate')
   public tableActionTemplate: any;
-  public lovCategory: LOVService;
+  public lovSkillType: LOVService;
   public lovSkill: LOVService;
+  public listSearchCriteria: SearchCriteria[] = [];
   private selectedId: string;
 
   constructor(
@@ -36,6 +38,15 @@ export class ALL005Component implements OnInit {
     this.route.params.subscribe((param) => {
       this.selectedId = param.id;
     });
+    this.listSearchCriteria.push(new SearchCriteria(_factory));
+  }
+  public addSearchCriteria() {
+    const searchCriteria = new SearchCriteria(this._factory);
+    this.listSearchCriteria.push(searchCriteria);
+  }
+
+  public removeSearchCriteria(inc) {
+    this.listSearchCriteria.splice(inc, 1);
   }
   public ngOnInit() {
     console.log('Selected ID : ' + this.selectedId);
@@ -96,15 +107,6 @@ export class ALL005Component implements OnInit {
     //     }
     //   ]
     // });
-    this.lovCategory = this._factory.lov({
-      api: 'lov/SkillType',
-      initializeData: true
-    });
-
-    this.lovSkill = this._factory.lov({
-      api: 'lov/Skill',
-      initializeData: true
-    });
   }
 
   public onEdit() {

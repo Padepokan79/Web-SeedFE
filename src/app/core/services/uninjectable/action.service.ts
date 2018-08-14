@@ -1,3 +1,5 @@
+import { ISimplifiedFilterOperand } from './../../interfaces/main/i-simplified-filter-operand';
+import { ISimplifiedFilterComponent } from './../../interfaces/main/i-simplified-filter-component';
 import { IReadAll } from './../../interfaces/param/i-read-all';
 import { IAfterActionMaterials } from './../../interfaces/action/i-after-action-materials';
 import { InputForm } from './../../models/input-form';
@@ -86,7 +88,7 @@ export class ActionService {
         this.IONA().setForm(inputForm);
     }
 
-    public setPaginationFilter(value: IFilterOperand | IFilterComponent, key?: string) {
+    public setPaginationFilter(value: IFilterOperand | IFilterComponent | ISimplifiedFilterComponent | ISimplifiedFilterOperand, key?: string) {
         this.table()
             .pagination()
             .setFilter(value, key);

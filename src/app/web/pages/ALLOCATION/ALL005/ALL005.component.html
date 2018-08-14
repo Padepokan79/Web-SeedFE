@@ -34,26 +34,26 @@ Modified   : 3-08-2018 by Hendra Kurniawan -->
                     </mat-form-field>
               </div>
           </div> 
-          <div class="col-md-12">
-              <div class="col-md-4">
+          <div *ngFor="let searchCriteria of listSearchCriteria; let inc = index" class="col-md-12" >
+              <div class="col-md-4 go-tight">
                   <mat-form-field class="sdw-full-size">
-                    <mat-select placeholder=">> Category" formControlName="skilltype_id" name="skilltype_id"  required>
-                      <mat-option *ngFor="let lov of lovCategory.data" [value]="lov.key">
+                    <mat-select placeholder="Choose Category" formControlName="skilltype_id" [(ngModel)]="searchCriteria.skilltype_id" name="skilltype_id" [disabled]="true" required>
+                      <mat-option *ngFor="let lov of searchCriteria.lovSkillType.data" [value]="lov.key" (onSelectionChange)="searchCriteria.selectedSkill($event, lov)">
                         {{lov.value}}
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
-                </div> 
-                <div class="col-md-4">
-                    <mat-form-field class="sdw-full-size">
-                      <mat-select placeholder=">> Skill" formControlName="skill_id" name="skill_id" required>
-                        <mat-option *ngFor="let lov of lovSkill.data" [value]="lov.key">
-                          {{lov.value}}
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4 go-tight">
+                  <mat-form-field class="sdw-full-size">
+                    <mat-select placeholder="Choose Skill" formControlName="skill_id" [(ngModel)]="searchCriteria.skill_id" name="skill_id" [disabled]="true" required>
+                      <mat-option *ngFor="let lov of searchCriteria.lovSkill?.data" [value]="lov.key">
+                        {{lov.value}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-2">
                     <mat-form-field class="sdw-full-size">
                         <input matInput placeholder="Value" formControlName="sdmskill_value" name="sdmskill_value" required>
                         <mat-hint *ngIf="action.formErrors.sdmskill_value" [ngStyle]="{'color': 'red'}">

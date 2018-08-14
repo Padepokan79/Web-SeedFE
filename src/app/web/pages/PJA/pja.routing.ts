@@ -26,7 +26,7 @@ export const PJA_ROUTES = [
         { path: 'PJA004', component: PJA004Component, canActivate: [AuthGuard] },
         { path: 'PJA006', component: PJA006Component, canActivate: [AuthGuard] },
         { path: 'PJA007', component: PJA007Component, canActivate: [AuthGuard] },
-        { path: 'PJA008', component: PJA009Component, canActivate: [AuthGuard] },
+        { path: 'PJA009', component: PJA009Component, canActivate: [AuthGuard] },
         { path: 'PJA010', component: PJA010Component, canActivate: [AuthGuard] },
         { path: 'PJA011', component: PJA011Component, canActivate: [AuthGuard] },
         { path: 'PJA012', component: PJA012Component, canActivate: [AuthGuard] },
