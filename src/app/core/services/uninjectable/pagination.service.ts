@@ -1,3 +1,5 @@
+import { ISimplifiedFilterOperand } from './../../interfaces/main/i-simplified-filter-operand';
+import { ISimplifiedFilterComponent } from './../../interfaces/main/i-simplified-filter-component';
 import { operators } from 'rxjs';
 import { DATE, TYPE, COMPARISON_OPERATOR, CONJUNCTION_OPERATOR } from './../../constant/constant';
 import { DatePipe } from '@angular/common';
@@ -14,12 +16,12 @@ export class PaginationService {
     public selectedSearchKey: ISearchKey;
     public searchValue: any;
 
-    public filters: Map<string, IFilterOperand | IFilterComponent>;
+    public filters: Map<string, IFilterOperand | IFilterComponent | ISimplifiedFilterComponent | ISimplifiedFilterOperand>;
     public pagingParams: IPagingParams;
 
     constructor(private _datePipe: DatePipe) {
         this.searchKeys = [];
-        this.filters = new Map<string, IFilterOperand | IFilterComponent>();
+        this.filters = new Map<string, IFilterOperand | IFilterComponent | ISimplifiedFilterComponent | ISimplifiedFilterOperand>();
         this.pagingParams = {} as IPagingParams;
     }
 
@@ -66,7 +68,7 @@ export class PaginationService {
         this.filters.set('serverSideSearchData', this.convertSearchAsFilter());
     }
 
-    public setFilter(value: IFilterOperand | IFilterComponent, filterKey?: string) {
+    public setFilter(value: IFilterOperand | IFilterComponent | ISimplifiedFilterComponent | ISimplifiedFilterOperand, filterKey?: string) {
         if (value) {
             if (filterKey) {
                 this.filters.set(filterKey, value);

@@ -84,7 +84,7 @@ export class PJA007Component implements OnInit {
   }
 
   public navigateEditMenu(id) {
-    this.router.navigate(['pages/pja/PJA008', { id }]);
+    this.router.navigate(['pages/pja/PJA009', { id }]);
   }
 
 }

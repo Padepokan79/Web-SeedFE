@@ -3,7 +3,7 @@ import { InputForm } from '../../../../core/models/input-form';
 import { ActionService } from '../../../../core/services/uninjectable/action.service';
 import { CoreFactory } from '../../../../core/factory/core.factory';
 import { COMPARISON_OPERATOR } from '../../../../core/constant/constant';
-import { ActivatedRoute, ParamMap } from '../../../../../../node_modules/@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '../../../../../../node_modules/@angular/router';
 import { DefaultNotificationService } from '../../../../core/services/default-notification.service';
 
 @Component({
@@ -25,7 +25,8 @@ private selectedId: string;
   constructor(
     public _notif: DefaultNotificationService,
     private _factory: CoreFactory,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     this.route.params.subscribe((param) => {
       this.selectedId = param.id;
@@ -33,7 +34,6 @@ private selectedId: string;
   }
 
   public ngOnInit() {
-    console.log('Selected ID : ' + this.selectedId);
     setInterval(() => {
       this.time = new Date();
     }, 1);
@@ -79,26 +79,22 @@ private selectedId: string;
     });
 
     this._factory.http().get(readAllApi).subscribe((res: any) => {
-      console.log(res);
       this.action.patchFormData(res.data.items[0]);
     });
   }
 
-  public onEdit() {
+  public onUpdate() {
     const updateAPI = this._factory.api({
       api : 'project/MengelolaClient/update',
       // params : {
       //   client_id : this.selectedId
       // }
     });
-
     this._factory.http().put(updateAPI + '?client_id=' + this.selectedId, this.action.getFormData()).subscribe((response: any) => {
-      console.log('Berhasil');
-      this._notif.success({
-        message: 'Data Updated'
+    this._notif.success({
+      message: 'Update Data Berhasil'
       });
-    }
-  );
-
+      setTimeout(() => this.router.navigate(['pages/pja/PJA004']), 1000);
+     });
   }
 }

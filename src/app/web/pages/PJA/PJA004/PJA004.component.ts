@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActionService } from '../../../../core/services/uninjectable/action.service';
+import { InputForm } from '../../../../core/models/input-form';
 import { DataTable } from '../../../../core/models/data-table';
 import { CoreFactory } from '../../../../core/factory/core.factory';
 import { TYPE } from '../../../../core/constant/constant';
@@ -22,6 +23,7 @@ export class PJA004Component implements OnInit {
   public tableActionTemplate: any;
 
   public action: ActionService;
+  public inputForm: InputForm;
   public dataTable: DataTable;
 
   constructor(private _factory: CoreFactory, private router: Router) { }
@@ -54,6 +56,7 @@ export class PJA004Component implements OnInit {
 
     this.action = this._factory.actions({
       api: 'project/MengelolaClient',
+      inputForm: this.inputForm,
       dataTable: this.dataTable
   });
   }

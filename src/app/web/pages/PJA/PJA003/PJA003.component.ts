@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActionService } from '../../../../core/services/uninjectable/action.service';
-import { DataTable } from '../../../../core/models/data-table'; 
+import { DataTable } from '../../../../core/models/data-table';
 import { CoreFactory } from '../../../../core/factory/core.factory';
 import { InputForm } from '../../../../core/models/input-form';
 import { LOVService } from '../../../../core/services/uninjectable/lov.service';
@@ -8,6 +8,7 @@ import { TYPE, COMPARISON_OPERATOR } from '../../../../core/constant/constant';
 import { FormControl, FormGroup } from '../../../../../../node_modules/@angular/forms';
 import { ListOfValue } from '../../../../core/models/list-of-value';
 import { Router } from '../../../../../../node_modules/@angular/router';
+import { startWith, map } from '../../../../../../node_modules/rxjs/operators';
 
 @Component({
   selector: 'app-PJA003',
@@ -20,8 +21,10 @@ export class PJA003Component implements OnInit {
   public viewAsDateTemplate: any;
   @ViewChild('tableActionTemplate')
   public tableActionTemplate: any;
-  @ViewChild('tableActionNotification')
-  public tableActionNotification: any;
+  @ViewChild('notif')
+  public notif: any;
+  public notifications: any;
+  public progress: boolean;
 
   public action: ActionService;
   public dataTable: DataTable;
@@ -33,17 +36,28 @@ export class PJA003Component implements OnInit {
   public time: Date = new Date();
 
   // sdm
-  // public filteredSdm: any;
-  // public sdmCtrl: any;
-  // public sdm: any;
-  // public kdSdm: any;
+  public filteredSdm: any;
+  public sdmCtrl: FormControl;
+
+  // project
+  public filteredProject: any;
+  public projectCtrl: FormControl;
 
   constructor(private _factory: CoreFactory, private router: Router) {
 
-    // this.sdmCtrl = new FormControl();
-    // this.filteredSdm = this.sdmCtrl.valueChanges
-    // .startWith(null)
-    // .map((name) => this.filterSdm(name));
+    this.sdmCtrl = new FormControl();
+    this.filteredSdm = this.sdmCtrl.valueChanges
+    .pipe(
+      startWith(''),
+      map((value) => this.filterSdm(value))
+    );
+
+    this.projectCtrl = new FormControl();
+    this.filteredProject = this.projectCtrl.valueChanges
+    .pipe(
+      startWith(''),
+      map((value) => this.filterProject(value))
+    );
   }
 
   public ngOnInit() {
@@ -58,8 +72,6 @@ export class PJA003Component implements OnInit {
         sdm_id: '',
         sdm_name: '',
         project_name: '',
-        kdsm1: '',
-        nmsdm: '',
         end_date_time: '',
       }
     });
@@ -96,9 +108,9 @@ export class PJA003Component implements OnInit {
         { prop: 'project_devtool', name: 'Dev Tools', width: 100, sortable: false },
         { prop: 'project_technicalinfo', name: 'Technical Info', width: 100, sortable: false },
         { prop: 'project_othertinfo', name: 'Other Info', width: 100, sortable: false },
-        { prop: 'project_id', name: 'Notifikasi', width: 100,
-          cellTemplate: this.tableActionNotification, sortable: false },
-        { prop: 'project_id', name: 'Action', width: 100,
+        { prop: 'notif', name: 'Notifikasi', width: 100,
+          cellTemplate: this.notif, sortable: false },
+        { prop: 'project_action', name: 'Action', width: 100,
           cellTemplate: this.tableActionTemplate, sortable: false }
       ]
     });
@@ -121,36 +133,46 @@ export class PJA003Component implements OnInit {
 
   }
 
-  // public filterSdm(val: string) {
-  //   // tslint:disable-next-line:max-line-length
-  //   return val && val.length > 2 ? this.lovSdm.data.filter((s) => s.values.sdm_name.toLowerCase().indexOf(val.toLocaleLowerCase()) === 0) : [];
-  //   }
-
-  // public setSdmValue(inputForm: FormGroup, dataSdm: ListOfValue) {
-  //   if (dataSdm) {
-  //     this.kdSdm = dataSdm.key;
-  //     this.lovSdm = this._factory.lov({
-  //       api: 'lov/Sdm',
-  //       initializeData: true
-  //     });
-  //     this.action.patchFormData({kdsdm1: dataSdm.key, nmsdm1: dataSdm.values.sdm_name});
-  //   }
-  // }
-
-  // public selectSdm(event, sdmSelect) {
-  //     this.lovSdm = this._factory.lov({
-  //       api: 'lov/Sdm',
-  //       pagingParams: {
-  //         filter : {
-  //           field: 'sdm_name',
-  //           operator: COMPARISON_OPERATOR.LIKE,
-  //           value: sdmSelect.key
-  //         }
-  //       },
-  //       initializeData: true
-  //   });
-  // }
    public navigateEditMenu(id) {
     this.router.navigate(['/pages/pja/PJA002', { id }]);
   }
+
+  public setSdmValue(inputForm: FormGroup, dataSdm: ListOfValue) {
+    if (dataSdm) {
+      this.lovSdm = this._factory.lov({
+        api: 'lov/sdm',
+        params: {
+          sdm_id: dataSdm.key
+        },
+        initializeData: true
+      });
+
+      this.action.patchFormData({sdm_id: dataSdm.key, sdm_name: dataSdm.values.sdm_sdm_name});
+      console.log(this.action.getFormControlValue('sdm_id'));
+    }
+  }
+
+  public filterSdm(val: string) {
+    return val ? this.lovSdm.data.filter((s) => s.values.sdm_sdm_name.toLowerCase().indexOf(val.toLocaleLowerCase()) === 0) : [];
+  }
+
+  public setProjectValue(inputForm: FormGroup, dataProject: ListOfValue) {
+    if (dataProject) {
+      this.lovProject = this._factory.lov({
+        api: 'lov/project',
+        params: {
+          project_id: dataProject.key
+        },
+        initializeData: true
+      });
+
+      this.action.patchFormData({project_id: dataProject.key, project_name: dataProject.values.project_project_name});
+      console.log(this.action.getFormControlValue('project_id'));
+    }
+  }
+
+  public filterProject(val: string) {
+    return val ? this.lovProject.data.filter((s) => s.values.project_project_name.toLowerCase().indexOf(val.toLocaleLowerCase()) === 0) : [];
+  }
+
 }

@@ -1,11 +1,10 @@
-import { TYPE, COMPARISON_OPERATOR, CONJUNCTION_OPERATOR } from 'app/core/constant/constant';
+import { TYPE, COMPARISON_OPERATOR, CONJUNCTION_OPERATOR } from './../../../../core/constant/constant';
+import { CoreFactory } from './../../../../core/factory/core.factory';
+import { DataTable } from './../../../../core/models/data-table';
+import { InputForm } from './../../../../core/models/input-form';
+import { ActionService } from './../../../../core/services/uninjectable/action.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActionService } from '../../../../core/services/uninjectable/action.service';
-import { InputForm } from '../../../../core/models/input-form';
-import { DataTable } from '../../../../core/models/data-table';
 import { LOVService } from '../../../../core/services/uninjectable/lov.service';
-import { CoreFactory } from '../../../../core/factory/core.factory';
-import { Router } from '../../../../../../node_modules/@angular/router';
 
 @Component({
   selector: 'app-SDM008',
@@ -26,7 +25,7 @@ export class SDM008Component implements OnInit {
   public lovSDM: LOVService;
   public lovPsychologicals: LOVService;
 
-  constructor(private _factory: CoreFactory, private router: Router) { }
+  constructor(private _factory: CoreFactory) { }
 
   public ngOnInit() {
     this.inputForm = this._factory.inputForm({
@@ -68,8 +67,7 @@ export class SDM008Component implements OnInit {
         limit : 5
       },
       searchCriteria : [
-        { viewValue: 'Name', viewKey: 'sdm_name', type: TYPE.STRING },
-        { viewValue: 'Condition', viewKey: 'psyco_name', type: TYPE.STRING },
+        { viewValue: 'Name', viewKey: 'sdm_id', type: TYPE.STRING },
       ],
       tableColumns : [
         { prop: 'num', name: 'No', width: 5, sortable: false },
@@ -97,11 +95,6 @@ export class SDM008Component implements OnInit {
         api: 'lov/Psychologicals',
         initializeData: true
     });
-  }
-
-  public navigateEditMenu(id) {
-    console.log(id);
-    this.router.navigate(['/pages/sdm/SDM007', { id }]);
   }
 
 }

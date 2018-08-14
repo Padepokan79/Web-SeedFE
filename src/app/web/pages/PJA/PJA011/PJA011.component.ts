@@ -52,13 +52,16 @@ export class PJA011Component implements OnInit {
         sdmassign_picclientphone: '',
         method_id: '',
         method_name: '',
-      },
-      validationMessages: {
-        sdmassign_picclientphone: {
-          required: 'Silahkan masukkan Task ID',
-          pattern: 'Hanya boleh angka'
-        }
       }
+      // validationMessages: {
+      //   task_id: {
+      //     required: 'Silahkan masukkan Task ID',
+      //     pattern: 'Hanya boleh angka'
+      //   },
+      //   user_id: {
+      //     required: 'Silahkan masukkan User ID'
+      //   }
+      // }
     });
 
     this.lovMethod = this._factory.lov({
