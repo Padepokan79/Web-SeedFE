@@ -40,7 +40,6 @@ export class PJA009Component implements OnInit {
   }
 
   public ngOnInit() {
-    console.log('Selected ID : ' + this.selectedId);
     this.inputForm = this._factory.inputForm({
       formControls: {
         sdmhiring_id: '',
@@ -87,7 +86,6 @@ export class PJA009Component implements OnInit {
     });
 
     this._factory.http().get(readAllApi).subscribe((res: any) => {
-      console.log(res);
       this.action.patchFormData(res.data.items[0]);
 
     });
@@ -97,9 +95,8 @@ export class PJA009Component implements OnInit {
     api: 'project/mengelolaHiring/update',
     // params: {
     // client_id: this.selectedId }
-   });
+  });
   this._factory.http().put(updateAPI + '?sdmhiring_id=' + this.selectedId, this.action.getFormData()).subscribe((response: any) => {
-    console.log('Update Data Berhasil');
     this._notif.success({
       message: 'Update Data Berhasil'
     });

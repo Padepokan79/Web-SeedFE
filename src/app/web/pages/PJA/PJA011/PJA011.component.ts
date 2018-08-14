@@ -39,7 +39,6 @@ export class PJA011Component implements OnInit {
   }
 
   public ngOnInit() {
-    console.log('Selected ID : ' + this.selectedId);
     this.inputForm = this._factory.inputForm({
       formControls: {
         sdmassign_id: '',
@@ -53,16 +52,13 @@ export class PJA011Component implements OnInit {
         sdmassign_picclientphone: '',
         method_id: '',
         method_name: '',
+      },
+      validationMessages: {
+        sdmassign_picclientphone: {
+          required: 'Silahkan masukkan Task ID',
+          pattern: 'Hanya boleh angka'
+        }
       }
-      // validationMessages: {
-      //   task_id: {
-      //     required: 'Silahkan masukkan Task ID',
-      //     pattern: 'Hanya boleh angka'
-      //   },
-      //   user_id: {
-      //     required: 'Silahkan masukkan User ID'
-      //   }
-      // }
     });
 
     this.lovMethod = this._factory.lov({
@@ -87,7 +83,6 @@ export class PJA011Component implements OnInit {
       });
 
     this._factory.http().get(readAllApi).subscribe((res: any) => {
-      console.log(res);
       this.action.patchFormData(res.data.items[0]);
     });
 
