@@ -5,6 +5,11 @@ import { CoreFactory } from '../../../../core/factory/core.factory';
 import { ActionService } from '../../../../core/services/uninjectable/action.service';
 import { InputForm } from '../../../../core/models/input-form';
 import { DataTable } from '../../../../core/models/data-table';
+import { FormControl, FormGroup } from '../../../../../../node_modules/@angular/forms';
+import { ListOfValue } from '../../../../core/models/list-of-value';
+import { map, startWith } from '../../../../../../node_modules/rxjs/operators';
+import { DefaultNotificationService } from '../../../../core/services/default-notification.service';
+import { Router } from '../../../../../../node_modules/@angular/router';
 
 @Component({
   selector: 'app-SDM007',
@@ -26,12 +31,19 @@ export class SDM006Component implements OnInit {
   public lovSdm: LOVService;
   public lovCondition: LOVService;
 
-  // public sdmCtrl: FormControl;
-  // public sdm: any;
-  // public filteredSdm: any;
-  // public sdmId: any;
+  public sdmCtrl: FormControl;
+  public filteredSdm: any;
 
-  constructor(private _factory: CoreFactory) {}
+  constructor(
+    public _notif: DefaultNotificationService, private _factory: CoreFactory,
+    private router: Router) {
+    this.sdmCtrl = new FormControl();
+    this.filteredSdm = this.sdmCtrl.valueChanges
+    .pipe(
+      startWith(''),
+      map((value) => this.filterSdm(value))
+    );
+  }
 
   public ngOnInit() {
 
@@ -42,6 +54,7 @@ export class SDM006Component implements OnInit {
     this.inputForm = this._factory.inputForm({
       formControls: {
         sdm_id: '',
+        sdm_name: '',
         psyco_id: '',
         sdmpsycological_desc: '',
         psycological_date: ''
@@ -76,5 +89,29 @@ export class SDM006Component implements OnInit {
     });
 
   }
+
+  public setSdmValue(inputForm: FormGroup, dataSdm: ListOfValue) {
+    if (dataSdm) {
+      this.lovSdm = this._factory.lov({
+        api: 'lov/sdm',
+        params: {
+          sdm_id: dataSdm.key
+        },
+        initializeData: true
+      });
+
+      this.action.patchFormData({sdm_id: dataSdm.key, sdm_name: dataSdm.values.sdm_sdm_name});
+      console.log(this.action.getFormControlValue('sdm_id'));
+    }
+  }
+
+  public filterSdm(val: string) {
+    return val ? this.lovSdm.data.filter((s) => s.values.sdm_sdm_name.toLowerCase().indexOf(val.toLocaleLowerCase()) === 0) : [];
+  }
+
+  public timeOut() {
+  // tslint:disable-next-line:align
+    setTimeout(() => this.router.navigate(['pages/sdm/SDM008']), 1000);
+ }
 
 }

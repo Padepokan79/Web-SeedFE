@@ -2,9 +2,9 @@
 <io-form *ngIf="action?.form()">
   <div class="io-form-header">
     <span><i class="fa fa-home"></i></span>
-    <a href=""><span>Dashboard</span></a><b> > </b>
-    <a href=""><span>SDM</span></a><b> > </b>
-    <a href=""><span>Psychology</span></a><b> > </b>
+    <a [routerLink]="['/pages/dashboard']"><span>Dashboard</span></a><b> > </b>
+    <a><span>SDM</span></a><b> > </b>
+    <a [routerLink]="['/pages/sdm/SDM008']"><span>Psychology</span></a><b> > </b>
     <span>Update</span>
     <span class="time">{{time | date:'medium'}}</span>
   </div>
@@ -19,14 +19,15 @@
           <mat-label><b>SDM Name</b></mat-label>
         </td>
         <td><b>:</b></td>
-        <td>
-          <mat-form-field class="sdw-full-size">
+        <td style="height: 60px;">
+          <mat-label><b>{{ sdmName }}</b></mat-label>
+          <!-- <mat-form-field class="sdw-full-size">
             <mat-select formControlName="sdm_id" name="sdm_id" required readonly>
               <mat-option *ngFor="let lov of lovSdm.data" [value]="lov.key">
                 {{lov.value}}
               </mat-option>
-            </mat-select>
-          </mat-form-field>
+            </mat-select> -->
+          <!-- </mat-form-field> -->
         </td>
       </tr>
       <tr>
@@ -76,10 +77,10 @@
         <td></td>
         <td></td>
         <td align="right">
-          <button [routerLink]="['/pages/dashboard']" type="button" class="btn btn-primary btn-mm btn-icon">
+          <button [routerLink]="['/pages/sdm/SDM008']" type="button" class="btn btn-primary btn-mm btn-icon">
             Back
           </button>
-          <button type="button" class="btn btn-primary btn-mm btn-icon" (click)="onEdit()">
+          <button type="button" class="btn btn-primary btn-mm btn-icon" (click)="onUpdate()">
             Update
           </button>
         </td>

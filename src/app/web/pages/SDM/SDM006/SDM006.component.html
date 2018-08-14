@@ -1,9 +1,9 @@
 <io-form *ngIf="action?.form()">
   <div class="io-form-header">
     <span><i class="fa fa-home"></i></span>
-    <a href=""><span>Dashboard</span></a><b> > </b>
-    <a href=""><span>SDM</span></a><b> > </b>
-    <a href=""><span>Psychology</span></a><b> > </b>
+    <a [routerLink]="['/pages/dashboard']"><span>Dashboard</span></a><b> > </b>
+    <a><span>SDM</span></a><b> > </b>
+    <a [routerLink]="['/pages/sdm/SDM008']"><span>Psychology</span></a><b> > </b>
     <span>Input</span>
     <span class="time">{{time | date:'medium'}}</span>
   </div>
@@ -20,21 +20,21 @@
         <td><b>:</b></td>
         <td>
           <mat-form-field class="sdw-full-size">
-
-            <!-- <input matInput [formControl]="sdmCtrl" [matAutocomplete]="autoSdm" formContolName="sdm_id"> -->
-
-            <mat-select formControlName="sdm_id" name="sdm_id" required>
+            <!-- <mat-select formControlName="sdm_id" name="sdm_id" required>
               <mat-option *ngFor="let lov of lovSdm.data" [value]="lov.key">
                 {{lov.value}}
               </mat-option>
             </mat-select>
-          </mat-form-field>
+          </mat-form-field> -->
 
-          <!-- <mat-autocomplete #autoSdm="matAutocomplete">
-            <mat-option *ngFor="let lov of lovCondition" [value]="lov.key">
-              {{ lov.value }}
+          <input matInput formControlName="sdm_name" name="sdm_name" [formControl]="sdmCtrl" [matAutocomplete]="auto" required>
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let dataSdm of filteredSdm | async" [value]="dataSdm.values.sdm_sdm_name" 
+            (onSelectionChange)="setSdmValue(action?.formControls(), dataSdm);">
+              {{ dataSdm.values.sdm_sdm_name }}
             </mat-option> 
-          </mat-autocomplete> -->
+          </mat-autocomplete>
+        </mat-form-field>
 
         </td>
       </tr>
@@ -85,10 +85,10 @@
         <td></td>
         <td></td>
         <td align="right">
-          <button [routerLink]="['/pages/dashboard']" type="button" class="btn btn-primary btn-mm btn-icon">
+          <button [routerLink]="['/pages/sdm/SDM008']" type="button" class="btn btn-primary btn-mm btn-icon">
             Back
           </button>
-          <button type="button" class="btn btn-primary btn-mm btn-icon" (click)="action.onSave()">
+          <button type="button" class="btn btn-primary btn-mm btn-icon" (click)="action.onSave(timeOut())">
             Input
           </button>
         </td>
