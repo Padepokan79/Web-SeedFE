@@ -20,14 +20,17 @@ UPDATE		:
 				<td id="td">
 				    <mat-label>SDM Name </mat-label>
 				</td>
-				<td>
+				<td> 
 			        <mat-form-field >
-			          <input matInput [formControl]="skillCtrl" [matAutocomplete]="auto" formControlName="sdm_id" name="sdm_id" required>
+			          <input matInput [(ngModel)]="selectedValue" [formControl]="skillCtrl" [matAutocomplete]="auto" formControlName="sdm_id" name="sdm_id" required>
 			          <mat-autocomplete #auto="matAutocomplete">
-			          	<mat-option *ngFor="let dataSkill of setSkillValue" [value]="dataSkill.value">
-			          		 {{ dataSkill.key }}
-			          	</mat-option>
+			          <mat-option *ngFor="let lov of filteredSkill" [value]="lov.value">
+			              {{lov.values.sdm_name}}
+			            </mat-option>
 			          </mat-autocomplete>
+			          <mat-hint *ngIf="action.formErrors.sdm_id" [ngStyle]="{'color': 'red'}">
+                      		{{action.formErrors.sdm_id}}
+                      </mat-hint>
 			        </mat-form-field>
 				</td> 
 				<td id="td">
@@ -48,7 +51,7 @@ UPDATE		:
 				</td>
 				<td>
 					<mat-form-field>
-					    <input matInput formControlName="nip" name="nip" readonly>
+					    <input matInput formControlName="nip" name="nip" value="{{ selectedValue }}" readonly>
 					</mat-form-field>
 				</td>
 				<td id="td">
@@ -119,6 +122,9 @@ UPDATE		:
 				<td>
 					<mat-form-field>
 					    <input matInput formControlName="project_projectsite" name="project_projectsite">
+					    <mat-hint *ngIf="action.formErrors.project_projectsite" [ngStyle]="{'color': 'red'}">
+                      		{{action.formErrors.project_projectsite}}
+                    	</mat-hint>
 					</mat-form-field>
 				</td>
 				<td id="td">
@@ -127,6 +133,9 @@ UPDATE		:
 				<td>
 			        <mat-form-field>
 			          	<input matInput formControlName="project_framework" name="project_framework">
+			          	<mat-hint *ngIf="action.formErrors.project_framework" [ngStyle]="{'color': 'red'}">
+                      		{{action.formErrors.project_framework}}
+                    	</mat-hint>
 			    	</mat-form-field>
 				</td>
 			</tr>
@@ -139,6 +148,9 @@ UPDATE		:
 			          <input matInput [matDatepicker]="pickerStartDate" (click)="pickerStartDate.open()" formControlName="project_startdate" name="project_startdate">
 			          <mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
 			          <mat-datepicker #pickerStartDate></mat-datepicker>
+			          <mat-hint *ngIf="action.formErrors.project_startdate" [ngStyle]="{'color': 'red'}">
+                      		{{action.formErrors.project_startdate}}
+                      </mat-hint>
 			        </mat-form-field>
 				</td>
 				<td id="td">
@@ -147,6 +159,9 @@ UPDATE		:
 				<td>
 			        <mat-form-field>
 			          	<input matInput formControlName="project_database" name="project_database">
+			          	<mat-hint *ngIf="action.formErrors.project_database" [ngStyle]="{'color': 'red'}">
+                      		{{action.formErrors.project_database}}
+                        </mat-hint>
 			    	</mat-form-field>
 				</td>
 			</tr>
@@ -159,6 +174,9 @@ UPDATE		:
 			          <input matInput [matDatepicker]="pickerEndDate" (click)="pickerEndDate.open()" formControlName="project_enddate" name="project_enddate">
 			          <mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
 			          <mat-datepicker #pickerEndDate></mat-datepicker>
+			          <mat-hint *ngIf="action.formErrors.project_enddate" [ngStyle]="{'color': 'red'}">
+                      		{{action.formErrors.project_enddate}}
+                      </mat-hint>
 			        </mat-form-field>
 				</td>
 				<td id="td">
@@ -167,6 +185,9 @@ UPDATE		:
 				<td>
 			        <mat-form-field>
 			          	<input matInput formControlName="project_devtool" name="project_devtool">
+			          	<mat-hint *ngIf="action.formErrors.project_devtool" [ngStyle]="{'color': 'red'}">
+                      		{{action.formErrors.project_devtool}}
+                        </mat-hint>
 			    	</mat-form-field>
 				</td>
 			</tr>
@@ -177,6 +198,9 @@ UPDATE		:
 				<td>
 					<mat-form-field>
 					    <textarea matInput formControlName="project_desc" name="project_desc"></textarea>
+					    <mat-hint *ngIf="action.formErrors.project_desc" [ngStyle]="{'color': 'red'}">
+                      		{{action.formErrors.project_desc}}
+                        </mat-hint>
 					</mat-form-field>
 				</td> 
 				<td id="td">
@@ -185,6 +209,9 @@ UPDATE		:
 				<td>
 			        <mat-form-field>
 					    <textarea matInput formControlName="project_otherinfo" name="project_otherinfo"></textarea>
+					    <mat-hint *ngIf="action.formErrors.project_otherinfo" [ngStyle]="{'color': 'red'}">
+                      		{{action.formErrors.project_otherinfo}}
+                        </mat-hint>
 					</mat-form-field>
 				</td>
 			</tr>
@@ -195,6 +222,9 @@ UPDATE		:
 				<td>
 			        <mat-form-field>
 			          	<input matInput formControlName="project_appserver" name="project_appserver">
+			          	<mat-hint *ngIf="action.formErrors.project_appserver" [ngStyle]="{'color': 'red'}">
+                      		{{action.formErrors.project_appserver}}
+                        </mat-hint>
 			    	</mat-form-field>
 				</td>
 				<td id="td">
@@ -203,6 +233,9 @@ UPDATE		:
 				<td>
 			        <mat-form-field>
 					    <textarea matInput formControlName="project_technicalinfo" name="project_technicalinfo"></textarea>
+					    <mat-hint *ngIf="action.formErrors.project_technicalinfo" [ngStyle]="{'color': 'red'}">
+                      		{{action.formErrors.project_technicalinfo}}
+                        </mat-hint>
 					</mat-form-field>
 				</td>
 			</tr>
@@ -212,13 +245,12 @@ UPDATE		:
 				<td></td>
 				<td></td>
 				<td>
-
-					<button type="button" class="btn btn-primary btn-mm btn-icon" (click)="action.onSave()">
-						   <b>Simpan</b>
-					</button>&emsp;
-					<button type="button" class="btn btn-danger btn-mm btn-icon">
-						   <b>Kembali</b>
-					</button>
+				<button type="button" class="btn btn-primary btn-mm btn-icon" (click)="action.onSave()">
+						   <b>Perbarui</b>
+				</button>&emsp;
+				<button type="button" class="btn btn-danger btn-mm btn-icon" [routerLink]="['/pages/project']">
+					   <b>Kembali</b>
+				</button>
 				</td>
 			</tr>
 			<tr style="height: 10px;"></tr>
