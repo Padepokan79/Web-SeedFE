@@ -44,7 +44,7 @@
             </td>
           </tr>
 
-          <!-- <tr>
+          <tr>
             <td class="nx-table-range">
               <mat-label>Start Date</mat-label>
             </td>
@@ -53,9 +53,9 @@
             </td>
             <td class="nx-table-range">
               <mat-form-field class="classData">
-                <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="sdmassign_startdate" name="sdmassign_startdate">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
+                <input matInput [matDatepicker]="pickStartDate" placeholder="Choose a date" formControlName="sdmassign_startdate" name="sdmassign_startdate">
+                <mat-datepicker-toggle matSuffix [for]="pickStartDate"></mat-datepicker-toggle>
+                <mat-datepicker #pickStartDate></mat-datepicker>
               </mat-form-field>
             </td>
           </tr>
@@ -69,12 +69,12 @@
             </td>
             <td class="nx-table-range">
               <mat-form-field class="classData">
-                <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="sdmassign_enddate" name="sdmassign_enddate">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
+                <input matInput [matDatepicker]="pickEndDate" placeholder="Choose a date" formControlName="sdmassign_enddate" name="sdmassign_startdate">
+                <mat-datepicker-toggle matSuffix [for]="pickEndDate"></mat-datepicker-toggle>
+                <mat-datepicker #pickEndDate></mat-datepicker>
               </mat-form-field>
             </td>
-          </tr> -->
+          </tr>
 
           <tr>
             <td class="nx-table-range">
@@ -141,7 +141,7 @@
             </td>
             <td class="nx-table-range">
               <mat-form-field class="nx-class-data">
-                <mat-select placeholder="" formControlName="method_name" name="method_name">
+                <mat-select placeholder="" formControlName="method_id" name="method_id">
                   <mat-option *ngFor="let lov of lovMethod.data" [value]="lov.key">
                     {{lov.value}}
                   </mat-option>

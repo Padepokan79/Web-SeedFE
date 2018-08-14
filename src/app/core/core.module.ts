@@ -46,7 +46,6 @@ import { BaBackTop } from './components/admin/baBackTop/baBackTop.component';
 import { BaMsgCenter } from './components/admin/baMsgCenter/baMsgCenter.component';
 import { BaScrollPosition } from './directives/admin/baScrollPosition.directive';
 import { BaSlimScroll } from './directives/admin/baSlimScroll.directive';
-import { BaProfilePicturePipe } from './pipes/admin/baProfilePicture.pipe';
 import { EmailValidator } from './validators/email.validator';
 import { EqualPasswordsValidator } from './validators/equal-passwords.validator';
 import { AlertService } from './services/alert.service';
@@ -106,6 +105,7 @@ import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { FileUploadModule } from 'ng2-file-upload/file-upload/file-upload.module';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { CoreConfigModule } from 'app/core/core.config.module';
+import { IOProfilePicturePipe } from './pipes/admin/io-profile-picture.pipe';
 
 const CORE_COMPONENTS = [
     ActionComponent,
@@ -140,7 +140,7 @@ const CORE_DIRECTIVES = [
 ];
 
 const CORE_PIPES = [
-    BaProfilePicturePipe
+    IOProfilePicturePipe
 ];
 
 const CORE_VALIDATORS = [
