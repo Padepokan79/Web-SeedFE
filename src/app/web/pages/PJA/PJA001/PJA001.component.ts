@@ -1,7 +1,7 @@
 // 
 // AUTHOR  	: Malik Chaudhary
 // CREATED 	: Wednesday, ‎August ‎1, ‎2018, ‏‎9:48:58 AM
-// UPDATE	: 
+// UPDATE	:  
 // 
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { InputForm } from './../../../../core/models/input-form';
@@ -15,7 +15,6 @@ import {FormControl, FormGroup} from '@angular/forms';
 import { ListOfValue } from '../../../../core/models/list-of-value';
 import { MatOptionSelectionChange } from '@angular/material';
 //import { DataTable } from './../../../../core/models/data-table';
-
 @Component({
   selector: 'app-PJA001',
   templateUrl: './PJA001.component.html',
@@ -34,26 +33,28 @@ export class PJA001Component implements OnInit {
 
   public inputForm: InputForm;
   public action: ActionService;
-  public lovSkill: LOVService;
+  public lovSdm: LOVService;
 
   public skill: any;
-  public skillCtrl: FormControl;
-  public filteredSkill: any;
+  public sdmCtrl: FormControl;
+  public filteredSdm: any;
 	public listSkill: any[] = [];
-	public kdSkill: any;
+	public kdSdm: any;
   //public dataTable: DataTable;
 
   constructor(private _factory: CoreFactory) {
-			this.skillCtrl = new FormControl();
-              this.filteredSkill = this.skillCtrl.valueChanges
-              .startWith(null)
-              .map((name) => this.filterSkill(name));
+			this.sdmCtrl = new FormControl();
+              this.filteredSdm = this.sdmCtrl.valueChanges
+              .startWith('')
+              .map((value) => this.filterSdm(value));
    }
 
   public ngOnInit() {
   	 this.inputForm = this._factory.inputForm({
       formControls: {
   			sdm_id: '',
+        sdm_n_i_k: '',
+        sdm_name: '',
   			project_name: '',
   			project_desc: '',
   			project_role: '',
@@ -75,6 +76,9 @@ export class PJA001Component implements OnInit {
   			sdm_id: {
   				required: 'Silahkan masukan Nama SDM'
   			},
+        sdm_n_i_k: {
+          required: 'Silahkan masukan NIK SDM'
+        },
   			project_name: {
   				required: 'Silahkan masukan Nama Project'
   			},
@@ -132,33 +136,33 @@ export class PJA001Component implements OnInit {
         //dataTable: this.dataTable
     });
 
-    this.lovSkill = this._factory.lov({
-        api: 'lov/Skill',
+    this.lovSdm = this._factory.lov({
+        api: 'lov/Sdm',
         initializeData: true 
     }); 
    
   }
-   public filterSkill(val: string) {
-    return val && val.length > 0 ? this.lovSkill.data.filter((s) => s.values.sdm_name.toLowerCase().indexOf(val.toLocaleLowerCase()) === 0) : [];
+   public filterSdm(val: string) {
+    return val && val.length > 1 ? this.lovSdm.data.filter((s) => s.values.sdm_sdm_name.toLowerCase().indexOf(val.toLocaleLowerCase()) === 0) : [];
         
   }
  
-  // public setSkillValue(inputForm: FormGroup, dataSkill: ListOfValue) {
-  //       if (dataSkill) {
-  //           this.kdSkill = dataSkill.key;
-  //           this.lovSkill = this._factory.lov({
-  //               api: 'lov/Skill',
-  //               params: {
-  //                   skill_id: dataSkill.key
-  //               },
-  //               initializeData: true
-  //           });
+  public setSdmValue(inputForm: FormGroup, dataSdm: ListOfValue) {
+        if (dataSdm) {
+            this.kdSdm = dataSdm.key;
+            this.lovSdm = this._factory.lov({
+                api: 'lov/Sdm',
+                params: {
+                    sdm_id: dataSdm.key
+                },
+                initializeData: true
+            });
 
-  //           // tslint:disable-next-line:max-line-length
-  //           this.action.patchFormData({skill_id: dataSkill.key, skill_name: dataSkill.values.skill_name});
+            // tslint:disable-next-line:max-line-length
+            this.action.patchFormData({sdm_id: dataSdm.key, sdm_name: dataSdm.values.sdm_sdm_name});
 
-  //       }
-  //   }
+        }
+    }
   // public aksi = this._factory.lov({api: 'lov/Skill', initializeData:true});
   // private _filter(value: string): string[] {
   //   const filterValue = value.toLowerCase();
