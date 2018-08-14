@@ -21,9 +21,9 @@ UPDATE 		:
 				</td>
 				<td>
 			        <mat-form-field >
-			          <input matInput name="sdm_id" readonly>
+			          <input matInput formControlName="sdm_id" name="sdm_id" readonly>
 			        </mat-form-field>
-				</td>
+				</td> 
 				<td id="td">
 				    <mat-label>Role Project </mat-label>
 				</td>
@@ -39,7 +39,7 @@ UPDATE 		:
 				</td>
 				<td>
 					<mat-form-field>
-					    <input matInput name="sdm_nip" readonly>
+					    <input matInput readonly>
 					</mat-form-field>
 				</td>
 				<td id="td">
@@ -188,10 +188,10 @@ UPDATE 		:
 				<td></td>
 				<td>
 
-					<button type="button" class="btn btn-primary btn-mm btn-icon" (click)="action.onSave()">
+					<button type="button" class="btn btn-primary btn-mm btn-icon" (click)="onEdit()">
 						   <b>Perbarui</b>
 					</button>&emsp;
-					<button type="button" class="btn btn-danger btn-mm btn-icon">
+					<button type="button" class="btn btn-danger btn-mm btn-icon" [routerLink]="['/pages/project']">
 						   <b>Kembali</b>
 					</button>
 				</td>

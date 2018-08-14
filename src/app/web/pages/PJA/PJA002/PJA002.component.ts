@@ -17,6 +17,7 @@ import { ActivatedRoute, ParamMap } from '../../../../../../node_modules/@angula
 import { switchMap } from '../../../../../../node_modules/rxjs/operators/switchMap';
 import { filter } from '../../../../../../node_modules/rxjs/operator/filter';
 
+
 @Component({
   selector: 'app-PJA002',
   templateUrl: './PJA002.component.html',
@@ -30,11 +31,11 @@ public time: Date = new Date();
   public inputForm: InputForm;
   public action: ActionService;
   public lovSdm: LOVService;
-private selectedId: string;
+private selectedId: number;
 
   constructor(private _factory: CoreFactory,private route: ActivatedRoute) { 
     this.route.params.subscribe((param) => {
-      this.selectedId = param.id;
+      this.selectedId = param.id-1;
     });
   }
 
@@ -43,25 +44,26 @@ private selectedId: string;
     setInterval(() => {
       this.time = new Date();
     }, 1);
-  	  this.inputForm = this._factory.inputForm({
+  	this.inputForm = this._factory.inputForm({
       formControls: {
-  			sdm_id: '',
-  			project_name: '',
-  			project_desc: '',
-  			project_role: '',
-  			project_startdate: '',
-  			project_enddate: '',
-  			project_projectsite: '',
-  			project_customer: '',
-  			project_apptype: '',
-  			project_serveros: '',
-  			project_devlanguage: '',
-  			project_framework: '', 
-  			project_database: '',
-  			project_appserver: '',
-  			project_devtool: '',
-  			project_technicalinfo: '',
-  			project_otherinfo: ''
+        project_id: '',
+        sdm_id: '',
+        project_name: '',
+        project_desc: '',
+        project_role: '',
+        project_startdate: '',
+        project_enddate: '',
+        project_projectsite: '',
+        project_customer: '',
+        project_apptype: '',
+        project_serveros: '',
+        project_devlanguage: '',
+        project_framework: '', 
+        project_database: '',
+        project_appserver: '',
+        project_devtool: '',
+        project_technicalinfo: '',
+        project_otherinfo: ''
   		},
   		validationMessages: {
   			
@@ -76,20 +78,26 @@ private selectedId: string;
           value : this.selectedId
         }
       }
+      
     });
     this._factory.http().get(readAllApi).subscribe((res: any) => {
       console.log(res);
-      this.action.patchFormData(res.data.items[0]);
+      this.action.patchFormData(res.data.items[this.selectedId]);
     });
+
   	this.action = this._factory.actions({
         api: 'project/MengelolaProject',
         inputForm: this.inputForm
-        //dataTable: this.dataTable
-    });
-    this.lovSdm = this._factory.lov({
-        api: 'lov/Sdm',
-        initializeData: true
     });
   }
 
+  public onEdit() { 
+    const updateAPI = this._factory.api({
+     api: 'project/MengelolaProject/update',
+
+  });
+  this._factory.http().put(updateAPI + '?project_id=' + this.selectedId, this.action.getFormData()).subscribe((response: any) => {
+  console.log('Berhasil');
+   });  
+  }
 }
