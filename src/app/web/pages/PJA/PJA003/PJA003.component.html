@@ -21,11 +21,11 @@
         <td>
           <div class="name">
               <mat-form-field>
-                  <input matInput placeholder=""  [matAutocomplete]="sdmName" formControlName="sdm_id" (onkeyup)="selectSdm($event,lovSdm)">
-                    <mat-autocomplete #sdmName="matAutocomplete" >
-                      <mat-option *ngFor="let lov of lovSdm?.data" [value]="lov.value">
-                        {{lov.value}}
-                      </mat-option>
+                <input matInput placeholder=""  [matAutocomplete]="sdmName" formControlName="sdm_name" name="sdm_name" [formControl]="sdmCtrl">
+                  <mat-autocomplete #sdmName="matAutocomplete" >
+                    <mat-option *ngFor="let dataSdm of filteredSdm | async" [value]="dataSdm.values.sdm_sdm_name" (onSelectionChange)="setSdmValue(action?.formControls(), dataSdm);">
+                      {{dataSdm.values.sdm_sdm_name}}
+                    </mat-option>
                     </mat-autocomplete>
               </mat-form-field>
           </div>
@@ -41,11 +41,11 @@
         <td>
           <div class="name-project">
               <mat-form-field appearance="outline">
-                  <input matInput placeholder="" formControlName="project_id" [matAutocomplete]="projectName" name="project_id" (keydown)="action.onSearch($event)">
-                    <mat-autocomplete #projectName="matAutocomplete">
-                      <mat-option *ngFor="let lov of lovProject.data" [value]="lov.value">
-                     {{lov.value}}
-                    </mat-option>
+                <input matInput placeholder="" formControlName="project_name" [matAutocomplete]="projectName" name="project_name" [formControl]="projectCtrl" (keydown)="action.onSearch($event)">
+                  <mat-autocomplete #projectName="matAutocomplete">
+                    <mat-option *ngFor="let dataProject of filteredProject | async" [value]="dataProject.values.project_project_name" (onSelectionChange)="setProjectValue(action?.formControls(), dataProject);">
+                    {{dataProject.values.project_project_name}}
+                    </mat-option>>
                   </mat-autocomplete>
               </mat-form-field>
           </div>
@@ -88,9 +88,13 @@
     </button>
   </ng-template>
 
-  <ng-template #tableActionNotification let-row="row" let-value="value" ngx-datatable-cell-template>
-    <i class="glyphicon glyphicon-alert"></i>
-  </ng-template>
+  <ng-template #notif let-row="row" let-value="value" ngx-datatable-cell-template>
+      <i matTooltip="Non-Aktif" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:black; font-size: 30px" *ngIf="row.sdm_notification == 'black'"></i>
+      <i matTooltip="Sisa 1 bulan" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:red; font-size: 30px" *ngIf="row.sdm_notification == 'red'"></i>
+      <i matTooltip="Sisa 2 bulan" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:#f5f515; font-size: 30px" *ngIf="row.sdm_notification == 'yellow'"></i>
+      <i matTooltip="Sisa 4 bulan" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:#00da00; font-size: 30px" *ngIf="row.sdm_notification == 'green'"></i>
+      <i matTooltip="Sisa lebih dari 4 bulan" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:#b3b3b3; font-size: 30px" *ngIf="row.sdm_notification == 'grey'"></i>
+   </ng-template>
 
   <ng-template #viewAsDateTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
       {{value | date:'yyyy-MM-dd'}}
