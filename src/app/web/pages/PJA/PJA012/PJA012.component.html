@@ -5,7 +5,7 @@
   <ul class="breadcrumb">
     <li><a href="#">Dashboard</a></li>
     <li><a href="#">Project Assignment</a></li>
-    <li><a href="#">SDM Assignment</a></li>
+    <li><a href="#" [routerLink]="['/pages/PJA011']">SDM Assignment</a></li>
     <li>Multifiltering SDM</li>
   </ul>
 </div>
@@ -13,6 +13,19 @@
   <form class="io-form-body">
     <div id="filtering" class="row row-center">  
       <ul class="list-filter">
+        <li class="col-md-12 position-li" style="margin-bottom: 1em">
+          <div class="col-md-6 go tight">
+            <mat-form-field class="sdw-full-size">
+              <input matInput [formControl]="sdmCtrl" placeholder="Input SDM Name" name="sdm_id" [matAutocomplete]="auto" class="blacky">
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let dataSdm of filteredSdm | async" [value]="dataSdm.values.sdm_sdm_name" (onSelectionChange)="setSdmValue(action?.formControls(),dataSdm)">
+                  {{ dataSdm.values.sdm_sdm_name }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+        </li>
+        <br><br>
         <li *ngFor="let searchCriteria of listSearchCriteria; let inc = index" class="col-md-12 position-li">
           <div class="col-md-2 go-tight">
             <mat-form-field class="sdw-full-size">
@@ -34,11 +47,11 @@
           </div>
           <div class="col-md-2 go-tight">
             <mat-form-field class="sdw-full-size">
-              <input matInput type="number" min="1" max="10" placeholder="Value" [(ngModel)]="searchCriteria.value" name="sdmskill_value" class="blacky" required>
+              <input matInput type="number" min="1" max="10" placeholder="Value" [(ngModel)]="searchCriteria.value" name="sdmskill_value" class="blacky">
             </mat-form-field>
           </div>
           <div class="col-sm-2 text-left">
-            <button class="btn btn-flat btn-sm" *ngIf="inc>=0" (click)="addSearchCriteria()"><i class="fa fa-plus"></i></button>&nbsp;&nbsp;
+            <button class="btn btn-flat btn-sm" *ngIf="inc==0" (click)="addSearchCriteria()"><i class="fa fa-plus"></i></button>
             <button class="btn btn-flat btn-sm" *ngIf="inc>0" (click)="removeSearchCriteria(inc,1)"><i class="fa fa-minus"></i></button>
           </div>
         </li>
@@ -46,19 +59,19 @@
     </div>
     <br>
     <div class="action-filter col-md-12">
-      <button class="btn btn-filter btn-mm" (submit)="selectToAssign()">Filter</button>
+      <button class="btn btn-filter btn-mm" (click)="selectToAssign()">Filter</button>
     </div>
   </form>
 </div>
-<div class="contents">
-  <form class="io-form-body" [formGroup]="action?.formControls()" *ngIf="action?.form()">
+<div class="contents" *ngIf="isButtonClicked">
+  <!-- <form class="io-form-body" [formGroup]="action?.formControls()" *ngIf="action?.form()">
     <io-table *ngIf="action?.table()" [action]="action">
     </io-table>
     <div class="action-filter col-md-12">
       <button [routerLink]="['/pages/dashboard']" class="btn btn-mm"> &lt; Back</button>
       <button class="btn btn-primary btn-mm" (click)="action.onSave()">Submit</button>
     </div>
-  </form>
+  </form> -->
   <div align="center">
   <ng-template #tableActionTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
     <div class="col-md-12">
