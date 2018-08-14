@@ -1,8 +1,7 @@
-// import { COMPARISON_OPERATOR, CONJUNCTION_OPERATOR } from '../../../core/constant/constant';
 import { CoreFactory } from '../../../../core/factory/core.factory';
-import { LOVService } from '../../../../core/services/uninjectable/lov.service';
+import { COMPARISON_OPERATOR, CONJUNCTION_OPERATOR } from '../../../../core/constant/constant';
 import { DataTable } from '../../../../core/models/data-table';
-import { COMPARISON_OPERATOR } from 'app/core/constant/constant';
+import { LOVService } from '../../../../core/services/uninjectable/lov.service';
 
 export class SearchCriteria {
     // tslint:disable-next-line:variable-name
@@ -25,16 +24,22 @@ export class SearchCriteria {
     public selectedSkill(event, skillSelect) {
         if (event && event.source.selected && skillSelect) {
             this.lovSkill = this._factory.lov({
-            api: 'lov/Skill/',
-            pagingParams: {
-                filter: {
-                field: 'skilltype_id',
-                operator: COMPARISON_OPERATOR.EQ,
-                value: skillSelect.key
-                }
-            },
-            initializeData: true
+                api: 'lov/Skill/',
+                pagingParams: {
+                    filter: {
+                    field: 'skilltype_id',
+                    operator: COMPARISON_OPERATOR.EQ,
+                    value: skillSelect.key
+                    }
+                },
+                initializeData: true
             });
         }
     }
+
+    // public availyValue(event, availValue) {
+    //     if(event && event.source.selected && availValue) {
+
+    //     }
+    // }
 }
