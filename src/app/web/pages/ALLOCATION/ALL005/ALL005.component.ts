@@ -6,6 +6,7 @@ import { LOVService } from '../../../../core/services/uninjectable/lov.service';
 import { ActivatedRoute } from '../../../../../../node_modules/@angular/router';
 import { COMPARISON_OPERATOR, TYPE } from '../../../../core/constant/constant';
 import { DataTable } from '../../../../core/models/data-table';
+import { DefaultNotificationService } from '../../../../core/services/default-notification.service';
 
 @Component({
   selector: 'app-ALL005',
@@ -28,6 +29,7 @@ export class ALL005Component implements OnInit {
   private selectedId: string;
 
   constructor(
+    public _notif: DefaultNotificationService,
     private _factory: CoreFactory,
     private route: ActivatedRoute
   ) {
@@ -45,6 +47,8 @@ export class ALL005Component implements OnInit {
         sdmskill_id: '',
         sdm_nik: '',
         sdm_name: '',
+        skilltype_id: '',
+        skill_id: '',
         skilltype_name: '',
         skill_name: '',
         sdmskill_value: '',
@@ -103,4 +107,19 @@ export class ALL005Component implements OnInit {
     });
   }
 
+  public onEdit() {
+    const updateAPI = this._factory.api({
+      api : 'allocation/mengelolaSdmSkill/update',
+      // params : {
+      //   client_id : this.selectedId
+      // }
+    });
+
+    this._factory.http().put(updateAPI + '?sdmskill_id=' + this.selectedId, this.action.getFormData()).subscribe((response: any) => {
+      console.log('Berhasil');
+      this._notif.success({
+        message: 'Data Updated'
+      });
+    });
+  }
 }

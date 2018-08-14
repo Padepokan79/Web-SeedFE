@@ -4,6 +4,7 @@ import { ActionService } from '../../../../core/services/uninjectable/action.ser
 import { CoreFactory } from '../../../../core/factory/core.factory';
 import { COMPARISON_OPERATOR } from '../../../../core/constant/constant';
 import { ActivatedRoute, ParamMap } from '../../../../../../node_modules/@angular/router';
+import { DefaultNotificationService } from '../../../../core/services/default-notification.service';
 
 @Component({
   selector: 'app-PJA006',
@@ -22,6 +23,7 @@ public tableActionTemplate: any;
 private selectedId: string;
 
   constructor(
+    public _notif: DefaultNotificationService,
     private _factory: CoreFactory,
     private route: ActivatedRoute
   ) {
@@ -92,7 +94,11 @@ private selectedId: string;
 
     this._factory.http().put(updateAPI + '?client_id=' + this.selectedId, this.action.getFormData()).subscribe((response: any) => {
       console.log('Berhasil');
-    });
+      this._notif.success({
+        message: 'Data Updated'
+      });
+    }
+  );
 
   }
 }

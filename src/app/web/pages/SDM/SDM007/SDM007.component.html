@@ -1,3 +1,4 @@
+<!-- Created by Alifhar Juliansyah -->
 <io-form *ngIf="action?.form()">
   <div class="io-form-header">
     <span><i class="fa fa-home"></i></span>
@@ -20,7 +21,7 @@
         <td><b>:</b></td>
         <td>
           <mat-form-field class="sdw-full-size">
-            <mat-select formControlName="sdm_id" name="sdm_id" required>
+            <mat-select formControlName="sdm_id" name="sdm_id" required readonly>
               <mat-option *ngFor="let lov of lovSdm.data" [value]="lov.key">
                 {{lov.value}}
               </mat-option>
@@ -78,7 +79,7 @@
           <button [routerLink]="['/pages/dashboard']" type="button" class="btn btn-primary btn-mm btn-icon">
             Back
           </button>
-          <button type="button" class="btn btn-primary btn-mm btn-icon" (click)="action.onSave()">
+          <button type="button" class="btn btn-primary btn-mm btn-icon" (click)="onEdit()">
             Update
           </button>
         </td>
