@@ -13,17 +13,23 @@ export class SDM001Component implements OnInit {
   public selected = 0;
   public disabled = false;
   public disabled1 = false;
+  public tab = 0;
 
   constructor(private _factory: CoreFactory) { }
 
+  // tslint:disable-next-line:no-empty
   public ngOnInit() {
 
   }
 
-  public toDisable(){
+  public toDisable() {
     this.disabled = true;
     this.disabled1 = true;
     this.selected = 1;
     console.log(this.disabled);
+  }
+
+  public receiveTab($event) {
+    this.tab = $event;
   }
 }

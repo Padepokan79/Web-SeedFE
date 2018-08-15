@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { ActionService } from '../../../../../core/services/uninjectable/action.service';
 import { InputForm } from '../../../../../core/models/input-form';
 import { LOVService } from '../../../../../core/services/uninjectable/lov.service';
@@ -21,6 +21,9 @@ export class TabDatapribadiComponent implements OnInit {
   public form: number;
   @Input()
   public id: number;
+
+  @Output()
+  public tabEvent= new EventEmitter<number>();
 
   @ViewChild('viewAsDateTemplate')
   public viewAsDateTemplate: any;
@@ -131,4 +134,9 @@ export class TabDatapribadiComponent implements OnInit {
     };
     reader.readAsDataURL(this.fileToUpload);
   }
+
+  public sendTab() {
+    this.tabEvent.emit(1);
+  }
+
 }

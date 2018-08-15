@@ -3,7 +3,7 @@ AUTHOR     : Malik Chaudhary
 CREATED   : ‎Thursday, ‎August ‎2, ‎2018, ‏‎1:45:06 PM
 UPDATE     :
 */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { InputForm } from './../../../../core/models/input-form';
 import { CoreFactory } from './../../../../core/factory/core.factory';
 import { ActionService } from './../../../../core/services/uninjectable/action.service';
@@ -32,10 +32,11 @@ public time: Date = new Date();
   public action: ActionService;
   public lovSdm: LOVService;
 private selectedId: number;
+// tslint:disable-next-line:member-ordering
 
   constructor(private _factory: CoreFactory,private route: ActivatedRoute) { 
     this.route.params.subscribe((param) => {
-      this.selectedId = param.id-1;
+      this.selectedId = param.id;
     });
   }
 
@@ -47,7 +48,8 @@ private selectedId: number;
   	this.inputForm = this._factory.inputForm({
       formControls: {
         project_id: '',
-        sdm_id: '',
+        sdm_n_i_k: '',
+        sdm_name: '',
         project_name: '',
         project_desc: '',
         project_role: '',
@@ -82,7 +84,7 @@ private selectedId: number;
     });
     this._factory.http().get(readAllApi).subscribe((res: any) => {
       console.log(res);
-      this.action.patchFormData(res.data.items[this.selectedId]);
+      this.action.patchFormData(res.data.items[0]);
     });
 
   	this.action = this._factory.actions({

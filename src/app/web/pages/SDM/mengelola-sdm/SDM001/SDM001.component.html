@@ -11,9 +11,9 @@
   <form class="io-form-body"> 
    
       <div class="margin-padding-div">
-          <mat-tab-group>
+          <mat-tab-group [(selectedIndex)]="tab" >
             <mat-tab label="Data Pribadi"  [disabled]="disabled1">
-                <app-tab-datapribadi [form]="form"></app-tab-datapribadi>
+                <app-tab-datapribadi [form]="form" (tabEvent)="receiveTab($event)" ></app-tab-datapribadi>
             </mat-tab>
             <mat-tab label="Pendidikan"  [disabled]="disabled">
                 <app-tab-education [form]="form"></app-tab-education>
