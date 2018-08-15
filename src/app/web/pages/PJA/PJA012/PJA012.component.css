@@ -1,36 +1,15 @@
-/* breadcrumbs */
-ul.breadcrumb li {
-    display: inline;
-    font-size: 18px;
-}
-
-ul.breadcrumb li+li:before {
-    padding: 8px;
-    color: black;
-    content: ">\00a0";
-}
-
-ul.breadcrumb li {
-    color: #202020;
-    text-decoration: none;
-}
-
-ul.breadcrumb li a {
-    color: #0275d8;
-    text-decoration: none;
-}
-
-ul.breadcrumb li a:hover {
-    color: #01447e;
-    text-decoration: underline;
-}
-
 ng-template {
     padding: 0 auto;
 }
 
 .blacky {
     color: #202020;
+}
+
+.all-of-white {
+	background-color: #FEFEFE;
+	margin: 12px 40px 12px 30px;
+	height : auto;
 }
 
 /* filter-contents */
@@ -48,7 +27,8 @@ div.go-tight {
 }
 
 .btn-flat {
-    background-color: #FEFEFE;
+	background-color: azure;
+	box-shadow: 1px 1px #787878;
     color: #242424;
 }
 
@@ -60,4 +40,51 @@ div.go-tight {
 
 .position-li {
     margin: 10px 20% -10px 20%;
+}
+
+.nx-title {
+	text-align: left;
+	font-size: 150%;
+	margin: 20px;
+	color: black;
+}
+
+.nx-label-style {
+	text-align: left;
+	margin: 20px;
+	color: black;
+}
+
+.nx-table-margin {
+	margin-right: 20px;
+	margin-bottom: 25px;
+}
+
+.nx-table-range {
+	padding: 5px;
+	margin: 10px;
+}
+
+#nx-table-range {
+	padding: 5px;
+	margin: 10px;
+}
+
+.nx-table-col-width {
+	width: 250px;
+}
+
+.nx-button-range {
+	margin-top: 10px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	float: right;
+}
+
+.nx-brc-header {
+	margin: 12px;
+}
+
+.nx-table-left-align {
+	text-align: left;
 }
