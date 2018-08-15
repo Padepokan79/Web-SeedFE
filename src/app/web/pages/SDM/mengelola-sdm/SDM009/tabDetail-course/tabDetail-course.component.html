@@ -1,0 +1,113 @@
+<form class="io-form-body" [formGroup]="action?.formControls()"> 
+
+  <div style="width: 100%; padding-left: 20px; padding-right: 20px">
+  <!-- KONTEN KURSUS-->
+  <table style="width: 100%">
+
+  <!-- NAMA Kursus/Pelatihan -->
+  <tr>
+    <td style="width: 20%">Kursus/Pelatihan {{ form }} {{ id }}</td>
+    <td style="width: 5px">:</td>
+    <td style="width: 80%">
+      <mat-form-field class="sdw-full-size">
+          <input matInput placeholder="" formControlName="course_title" name="course_title" required>
+          <mat-hint *ngIf="action.formErrors.course_title" [ngStyle]="{'color': 'red'}">
+            {{action.formErrors.course_title}}
+          </mat-hint>
+        </mat-form-field>
+    </td>
+  </tr>
+  
+  <!-- PENYELENGGARA KURSUS-->
+  <tr>
+    <td>Penyelenggara</td>
+    <td>:</td>
+    <td>
+        <mat-form-field class="sdw-full-size">
+            <input matInput placeholder="" formControlName="course_provider" name="course_provider" required>
+            <mat-hint *ngIf="action.formErrors.course_provider" [ngStyle]="{'color': 'red'}">
+              {{action.formErrors.course_provider}}
+            </mat-hint>
+          </mat-form-field>
+      </td>
+  </tr>
+
+  <!-- TEMPAT KURSUS -->
+  <tr>
+    <td>Tempat</td>
+    <td>:</td>
+    <td>
+        <mat-form-field class="sdw-full-size">
+            <input matInput placeholder="" formControlName="course_place" name="course_place" required>
+            <mat-hint *ngIf="action.formErrors.course_place" [ngStyle]="{'color': 'red'}">
+              {{action.formErrors.course_place}}
+            </mat-hint>
+          </mat-form-field>
+      </td>
+  </tr>
+  
+  <!-- WAKTU TANGGAL KURSUS-->
+  <tr>
+    <td>Waktu</td>
+    <td>:</td>
+    <td>
+        <mat-form-field class="sdw-full-size">
+            <input matInput [matDatepicker]="pickerCourse" placeholder="" formControlName="course_date">
+            <mat-datepicker-toggle matSuffix [for]="pickerCourse"></mat-datepicker-toggle>
+            <mat-datepicker #pickerCourse></mat-datepicker>
+          </mat-form-field>
+    </td>
+  </tr>
+
+  <!--DURASI KURSUS -->
+  <tr>
+    <td>Durasi</td>
+    <td>:</td>
+    <td>
+        <mat-form-field class="sdw-full-size">
+            <input matInput placeholder="" formControlName="course_duration" name="course_duration" required>
+            <mat-hint *ngIf="action.formErrors.course_duration" [ngStyle]="{'color': 'red'}">
+              {{action.formErrors.course_duration}}
+            </mat-hint>
+          </mat-form-field>
+      </td>
+  </tr>
+
+  <!-- SERTIFIKAT -->
+  <tr>
+      <td>Sertifikat</td>
+      <td>:</td>
+      <td>
+        <mat-radio-group class="margin-field" formControlName="course_certificates" name="course_certificates">
+          <mat-radio-button value="Yes">Yes</mat-radio-button>
+          <mat-radio-button value="No">No</mat-radio-button>
+        </mat-radio-group>
+      </td>
+  </tr>
+  </table>
+  </div>
+  <div class="col-md-3" *ngIf=" form == 2 ">
+      <io-form-action [action]="action"></io-form-action>
+  </div>
+  <div class="col-md-6 pos" style="float:right">
+      <button mat-raised-button style="margin: 10px 0px" (click)="action.onSave()" *ngIf=" form == 1 ">Submit</button>
+      <!-- <button mat-raised-button style="margin: 10px 0px" (click)="action.onEdit()" *ngIf=" form == 2 ">Update</button> -->
+  </div>
+</form>
+
+<div *ngIf="form == 2">
+  <io-table *ngIf="action?.table()" [action]="action">
+      <div class="io-table-header">
+      <h3>List Educations</h3>
+      </div>
+  </io-table>
+</div>
+
+<ng-template #tableActionTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
+  <button type="button" class="btn btn-primary btn-mm btn-icon" (click)="action.onEdit(row)">
+      <i class="glyphicon glyphicon-pencil"></i>
+  </button>
+  <button type="button" class="btn btn-primary btn-mm btn-icon" (click)="action.onDelete(row)">
+      <i class="glyphicon glyphicon-trash"></i>
+  </button>
+</ng-template>
