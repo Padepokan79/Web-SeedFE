@@ -1,3 +1,4 @@
+import { Conjunction } from './../../enums/conjunction-operator.enum';
 import { ISimplifiedFilterOperand } from './../../interfaces/main/i-simplified-filter-operand';
 import { ISimplifiedFilterComponent } from './../../interfaces/main/i-simplified-filter-component';
 import { operators } from 'rxjs';
@@ -107,40 +108,43 @@ export class PaginationService {
     }
 
     private combineFilterWithSearchCriteria() {
-        let filterOperand = {
-            operator: CONJUNCTION_OPERATOR.AND,
-            component: []
-        } as IFilterOperand;
+        // let filterOperand = {
+        //     operator: CONJUNCTION_OPERATOR.AND,
+        //     component: []
+        // } as IFilterOperand;
+        let filterOperand = [];
 
         if (this.pagingParams && this.pagingParams.filter) {
-            if (this.pagingParams.filter.hasOwnProperty('component')) {
-                let filter = this.pagingParams.filter as IFilterOperand;
-                if (filter.operator == CONJUNCTION_OPERATOR.AND) {
-                    filter.component.forEach((filterComponent) => {
-                        filterOperand.component.push(filterComponent);
-                    });
-                }
-            } else {
-                let filter = this.pagingParams.filter as IFilterComponent;
-                filterOperand.component.push(filter);
-            }
+            filterOperand.push(this.pagingParams.filter);
+            // if (this.pagingParams.filter.hasOwnProperty('component')) {
+            //     let filter = this.pagingParams.filter as IFilterOperand;
+            //     if (filter.operator == CONJUNCTION_OPERATOR.AND) {
+            //         filter.component.forEach((filterComponent) => {
+            //             filterOperand.component.push(filterComponent);
+            //         });
+            //     }
+            // } else {
+            //     let filter = this.pagingParams.filter as IFilterComponent;
+            //     filterOperand.component.push(filter);
+            // }
         }
 
         this.filters.forEach((filter) => {
-            if (filter.hasOwnProperty('component')) {
-                filter = filter as IFilterOperand;
-                if (filter.operator == CONJUNCTION_OPERATOR.AND) {
-                    filter.component.forEach((filterComponent) => {
-                        filterOperand.component.push(filterComponent);
-                    });
-                }
-            } else {
-                filter = filter as IFilterComponent;
-                filterOperand.component.push(filter);
-            }
+            filterOperand.push(filter);
+            // if (filter.hasOwnProperty('component')) {
+            //     filter = filter as IFilterOperand;
+            //     if (filter.operator == CONJUNCTION_OPERATOR.AND) {
+            //         filter.component.forEach((filterComponent) => {
+            //             filterOperand.component.push(filterComponent);
+            //         });
+            //     }
+            // } else {
+            //     filter = filter as IFilterComponent;
+            //     filterOperand.component.push(filter);
+            // }
         });
 
-        return filterOperand;
+        return Conjunction.AND(...filterOperand);
     }
 
     private convertSearchAsFilter(): IFilterComponent {
