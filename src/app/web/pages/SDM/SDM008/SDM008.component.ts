@@ -5,6 +5,7 @@ import { InputForm } from './../../../../core/models/input-form';
 import { ActionService } from './../../../../core/services/uninjectable/action.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { LOVService } from '../../../../core/services/uninjectable/lov.service';
+import { Router } from '../../../../../../node_modules/@angular/router';
 
 @Component({
   selector: 'app-SDM008',
@@ -25,7 +26,7 @@ export class SDM008Component implements OnInit {
   public lovSDM: LOVService;
   public lovPsychologicals: LOVService;
 
-  constructor(private _factory: CoreFactory) { }
+  constructor(private _factory: CoreFactory, private router: Router) { }
 
   public ngOnInit() {
     this.inputForm = this._factory.inputForm({
@@ -95,6 +96,10 @@ export class SDM008Component implements OnInit {
         api: 'lov/Psychologicals',
         initializeData: true
     });
+  }
+
+  public navigateEditMenu(id) {
+    this.router.navigate(['/pages/sdm/SDM007', { id }]);
   }
 
 }
