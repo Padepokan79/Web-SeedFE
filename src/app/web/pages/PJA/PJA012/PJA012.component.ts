@@ -30,7 +30,7 @@ export class PJA012Component implements OnInit {
   public inputForm: InputForm;
   public dataTable: DataTable;
   public listSearchCriteria: SearchCriteria[] = [];
-  public kdSdm: any;
+  public IdSdm: any;
   public filteredSdm: any;
 
   public lovSDM: LOVService;
@@ -48,12 +48,12 @@ export class PJA012Component implements OnInit {
   }
 
   public filterSdm(val: string) {
-    return val && val.length > 1 ? this.lovSDM.data.filter((s) => s.values.sdm_sdm_name.toLowerCase().indexOf(val.toLocaleLowerCase()) === 0) : [];
+    return val && val.length >= 0 ? this.lovSDM.data.filter((s) => s.values.sdm_sdm_name.toLowerCase().indexOf(val.toLocaleLowerCase()) === 0) : [];
   }
 
   public setSdmValue(inputForm: FormGroup, dataSdm: ListOfValue) {
-    if(dataSdm) {
-      this.kdSdm = dataSdm.key;
+    if (dataSdm) {
+      this.IdSdm = dataSdm.key;
       this.lovSDM = this._factory.lov({
         api: 'lov/Sdm',
         params: {
@@ -124,7 +124,7 @@ export class PJA012Component implements OnInit {
         Conjunction.AND(
           Comparison.EQ('skilltype_id', searchCriteria.skilltype_id),
           Comparison.EQ('skill_id', searchCriteria.skill_id),
-          Comparison.GE('value', searchCriteria.value)
+          Comparison.GE('sdmskill_value', searchCriteria.value)
         )
       );
 
