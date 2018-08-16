@@ -5,6 +5,7 @@ import { CoreFactory } from '../../../../core/factory/core.factory';
 import { DataTable } from '../../../../core/models/data-table';
 import { TYPE } from '../../../../core/constant/constant';
 import { LOVService } from '../../../../core/services/uninjectable/lov.service';
+import { Router } from '../../../../../../node_modules/@angular/router';
 
 @Component({
   selector: 'app-PJA005',
@@ -20,7 +21,10 @@ export class PJA005Component implements OnInit {
   public inputForm: InputForm;
   public dataTable: DataTable;
   public time: Date = new Date();
-  constructor(private _factory: CoreFactory) {}
+  constructor(
+    private _factory: CoreFactory,
+    private router: Router
+    ) {}
 
   public ngOnInit() {
    setInterval(() => {
@@ -75,10 +79,15 @@ export class PJA005Component implements OnInit {
       { prop: 'client_name', name: 'Client Name', width: 200, sortable: false}
     ]
   });
-   this.action = this._factory.actions({
+
+  this.action = this._factory.actions({
     api: 'project/MengelolaClient/Create',
     inputForm: this.inputForm,
     // dataTable: this.dataTable
-});
+  });
+
+  }
+  public timeOut() {
+      setTimeout(() => this.router.navigate(['pages/pja/PJA004']), 1000);
   }
 }

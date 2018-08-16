@@ -19,6 +19,12 @@ import { TabCourseComponent } from './SDM/mengelola-sdm/tab-course/tab-course.co
 import { TabEmploymentComponent } from './SDM/mengelola-sdm/tab-employment/tab-employment.component';
 import { TabProfilComponent } from './mengelola-sdm/tab-profil/tab-profil.component';
 import { TabLanguageComponent } from './SDM/mengelola-sdm/tab-language/tab-language.component';
+import { TabDetailCourseComponent } from './SDM/mengelola-sdm/SDM009/tabDetail-course/tabDetail-course.component';
+import { TabDetailDataPribadiComponent } from './SDM/mengelola-sdm/SDM009/tabDetail-dataPribadi/tabDetail-dataPribadi.component';
+import { TabDetailEducationComponent } from './SDM/mengelola-sdm/SDM009/tabDetail-Education/tabDetail-Education.component';
+import { TabDetailEmploymentComponent } from './SDM/mengelola-sdm/SDM009/tabDetail-employment/tabDetail-employment.component';
+import { TabDetailLanguageComponent } from './SDM/mengelola-sdm/SDM009/tabDetail-language/tabDetail-language.component';
+import { TabDetailProfilComponent } from './SDM/mengelola-sdm/SDM009/tabDetail-profil/tabDetail-profil.component';
 import { SDM001Component } from './SDM/mengelola-sdm/SDM001/SDM001.component';
 import { SDM003Component } from './SDM/mengelola-sdm/SDM003/SDM003.component';
 import { SDM002Component } from './SDM/mengelola-sdm/SDM002/SDM002.component';

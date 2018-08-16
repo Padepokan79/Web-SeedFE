@@ -125,7 +125,7 @@
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size">
-                <input matInput placeholder="" formControlName="sdm_phone" name="sdm_phone" >
+                <input matInput placeholder="" formControlName="sdm_phone" name="sdm_phone" readonly>
             </mat-form-field>
         </td>
     </tr>
@@ -269,7 +269,7 @@
         <io-form-action [action]="action"></io-form-action>
     </div> -->
     <div class="col-md-6 pos" style="float:right">
-    <button mat-raised-button style="margin: 10px 0px" (click)="action.onSave(sendTab())" *ngIf=" form == 1 " [disabled]="action?.formControls()?.invalid || action?.formControls()?.pristine" >Submit</button>
+    <button mat-raised-button style="margin: 10px 0px" (click)="action.onSave()" *ngIf=" form == 1 ">Submit</button>
     <button mat-raised-button style="margin: 10px 0px" (click)="action.onEdit()" *ngIf=" form == 2 ">Update</button>
     </div>
 </form>
