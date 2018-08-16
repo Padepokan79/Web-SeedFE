@@ -9,6 +9,8 @@ import { FormControl, FormGroup } from '../../../../../../node_modules/@angular/
 import { ListOfValue } from '../../../../core/models/list-of-value';
 import { Router } from '../../../../../../node_modules/@angular/router';
 import { startWith, map } from '../../../../../../node_modules/rxjs/operators';
+import { Conjunction } from '../../../../core/enums/conjunction-operator.enum';
+import { Comparison } from '../../../../core/enums/comparison-operator.enum';
 
 @Component({
   selector: 'app-PJA003',
@@ -68,11 +70,10 @@ export class PJA003Component implements OnInit {
 
     this.inputForm = this._factory.inputForm({
       formControls: {
-        project_id: '',
         sdm_id: '',
         sdm_name: '',
         project_name: '',
-        end_date_time: '',
+        project_enddate: '',
       }
     });
 
@@ -173,6 +174,41 @@ export class PJA003Component implements OnInit {
 
   public filterProject(val: string) {
     return val ? this.lovProject.data.filter((s) => s.values.project_project_name.toLowerCase().indexOf(val.toLocaleLowerCase()) === 0) : [];
+  }
+
+  public onSearch() {
+    const filterCriteria = [];
+
+    const SdmName = this.action.getFormControlValue('sdm_id');
+    const SdmProject = this.action.getFormControlValue('project_name');
+    const Projectdate = this.action.getFormControlValue('project_enddate');
+
+    if (SdmName) {
+      filterCriteria.push(Comparison.EQ('sdm_id', SdmName));
+    }
+
+    if (SdmProject) {
+      filterCriteria.push(Comparison.EQ('project_name', SdmProject));
+    }
+
+    if (Projectdate) {
+      filterCriteria.push(Comparison.EQ('project_enddate', Projectdate));
+    }
+
+    this.action.setPaginationFilter(
+      Conjunction.OR(
+        // filterCriteria
+        Comparison.EQ('project_enddate', Projectdate),
+        Comparison.EQ('project_name', SdmProject),
+        Comparison.EQ('sdm_id', SdmName),
+        // Conjunction.AND(
+        //   Comparison.EQ('project_name', SdmProject),
+        //   Comparison.EQ('sdm_id', SdmName)
+        // ),
+      )
+    );
+
+    this.action.refreshTable();
   }
 
 }
