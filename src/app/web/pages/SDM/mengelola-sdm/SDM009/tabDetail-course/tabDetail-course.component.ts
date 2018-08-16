@@ -2,8 +2,9 @@ import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { CoreFactory } from '../../../../../../core/factory/core.factory';
 import { ActionService } from '../../../../../../core/services/uninjectable/action.service';
 import { DataTable } from '../../../../../../core/models/data-table';
-import { COMPARISON_OPERATOR, CONJUNCTION_OPERATOR } from '../../../../../../core/constant/constant';
+import { COMPARISON_OPERATOR, CONJUNCTION_OPERATOR, TYPE } from '../../../../../../core/constant/constant';
 import { InputForm } from '../../../../../../core/models/input-form';
+import { LOVService } from '../../../../../../core/services/uninjectable/lov.service';
 
 @Component({
   selector: 'app-tabDetail-course',
@@ -12,6 +13,7 @@ import { InputForm } from '../../../../../../core/models/input-form';
 })
 export class TabDetailCourseComponent implements OnInit {
 
+  public lovDegree: LOVService;
   public inputForm: InputForm;
   @ViewChild('tableActionTemplate')
   public tableActionTemplate: any;
@@ -42,7 +44,7 @@ export class TabDetailCourseComponent implements OnInit {
         course_place: '',
         course_duration: '',
         course_date: '',
-        course_certificates: 'Yes',
+        course_certificates: '',
       },
       validationMessages: {
         course_title: {
@@ -51,7 +53,25 @@ export class TabDetailCourseComponent implements OnInit {
       }
     });
 
-    if (this.form === 3) {
+    this.dataTable = this._factory.dataTable({
+      serverSide : true,
+      pagingParams : {
+        limit : 10
+      },
+      searchCriteria : [
+        { viewValue: 'Course Name', viewKey: 'course_name', type: TYPE.STRING }
+      ],
+      tableColumns : [
+        { prop: 'course_title', name: 'Title', width: 10, sortable: false },
+        { prop: 'course_provider', name: 'Penyelenggara', width: 30, sortable: true },
+        { prop: 'course_place', name: 'Tempat', width: 20, sortable: true },
+        { prop: 'course_duration', name: 'Durasi', width: 20, sortable: true },
+        { prop: 'course_date', name: 'Tanggal', width: 20, sortable: true },
+        { prop: 'course_certificates', name: 'Sertifikat', width: 20, sortable: true }
+      ]
+    });
+
+    if (this.form === 2) {
       this.dataTable = this._factory.dataTable({
         serverSide : true,
         pagingParams : {
@@ -63,9 +83,12 @@ export class TabDetailCourseComponent implements OnInit {
           limit : 5
         },
         tableColumns : [
-          { prop: 'course_id', name: 'Course ID', width: 10, sortable: false },
-          { prop: 'course_title', name: 'Nama Kursus', width: 30, sortable: true },
-          { prop: 'course_id', name: 'Action', width: 20,
+          { prop: 'course_title', name: 'Title', width: 10, sortable: false },
+        { prop: 'course_provider', name: 'Penyelenggara', width: 30, sortable: true },
+        { prop: 'course_place', name: 'Tempat', width: 20, sortable: true },
+        { prop: 'course_duration', name: 'Durasi', width: 20, sortable: true },
+        { prop: 'course_date', name: 'Tanggal', width: 20, sortable: true },
+        { prop: 'course_certificates', name: 'Sertifikat', width: 20,
             cellTemplate: this.tableActionTemplate, sortable: false }
 
         ]
@@ -74,6 +97,11 @@ export class TabDetailCourseComponent implements OnInit {
     this.action = this._factory.actions({
       api: 'sdm/course',
       dataTable: this.dataTable
+    });
+
+    this.lovDegree = this._factory.lov({
+      api: 'lov/degree',
+      initializeData: true
     });
   }
 
