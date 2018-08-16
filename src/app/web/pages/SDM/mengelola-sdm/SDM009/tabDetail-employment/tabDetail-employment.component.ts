@@ -3,7 +3,8 @@ import { ActionService } from '../../../../../../core/services/uninjectable/acti
 import { InputForm } from '../../../../../../core/models/input-form';
 import { DataTable } from '../../../../../../core/models/data-table';
 import { CoreFactory } from '../../../../../../core/factory/core.factory';
-import { COMPARISON_OPERATOR } from '../../../../../../core/constant/constant';
+import { COMPARISON_OPERATOR, TYPE } from '../../../../../../core/constant/constant';
+import { LOVService } from '../../../../../../core/services/uninjectable/lov.service';
 
 @Component({
   selector: 'app-tabDetail-employment',
@@ -11,6 +12,11 @@ import { COMPARISON_OPERATOR } from '../../../../../../core/constant/constant';
   styleUrls: ['./tabDetail-employment.component.css']
 })
 export class TabDetailEmploymentComponent implements OnInit {
+
+  public selected = 0;
+  public disabled = true;
+  public disabled1 = false;
+  public sdmterbesar = 0;
 
   @Input()
   public form: number;
@@ -28,6 +34,8 @@ export class TabDetailEmploymentComponent implements OnInit {
   public inputForm: InputForm;
   public dataTable: DataTable;
 
+  public lovEmployment: LOVService;
+
   constructor(private _factory: CoreFactory) { }
 
   public ngOnInit() {
@@ -39,14 +47,12 @@ export class TabDetailEmploymentComponent implements OnInit {
 
     this.inputForm = this._factory.inputForm({
       formControls: {
-        course_id: 0,
+        employment_id: 0,
         sdm_id: this.sdmid,
-        course_title: '',
-        course_provider: '',
-        course_place: '',
-        course_duration: '',
-        course_date: '',
-        course_certificates: 'Yes',
+        employment_corpname: '',
+        employment_startdate: '',
+        employment_enddate: '',
+        employment_rolejob: '',
       },
       validationMessages: {
         course_title: {
@@ -55,7 +61,23 @@ export class TabDetailEmploymentComponent implements OnInit {
       }
     });
 
-    if (this.form === 3) {
+    this.dataTable = this._factory.dataTable({
+      serverSide : true,
+      pagingParams : {
+        limit : 10
+      },
+      searchCriteria : [
+        { viewValue: 'Edu Name', viewKey: 'edu_name', type: TYPE.STRING}
+      ],
+      tableColumns : [
+        { prop: 'employment_corpname', name: 'Nama Perusahaan', width: 40, sortable: false },
+        { prop: 'employment_startdate', name: 'Tanggal masuk', width: 100, sortable: false },
+        { prop: 'employment_enddate', name: 'Tanggal keluar', width: 100, sortable: false },
+        { prop: 'employment_rolejob', name: 'Jabatan', width: 100, sortable: false }
+      ]
+    });
+
+    if (this.form === 2) {
       this.dataTable = this._factory.dataTable({
         serverSide : true,
         pagingParams : {
@@ -67,9 +89,10 @@ export class TabDetailEmploymentComponent implements OnInit {
           limit : 5
         },
         tableColumns : [
-          { prop: 'course_id', name: 'Course ID', width: 10, sortable: false },
-          { prop: 'course_title', name: 'Nama Kursus', width: 30, sortable: true },
-          { prop: 'course_id', name: 'Action', width: 20,
+          { prop: 'employment_corpname', name: 'Nama Perusahaan', width: 40, sortable: false },
+          { prop: 'employment_startdate', name: 'Tanggal masuk', width: 100, sortable: false },
+          { prop: 'employment_enddate', name: 'Tanggal keluar', width: 100, sortable: false },
+          { prop: 'employment_rolejob', name: 'Jabatan', width: 100,
             cellTemplate: this.tableActionTemplate, sortable: false }
 
         ]
@@ -78,6 +101,11 @@ export class TabDetailEmploymentComponent implements OnInit {
     this.action = this._factory.actions({
       api: 'sdm/course',
       dataTable: this.dataTable
+    });
+
+    this.lovEmployment = this._factory.lov({
+      api: 'lov/degree',
+      initializeData: true
     });
   }
 
