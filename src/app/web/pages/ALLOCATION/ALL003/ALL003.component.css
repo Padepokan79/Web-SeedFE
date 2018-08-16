@@ -19,3 +19,10 @@
 	background-color: white; 
 	float: right;
 }
+.breadcrumb{
+    font-size: 15px;
+    color: black;
+    background: white;
+    height: 55px;
+    padding-top: 20px;
+}
