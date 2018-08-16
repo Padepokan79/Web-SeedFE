@@ -10,6 +10,7 @@ UPDATE 		:
 		     <a [routerLink]="['/pages/dashboard']">dashboard</a><b> > </b>
 		     <a [routerLink]="['/pages/project']"><span>Project Assignment</span></a><b> > </b>
 		     <a><span>Update Project SDM</span></a>
+    		<span class="time">{{ time | date: 'medium'}}</span>
    		</div>
  	</div>
 
@@ -35,11 +36,11 @@ UPDATE 		:
 			</tr>
 			<tr>
 				<td id="td">
-				    <mat-label>NIP </mat-label>
+				    <mat-label>NIK </mat-label>
 				</td>
 				<td>
 					<mat-form-field>
-					    <input matInput formControlName="sdm_n_i_k" name="sdm_n_i_k" readonly>
+					    <input matInput formControlName="sdm_nik" name="sdm_nik" readonly>
 					</mat-form-field>
 				</td>
 				<td id="td">
@@ -187,13 +188,10 @@ UPDATE 		:
 				<td></td>
 				<td></td>
 				<td>
-
-					<button type="button" class="btn btn-primary btn-mm btn-icon" (click)="onEdit()">
-						   <b>Perbarui</b>
-					</button>&emsp;
-					<button type="button" class="btn btn-danger btn-mm btn-icon">
-						   <b>Kembali</b>
-					</button>
+				<button type="button" class="btn btn-primary btn-mm btn-icon" (click)="onEdit()" [routerLink]="['/pages/pja/PJA003']">
+					   <b>Perbarui</b>
+				</button>&emsp;
+		     	<a class="btn btn-danger btn-mm btn-icon" [routerLink]="['/pages/pja/PJA003']">Kembali</a>
 				</td>
 			</tr>
 			<tr style="height: 10px;"></tr>

@@ -19,3 +19,6 @@ td{
 table{
     width: 90%
 }
+.time{
+    float: right;
+}
