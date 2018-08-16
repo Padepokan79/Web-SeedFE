@@ -16,6 +16,8 @@ export class TabEmploymentComponent implements OnInit {
   public form: number;
   @Input()
   public id: number;
+  @Input()
+  public sdmId: number;
 
   public sdmid: number;
 
@@ -33,7 +35,7 @@ export class TabEmploymentComponent implements OnInit {
   public ngOnInit() {
 
     if (this.form === 1) {
-      this.sdmid = 113;
+      this.sdmid = this.sdmId;
     } else {
       this.sdmid = this.id;
     }
@@ -81,6 +83,10 @@ export class TabEmploymentComponent implements OnInit {
       inputForm: this.inputForm,
       dataTable: this.dataTable
     });
+  }
+
+  public resetForm() {
+    this.action.onReset();
   }
 
 }

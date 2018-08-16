@@ -17,6 +17,8 @@ export class TabCourseComponent implements OnInit {
   public form: number;
   @Input()
   public id: number;
+  @Input()
+  public sdmId: number;
 
   public sdmid: number;
 
@@ -34,7 +36,7 @@ export class TabCourseComponent implements OnInit {
   public ngOnInit() {
 
     if (this.form === 1) {
-      this.sdmid = 113;
+      this.sdmid = this.sdmId;
     } else {
       this.sdmid = this.id;
     }
@@ -42,6 +44,15 @@ export class TabCourseComponent implements OnInit {
     this.inputForm = this._factory.inputForm({
       formControls: {
         course_id: 0,
+        sdm_id: this.sdmid,
+        course_title: '',
+        course_provider: '',
+        course_place: '',
+        course_duration: '',
+        course_date: '',
+        course_certificates: 'Yes',
+      },
+      immutableFormControls: {
         sdm_id: this.sdmid,
         course_title: '',
         course_provider: '',
@@ -84,4 +95,9 @@ export class TabCourseComponent implements OnInit {
       dataTable: this.dataTable
     });
   }
+
+  public resetForm() {
+    this.action.onReset();
+  }
+
 }

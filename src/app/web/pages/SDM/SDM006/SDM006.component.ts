@@ -59,6 +59,20 @@ export class SDM006Component implements OnInit {
         sdmpsycological_desc: '',
         psycological_date: ''
       },
+      validationMessages: {
+        sdm_id: {
+          required: 'Silahkan masukan Nama'
+        },
+        psyco_id: {
+          required: 'Silahkan masukan Psychology'
+        },
+        sdmpsycological_desc: {
+          required: 'Silahkan masukan deskripsi'
+        },
+        psycological_date: {
+          required: 'Silahkan masukan tanggal'
+        }
+      }
     });
 
     // this.dataTable = this._factory.dataTable({
