@@ -8,8 +8,10 @@ ng-template {
 
 .all-of-white {
 	background-color: #FEFEFE;
-	margin: 12px 40px 12px 30px;
+	margin: 5px 40px 5px 30px;
 	height : auto;
+	border-color: 1px solid #404040;
+	box-sizing: border-box;
 }
 
 /* filter-contents */
@@ -18,7 +20,7 @@ ul {
 }
 
 li.list-filter {
-    width: 300px;
+    width: 350px;
     text-align: center;
 }
 

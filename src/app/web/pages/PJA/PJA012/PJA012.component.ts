@@ -10,7 +10,11 @@ import { Comparison } from './../../../../core/enums/comparison-operator.enum';
 import { Conjunction } from './../../../../core/enums/conjunction-operator.enum';
 import { DefaultNotificationService } from './../../../../core/services/default-notification.service';
 import { ListOfValue } from './../../../../core/models/list-of-value';
-import { FormGroup, FormControl } from './../../../../../../node_modules/@angular/forms';
+import { FormGroup, FormControl, CheckboxControlValueAccessor } from './../../../../../../node_modules/@angular/forms';
+import { ISimplifiedFilterComponent } from '../../../../core/interfaces/main/i-simplified-filter-component';
+import { MultiInsert } from './MultiInsert';
+import { ActivatedRoute } from '../../../../../../node_modules/@angular/router';
+import { HttpClient } from '../../../../../../node_modules/@angular/common/http';
 
 @Component({
   selector: 'app-PJA012',
@@ -30,21 +34,29 @@ export class PJA012Component implements OnInit {
   public inputForm: InputForm;
   public dataTable: DataTable;
   public listSearchCriteria: SearchCriteria[] = [];
+  public listMultiInsert: MultiInsert[] = [];
   public IdSdm: any;
   public filteredSdm: any;
+  public getClientid: number;
 
   public lovSDM: LOVService;
   public lovSkillType: LOVService;
   public lovSkill: LOVService;
   public lovSdmSkill: LOVService;
   public isButtonClicked = false;
+  public hiringSubmit: any;
+  public assignSubmit: any;
+  public dataHiringInput: [];
 
-  constructor(private _factory: CoreFactory, public _notif: DefaultNotificationService) {
+  constructor(private _factory: CoreFactory, public _notif: DefaultNotificationService, private route: ActivatedRoute, private httpClient: HttpClient) {
     this.listSearchCriteria.push(new SearchCriteria(_factory));
     this.sdmCtrl = new FormControl();
     this.filteredSdm = this.sdmCtrl.valueChanges
     .startWith('')
     .map((value) => this.filterSdm(value) );
+    this.route.params.subscribe((param) => {
+      this.getClientid = param.id;
+    });
   }
 
   public filterSdm(val: string) {
@@ -54,14 +66,7 @@ export class PJA012Component implements OnInit {
   public setSdmValue(inputForm: FormGroup, dataSdm: ListOfValue) {
     if (dataSdm) {
       this.IdSdm = dataSdm.key;
-      this.lovSDM = this._factory.lov({
-        api: 'lov/Sdm',
-        params: {
-          sdm_id : dataSdm.key
-        },
-        initializeData: true
-      });
-      this.action.patchFormData({ sdm_id: dataSdm.key, sdm_name: dataSdm.values.sdm_sdm_name });
+      // this.action.patchFormData({ sdm_id: dataSdm.key, sdm_name: dataSdm.values.sdm_sdm_name });
     }
   }
 
@@ -75,9 +80,6 @@ export class PJA012Component implements OnInit {
   }
 
   public ngOnInit() {
-    this.inputForm = this._factory.inputForm({
-
-    });
 
     this.lovSDM = this._factory.lov({
       api: 'lov/Sdm',
@@ -95,12 +97,13 @@ export class PJA012Component implements OnInit {
         { prop: 'skilltype_name', name: 'Category', width: 20, sortable: false },
         { prop: 'skill_name', name: 'Skills', width: 20, sortable: false },
         { prop: 'sdmskill_value', name: 'Value', width: 50, sortable: false },
-        { prop: 'sdm_id', name: 'Action', width: 10, cellTemplate: this.tableActionTemplate, sortable: false },
+        { prop: 'sdm_id', name: 'Select', width: 10, cellTemplate: this.tableActionTemplate, sortable: false }
       ]
     });
 
     this.action = this._factory.actions({
       api: 'allocation/MengelolaSdmSkill',
+      // api: 'allocation/MultifilteringSdm',
       dataTable: this.dataTable
     });
 
@@ -129,17 +132,46 @@ export class PJA012Component implements OnInit {
       );
 
       this._notif.success({
-        message : searchCriteria.skilltype_id + ' , ' + searchCriteria.skill_id + ' , ' + searchCriteria.value
+        message : 'Data has been Filtered'
       });
     });
 
-    const doubleFilter = Conjunction.OR(...filterComponent);
+    // const filterNameComponent: ISimplifiedFilterComponent[] = [];
+    // filterNameComponent.push(
+    //   Comparison.EQ('sdm_id', this.IdSdm)
+    // );
+
+    // this._notif.success({
+    //   message : this,
+    // });
+
+    const doubleFilter = Conjunction.OR(
+      ...filterComponent,
+      Comparison.EQ('sdm_id', this.IdSdm)
+    );
 
     this.action.setPaginationFilter(doubleFilter);
+    // this.action.setPaginationFilter(filterNameComponent);
     this.action.refreshTable();
   }
 
-  // public assignSdmSubmit() {
+  public distRedundantCheckedSdm() {
+    const tempData = [];
+    this.action.table().rows.forEach((item) => {
+      if (item.checked) {
+        tempData.push(item);
+      }
+    });
 
-  // }
+    console.log(tempData);
+  }
+
+  public assignSdmSubmit() {
+    this.isButtonClicked = true;
+    // const postAPI = this._factory.api({
+    //   api: 'project/mengelolaSdmHiring',
+    // });
+    console.log(this.dataHiringInput);
+    // this._factory.http().post(postAPI,this.action.getFormData()).subscribe((response: any) => { });
+  }
 }

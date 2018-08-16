@@ -12,7 +12,7 @@ UPDATE		: Wednesday, August 15th 2018 08:05:00 AM
       <span><i class="fa fa-home"></i></span>
       <a [routerLink]="['/pages/dashboard']">dashboard</a><b> > </b>
       <a [routerLink]="['/pages/project']"><span>Project Assignment</span></a><b> > </b>
-      <a><span>Assign SDM</span></a>
+      <a><span>Assign SDM untuk {{ getClientid }}</span></a>
     </div>
   </div>
 </div>
@@ -37,7 +37,7 @@ UPDATE		: Wednesday, August 15th 2018 08:05:00 AM
           <li *ngFor="let searchCriteria of listSearchCriteria; let inc = index" class="col-md-12 position-li">
             <div class="col-md-2 go-tight">
               <mat-form-field class="sdw-full-size">
-                <mat-select placeholder="Choose Category" [(ngModel)]="searchCriteria.skilltype_id" name="skilltype_id" required>
+                <mat-select placeholder="Choose Category" [(ngModel)]="searchCriteria.skilltype_id" name="skilltype_id{{inc}}" required>
                   <mat-option *ngFor="let lov of searchCriteria.lovSkillType.data" [value]="lov.key" (onSelectionChange)="searchCriteria.selectedSkill($event, lov)">
                     {{lov.value}}
                   </mat-option>
@@ -46,7 +46,7 @@ UPDATE		: Wednesday, August 15th 2018 08:05:00 AM
             </div>
             <div class="col-md-2 go-tight">
               <mat-form-field class="sdw-full-size">
-                <mat-select placeholder="Choose Skill" [(ngModel)]="searchCriteria.skill_id" name="skill_id" required>
+                <mat-select placeholder="Choose Skill" [(ngModel)]="searchCriteria.skill_id" name="skill_id{{inc}}" required>
                   <mat-option *ngFor="let lov of searchCriteria.lovSkill?.data" [value]="lov.key">
                     {{lov.value}}
                   </mat-option>
@@ -55,7 +55,7 @@ UPDATE		: Wednesday, August 15th 2018 08:05:00 AM
             </div>
             <div class="col-md-2 go-tight">
               <mat-form-field class="sdw-full-size">
-                <input matInput type="number" min="1" max="10" placeholder="Value" [(ngModel)]="searchCriteria.value" name="sdmskill_value" class="blacky">
+                <input matInput type="number" min="1" max="10" placeholder="Value" [(ngModel)]="searchCriteria.value" name="sdmskill_value{{inc}}" class="blacky">
               </mat-form-field>
             </div>
             <div class="col-sm-2 text-left">
@@ -76,17 +76,19 @@ UPDATE		: Wednesday, August 15th 2018 08:05:00 AM
 <div class="contents" *ngIf="isButtonClicked">
   <form class="io-form-body">
     <io-table *ngIf="action?.table()" [action]="action">
-    </io-table>
+      <div class="io-table-header">
+        <h3>Candidates</h3>
+      </div>
+    </io-table>      
     <div class="action-filter col-md-12">
       <button [routerLink]="['/pages/dashboard']" class="btn btn-mm"> &lt; Back</button>
-      <button class="btn btn-primary btn-mm" (click)="action.onSave()">Submit</button>
+      <button class="btn btn-primary btn-mm" (click)="assignSdmSubmit()">Submit</button>
     </div>
   </form>
-  <div align="center">
-  <ng-template #tableActionTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
-    <div class="col-md-12">
-      <mat-checkbox (change)="action.adjustValue($event)" name="select_sdm"></mat-checkbox>
-    </div>
-  </ng-template>
-  </div>
 </div>
+
+<ng-template #tableActionTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
+  <div>
+    <mat-checkbox name="sdm_id" (change)="distRedundantCheckedSdm()" value="{{row.sdm_id}}" [(ngModel)]="row.Checked" [name]="row.sdm_id"></mat-checkbox>
+  </div>
+</ng-template>
