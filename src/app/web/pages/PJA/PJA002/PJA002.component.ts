@@ -16,6 +16,7 @@ import { letProto } from '../../../../../../node_modules/rxjs/operator/let';
 import { ActivatedRoute, ParamMap } from '../../../../../../node_modules/@angular/router';
 import { switchMap } from '../../../../../../node_modules/rxjs/operators/switchMap';
 import { filter } from '../../../../../../node_modules/rxjs/operator/filter';
+import { DefaultNotificationService } from './../../../../core/services/default-notification.service';
 
 
 @Component({
@@ -28,19 +29,24 @@ export class PJA002Component implements OnInit {
   public viewAsDateTemplate: any;
 
 public time: Date = new Date();
-  public inputForm: InputForm;
-  public action: ActionService;
-  public lovSdm: LOVService;
+public inputForm: InputForm;
+public action: ActionService;
+public lovSdm: LOVService;
 private selectedId: number;
+
 // tslint:disable-next-line:member-ordering
 
-  constructor(private _factory: CoreFactory,private route: ActivatedRoute) { 
+  constructor(private _factory: CoreFactory,private route: ActivatedRoute, public _notif: DefaultNotificationService) { 
     this.route.params.subscribe((param) => {
       this.selectedId = param.id;
     });
   }
 
   public ngOnInit() {
+     setInterval(() => {
+      this.time = new Date();
+    }, 1);
+
      console.log('Selected ID : ' + this.selectedId);
     setInterval(() => {
       this.time = new Date();
@@ -48,7 +54,7 @@ private selectedId: number;
   	this.inputForm = this._factory.inputForm({
       formControls: {
         project_id: '',
-        sdm_n_i_k: '',
+        sdm_nik: '',
         sdm_name: '',
         project_name: '',
         project_desc: '',
@@ -101,5 +107,8 @@ private selectedId: number;
   this._factory.http().put(updateAPI + '?project_id=' + this.selectedId, this.action.getFormData()).subscribe((response: any) => {
   console.log('Berhasil');
    });  
+  this._notif.success({
+    message: 'Data ' + this.action.getFormControlValue('sdm_name') + ' berhasil diperbarui'
+  });
   }
 }
