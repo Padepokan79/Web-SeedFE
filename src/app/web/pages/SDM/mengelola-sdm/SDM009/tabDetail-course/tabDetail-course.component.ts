@@ -58,9 +58,9 @@ export class TabDetailCourseComponent implements OnInit {
       pagingParams : {
         limit : 10
       },
-      searchCriteria : [
-        { viewValue: 'Course Name', viewKey: 'course_name', type: TYPE.STRING }
-      ],
+      // searchCriteria : [
+      //   { viewValue: 'Course Name', viewKey: 'course_name', type: TYPE.STRING }
+      // ],
       tableColumns : [
         { prop: 'course_title', name: 'Title', width: 10, sortable: false },
         { prop: 'course_provider', name: 'Penyelenggara', width: 30, sortable: true },

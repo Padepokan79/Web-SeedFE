@@ -64,9 +64,9 @@ export class TabDetailProfilComponent implements OnInit {
         pagingParams : {
           limit : 10
         },
-        searchCriteria : [
-          { viewValue: 'Edu Name', viewKey: 'edu_name', type: TYPE.STRING}
-        ],
+        // searchCriteria : [
+        //   { viewValue: 'Edu Name', viewKey: 'edu_name', type: TYPE.STRING}
+        // ],
         tableColumns : [
           { prop: 'profiling_id', name: 'No', width: 40, sortable: false },
           { prop: 'profiling_name', name: 'Profil', width: 100, sortable: false },
