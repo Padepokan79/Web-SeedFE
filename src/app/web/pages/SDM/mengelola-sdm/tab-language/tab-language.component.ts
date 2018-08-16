@@ -24,6 +24,8 @@ export class TabLanguageComponent implements OnInit {
   public form: number;
   @Input()
   public id: number;
+  @Input()
+  public sdmId: number;
 
   public sdmid: number;
 
@@ -35,7 +37,7 @@ export class TabLanguageComponent implements OnInit {
   public ngOnInit() {
 
     if (this.form === 1) {
-      this.sdmid = 113;
+      this.sdmid = this.sdmId;
     } else {
       this.sdmid = this.id;
     }
@@ -74,7 +76,6 @@ export class TabLanguageComponent implements OnInit {
       dataTable: this.dataTable
     });
 
-
     this.lovLanguage = this._factory.lov({
       api: 'lov/languages',
       initializeData: true
@@ -86,8 +87,12 @@ export class TabLanguageComponent implements OnInit {
     this.listLanguage.splice(index, 0, checkedData);
   }
 
+  // tslint:disable-next-line:no-empty
   public save() {
+}
 
+  public resetForm() {
+    this.action.onReset();
   }
 
 }

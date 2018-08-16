@@ -12,23 +12,23 @@
    
       <div class="margin-padding-div">
           <mat-tab-group [(selectedIndex)]="tab" >
-            <mat-tab label="Data Pribadi"  [disabled]="disabled1">
+            <mat-tab label="Data Pribadi"  [disabled]="disabled[0]">
                 <app-tab-datapribadi [form]="form" (tabEvent)="receiveTab($event)" ></app-tab-datapribadi>
             </mat-tab>
-            <mat-tab label="Pendidikan"  [disabled]="disabled">
-                <app-tab-education [form]="form"></app-tab-education>
+            <mat-tab label="Pendidikan"  [disabled]="disabled[1]">
+                <app-tab-education [form]="form" [sdmId]="sdmId" *ngIf="tab === 1"></app-tab-education>
             </mat-tab>
-            <mat-tab label="Kursus"  [disabled]="disabled">
-                <app-tab-course [form]="form"></app-tab-course>
+            <mat-tab label="Kursus"  [disabled]="disabled[1]">
+                <app-tab-course [form]="form" [sdmId]="sdmId" *ngIf="tab === 2"></app-tab-course>
             </mat-tab>
-            <mat-tab label="Pekerjaan"  [disabled]="disabled">
-              <app-tab-employment [form]="form"></app-tab-employment>
+            <mat-tab label="Pekerjaan"  [disabled]="disabled[1]">
+              <app-tab-employment [form]="form" [sdmId]="sdmId" *ngIf="tab === 3"></app-tab-employment>
             </mat-tab>
-            <mat-tab label="Profil"  [disabled]="disabled">
-              <app-tab-profil [form]="form"></app-tab-profil>
+            <mat-tab label="Profil"  [disabled]="disabled[1]">
+              <app-tab-profil [form]="form" [sdmId]="sdmId" *ngIf="tab === 4"></app-tab-profil>
             </mat-tab>
-            <mat-tab label="Bahasa"  [disabled]="disabled">
-              <app-tab-language [form]="form"></app-tab-language>
+            <mat-tab label="Bahasa"  [disabled]="disabled[1]">
+              <app-tab-language [form]="form" [sdmId]="sdmId" *ngIf="tab === 5"></app-tab-language>
             </mat-tab>
           </mat-tab-group>
         </div>

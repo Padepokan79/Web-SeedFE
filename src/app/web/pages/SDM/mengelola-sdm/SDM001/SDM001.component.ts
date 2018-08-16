@@ -11,9 +11,9 @@ export class SDM001Component implements OnInit {
   public form = 1;
   public time: Date = new Date();
   public selected = 0;
-  public disabled = false;
-  public disabled1 = false;
+  public disabled = [false, true];
   public tab = 0;
+  public sdmId: number;
 
   constructor(private _factory: CoreFactory) { }
 
@@ -22,15 +22,17 @@ export class SDM001Component implements OnInit {
 
   }
 
-  public toDisable() {
-    this.disabled = true;
-    this.disabled1 = true;
-    this.selected = 1;
-    console.log(this.disabled);
-  }
+  // public toDisable() {
+  //   this.disabled = true;
+  //   this.disabled1 = true;
+  //   this.selected = 1;
+  //   console.log(this.disabled);
+  // }
 
   public receiveTab($event) {
-    this.tab = $event;
-    this.disabled1 = true;
+    this.tab = 1;
+    this.disabled[0] = true;
+    this.disabled[1] = false;
+    this.sdmId = $event;
   }
 }

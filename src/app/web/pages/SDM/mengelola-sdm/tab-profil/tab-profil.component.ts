@@ -16,6 +16,8 @@ export class TabProfilComponent implements OnInit {
   public form: number;
   @Input()
   public id: number;
+  @Input()
+  public sdmId: number;
 
   public sdmid: number;
 
@@ -33,7 +35,7 @@ export class TabProfilComponent implements OnInit {
   public ngOnInit() {
 
     if (this.form === 1) {
-      this.sdmid = 113;
+      this.sdmid = this.sdmId;
     } else {
       this.sdmid = this.id;
     }
@@ -71,12 +73,16 @@ export class TabProfilComponent implements OnInit {
       ]
     });
   }
-  
+
     this.action = this._factory.actions({
       api: 'sdm/profiling',
       dataTable: this.dataTable,
       inputForm: this.inputForm
     });
+  }
+
+  public resetForm() {
+    this.action.onReset();
   }
 
 }
