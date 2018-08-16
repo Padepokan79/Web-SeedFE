@@ -66,9 +66,9 @@ export class TabDetailEmploymentComponent implements OnInit {
       pagingParams : {
         limit : 10
       },
-      searchCriteria : [
-        { viewValue: 'Edu Name', viewKey: 'edu_name', type: TYPE.STRING}
-      ],
+      // searchCriteria : [
+      //   { viewValue: 'Corp Name', viewKey: 'employment_corpname', type: TYPE.STRING}
+      // ],
       tableColumns : [
         { prop: 'employment_corpname', name: 'Nama Perusahaan', width: 40, sortable: false },
         { prop: 'employment_startdate', name: 'Tanggal masuk', width: 100, sortable: false },
@@ -99,7 +99,7 @@ export class TabDetailEmploymentComponent implements OnInit {
       });
     }
     this.action = this._factory.actions({
-      api: 'sdm/course',
+      api: 'sdm/employment',
       dataTable: this.dataTable
     });
 

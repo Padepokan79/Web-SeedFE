@@ -19,16 +19,16 @@
                 </mat-hint>
             </mat-form-field>
         </td>
-        <td rowspan="7">
-            <div style="margin-left: 50px">
+        <!-- <td rowspan="7"> -->
+            <!-- <div style="margin-left: 50px"> -->
                 <!-- <img mat-card-image style="width: 200px" src="http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png" alt="Photo of a Shiba Inu"><br> -->
-                <img mat-card-image style="width: 200px"  [src]="imageUrl" ><br>
-                <label for="singleFile">Browse Image</label>
+                <!-- <img mat-card-image style="width: 200px"  [src]="imageUrl" ><br> -->
+                <!-- <label for="singleFile">Browse Image</label> -->
                 <!-- <input id="singleFile" type="file"> -->
-                <input type="file" #Image accept="image/*" (change)="handleFileInput($event.target.files)" formControlName="sdm_image" name="sdm_image">
+                <!-- <input type="file" #Image accept="image/*" (change)="handleFileInput($event.target.files)" formControlName="sdm_image" name="sdm_image"> -->
 
-            </div>
-        </td>
+            <!-- </div> -->
+        <!-- </td> -->
     </tr>
 
     <!-- NIK -->
@@ -83,14 +83,15 @@
 
     <!-- tanggal lahir -->
     <tr>
-        <td class="td1">Tanggal Lahir</td>
-        <td class="td2">:</td>
-        <td class="td3">
+        <td>Tanggal Lahir</td>
+        <td>:</td>
+        <td>
+            <div class="example-container">
             <mat-form-field class="sdw-full-size">
-                <input matInput [matDatepicker]="picker" (click)="pickerStartDate.open()" placeholder="" formControlName="sdm_datebirth">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
+                <input matInput placeholder="" formControlName="sdm_datebirth" name="sdm_datebirth">
+                <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
             </mat-form-field>
+            </div>
         </td>
     </tr>
 
