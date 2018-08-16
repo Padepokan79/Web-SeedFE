@@ -31,5 +31,6 @@ export class SDM001Component implements OnInit {
 
   public receiveTab($event) {
     this.tab = $event;
+    this.disabled1 = true;
   }
 }

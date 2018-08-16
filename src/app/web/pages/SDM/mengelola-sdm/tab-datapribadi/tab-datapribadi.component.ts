@@ -23,7 +23,7 @@ export class TabDatapribadiComponent implements OnInit {
   public id: number;
 
   @Output()
-  public tabEvent= new EventEmitter<number>();
+  public tabEvent = new EventEmitter<number>();
 
   @ViewChild('viewAsDateTemplate')
   public viewAsDateTemplate: any;
