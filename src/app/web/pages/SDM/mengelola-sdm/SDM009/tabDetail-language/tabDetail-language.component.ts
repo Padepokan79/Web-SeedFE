@@ -4,7 +4,7 @@ import { InputForm } from '../../../../../../core/models/input-form';
 import { DataTable } from '../../../../../../core/models/data-table';
 import { LOVService } from '../../../../../../core/services/uninjectable/lov.service';
 import { CoreFactory } from '../../../../../../core/factory/core.factory';
-import { COMPARISON_OPERATOR } from '../../../../../../core/constant/constant';
+import { COMPARISON_OPERATOR, TYPE } from '../../../../../../core/constant/constant';
 
 @Component({
   selector: 'app-tabDetail-language',
@@ -12,13 +12,11 @@ import { COMPARISON_OPERATOR } from '../../../../../../core/constant/constant';
   styleUrls: ['./tabDetail-language.component.css']
 })
 export class TabDetailLanguageComponent implements OnInit {
-  @ViewChild('tableActionTemplate')
-  public tableActionTemplate: any;
-
-  public action: ActionService;
-  public inputForm: InputForm;
-  public dataTable: DataTable;
   public lovLanguage: LOVService;
+  public selected = 0;
+  public disabled = true;
+  public disabled1 = false;
+  public sdmterbesar = 0;
 
   @Input()
   public form: number;
@@ -26,6 +24,17 @@ export class TabDetailLanguageComponent implements OnInit {
   public id: number;
 
   public sdmid: number;
+
+  @ViewChild('viewAsDateTemplate')
+  public viewAsDateTemplate: any;
+  @ViewChild('tableActionTemplate')
+  public tableActionTemplate: any;
+
+  public action: ActionService;
+  public inputForm: InputForm;
+  public dataTable: DataTable;
+
+  public lovSdmlanguage: LOVService;
 
   public listLanguage = ['', '', '', ''];
 
@@ -40,9 +49,25 @@ export class TabDetailLanguageComponent implements OnInit {
 
     this.inputForm = this._factory.inputForm({
       formControls: {
+        sdmlanguage_id: '',
         sdm_id: this.sdmid,
         language_id: '',
+        language_name: '',
       }
+    });
+
+    this.dataTable = this._factory.dataTable({
+      serverSide : true,
+      pagingParams : {
+        limit : 10
+      },
+      searchCriteria : [
+        { viewValue: 'Edu Name', viewKey: 'edu_name', type: TYPE.STRING}
+      ],
+      tableColumns : [
+        { prop: 'sdmlanguage_id', name: 'No', width: 40, sortable: false },
+        { prop: 'language_name', name: 'Bahasa', width: 100, sortable: false },
+      ]
     });
 
     if (this.form === 2) {

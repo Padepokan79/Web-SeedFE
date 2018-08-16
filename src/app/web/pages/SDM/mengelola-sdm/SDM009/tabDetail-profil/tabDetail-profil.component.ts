@@ -3,7 +3,8 @@ import { ActionService } from '../../../../../../core/services/uninjectable/acti
 import { DataTable } from '../../../../../../core/models/data-table';
 import { InputForm } from '../../../../../../core/models/input-form';
 import { CoreFactory } from '../../../../../../core/factory/core.factory';
-import { COMPARISON_OPERATOR } from '../../../../../../core/constant/constant';
+import { COMPARISON_OPERATOR, TYPE } from '../../../../../../core/constant/constant';
+import { LOVService } from '../../../../../../core/services/uninjectable/lov.service';
 
 @Component({
   selector: 'app-tabDetail-profil',
@@ -11,6 +12,11 @@ import { COMPARISON_OPERATOR } from '../../../../../../core/constant/constant';
   styleUrls: ['./tabDetail-profil.component.css']
 })
 export class TabDetailProfilComponent implements OnInit {
+
+  public selected = 0;
+  public disabled = true;
+  public disabled1 = false;
+  public sdmterbesar = 0;
 
   @Input()
   public form: number;
@@ -27,6 +33,8 @@ export class TabDetailProfilComponent implements OnInit {
   public action: ActionService;
   public inputForm: InputForm;
   public dataTable: DataTable;
+
+  public lovProfiling: LOVService;
 
   constructor(private _factory: CoreFactory) { }
 
@@ -49,6 +57,20 @@ export class TabDetailProfilComponent implements OnInit {
             required: 'Silahkan masukkan Nama Lengkap'
           }
         }
+      });
+
+      this.dataTable = this._factory.dataTable({
+        serverSide : true,
+        pagingParams : {
+          limit : 10
+        },
+        searchCriteria : [
+          { viewValue: 'Edu Name', viewKey: 'edu_name', type: TYPE.STRING}
+        ],
+        tableColumns : [
+          { prop: 'profiling_id', name: 'No', width: 40, sortable: false },
+          { prop: 'profiling_name', name: 'Profil', width: 100, sortable: false },
+        ]
       });
 
       if (this.form === 2) {
@@ -76,6 +98,11 @@ export class TabDetailProfilComponent implements OnInit {
         api: 'sdm/profiling',
         dataTable: this.dataTable,
         inputForm: this.inputForm
+      });
+
+      this.lovProfiling = this._factory.lov({
+        api: 'lov/degree',
+        initializeData: true
       });
   }
 
