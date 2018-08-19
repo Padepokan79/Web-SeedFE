@@ -136,14 +136,6 @@ export class ALL006Component implements OnInit {
       );
     });
 
-    // if (this.IdSdm == null) {
-    //   this.doubleFilter = Conjunction.OR(...filterComponent);
-    // }
-
-    // if (this.categorySkill == null) {
-    //   this.doubleFilter = Comparison.EQ('sdm_id', this.IdSdm);
-    // }
-
     this.doubleFilter = Conjunction.OR(
       ...filterComponent,
       Comparison.EQ('sdm_id', this.IdSdm)
@@ -157,27 +149,4 @@ export class ALL006Component implements OnInit {
     // this.action.setPaginationFilter(filterNameComponent);
     this.action.refreshTable();
   }
-
-  public distRedundantCheckedSdm() {
-    const tempData = [];
-    this.action.table().rows.forEach((item) => {
-      if (item.checked) {
-        tempData.push(item);
-      }
-    });
-
-    console.log(tempData);
-  }
-
-  // public assignSdmSubmit() {
-  //   this.isButtonClicked = true;
-  //   this.listMultiInsert.forEach((sdmHiring: MultiInsert) => {
-  //     this.IdSdm = sdmHiring.sdmId;
-  //     this.getClientid = sdmHiring.clientId;
-  //     this.hiringstatId = sdmHiring.hirestatId;
-  //     sdmHiring.postSdmHiring();
-  //   });
-
-  //   }
-  // }
 }
