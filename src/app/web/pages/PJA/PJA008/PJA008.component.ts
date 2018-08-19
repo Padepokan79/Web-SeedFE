@@ -1,18 +1,18 @@
-import { CoreFactory } from './../../../../core/factory/core.factory';
-import { DataTable } from './../../../../core/models/data-table';
-import { InputForm } from './../../../../core/models/input-form';
-import { ActionService } from './../../../../core/services/uninjectable/action.service';
+import { CoreFactory } from '../../../../core/factory/core.factory';
+import { DataTable } from '../../../../core/models/data-table';
+import { InputForm } from '../../../../core/models/input-form';
+import { ActionService } from '../../../../core/services/uninjectable/action.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { LOVService } from './../../../../core/services/uninjectable/lov.service';
+import { LOVService } from '../../../../core/services/uninjectable/lov.service';
 import { SearchCriteria } from './SearchCriteria';
-import { ISimplifiedFilterOperand } from './../../../../core/interfaces/main/i-simplified-filter-operand';
-import { Comparison } from './../../../../core/enums/comparison-operator.enum';
-import { Conjunction } from './../../../../core/enums/conjunction-operator.enum';
-import { DefaultNotificationService } from './../../../../core/services/default-notification.service';
-import { ListOfValue } from './../../../../core/models/list-of-value';
-import { FormGroup, FormControl, CheckboxControlValueAccessor } from './../../../../../../node_modules/@angular/forms';
-import { ActivatedRoute } from '../../../../../../node_modules/@angular/router';
-import { HttpClient } from '../../../../../../node_modules/@angular/common/http';
+import { ISimplifiedFilterOperand } from '../../../../core/interfaces/main/i-simplified-filter-operand';
+import { Comparison } from '../../../../core/enums/comparison-operator.enum';
+import { Conjunction } from '../../../../core/enums/conjunction-operator.enum';
+import { DefaultNotificationService } from '../../../../core/services/default-notification.service';
+import { ListOfValue } from '../../../../core/models/list-of-value';
+import { FormGroup, FormControl, CheckboxControlValueAccessor } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 import { MultiInsert } from './MultiInsert';
 
 @Component({
