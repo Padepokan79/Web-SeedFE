@@ -11,10 +11,10 @@ import { Conjunction } from './../../../../core/enums/conjunction-operator.enum'
 import { DefaultNotificationService } from './../../../../core/services/default-notification.service';
 import { ListOfValue } from './../../../../core/models/list-of-value';
 import { FormGroup, FormControl, CheckboxControlValueAccessor } from './../../../../../../node_modules/@angular/forms';
-import { ISimplifiedFilterComponent } from '../../../../core/interfaces/main/i-simplified-filter-component';
-import { MultiInsert } from './MultiInsert';
 import { ActivatedRoute } from '../../../../../../node_modules/@angular/router';
 import { HttpClient } from '../../../../../../node_modules/@angular/common/http';
+import { MultiInsert } from './MultiInsert';
+import { MultiInsertSdmAssign } from './MultiInsertSdmAssign';
 
 @Component({
   selector: 'app-PJA012',
@@ -35,10 +35,10 @@ export class PJA012Component implements OnInit {
   public dataTable: DataTable;
   public listSearchCriteria: SearchCriteria[] = [];
   public listMultiInsert: MultiInsert[] = [];
+  public listMultiInsertSdmAssign: MultiInsertSdmAssign[] = [];
   public IdSdm: any;
   public filteredSdm: any;
   public getClientid: number;
-
   public lovSDM: LOVService;
   public lovSkillType: LOVService;
   public lovSkill: LOVService;
@@ -46,7 +46,18 @@ export class PJA012Component implements OnInit {
   public isButtonClicked = false;
   public hiringSubmit: any;
   public assignSubmit: any;
-  public dataHiringInput: [];
+  public doubleFilter: any;
+  public categorySkill: any;
+  public varSkill: string;
+  public skillValue: string;
+  public hiringstatId: number;
+  public methodIds: any;
+  public sdmhiringId: string;
+  public sdmassignStartdate: string;
+  public sdmassignEnddate: string;
+  public sdmassignLoc: string;
+  public sdmassignPicclient: string;
+  public sdmassignPicclientphone: string;
 
   constructor(private _factory: CoreFactory, public _notif: DefaultNotificationService, private route: ActivatedRoute, private httpClient: HttpClient) {
     this.listSearchCriteria.push(new SearchCriteria(_factory));
@@ -66,7 +77,7 @@ export class PJA012Component implements OnInit {
   public setSdmValue(inputForm: FormGroup, dataSdm: ListOfValue) {
     if (dataSdm) {
       this.IdSdm = dataSdm.key;
-      // this.action.patchFormData({ sdm_id: dataSdm.key, sdm_name: dataSdm.values.sdm_sdm_name });
+      this.action.patchFormData({ sdm_id: dataSdm.key, sdm_name: dataSdm.values.sdm_sdm_name });
     }
   }
 
@@ -123,34 +134,37 @@ export class PJA012Component implements OnInit {
     this.isButtonClicked = true;
     const filterComponent: ISimplifiedFilterOperand[] = [];
     this.listSearchCriteria.forEach((searchCriteria: SearchCriteria) => {
+      this.categorySkill = searchCriteria.skilltype_id;
+      this.varSkill = searchCriteria.skill_id;
+      this.skillValue = searchCriteria.value;
+
       filterComponent.push(
         Conjunction.AND(
-          Comparison.EQ('skilltype_id', searchCriteria.skilltype_id),
-          Comparison.EQ('skill_id', searchCriteria.skill_id),
-          Comparison.GE('sdmskill_value', searchCriteria.value)
+          Comparison.EQ('skilltype_id', this.categorySkill),
+          Comparison.EQ('skill_id', this.varSkill),
+          Comparison.GE('sdmskill_value', this.skillValue)
         )
       );
-
-      this._notif.success({
-        message : 'Data has been Filtered'
-      });
     });
 
-    // const filterNameComponent: ISimplifiedFilterComponent[] = [];
-    // filterNameComponent.push(
-    //   Comparison.EQ('sdm_id', this.IdSdm)
-    // );
+    // if (this.IdSdm == null) {
+    //   this.doubleFilter = Conjunction.OR(...filterComponent);
+    // }
 
-    // this._notif.success({
-    //   message : this,
-    // });
+    // if (this.categorySkill == null) {
+    //   this.doubleFilter = Comparison.EQ('sdm_id', this.IdSdm);
+    // }
 
-    const doubleFilter = Conjunction.OR(
+    this.doubleFilter = Conjunction.OR(
       ...filterComponent,
       Comparison.EQ('sdm_id', this.IdSdm)
     );
 
-    this.action.setPaginationFilter(doubleFilter);
+    this._notif.success({
+      message : 'Data has been Filtered'
+    });
+
+    this.action.setPaginationFilter(this.doubleFilter);
     // this.action.setPaginationFilter(filterNameComponent);
     this.action.refreshTable();
   }
@@ -166,12 +180,26 @@ export class PJA012Component implements OnInit {
     console.log(tempData);
   }
 
-  public assignSdmSubmit() {
-    this.isButtonClicked = true;
-    // const postAPI = this._factory.api({
-    //   api: 'project/mengelolaSdmHiring',
-    // });
-    console.log(this.dataHiringInput);
-    // this._factory.http().post(postAPI,this.action.getFormData()).subscribe((response: any) => { });
-  }
+  // public assignSdmSubmit() {
+  //   this.isButtonClicked = true;
+  //   this.listMultiInsert.forEach((sdmHiring: MultiInsert) => {
+  //     this.IdSdm = sdmHiring.sdmId;
+  //     this.getClientid = sdmHiring.clientId;
+  //     this.hiringstatId = sdmHiring.hirestatId;
+  //     sdmHiring.postSdmHiring();
+  //   });
+
+  //   if (this.listMultiInsert) {
+  //     this.listMultiInsertSdmAssign.forEach((sdmAssignment: MultiInsertSdmAssign) => {
+  //       this.methodIds = sdmAssignment.methodId;
+  //       this.sdmhiringId = sdmAssignment.sdmhiringId;
+  //       this.sdmassignStartdate = sdmAssignment.sdmassignStartdate;
+  //       this.sdmassignEnddate = sdmAssignment.sdmassignEnddate;
+  //       this.sdmassignLoc = sdmAssignment.sdmassignLoc;
+  //       this.sdmassignPicclient = sdmAssignment.sdmassignPicclient;
+  //       this.sdmassignPicclientphone = sdmAssignment.sdmassignPicclientphone;
+  //       sdmAssignment.postSdmAssignment();
+  //     });
+  //   }
+  // }
 }
