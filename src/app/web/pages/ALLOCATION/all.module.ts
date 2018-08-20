@@ -7,6 +7,7 @@ import { ALL005Component } from './ALL005/ALL005.component';
 import { ALL003Component } from './ALL003/ALL003.component';
 import { ALL004Component } from './ALL004/ALL004.component';
 import { InputSkill } from './ALL004/InputSkill';
+import { HttpClientModule } from '@angular/common/http';
 
 const ALL_COMPONENTS = [
     ALL001Component,
@@ -20,7 +21,8 @@ const ALL_COMPONENTS = [
 @NgModule({
   imports: [
     ...PAGES_MODULE_PROVIDERS,
-    routing
+    routing,
+    HttpClientModule
   ],
   exports: [
     ...ALL_COMPONENTS

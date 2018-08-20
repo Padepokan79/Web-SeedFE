@@ -1,71 +1,70 @@
 <!-- Created by : Vikri Ramdhani
 Date       : 2-08-2018
 Modified   : 10-08-2018 by Vikri Ramdhani -->
-<mat-toolbar>
-  Input Nilai Skill Sdm
-</mat-toolbar>
-<div class="breadcrumbs">
-  <ul class="breadcrumb">
-    <li><a href="#">SdmSkill</a></li>
-    <li><a href="#">Input Nilai Skill Sdm</a></li>
-  </ul>
-</div>
-<form class="io-form-body" style="background-color: white; padding-top: 10px;" [formGroup]="action?.formControls()">
-<div class="filter-contents" align="center">
-    <div id="filtering" class="row row-center"> 
-      <ul class="list-filter">
-      <div class="col-md-2 go-tight">
-            <mat-form-field class="sdw-full-size">
-              <mat-select placeholder="Choose Sdm" [(value)]="selected" formControlName="sdm_id" name="sdm_id" required>
-                  <mat-option *ngFor="let lov of lovSDM.data" [value]="lov.key">
-                    {{lov.value}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-         </div>
-         <div class="col-md-2 go-tight">
-            <mat-form-field class="sdw-full-size">
-              <input matInput placeholder="Nik" value="{{ selected }}" disabled>
-            </mat-form-field>
-          </div>
-        <li *ngFor="let searchCriteria of listSearchCriteria; let inc = index" class="col-md-12">
-          <div class="col-md-2 go-tight">
-            <mat-form-field class="sdw-full-size">
-              <mat-select placeholder="Choose Category" formControlName="skilltype_id" [(ngModel)]="searchCriteria.skilltype_id" name="skilltype_id" required>
-                <mat-option *ngFor="let lov of searchCriteria.lovSkillType.data" [value]="lov.key" (onSelectionChange)="searchCriteria.selectedSkill($event, lov)">
-                  {{lov.value}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-          <div class="col-md-2 go-tight">
-            <mat-form-field class="sdw-full-size">
-              <mat-select placeholder="Choose Skill" formControlName="skill_id" [(ngModel)]="searchCriteria.skill_id" name="skill_id" required>
-                <mat-option *ngFor="let lov of searchCriteria.lovSkill?.data" [value]="lov.key">
-                  {{lov.value}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-          <div class="col-md-2 go-tight">
-            <mat-form-field class="sdw-full-size">
-              <input matInput type="number" min="1" max="10" formControlName="sdmskill_value" placeholder="Value" [(ngModel)]="searchCriteria.value" name="sdmskill_value" class="blacky" required>
-            </mat-form-field>
-          </div>
-          <div class="col-sm-1">
-            <button class="btn btn-primary btn-sm" *ngIf="inc==0" (click)="addSearchCriteria()"><i class="fa fa-plus"></i></button>
-            <button class="btn btn-warning btn-sm" *ngIf="inc>0" (click)="removeSearchCriteria(inc,1)"><i class="fa fa-minus"></i></button>
-          </div>
-        </li>
-      </ul>
+<io-form>
+    <div class="io-form-header">
+      <span><i class="fa fa-home"></i></span>  
+        <a [routerLink]="['/pages/dashboard']">Dashboard</a><b> > </b>
+        <a [routerLink]="['']">SDM Allocation</a><b> > </b>
+        <a [routerLink]="['']">List SDM Skill Allocation</a><b> > </b>
+        <a [routerLink]="['']">Input Nilai Skill SDM</a> 
     </div>
-    <br>
-    <div class="action-filter col-md-12" style="width: 100%; background-color: white; float: left; padding-bottom: 10px;">
-      <!-- <button class="btn btn-primary btn-mm" (click)="addSearchCriteria()">+</button> -->
-      <button class="btn btn-success save" (click)="action.onSave()">Save</button>
-      <a [routerLink]="['/pages/all/ALL003']">
-      <button class="btn btn-danger save">Back</button>
-    </a>
-    </div>
-</div>
-</form>
+    <form class="io-form-body" style="background-color: transparent; padding-top: 10px; ">
+      <div class="filter-contents" align="center">
+          <div id="filtering" class="row row-center"> 
+            <ul class="list-filter">
+            <div class="col-md-2 go-tight" style="width: 25%;">
+                  <mat-form-field class="sdw-full-size">
+                    <mat-select placeholder="Choose Sdm" [(value)]="selected" formControlName="sdm_id" name="sdm_id" required>
+                        <mat-option *ngFor="let lov of lovSDM.data" [value]="lov.key">
+                          {{lov.value}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+               </div>
+               <div class="col-md-2 go-tight" style="width: 25%;">
+                  <mat-form-field class="sdw-full-size">
+                    <input matInput placeholder="Nik" value="{{ selected }}" disabled>
+                  </mat-form-field>
+                </div>
+              <li style="list-style: none; margin-left: -1.5%;" *ngFor="let searchCriteria of listSearchCriteria; let inc = index" class="col-md-12">
+                <div class="col-md-2 go-tight" style="width: 25%;">
+                  <mat-form-field class="sdw-full-size">
+                    <mat-select placeholder="Choose Category" formControlName="skilltype_id" [(ngModel)]="searchCriteria.skilltype_id" name="skilltype_id" required>
+                      <mat-option *ngFor="let lov of searchCriteria.lovSkillType.data" [value]="lov.key" (onSelectionChange)="searchCriteria.selectedSkill($event, lov)">
+                        {{lov.value}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-2 go-tight" style="width: 25%;">
+                  <mat-form-field class="sdw-full-size">
+                    <mat-select placeholder="Choose Skill" formControlName="skill_id" [(ngModel)]="searchCriteria.skill_id" name="skill_id" required>
+                      <mat-option *ngFor="let lov of searchCriteria.lovSkill?.data" [value]="lov.key">
+                        {{lov.value}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-2 go-tight" style="width: 25%;">
+                  <mat-form-field class="sdw-full-size">
+                    <input matInput type="number" min="1" max="10" formControlName="sdmskill_value" placeholder="Value" [(ngModel)]="searchCriteria.value" name="sdmskill_value" class="blacky" required>
+                  </mat-form-field>
+                </div>
+                <div class="col-sm-1">
+                  <button class="btn btn-primary btn-sm" *ngIf="inc==0" (click)="addSearchCriteria()"><i class="fa fa-plus"></i></button>
+                  <button class="btn btn-warning btn-sm" *ngIf="inc>0" (click)="removeSearchCriteria(inc,1)"><i class="fa fa-minus"></i></button>
+                </div>
+              </li>
+            </ul>
+            <div class="action-filter col-md-12" style="width: 110%; background-color: transparent; float: left; margin-top: 20px; margin-left: 3%">
+              <button class="btn btn-success save" (click)="doPOST()">Save</button>
+              <a [routerLink]="['/pages/all/ALL003']">
+                <button class="btn btn-danger save">Back</button>
+              </a>
+            </div>
+          </div>
+          <br>
+      </div>
+    </form>
+</io-form>
