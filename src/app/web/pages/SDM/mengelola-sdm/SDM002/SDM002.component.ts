@@ -22,10 +22,11 @@ export class SDM002Component implements OnInit {
     this.route.params.subscribe((param) => {
       this.selectedId = param.id;
       this.id = param.id;
+      console.log(this.id);
     });
   }
 
   public ngOnInit() {
-    console.log('Selected ID : ' + this.selectedId);
+    // console.log('Selected ID : ' + this.selectedId);
   }
 }

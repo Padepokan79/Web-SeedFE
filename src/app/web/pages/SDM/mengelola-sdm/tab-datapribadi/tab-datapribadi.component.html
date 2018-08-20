@@ -25,7 +25,7 @@
                 <img mat-card-image style="width: 200px"  [src]="imageUrl" ><br>
                 <label for="singleFile">Browse Image</label>
                 <!-- <input id="singleFile" type="file"> -->
-                <input type="file" #Image accept="image/*" (change)="handleFileInput($event.target.files)" formControlName="sdm_image" name="sdm_image">
+                <!-- <input type="file" #Image accept="image/*" (change)="handleFileInput($event.target.files)" formControlName="sdm_image" name="sdm_image"> -->
 
             </div>
         </td>
@@ -232,9 +232,10 @@
         <td>Penempatan</td>
         <td>:</td>
         <td>
-            <mat-form-field class="sdw-full-size">
-                <input matInput placeholder="" formControlName="sdm_contractloc" name="sdm_contractloc">
-                </mat-form-field>
+            <mat-radio-group class="margin-field" formControlName="sdm_contractloc" name="sdm_contractloc" >
+                <mat-radio-button value="1">Bandung</mat-radio-button>
+                <mat-radio-button value="2">Luar Bandung</mat-radio-button>
+            </mat-radio-group>            
         </td>
     </tr>
 

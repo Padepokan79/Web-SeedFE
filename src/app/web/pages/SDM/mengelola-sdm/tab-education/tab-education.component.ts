@@ -70,37 +70,51 @@ export class TabEducationComponent implements OnInit {
         edu_enddate: {
           pattern: 'Masukkan tahun'
         }
-      },
-      resetFormAfterAction: true
+      }
     });
 
     if (this.form === 2) {
-      this.dataTable = this._factory.dataTable({
-        serverSide: true,
-        pagingParams: {
-          filter: {
-            field: 'sdm_id',
-            operator: COMPARISON_OPERATOR.EQ,
-            value: this.id
-          },
-          limit: 5
-        },
-        searchCriteria: [
-          { viewValue: 'ID SDM', viewKey: 'sdm_id', type: TYPE.NUMBER }
-        ],
-        tableColumns: [
-          { prop: 'sdm_id', name: 'No', width: 10, sortable: false },
-          { prop: 'edu_name', name: 'Nama Sekolah', width: 30, sortable: true },
-          { prop: 'gelar', name: 'Tingkat', width: 20, sortable: true },
-          { prop: 'edu_subject', name: 'Jurusan', width: 20, sortable: true },
-          { prop: 'edu_startdate', name: 'Tahun Masuk', width: 20, sortable: true },
-          { prop: 'edu_enddate', name: 'Tahun Keluar', width: 20, sortable: true },
-          {
-            prop: 'edu_id', name: 'Action', width: 20,
-            cellTemplate: this.tableActionTemplate, sortable: false
+      const readAllApi = this._factory.api({
+        api : 'sdm/education/readAll',
+        pagingParams : {
+          filter : {
+            field : 'sdm_id',
+            operator : COMPARISON_OPERATOR.EQ,
+            value : this.id
           }
-        ]
+        }
       });
+
+      this._factory.http().get(readAllApi).subscribe((res: any) => {
+        console.log(res);
+        this.action.patchFormData(res.data.items[0]);
+      });
+    //   this.dataTable = this._factory.dataTable({
+    //     serverSide: true,
+    //     pagingParams: {
+    //       filter: {
+    //         field: 'sdm_id',
+    //         operator: COMPARISON_OPERATOR.EQ,
+    //         value: this.id
+    //       },
+    //       limit: 5
+    //     },
+    //     searchCriteria: [
+    //       { viewValue: 'ID SDM', viewKey: 'sdm_id', type: TYPE.NUMBER }
+    //     ],
+    //     tableColumns: [
+    //       { prop: 'sdm_id', name: 'No', width: 10, sortable: false },
+    //       { prop: 'edu_name', name: 'Nama Sekolah', width: 30, sortable: true },
+    //       { prop: 'degree_id', name: 'Tingkat', width: 20, sortable: true },
+    //       { prop: 'edu_subject', name: 'Jurusan', width: 20, sortable: true },
+    //       { prop: 'edu_startdate', name: 'Tahun Masuk', width: 20, sortable: true },
+    //       { prop: 'edu_enddate', name: 'Tahun Keluar', width: 20, sortable: true },
+    //       {
+    //         prop: 'edu_id', name: 'Action', width: 20,
+    //         cellTemplate: this.tableActionTemplate, sortable: false
+    //       }
+    //     ]
+    //   });
     }
     this.action = this._factory.actions({
       api: 'sdm/Education',
@@ -114,7 +128,7 @@ export class TabEducationComponent implements OnInit {
     });
   }
 
-  // public resetForm() {
-  //   this.action.onReset();
-  // }
+  public resetForm() {
+    this.action.onReset();
+  }
 }
