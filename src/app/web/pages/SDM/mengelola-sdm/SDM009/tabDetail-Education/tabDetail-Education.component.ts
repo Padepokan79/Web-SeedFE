@@ -5,6 +5,7 @@ import { DataTable } from '../../../../../../core/models/data-table';
 import { LOVService } from '../../../../../../core/services/uninjectable/lov.service';
 import { CoreFactory } from '../../../../../../core/factory/core.factory';
 import { COMPARISON_OPERATOR, TYPE } from '../../../../../../core/constant/constant';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-tabDetail-Education',
@@ -35,8 +36,16 @@ export class TabDetailEducationComponent implements OnInit {
   public dataTable: DataTable;
 
   public lovDegree: LOVService;
+  private selectedId: any;
 
-  constructor(private _factory: CoreFactory) { }
+  constructor( private _factory: CoreFactory,
+               private route: ActivatedRoute
+  ) {
+    this.route.params.subscribe((param) => {
+      this.selectedId = param.id;
+      console.log(this.selectedId);
+    });
+  }
 
   public ngOnInit() {
     if (this.form === 1) {
@@ -51,6 +60,7 @@ export class TabDetailEducationComponent implements OnInit {
         sdm_id: this.sdmid,
         edu_name: '',
         degree_id: '',
+        degree_name: '',
         edu_subject: '',
         edu_startdate: '',
         edu_enddate: '',
@@ -60,6 +70,23 @@ export class TabDetailEducationComponent implements OnInit {
           required: 'Silahkan masukkan Nama Sekolah'
         },
       }
+    });
+
+    this.dataTable = this._factory.dataTable({
+      serverSide : true,
+      pagingParams : {
+        limit : 10
+      },
+      // searchCriteria : [
+      //   { viewValue: 'Edu Name', viewKey: 'edu_name', type: TYPE.STRING}
+      // ],
+      tableColumns : [
+        { prop: 'edu_name', name: 'Nama Sekolah', width: 40, sortable: false },
+        { prop: 'edu_subject', name: 'Jurusan', width: 100, sortable: false },
+        { prop: 'degree_name', name: 'Tingkat', width: 100, sortable: false },
+        { prop: 'edu_startdate', name: 'Tahun Masuk', width: 100, sortable: false },
+        { prop: 'edu_enddate', name: 'Tahun Keluar', width: 100, sortable: false }
+      ]
     });
 
     if (this.form === 2) {
@@ -80,7 +107,7 @@ export class TabDetailEducationComponent implements OnInit {
       tableColumns : [
         { prop: 'sdm_id', name: 'No', width: 10, sortable: false },
         { prop: 'edu_name', name: 'Nama Sekolah', width: 30, sortable: true },
-        { prop: 'gelar', name: 'Tingkat', width: 20, sortable: true },
+        { prop: 'degree_name', name: 'Tingkat', width: 20, sortable: true },
         { prop: 'edu_subject', name: 'Jurusan', width: 20, sortable: true },
         { prop: 'edu_startdate', name: 'Tahun Masuk', width: 20, sortable: true },
         { prop: 'edu_enddate', name: 'Tahun Keluar', width: 20, sortable: true },
@@ -99,6 +126,23 @@ export class TabDetailEducationComponent implements OnInit {
     this.lovDegree = this._factory.lov({
       api: 'lov/degree',
       initializeData: true
+    });
+
+    const readAllApi = this._factory.api({
+      api : 'sdm/education/readAll',
+      pagingParams : {
+        filter : {
+          field : 'sdm_id',
+          operator : COMPARISON_OPERATOR.EQ,
+          value : this.selectedId
+        }
+      }
+    });
+
+    this._factory.http().get(readAllApi).subscribe((res: any) => {
+      console.log(res);
+      this.action.patchFormData(res.data.items[0]);
+      // this.dataTable = res.data.items[0];
     });
   }
 

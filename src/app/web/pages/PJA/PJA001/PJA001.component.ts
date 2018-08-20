@@ -1,7 +1,7 @@
 // 
 // AUTHOR  	: Malik Chaudhary
 // CREATED 	: Wednesday, ‎August ‎1, ‎2018, ‏‎9:48:58 AM
-// UPDATE	:  
+// UPDATE	  : APN, Thursday, August 16, ‎2018, ‏‎9:37:29 AM
 // 
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { InputForm } from './../../../../core/models/input-form';
@@ -15,6 +15,8 @@ import {FormControl, FormGroup} from '@angular/forms';
 import { ListOfValue } from '../../../../core/models/list-of-value';
 import { MatOptionSelectionChange } from '@angular/material';
 //import { DataTable } from './../../../../core/models/data-table';
+import { Router } from '../../../../../../node_modules/@angular/router';
+
 @Component({
   selector: 'app-PJA001',
   templateUrl: './PJA001.component.html',
@@ -42,7 +44,10 @@ export class PJA001Component implements OnInit {
 	public kdSdm: any;
   //public dataTable: DataTable;
 
-  constructor(private _factory: CoreFactory) {
+  constructor(
+    private _factory: CoreFactory,
+    private router: Router
+  ) {
 			this.sdmCtrl = new FormControl();
               this.filteredSdm = this.sdmCtrl.valueChanges
               .startWith('')
@@ -53,7 +58,7 @@ export class PJA001Component implements OnInit {
   	 this.inputForm = this._factory.inputForm({
       formControls: {
   			sdm_id: '',
-        sdm_n_i_k: '',
+        sdm_nik: '',
         sdm_name: '',
   			project_name: '',
   			project_desc: '',
@@ -76,7 +81,7 @@ export class PJA001Component implements OnInit {
   			sdm_id: {
   				required: 'Silahkan masukan Nama SDM'
   			},
-        sdm_n_i_k: {
+        sdm_nik: {
           required: 'Silahkan masukan NIK SDM'
         },
   			project_name: {
@@ -163,6 +168,10 @@ export class PJA001Component implements OnInit {
 
         }
     }
+
+  public timeOut() {
+      setTimeout(() => this.router.navigate(['pages/pja/PJA003']), 1000);
+  }
   // public aksi = this._factory.lov({api: 'lov/Skill', initializeData:true});
   // private _filter(value: string): string[] {
   //   const filterValue = value.toLowerCase();

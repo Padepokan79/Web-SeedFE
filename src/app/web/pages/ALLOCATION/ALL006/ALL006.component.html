@@ -1,7 +1,6 @@
 <!-- 
 AUTHOR  	: Khairil Anwar
-CREATED 	: Wednesday, ‎August 2nd ‎ 2018 13:00:43 PM
-UPDATE		: Wednesday, August 15th 2018 08:05:00 AM
+CREATED 	: Friday, ‎August 17th 2018 08:12:51 AM
 -->
 <mat-toolbar>
   SDM Assign
@@ -11,8 +10,8 @@ UPDATE		: Wednesday, August 15th 2018 08:05:00 AM
     <div class="title-header">
       <span><i class="fa fa-home"></i></span>
       <a [routerLink]="['/pages/dashboard']">dashboard</a><b> > </b>
-      <a [routerLink]="['/pages/project']"><span>Project Assignment</span></a><b> > </b>
-      <a><span>Assign SDM untuk {{ getClientid }}</span></a>
+      <a [routerLink]="['/pages/Allocation']"><span>SDM Allocation</span></a><b> > </b>
+      <a><span>Multifiltering SDM</span></a>
     </div>
   </div>
 </div>
@@ -80,12 +79,9 @@ UPDATE		: Wednesday, August 15th 2018 08:05:00 AM
         <h3>Candidates</h3>
       </div>
     </io-table>      
-    <div class="action-filter col-md-12">
-      <button [routerLink]="['/pages/dashboard']" class="btn btn-mm"> &lt; Back</button>
-      <button class="btn btn-primary btn-mm" (click)="assignSdmSubmit()" [routerLink]="['/pages/pja/PJA010']">Submit</button>
-    </div>
   </form>
+  <ng-template #tableActionTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
+    <button class="btn btn-warning btn-mm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>"</button>
+    <button class="btn btn-warning btn-mm"><i class="fa fa-trash" aria-hidden="true"></i>"</button>    
+  </ng-template>
 </div>
-<ng-template #tableActionTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
-  <mat-checkbox (change)="distRedundantCheckedSdm()" value="{{row.sdm_id}}" [(ngModel)]="row.Checked" [name]="row.sdm_id"></mat-checkbox>
-</ng-template>

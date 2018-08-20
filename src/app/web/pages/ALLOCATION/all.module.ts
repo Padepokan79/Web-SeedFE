@@ -8,13 +8,15 @@ import { ALL003Component } from './ALL003/ALL003.component';
 import { ALL004Component } from './ALL004/ALL004.component';
 import { InputSkill } from './ALL004/InputSkill';
 import { HttpClientModule } from '@angular/common/http';
+import { ALL006Component } from './ALL006/ALL006.component';
 
 const ALL_COMPONENTS = [
     ALL001Component,
     ALL002Component,
     ALL003Component,
     ALL004Component,
-    ALL005Component
+    ALL005Component,
+    ALL006Component
     // InputSkill
 ];
 

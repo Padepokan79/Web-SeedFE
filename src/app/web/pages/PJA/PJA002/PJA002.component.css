@@ -1,7 +1,7 @@
 /*
 AUTHOR 		: Malik Chaudhary
 CREATED 	: ‎Thursday, ‎August ‎2, ‎2018, ‏‎1:45:06 PM
-UPDATE 		:
+UPDATE 		: ‎Thursday, ‎August ‎16, ‎2018, ‏‎1:51 PM
 */
 
 td{
@@ -18,4 +18,7 @@ td{
 
 table{
     width: 90%
+}
+.time{
+    float: right;
 }

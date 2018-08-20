@@ -1,7 +1,6 @@
 <!-- 
 AUTHOR  	: Khairil Anwar
-CREATED 	: Wednesday, ‎August 2nd ‎ 2018 13:00:43 PM
-UPDATE		: Wednesday, August 15th 2018 08:05:00 AM
+CREATED 	: Thursday, ‎August 16th 2018 23:00:00 PM
 -->
 <mat-toolbar>
   SDM Assign
@@ -12,7 +11,7 @@ UPDATE		: Wednesday, August 15th 2018 08:05:00 AM
       <span><i class="fa fa-home"></i></span>
       <a [routerLink]="['/pages/dashboard']">dashboard</a><b> > </b>
       <a [routerLink]="['/pages/project']"><span>Project Assignment</span></a><b> > </b>
-      <a><span>Assign SDM untuk {{ getClientid }}</span></a>
+      <a><span>Hire SDM</span></a>
     </div>
   </div>
 </div>
@@ -82,10 +81,10 @@ UPDATE		: Wednesday, August 15th 2018 08:05:00 AM
     </io-table>      
     <div class="action-filter col-md-12">
       <button [routerLink]="['/pages/dashboard']" class="btn btn-mm"> &lt; Back</button>
-      <button class="btn btn-primary btn-mm" (click)="assignSdmSubmit()" [routerLink]="['/pages/pja/PJA010']">Submit</button>
+      <button class="btn btn-primary btn-mm" [routerLink]="['/pages/pja/PJA006']">Get</button>
     </div>
   </form>
+  <ng-template #tableActionTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
+    <mat-checkbox (change)="distRedundantCheckedSdm()" value="{{row.sdm_id}}" [(ngModel)]="row.Checked" [name]="row.sdm_id"></mat-checkbox>
+  </ng-template>
 </div>
-<ng-template #tableActionTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
-  <mat-checkbox (change)="distRedundantCheckedSdm()" value="{{row.sdm_id}}" [(ngModel)]="row.Checked" [name]="row.sdm_id"></mat-checkbox>
-</ng-template>
