@@ -18,7 +18,8 @@ export class ALL003Component implements OnInit {
 
   @ViewChild('tableActionTemplate')
   public tableActionTemplate: any;
-
+  @ViewChild('notif')
+  public notif: any;
   public action: ActionService;
   public inputForm: InputForm;
   public dataTable: DataTable;
@@ -78,8 +79,11 @@ export class ALL003Component implements OnInit {
         { prop: 'skilltype_name', name: 'Skill Type Name', width: 100, sortable: false },
         { prop: 'sdmskill_value', name: 'Skill Value', width: 100, sortable: true },
         { prop: 'project_enddate', name: 'Project End Date', width: 100, sortable: false },
+        { prop: 'notif', name: 'Notifikasi', width: 50,
+        cellTemplate: this.notif, sortable: false },
         { prop: 'sdmskill_id', name: 'Action', width: 100,
-        cellTemplate: this.tableActionTemplate, sortable: false }
+        cellTemplate: this.tableActionTemplate, sortable: false },
+        
       ]
     });
     this.action = this._factory.actions({
