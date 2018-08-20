@@ -10,7 +10,7 @@ import { Comparison } from '../../../../core/enums/comparison-operator.enum';
 import { Conjunction } from '../../../../core/enums/conjunction-operator.enum';
 import { DefaultNotificationService } from '../../../../core/services/default-notification.service';
 import { ListOfValue } from '../../../../core/models/list-of-value';
-import { FormGroup, FormControl, CheckboxControlValueAccessor } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { MultiInsert } from './MultiInsert';
@@ -172,15 +172,14 @@ export class PJA008Component implements OnInit {
     console.log(tempData);
   }
 
-  // public assignSdmSubmit() {
-  //   this.isButtonClicked = true;
-  //   this.listMultiInsert.forEach((sdmHiring: MultiInsert) => {
-  //     this.IdSdm = sdmHiring.sdmId;
-  //     this.getClientid = sdmHiring.clientId;
-  //     this.hiringstatId = sdmHiring.hirestatId;
-  //     sdmHiring.postSdmHiring();
-  //   });
+  public assignSdmSubmit() {
+    this.isButtonClicked = true;
+    this.listMultiInsert.forEach((sdmHiring: MultiInsert) => {
+      this.IdSdm = sdmHiring.sdmId;
+      this.getClientid = sdmHiring.clientId;
+      this.hiringstatId = sdmHiring.hirestatId;
+      sdmHiring.postSdmHiring();
+    });
+  }
 
-  //   }
-  // }
 }

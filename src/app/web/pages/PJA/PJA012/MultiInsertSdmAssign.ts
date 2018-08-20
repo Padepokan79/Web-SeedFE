@@ -1,5 +1,4 @@
-import { HttpParams } from '../../../../../../node_modules/@angular/common/http';
-import { HttpClient } from '../../../../../../node_modules/@types/selenium-webdriver/http';
+import { HttpParams, HttpClient } from '@angular/common/http';
 
 export class MultiInsertSdmAssign {
     public methodId: string = '';
@@ -9,7 +8,7 @@ export class MultiInsertSdmAssign {
     public sdmassignLoc: string = '';
     public sdmassignPicclient: string = '';
     public sdmassignPicclientphone: string = '';
-    public apiRoot: string = 'api/project/MengelolaSdmAssignment';
+    public apiRoot: string = 'api/project/SdmAssignment';
 
     constructor(private http: HttpClient) {
 
@@ -22,14 +21,14 @@ export class MultiInsertSdmAssign {
         };
         this.http.post(urlPost, {
             listData: [{
-                    method_id: this.methodId,
-                    sdmhiring_id: this.sdmhiringId,
-                    sdmassign_startdate: this.sdmassignStartdate,
-                    sdmassign_enddate: this.sdmassignEnddate,
-                    sdmassign_loc: this.sdmassignLoc,
-                    sdmassign_picclient: this.sdmassignPicclient,
-                    sdmassign_picclientphone: this.sdmassignPicclientphone
-                }]
+                method_id: this.methodId,
+                sdmhiring_id: this.sdmhiringId,
+                sdmassign_startdate: this.sdmassignStartdate,
+                sdmassign_enddate: this.sdmassignEnddate,
+                sdmassign_loc: this.sdmassignLoc,
+                sdmassign_picclient: this.sdmassignPicclient,
+                sdmassign_picclientphone: this.sdmassignPicclientphone
+            }]
         }, httpOptions)
         .subscribe((res) => console.log(res));
     }
