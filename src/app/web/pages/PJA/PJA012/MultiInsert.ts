@@ -22,7 +22,7 @@ export class MultiInsert {
                     hirestat_id: this.hirestatId
                 },
             ]
-``        }, httpOptions)
+        }, httpOptions)
         .subscribe((res) => console.log(res));
     }
 }

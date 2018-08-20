@@ -207,7 +207,7 @@ export class PJA012Component implements OnInit {
     } else {
       this._notif.error({
         message: 'An error occured'
-      })
+      });
     }
   }
 }
