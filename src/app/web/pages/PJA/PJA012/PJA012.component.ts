@@ -10,7 +10,7 @@ import { Comparison } from './../../../../core/enums/comparison-operator.enum';
 import { Conjunction } from './../../../../core/enums/conjunction-operator.enum';
 import { DefaultNotificationService } from './../../../../core/services/default-notification.service';
 import { ListOfValue } from './../../../../core/models/list-of-value';
-import { FormGroup, FormControl, CheckboxControlValueAccessor } from './../../../../../../node_modules/@angular/forms';
+import { FormGroup, FormControl } from './../../../../../../node_modules/@angular/forms';
 import { ActivatedRoute } from '../../../../../../node_modules/@angular/router';
 import { HttpClient } from '../../../../../../node_modules/@angular/common/http';
 import { MultiInsert } from './MultiInsert';
@@ -147,13 +147,13 @@ export class PJA012Component implements OnInit {
       );
     });
 
-    // if (this.IdSdm == null) {
-    //   this.doubleFilter = Conjunction.OR(...filterComponent);
-    // }
+    if (this.IdSdm == null) {
+      this.doubleFilter = Conjunction.OR(...filterComponent);
+    }
 
-    // if (this.categorySkill == null) {
-    //   this.doubleFilter = Comparison.EQ('sdm_id', this.IdSdm);
-    // }
+    if (this.categorySkill == null && this.varSkill == null && this.skillValue == null) {
+      this.doubleFilter = Comparison.EQ('sdm_id', this.IdSdm);
+    }
 
     this.doubleFilter = Conjunction.OR(
       ...filterComponent,
@@ -180,26 +180,34 @@ export class PJA012Component implements OnInit {
     console.log(tempData);
   }
 
-  // public assignSdmSubmit() {
-  //   this.isButtonClicked = true;
-  //   this.listMultiInsert.forEach((sdmHiring: MultiInsert) => {
-  //     this.IdSdm = sdmHiring.sdmId;
-  //     this.getClientid = sdmHiring.clientId;
-  //     this.hiringstatId = sdmHiring.hirestatId;
-  //     sdmHiring.postSdmHiring();
-  //   });
+  public assignSdmSubmit() {
+    this.isButtonClicked = true;
+    this.listMultiInsert.forEach((sdmHiring: MultiInsert) => {
+      this.IdSdm = sdmHiring.sdmId;
+      this.getClientid = sdmHiring.clientId;
+      this.hiringstatId = sdmHiring.hirestatId;
+      sdmHiring.postSdmHiring();
+    });
 
-  //   if (this.listMultiInsert) {
-  //     this.listMultiInsertSdmAssign.forEach((sdmAssignment: MultiInsertSdmAssign) => {
-  //       this.methodIds = sdmAssignment.methodId;
-  //       this.sdmhiringId = sdmAssignment.sdmhiringId;
-  //       this.sdmassignStartdate = sdmAssignment.sdmassignStartdate;
-  //       this.sdmassignEnddate = sdmAssignment.sdmassignEnddate;
-  //       this.sdmassignLoc = sdmAssignment.sdmassignLoc;
-  //       this.sdmassignPicclient = sdmAssignment.sdmassignPicclient;
-  //       this.sdmassignPicclientphone = sdmAssignment.sdmassignPicclientphone;
-  //       sdmAssignment.postSdmAssignment();
-  //     });
-  //   }
-  // }
+    if (this.listMultiInsert) {
+      this.listMultiInsertSdmAssign.forEach((sdmAssignment: MultiInsertSdmAssign) => {
+        this.methodIds = sdmAssignment.methodId;
+        this.sdmhiringId = sdmAssignment.sdmhiringId;
+        this.sdmassignStartdate = sdmAssignment.sdmassignStartdate;
+        this.sdmassignEnddate = sdmAssignment.sdmassignEnddate;
+        this.sdmassignLoc = sdmAssignment.sdmassignLoc;
+        this.sdmassignPicclient = sdmAssignment.sdmassignPicclient;
+        this.sdmassignPicclientphone = sdmAssignment.sdmassignPicclientphone;
+        sdmAssignment.postSdmAssignment();
+
+        this._notif.success({
+          message: 'Data has successfully Assigned'
+        });
+      });
+    } else {
+      this._notif.error({
+        message: 'An error occured'
+      })
+    }
+  }
 }
