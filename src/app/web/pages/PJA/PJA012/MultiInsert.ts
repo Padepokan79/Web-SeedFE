@@ -5,11 +5,10 @@ export class MultiInsert {
     public clientId: number;
     public sdmId: string = '';
     public hirestatId: number = 4;
-    public http: any;
 
-    public apiRoot: string = 'api/project/MengelolaSdmHiring/';
+    public apiRoot: string = 'api/project/MengelolaSdmHiring';
 
-    constructor(private httpClient: HttpClient) {
+    constructor(private http: HttpClient) {
 
     }
 

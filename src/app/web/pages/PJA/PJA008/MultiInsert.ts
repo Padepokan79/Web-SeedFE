@@ -5,9 +5,8 @@ export class MultiInsert {
     public clientId: number;
     public sdmId: string = '';
     public hirestatId: number = 3;
-    public http: any;
 
-    public apiRoot: string = 'api/project/MengelolaSdmHiring/';
+    public apiRoot: string = 'api/project/MengelolaSdmHiring';
 
     constructor(private httpClient: HttpClient) {
 
@@ -18,7 +17,7 @@ export class MultiInsert {
         const httpOptions = {
             params : new HttpParams()
         };
-        this.http.post(urlPost, {
+        this.httpClient.post(urlPost, {
             listData: [
                 {
                     client_id: this.clientId,
