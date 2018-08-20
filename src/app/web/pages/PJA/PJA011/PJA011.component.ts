@@ -25,6 +25,10 @@ export class PJA011Component implements OnInit {
   public time: Date = new Date();
 
   public lovMethod: LOVService;
+  
+  public sdmPhone: string;
+  public sdmName: string;
+
   private selectedId: number;
 
   constructor(
@@ -87,6 +91,8 @@ export class PJA011Component implements OnInit {
 
     this._factory.http().get(readAllApi).subscribe((res: any) => {
       this.action.patchFormData(res.data.items[0]);
+      this.sdmPhone = res.data.items[0].sdm_phone;
+      this.sdmName = res.data.items[0].sdm_name;
     });
 
     setInterval(() => {

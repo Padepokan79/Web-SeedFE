@@ -6,6 +6,8 @@ import { LOVService } from '../../../../core/services/uninjectable/lov.service';
 import { CoreFactory } from '../../../../core/factory/core.factory';
 import { TYPE } from '../../../../core/constant/constant';
 import { Router } from '@angular/router';
+import { Comparison } from '../../../../core/enums/comparison-operator.enum';
+import { Conjunction } from '../../../../core/enums/conjunction-operator.enum';
 
 @Component({
   selector: 'app-PJA007',
@@ -34,10 +36,13 @@ export class PJA007Component implements OnInit {
   public ngOnInit() {
     this.inputForm = this._factory.inputForm({
       formControls: {
+        sdm_id: '',
+        sdm_name: '',
+        sdm_phone: '',
         client_id: '',
         client_name: '',
-        client_mobileClient: '',
-        client_picClient: '',
+        client_mobileclient: '',
+        client_picclient: '',
       },
       validationMessages: {
         task_id: {
@@ -56,12 +61,12 @@ export class PJA007Component implements OnInit {
         limit : 10
       },
       searchCriteria : [
-        { viewValue: 'Client Name', viewKey: 'client_name', type: TYPE.STRING}
+        { viewValue: 'Name', viewKey: 'sdm_name', type: TYPE.STRING}
       ],
       tableColumns : [
-        { prop: 'sdmhiring_id', name: 'No', width: 40, sortable: false },
-        { prop: 'client_name', name: 'Client Name', width: 100, sortable: false },
-        { prop: 'client_mobileclient', name: 'Contact', width: 100, sortable: false },
+        { prop: 'sdmhiring_id', name: 'No', width: 20, sortable: false },
+        { prop: 'sdm_name', name: 'Name', width: 100, sortable: false },
+        { prop: 'sdm_phone', name: 'Contact', width: 100, sortable: false },
         { prop: 'hirestat_name', name: 'Status', width: 100, sortable: false },
         { prop: 'id', name: 'Action', width: 100,
           cellTemplate: this.tableActionTemplate, sortable: false }
@@ -85,6 +90,41 @@ export class PJA007Component implements OnInit {
 
   public navigateEditMenu(id) {
     this.router.navigate(['pages/pja/PJA009', { id }]);
+  }
+
+  public onSearch() {
+    const filterCriteria = [];
+
+    const ClientId = this.action.getFormControlValue('client_id');
+    // const ClientPicclient = this.action.getFormControlValue('client_picclient');
+    // const SdmassignPicclientphone = this.action.getFormControlValue('client_mobileclient');
+
+    // if (ClientId) {
+    //   filterCriteria.push(Comparison.EQ('client_id', ClientId));
+    // }
+
+    // if (SdmassignPicclient) {
+    //   filterCriteria.push(Comparison.EQ('client_picclient', SdmassignPicclient));
+    // }
+
+    // if (SdmassignPicclientphone) {
+    //   filterCriteria.push(Comparison.EQ('client_mobileclient', SdmassignPicclientphone));
+    // }
+
+    this.action.setPaginationFilter(
+      Conjunction.OR(
+        // filterCriteria
+        // Comparison.EQ('client_mobileclient', SdmassignPicclientphone),
+        // Comparison.EQ('client_picclient', ClientPicclient),
+        Comparison.EQ('client_id', ClientId),
+        // Conjunction.AND(
+        //   Comparison.EQ('project_name', SdmProject),
+        //   Comparison.EQ('sdm_id', SdmName)
+        // ),
+      )
+    );
+
+    this.action.refreshTable();
   }
 
 }

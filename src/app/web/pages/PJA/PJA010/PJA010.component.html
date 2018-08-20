@@ -57,8 +57,17 @@
           <mat-label>Get Data</mat-label>
         </td>
         <td>
-          <button class="btn btn-success btn-mm nx-button-range" [routerLink]="['/pages/pja/PJA012']">Assign</button>
+          <button mat-flat-button (click)="onSearch()">
+              <span class="glyphicon glyphicon-search nx-save-button" aria-hidden="true"></span>Filter</button>&nbsp;
+          <!-- <button mat-flat-button (click)="action.onReset()">
+              <span class="glyphicon glyphicon-remove nx-save-button" aria-hidden="true"></span>Clear</button>&nbsp; -->
+          <button mat-flat-button class="cancelButton" [routerLink]="['/pages/pja/PJA012']">Assign</button>
+          <!-- <button class="btn btn-success btn-mm nx-button-range">Hire SDM</button> -->
         </td>
+        
+        <!-- <td>
+          <button class="btn btn-success btn-mm nx-button-range" [routerLink]="['/pages/pja/PJA012']">Assign</button>
+        </td> -->
       </tr>
 
     </table>
@@ -79,6 +88,18 @@
   <button type="button" class="btn btn-primary btn-mm btn-icon" (click)="navigateEditMenu(row.sdmassign_id)">
     <i class="glyphicon glyphicon-pencil"></i>
   </button>
+  <button type="button" class="btn btn-danger btn-mm btn-icon" (click)="action.onDelete(row)">
+    <i class="glyphicon glyphicon-trash"></i>
+  </button>
+</ng-template>
+
+
+<ng-template #notif let-row="row" let-value="value" ngx-datatable-cell-template>
+  <i matTooltip="Non-Aktif" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:black; font-size: 30px" *ngIf="row.project_notification == 'black'"></i>
+  <i matTooltip="Sisa 1 bulan" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:red; font-size: 30px" *ngIf="row.project_notification == 'red'"></i>
+  <i matTooltip="Sisa 2 bulan" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:#f5f515; font-size: 30px" *ngIf="row.project_notification == 'yellow'"></i>
+  <i matTooltip="Sisa 4 bulan" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:#00da00; font-size: 30px" *ngIf="row.project_notification == 'green'"></i>
+  <i matTooltip="Sisa lebih dari 4 bulan" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:#b3b3b3; font-size: 30px" *ngIf="row.project_notification == 'grey'"></i>
 </ng-template>
 
 <!-- <ng-template #viewAsDateTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
