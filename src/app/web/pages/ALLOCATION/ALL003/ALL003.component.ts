@@ -18,7 +18,8 @@ export class ALL003Component implements OnInit {
 
   @ViewChild('tableActionTemplate')
   public tableActionTemplate: any;
-
+  @ViewChild('notif')
+  public notif: any;
   public action: ActionService;
   public inputForm: InputForm;
   public dataTable: DataTable;
@@ -36,7 +37,8 @@ export class ALL003Component implements OnInit {
         skilltype_id: '',
         skill_id: '',
         sdm_id: '',
-        sdmskill_value: ''
+        sdmskill_value: '',
+        project_enddate: '',
       },
     //   // validationMessages: {
     //   //   skilltype_name: {
@@ -71,13 +73,17 @@ export class ALL003Component implements OnInit {
         { viewValue: 'Skill Type id', viewKey: 'skilltype_id', type: TYPE.NUMBER }
       ],
       tableColumns : [
-        { prop: 'sdm_nik', name: 'NIK', width: 100, sortable: true },
-        { prop: 'sdm_name', name: 'Sdm Name', width: 100, sortable: true },
-        { prop: 'skill_name', name: 'Skill name', width: 100, sortable: true },
-        { prop: 'skilltype_name', name: 'Skill Type Name', width: 100, sortable: true },
+        { prop: 'sdm_nik', name: 'NIK', width: 100, sortable: false },
+        { prop: 'sdm_name', name: 'Sdm Name', width: 100, sortable: false },
+        { prop: 'skill_name', name: 'Skill name', width: 100, sortable: false },
+        { prop: 'skilltype_name', name: 'Skill Type Name', width: 100, sortable: false },
         { prop: 'sdmskill_value', name: 'Skill Value', width: 100, sortable: true },
+        { prop: 'project_enddate', name: 'Project End Date', width: 100, sortable: false },
+        { prop: 'notif', name: 'Notifikasi', width: 50,
+        cellTemplate: this.notif, sortable: false },
         { prop: 'sdmskill_id', name: 'Action', width: 100,
-        cellTemplate: this.tableActionTemplate, sortable: false }
+        cellTemplate: this.tableActionTemplate, sortable: false },
+        
       ]
     });
     this.action = this._factory.actions({

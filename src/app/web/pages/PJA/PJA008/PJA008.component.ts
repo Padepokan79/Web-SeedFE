@@ -1,28 +1,27 @@
-import { CoreFactory } from './../../../../core/factory/core.factory';
-import { DataTable } from './../../../../core/models/data-table';
-import { InputForm } from './../../../../core/models/input-form';
-import { ActionService } from './../../../../core/services/uninjectable/action.service';
+import { CoreFactory } from '../../../../core/factory/core.factory';
+import { DataTable } from '../../../../core/models/data-table';
+import { InputForm } from '../../../../core/models/input-form';
+import { ActionService } from '../../../../core/services/uninjectable/action.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { LOVService } from './../../../../core/services/uninjectable/lov.service';
+import { LOVService } from '../../../../core/services/uninjectable/lov.service';
 import { SearchCriteria } from './SearchCriteria';
-import { ISimplifiedFilterOperand } from './../../../../core/interfaces/main/i-simplified-filter-operand';
-import { Comparison } from './../../../../core/enums/comparison-operator.enum';
-import { Conjunction } from './../../../../core/enums/conjunction-operator.enum';
-import { DefaultNotificationService } from './../../../../core/services/default-notification.service';
-import { ListOfValue } from './../../../../core/models/list-of-value';
-import { FormGroup, FormControl, CheckboxControlValueAccessor } from './../../../../../../node_modules/@angular/forms';
-import { ActivatedRoute } from '../../../../../../node_modules/@angular/router';
-import { HttpClient } from '../../../../../../node_modules/@angular/common/http';
+import { ISimplifiedFilterOperand } from '../../../../core/interfaces/main/i-simplified-filter-operand';
+import { Comparison } from '../../../../core/enums/comparison-operator.enum';
+import { Conjunction } from '../../../../core/enums/conjunction-operator.enum';
+import { DefaultNotificationService } from '../../../../core/services/default-notification.service';
+import { ListOfValue } from '../../../../core/models/list-of-value';
+import { FormGroup, FormControl, CheckboxControlValueAccessor } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 import { MultiInsert } from './MultiInsert';
-import { MultiInsertSdmAssign } from './MultiInsertSdmAssign';
 
 @Component({
-  selector: 'app-PJA012',
-  templateUrl: './PJA012.component.html',
-  styleUrls: ['./PJA012.component.css']
+  selector: 'app-PJA008',
+  templateUrl: './PJA008.component.html',
+  styleUrls: ['./PJA008.component.css']
 })
 
-export class PJA012Component implements OnInit {
+export class PJA008Component implements OnInit {
 
   @ViewChild('viewAsDateTemplate')
   public viewAsDateTemplate: any;
@@ -35,7 +34,6 @@ export class PJA012Component implements OnInit {
   public dataTable: DataTable;
   public listSearchCriteria: SearchCriteria[] = [];
   public listMultiInsert: MultiInsert[] = [];
-  public listMultiInsertSdmAssign: MultiInsertSdmAssign[] = [];
   public IdSdm: any;
   public filteredSdm: any;
   public getClientid: number;
@@ -52,12 +50,6 @@ export class PJA012Component implements OnInit {
   public skillValue: string;
   public hiringstatId: number;
   public methodIds: any;
-  public sdmhiringId: string;
-  public sdmassignStartdate: string;
-  public sdmassignEnddate: string;
-  public sdmassignLoc: string;
-  public sdmassignPicclient: string;
-  public sdmassignPicclientphone: string;
 
   constructor(private _factory: CoreFactory, public _notif: DefaultNotificationService, private route: ActivatedRoute, private httpClient: HttpClient) {
     this.listSearchCriteria.push(new SearchCriteria(_factory));
@@ -189,17 +181,6 @@ export class PJA012Component implements OnInit {
   //     sdmHiring.postSdmHiring();
   //   });
 
-  //   if (this.listMultiInsert) {
-  //     this.listMultiInsertSdmAssign.forEach((sdmAssignment: MultiInsertSdmAssign) => {
-  //       this.methodIds = sdmAssignment.methodId;
-  //       this.sdmhiringId = sdmAssignment.sdmhiringId;
-  //       this.sdmassignStartdate = sdmAssignment.sdmassignStartdate;
-  //       this.sdmassignEnddate = sdmAssignment.sdmassignEnddate;
-  //       this.sdmassignLoc = sdmAssignment.sdmassignLoc;
-  //       this.sdmassignPicclient = sdmAssignment.sdmassignPicclient;
-  //       this.sdmassignPicclientphone = sdmAssignment.sdmassignPicclientphone;
-  //       sdmAssignment.postSdmAssignment();
-  //     });
   //   }
   // }
 }

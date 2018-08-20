@@ -23,7 +23,7 @@ export class TabDatapribadiComponent implements OnInit {
   public id: number;
 
   @Output()
-  public tabEvent= new EventEmitter<number>();
+  public tabEvent = new EventEmitter<number>();
 
   @ViewChild('viewAsDateTemplate')
   public viewAsDateTemplate: any;
@@ -108,21 +108,21 @@ export class TabDatapribadiComponent implements OnInit {
         initializeData: true
       });
 
-      const readAllApi = this._factory.api({
-        api : 'sdm/mengelolaSdm/readAll',
-        pagingParams : {
-          filter : {
-            field : 'sdm_id',
-            operator : COMPARISON_OPERATOR.EQ,
-            value : this.id
-          }
-        }
-      });
+      // const readAllApi = this._factory.api({
+      //   api : 'sdm/mengelolaSdm/readAll',
+      //   pagingParams : {
+      //     filter : {
+      //       field : 'sdm_id',
+      //       operator : COMPARISON_OPERATOR.EQ,
+      //       value : this.id
+      //     }
+      //   }
+      // });
 
-      this._factory.http().get(readAllApi).subscribe((res: any) => {
-        console.log(res);
-        this.action.patchFormData(res.data.items[0]);
-      });
+      // this._factory.http().get(readAllApi).subscribe((res: any) => {
+      //   console.log(res);
+      //   this.action.patchFormData(res.data.items[0]);
+      // });
   }
 
   public handleFileInput(file: FileList) {
@@ -135,8 +135,17 @@ export class TabDatapribadiComponent implements OnInit {
     reader.readAsDataURL(this.fileToUpload);
   }
 
-  public sendTab() {
-    this.tabEvent.emit(1);
+  public onSave() {
+    const postAPI = this._factory.api({
+      api: 'sdm/mengelolaSdm/create',
+    });
+
+    this._factory.http().post(postAPI, this.action.getFormData())
+    .subscribe((response: any) => {
+      // console.log(response.data.sdm_id);
+      this.tabEvent.emit(response.data.sdm_id);
+    });
+
   }
 
 }

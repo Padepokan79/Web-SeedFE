@@ -120,6 +120,9 @@ export class SDM003Component implements OnInit {
   public navigateEditMenu(id) {
     this.router.navigate(['/pages/sdm/SDM002', { id }]);
   }
+  public navigateDetailMenu(id) {
+    this.router.navigate(['/pages/sdm/SDM009', { id }]);
+  }
   public navigate() {
     this.router.navigate(['/pages/sdm/SDM002']);
   }

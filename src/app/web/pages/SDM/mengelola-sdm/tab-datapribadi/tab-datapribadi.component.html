@@ -161,7 +161,7 @@
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size">
-                <mat-select placeholder="" formControlName="religion_id" name="religion_id" >
+                <mat-select placeholder="" formControlName="religion_id" name="religion_id" required>
                 <!-- <mat-option></mat-option> -->
                 <mat-option *ngFor="let lov of lovReligion.data" [value]="lov.key">
                     {{lov.value}}
@@ -244,7 +244,7 @@
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size">
-                <input matInput [matDatepicker]="pickerStartDate" (click)="pickerStartDate.open()" placeholder="" formControlName="sdm_startcontract">
+                <input matInput [matDatepicker]="pickerStartDate" (click)="pickerStartDate.open()" placeholder="" formControlName="sdm_startcontract" required>
                 <mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
                 <mat-datepicker #pickerStartDate></mat-datepicker>
                 </mat-form-field>
@@ -257,7 +257,7 @@
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size">
-                <input matInput [matDatepicker]="pickerEndDate" (click)="pickerEndDate.open()" placeholder="" formControlName="sdm_endcontract">
+                <input matInput [matDatepicker]="pickerEndDate" (click)="pickerEndDate.open()" placeholder="" formControlName="sdm_endcontract" required>
                 <mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
                 <mat-datepicker #pickerEndDate></mat-datepicker>
                 </mat-form-field>
@@ -269,7 +269,7 @@
         <io-form-action [action]="action"></io-form-action>
     </div> -->
     <div class="col-md-6 pos" style="float:right">
-    <button mat-raised-button style="margin: 10px 0px" (click)="action.onSave(sendTab())" *ngIf=" form == 1 ">Submit</button>
+    <button mat-raised-button style="margin: 10px 0px" (click)="onSave()" *ngIf=" form == 1 " [disabled]="action?.formControls()?.invalid || action?.formControls()?.pristine" >Submit</button>
     <button mat-raised-button style="margin: 10px 0px" (click)="action.onEdit()" *ngIf=" form == 2 ">Update</button>
     </div>
 </form>
