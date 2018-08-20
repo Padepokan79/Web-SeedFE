@@ -108,21 +108,23 @@ export class TabDatapribadiComponent implements OnInit {
         initializeData: true
       });
 
-      // const readAllApi = this._factory.api({
-      //   api : 'sdm/mengelolaSdm/readAll',
-      //   pagingParams : {
-      //     filter : {
-      //       field : 'sdm_id',
-      //       operator : COMPARISON_OPERATOR.EQ,
-      //       value : this.id
-      //     }
-      //   }
-      // });
+      if(this.form === 2) {
+        const readAllApi = this._factory.api({
+          api : 'sdm/mengelolaSdm/readAll',
+          pagingParams : {
+            filter : {
+              field : 'sdm_id',
+              operator : COMPARISON_OPERATOR.EQ,
+              value : this.id
+            }
+          }
+        });
 
-      // this._factory.http().get(readAllApi).subscribe((res: any) => {
-      //   console.log(res);
-      //   this.action.patchFormData(res.data.items[0]);
-      // });
+        this._factory.http().get(readAllApi).subscribe((res: any) => {
+          console.log(res);
+          this.action.patchFormData(res.data.items[0]);
+        });
+      }
   }
 
   public handleFileInput(file: FileList) {
