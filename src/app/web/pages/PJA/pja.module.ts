@@ -17,7 +17,7 @@ import { PJA010Component } from './PJA010/PJA010.component';
 import { PJA011Component } from './PJA011/PJA011.component';
 import { PJA007Component } from './PJA007/PJA007.component';
 import { PJA009Component } from './PJA009/PJA009.component';
-
+import { PJA008Component } from './PJA008/PJA008.component';
 // import { SearchCriteria } from './PJA012/SearchCriteria';
 
 const PJA_COMPONENTS = [
@@ -29,6 +29,7 @@ const PJA_COMPONENTS = [
     PJA006Component,
     PJA012Component,
     PJA007Component,
+    PJA008Component,
     PJA009Component,
     PJA010Component,
     PJA011Component,

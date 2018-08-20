@@ -23,6 +23,8 @@ export class TabEducationComponent implements OnInit {
   public form: number;
   @Input()
   public id: number;
+  @Input()
+  public sdmId: number;
 
   public sdmid: number;
 
@@ -42,56 +44,64 @@ export class TabEducationComponent implements OnInit {
   public ngOnInit() {
 
     if (this.form === 1) {
-      this.sdmid = 113;
+      this.sdmid = this.sdmId;
     } else {
       this.sdmid = this.id;
     }
 
     this.inputForm = this._factory.inputForm({
       formControls: {
-        edu_id: 0,
-        sdm_id: this.sdmid,
         edu_name: '',
         degree_id: '',
         edu_subject: '',
         edu_startdate: '',
         edu_enddate: '',
       },
+      immutableFormControls: {
+        sdm_id: this.sdmid
+      },
       validationMessages: {
         edu_name: {
           required: 'Silahkan masukkan Nama Sekolah'
         },
-      }
+        edu_startdate: {
+          pattern: 'Masukkan tahun'
+        },
+        edu_enddate: {
+          pattern: 'Masukkan tahun'
+        }
+      },
+      resetFormAfterAction: true
     });
 
     if (this.form === 2) {
-
-    this.dataTable = this._factory.dataTable({
-      serverSide : true,
-      pagingParams : {
-        filter: {
-          field: 'sdm_id',
-          operator: COMPARISON_OPERATOR.EQ,
-          value: this.id
+      this.dataTable = this._factory.dataTable({
+        serverSide: true,
+        pagingParams: {
+          filter: {
+            field: 'sdm_id',
+            operator: COMPARISON_OPERATOR.EQ,
+            value: this.id
+          },
+          limit: 5
         },
-        limit : 5
-      },
-      searchCriteria : [
-        { viewValue: 'ID SDM', viewKey: 'sdm_id', type: TYPE.NUMBER }
-      ],
-      tableColumns : [
-        { prop: 'sdm_id', name: 'No', width: 10, sortable: false },
-        { prop: 'edu_name', name: 'Nama Sekolah', width: 30, sortable: true },
-        { prop: 'gelar', name: 'Tingkat', width: 20, sortable: true },
-        { prop: 'edu_subject', name: 'Jurusan', width: 20, sortable: true },
-        { prop: 'edu_startdate', name: 'Tahun Masuk', width: 20, sortable: true },
-        { prop: 'edu_enddate', name: 'Tahun Keluar', width: 20, sortable: true },
-        { prop: 'edu_id', name: 'Action', width: 20,
-          cellTemplate: this.tableActionTemplate, sortable: false }
-      ]
-    });
-
-  }
+        searchCriteria: [
+          { viewValue: 'ID SDM', viewKey: 'sdm_id', type: TYPE.NUMBER }
+        ],
+        tableColumns: [
+          { prop: 'sdm_id', name: 'No', width: 10, sortable: false },
+          { prop: 'edu_name', name: 'Nama Sekolah', width: 30, sortable: true },
+          { prop: 'gelar', name: 'Tingkat', width: 20, sortable: true },
+          { prop: 'edu_subject', name: 'Jurusan', width: 20, sortable: true },
+          { prop: 'edu_startdate', name: 'Tahun Masuk', width: 20, sortable: true },
+          { prop: 'edu_enddate', name: 'Tahun Keluar', width: 20, sortable: true },
+          {
+            prop: 'edu_id', name: 'Action', width: 20,
+            cellTemplate: this.tableActionTemplate, sortable: false
+          }
+        ]
+      });
+    }
     this.action = this._factory.actions({
       api: 'sdm/Education',
       dataTable: this.dataTable,
@@ -103,4 +113,8 @@ export class TabEducationComponent implements OnInit {
       initializeData: true
     });
   }
+
+  // public resetForm() {
+  //   this.action.onReset();
+  // }
 }

@@ -74,7 +74,7 @@
         <td><b>:</b></td>
         <td>
             <mat-form-field class="sdw-full-size">
-              <input matInput [matDatepicker]="pickerStartDate" (click)="pickerStartDate.open()" formControlName="psycological_date">
+              <input matInput [matDatepicker]="pickerStartDate" (click)="pickerStartDate.open()" formControlName="psycological_date" required>
               <mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
               <mat-datepicker #pickerStartDate></mat-datepicker>
             </mat-form-field>
@@ -88,7 +88,7 @@
           <button [routerLink]="['/pages/sdm/SDM008']" type="button" class="btn btn-primary btn-mm btn-icon">
             Back
           </button>
-          <button type="button" class="btn btn-primary btn-mm btn-icon" (click)="action.onSave(timeOut())">
+          <button type="button" class="btn btn-primary btn-mm btn-icon" (click)="action.onSave(timeOut())" [disabled]="action?.formControls()?.invalid || action?.formControls()?.pristine">
             Input
           </button>
         </td>

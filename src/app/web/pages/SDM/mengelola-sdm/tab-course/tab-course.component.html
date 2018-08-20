@@ -92,7 +92,7 @@
         <io-form-action [action]="action"></io-form-action>
     </div>
     <div class="col-md-6 pos" style="float:right">
-        <button mat-raised-button style="margin: 10px 0px" (click)="action.onSave()" *ngIf=" form == 1 ">Submit</button>
+        <button mat-raised-button style="margin: 10px 0px" (click)="resetForm(action.onSave())" *ngIf=" form == 1 ">Submit</button>
         <!-- <button mat-raised-button style="margin: 10px 0px" (click)="action.onEdit()" *ngIf=" form == 2 ">Update</button> -->
     </div>
 </form>
