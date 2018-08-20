@@ -20,7 +20,7 @@
         </td>
         <td class="nx-table-range" style="width: 100px">
           <mat-form-field class="classData">
-            <mat-select placeholder="Select Client" name="client_name">
+            <mat-select placeholder="Select Client" name="client_id">
               <mat-option *ngFor="let lov of lovClients.data" [value]="lov.key">
                 {{lov.value}}
               </mat-option>
@@ -32,8 +32,8 @@
             </mat-select> -->
           </mat-form-field>
         </td>
-        <td>
-        </td>
+        <td></td>
+        <td></td>
       </tr>
 
       <tr>
@@ -44,8 +44,11 @@
           <mat-label>:</mat-label>
         </td>
         <td class="nx-table-range">
-          <mat-label>Get Data</mat-label>
+          <mat-form-field class="nx-class-data">
+            <input matInput placeholder="" formControlName="client_picclient" name="client_picclient" readonly>
+          </mat-form-field>
         </td>
+        <td></td>
       </tr>
 
       <tr>
@@ -56,11 +59,17 @@
           <mat-label>:</mat-label>
         </td>
         <td class="nx-table-range">
-          <mat-label>Get Data</mat-label>
+          <mat-form-field class="nx-class-data">
+            <input matInput placeholder="" formControlName="client_mobileclient" name="client_mobileclient" readonly>
+          </mat-form-field>
         </td>
         <td>
-          <button class="btn btn-success btn-mm nx-button-range">Hire SDM</button>
-          <!-- <button class="btn btn-success btn-mm nx-button-range" [routerLink]="['/pages/pja/PJA010']">Hire SDM</button> -->
+          <button mat-flat-button (click)="onSearch()">
+              <span class="glyphicon glyphicon-search nx-save-button" aria-hidden="true"></span>Filter</button>&nbsp;
+          <!-- <button mat-flat-button (click)="action.onReset()">
+              <span class="glyphicon glyphicon-remove nx-save-button" aria-hidden="true"></span>Clear</button>&nbsp; -->
+          <button mat-flat-button class="cancelButton" [routerLink]="['/pages/pja/PJA008']">Hire SDM</button>
+          <!-- <button class="btn btn-success btn-mm nx-button-range">Hire SDM</button> -->
         </td>
       </tr>
 

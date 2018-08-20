@@ -22,10 +22,8 @@
             <td>
               <mat-label>:</mat-label>
             </td>
-            <td class="nx-table-range">
-              <mat-form-field class="nx-class-data">
-                <input matInput placeholder="" formControlName="client_name" name="client_name" readonly>
-              </mat-form-field>
+            <td class="nx-table-range" id="nx-table-range">
+              <mat-label>{{ clientName }}</mat-label>
             </td>
           </tr>
 
@@ -36,10 +34,8 @@
             <td>
               <mat-label>:</mat-label>
             </td>
-            <td class="nx-table-range">
-              <mat-form-field class="nx-class-data">
-                <input matInput placeholder="" formControlName="sdm_name" name="sdm_name" readonly>
-              </mat-form-field>
+            <td class="nx-table-range" id="nx-table-range">
+              <mat-label>{{ sdmName }}</mat-label>
             </td>
           </tr>
 
@@ -51,13 +47,6 @@
               <mat-label>:</mat-label>
             </td>
             <td class="nx-table-range">
-              <!-- <mat-form-field class="nx-class-data">
-                <mat-select placeholder="" formControlName="hirestat_name" name="hirestat_name">
-                  <mat-option *ngFor="let lov of lovHiring.data" [value]="lov.key">
-                    {{lov.value}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field> -->
               <mat-form-field class="nx-class-data">
                 <mat-select placeholder="" formControlName="hirestat_id" name="hirestat_id">
                   <mat-option *ngFor="let lov of lovHiring.data" [value]="lov.key">

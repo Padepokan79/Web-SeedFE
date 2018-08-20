@@ -20,6 +20,9 @@ export class PJA010Component implements OnInit {
   public viewAsDateTemplate: any;
   @ViewChild('tableActionTemplate')
   public tableActionTemplate: any;
+  @ViewChild('notif')
+  public notif: any;
+  public notifications: any;
 
   public action: ActionService;
   public inputForm: InputForm;
@@ -40,8 +43,12 @@ export class PJA010Component implements OnInit {
         sdmassign_id: '',
         sdmassign_loc: '',
         sdmassign_picclient: '',
+        sdm_id: '',
+        sdm_name: '',
+        sdm_phone: '',
         client_id: '',
         client_name: '',
+        client_mobileClient: '',
         method_id: '',
         method_name: '',
       }
@@ -68,11 +75,16 @@ export class PJA010Component implements OnInit {
       ],
       tableColumns : [
         { prop: 'sdmassign_id', name: 'Assign ID', width: 15, sortable: false },
+        { prop: 'sdm_name', name: 'Name', width: 15, sortable: false },
+        { prop: 'sdm_phone', name: 'Contact', width: 15, sortable: false },
         { prop: 'sdmassign_startdate', name: 'Start', width: 15, sortable: false },
         { prop: 'sdmassign_enddate', name: 'End', width: 15, sortable: false },
         { prop: 'sdmassign_loc', name: 'Location', width: 20, sortable: false },
-        { prop: 'sdmassign_picclient', name: 'PIC Name', width: 50, sortable: false },
+        { prop: 'sdmassign_picclient', name: 'PIC Handler', width: 50, sortable: false },
         { prop: 'sdmassign_picclientphone', name: 'PIC Contact', width: 50, sortable: false },
+        { prop: 'method_name', name: 'Method', width: 15, sortable: false },
+        { prop: 'notif', name: 'Notifikasi', width: 15,
+          cellTemplate: this.notif, sortable: false },
         { prop: 'sdmassign_id', name: 'Action', width: 15,
           cellTemplate: this.tableActionTemplate, sortable: false }
       ]
