@@ -20,7 +20,7 @@ export const PAGES_MENU = [
 			},
 			...SDM_MENU,
 			...ALL_MENU,
-			...PJA_MENU
+			...PJA_MENU,
 			// {
 			// 	path: 'example',
 			// 	data: {
