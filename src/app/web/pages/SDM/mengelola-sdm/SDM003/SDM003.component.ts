@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import * as FileSaver from 'file-saver';
 import { ResponseContentType } from '@angular/http';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -8,6 +8,11 @@ import { ActionService } from '../../../../../core/services/uninjectable/action.
 import { DataTable } from '../../../../../core/models/data-table';
 import { LOVService } from '../../../../../core/services/uninjectable/lov.service';
 import { CoreFactory } from '../../../../../core/factory/core.factory';
+import { startWith, map } from '../../../../../../../node_modules/rxjs/operators';
+import { ListOfValue } from '../../../../../core/models/list-of-value';
+import { InputForm } from '../../../../../core/models/input-form';
+import { Comparison } from '../../../../../core/enums/comparison-operator.enum';
+import { Conjunction } from '../../../../../core/enums/conjunction-operator.enum';
 
 @Component({
   selector: 'app-SDM003',
@@ -30,8 +35,19 @@ export class SDM003Component implements OnInit {
   public notif: any;
   public notifications: any;
   public progress: boolean;
+  // sdm
+  public filteredSdm: any;
+  public sdmCtrl: FormControl;
+  public inputForm: InputForm;
   // private sdmid: number;
   constructor(private _factory: CoreFactory, private router: Router, private route: ActivatedRoute) {
+
+    this.sdmCtrl = new FormControl();
+    this.filteredSdm = this.sdmCtrl.valueChanges
+    .pipe(
+      startWith(''),
+      map((value) => this.filterSdm(value))
+    );
     // this.route.params.subscribe((param) => {
     //   this.sdmid = param.id;
     // });
@@ -41,6 +57,14 @@ export class SDM003Component implements OnInit {
     setInterval(() => {
       this.time = new Date();
     }, 1);
+    this.inputForm = this._factory.inputForm({
+      formControls: {
+        sdm_id: '',
+        sdm_name: '',
+        sdmlvl_id: '',
+        sdm_endcontract: '',
+      }
+    });
     this.dataTable = this._factory.dataTable({
       serverSide : true,
       pagingParams : {
@@ -81,7 +105,8 @@ export class SDM003Component implements OnInit {
     });
     this.action = this._factory.actions({
         api: 'sdm/MengelolaSdm/readAll',
-        dataTable: this.dataTable
+        dataTable: this.dataTable,
+        inputForm: this.inputForm
     });
     this.lovSdmLvl = this._factory.lov({
       api: 'lov/sdmLvl',
@@ -100,6 +125,25 @@ export class SDM003Component implements OnInit {
   }
   public navigate() {
     this.router.navigate(['/pages/sdm/SDM002']);
+  }
+
+  public setSdmValue(inputForm: FormGroup, dataSdm: ListOfValue) {
+    if (dataSdm) {
+      this.lovSdm = this._factory.lov({
+        api: 'lov/sdm',
+        params: {
+          sdm_id: dataSdm.key
+        },
+        initializeData: true
+      });
+
+      this.action.patchFormData({sdm_id: dataSdm.key, sdm_name: dataSdm.values.sdm_sdm_name});
+      console.log(this.action.getFormControlValue('sdm_id'));
+    }
+  }
+
+  public filterSdm(val: string) {
+    return val ? this.lovSdm.data.filter((s) => s.values.sdm_sdm_name.toLowerCase().indexOf(val.toLocaleLowerCase()) === 0) : [];
   }
 
   // public onDownload() {
@@ -149,5 +193,40 @@ export class SDM003Component implements OnInit {
         },
         ()    => console.log('Completed file download.')
       );
+  }
+
+  public onSearch() {
+    const filterCriteria = [];
+
+    const SdmLvl = this.action.getFormControlValue('sdmlvl_id');
+    const SdmName = this.action.getFormControlValue('sdm_name');
+    const SdmEnddate = this.action.getFormControlValue('sdm_endcontract');
+
+    if (SdmLvl) {
+      filterCriteria.push(Comparison.EQ('sdmlvl_id', SdmLvl));
+    }
+
+    if (SdmName) {
+      filterCriteria.push(Comparison.EQ('sdm_name', SdmName));
+    }
+
+    if (SdmEnddate) {
+      filterCriteria.push(Comparison.EQ('sdm_endcontract', SdmEnddate));
+    }
+
+    this.action.setPaginationFilter(
+      Conjunction.OR(
+        // filterCriteria
+        Comparison.EQ('sdm_endcontract', SdmEnddate),
+        Comparison.EQ('sdmlvl_id', SdmLvl),
+        Comparison.EQ('sdm_name', SdmName),
+        // Conjunction.AND(
+        //   Comparison.EQ('project_name', SdmProject),
+        //   Comparison.EQ('sdm_id', SdmName)
+        // ),
+      )
+    );
+
+    this.action.refreshTable();
   }
 }
