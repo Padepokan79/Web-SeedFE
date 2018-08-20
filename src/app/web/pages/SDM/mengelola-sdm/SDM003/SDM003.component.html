@@ -65,7 +65,7 @@
   <button matTooltip="Preview CV" type="button" class="btn btn-primary btn-mm btn-icon" (click)="action.onEdit(row)">
     <i class="glyphicon glyphicon-file"></i>
   </button>
-  <button matTooltip="Print CV" type="button" class="btn btn-primary btn-mm btn-icon" (click)="onPrintReportPDF(row.sdm_id)">
+  <button matTooltip="Print CV" type="button" class="btn btn-primary btn-mm btn-icon" (click)="onPrintReportPDF(row.sdm_id, row.sdm_name)">
     <i class="glyphicon glyphicon-print"></i>
   </button>
   <button matTooltip="Edit data SDM" type="button" class="btn btn-primary btn-mm btn-icon" (click)="navigateEditMenu(row.sdm_id)">

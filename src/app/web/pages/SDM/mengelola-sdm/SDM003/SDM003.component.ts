@@ -124,7 +124,7 @@ export class SDM003Component implements OnInit {
     this.router.navigate(['/pages/sdm/SDM009', { id }]);
   }
   public navigate() {
-    this.router.navigate(['/pages/sdm/SDM002']);
+    this.router.navigate(['/pages/sdm/SDM001']);
   }
 
   public setSdmValue(inputForm: FormGroup, dataSdm: ListOfValue) {
@@ -166,23 +166,23 @@ export class SDM003Component implements OnInit {
   //               this.notifications.success('SUCCESS', 'File berhasil diunduh.');
   //     });
   // }
-  public onPrintReportPDF(id) {
+  public onPrintReportPDF(id, sdmName) {
     // this.router.navigate(['/pages/listSdm', { id }]);
     // this.nama = this.action.getFormControlValue('sdm_name');
     this.progress = true;
-    const reportIkhtisarGajiApi = this._factory.api({
+    const cv = this._factory.api({
             api: 'sdm/ReportCvSdm/GenerateAsPDF',
             params: {
                 sdmId : id
             }
         });
     this._factory.http()
-    .post(reportIkhtisarGajiApi, null,
+    .post(cv, null,
     { responseType: 'blob' })
     // .map((res) => res())
     .subscribe(
         (data)  => {
-            FileSaver.saveAs(data, 'CV ' + this.nama + '.pdf');
+            FileSaver.saveAs(data, 'CV ' + sdmName + '.pdf');
             this.progress = false;
         },
         (error) => {
