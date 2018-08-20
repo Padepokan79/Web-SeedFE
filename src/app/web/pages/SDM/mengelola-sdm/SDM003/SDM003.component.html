@@ -1,14 +1,13 @@
-<mat-card style="height: 60px">
-  <div class="title-header">
+<io-form *ngIf="action?.form()">
+  <div class="io-form-header">
     <span><i class="fa fa-home"></i></span>
     <a href=""><span>Dashboard</span></a><b> > </b>
     <a href=""><span>SDM</span></a><b> > </b>
     <a href=""><span>List SDM</span></a>
     <span class="time">{{time | date:'medium'}}</span>
   </div>
-</mat-card>
-<br>
-<mat-card style="margin:16px">
+
+  <form class="io-form-body" [formGroup]="action?.formControls()">
     <mat-list>
       <mat-list-item>
         <mat-label class="panjang">Level</mat-label>
@@ -23,10 +22,10 @@
       <mat-list-item>
         <mat-label class="panjang">Name</mat-label>
         <mat-form-field class="example-full-width">
-          <input type="text" placeholder="Pick one" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
+          <input placeholder="Pick one" matInput [formControl]="sdmCtrl" [matAutocomplete]="auto" formControlName="sdm_name" name="sdm_name">
           <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let lov of lovSdm.data" [value]="lov.key">
-              {{lov.value}}
+            <mat-option *ngFor="let dataSdm of filteredSdm | async" [value]="dataSdm.values.sdm_sdm_name" (onSelectionChange)="setSdmValue(action?.formControls(), dataSdm);">
+              {{dataSdm.values.sdm_sdm_name}}
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
@@ -37,24 +36,25 @@
       <mat-list-item>
         <mat-label class="panjang">Akhir Kontrak</mat-label>
         <mat-form-field>
-          <input matInput [matDatepicker]="picker">
+          <input matInput [matDatepicker]="picker" formControlName="sdm_endcontract" name="sdm_endcontract">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
         <div class="col-md-3" style="float:right">
-          <button mat-flat-button>
+          <button mat-flat-button (click)="onSearch()">
               <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Filter</button>
-          <button mat-flat-button>
+          <button mat-flat-button (click)="action.onReset()">
               <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Clear</button>
         </div>
       </mat-list-item>
+        <div class="col-md-2" style="float:right;margin-top:-41px">
+          <button mat-flat-button style="float:right" (click)="navigate()">
+              <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> New
+          </button>
+        </div>
     </mat-list>
-    <div class="col-md-2" style="float:right;margin-top:-41px">
-      <button mat-flat-button style="float:right" (click)="navigate()">
-          <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> New
-      </button>
-    </div>
-</mat-card>
+  </form>
+</io-form>
 <io-table *ngIf="action?.table()" [action]="action" style="margin-top:20px">
   <div class="io-table-header" style="background: white">
     <h3>List Task</h3>
