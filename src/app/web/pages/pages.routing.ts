@@ -16,7 +16,7 @@ import { SDM002Component } from './SDM/mengelola-sdm/SDM002/SDM002.component';
 import { SDM006Component } from './SDM/SDM006/SDM006.component';
 import { SDM007Component } from './SDM/SDM007/SDM007.component';
 import { SDM_ROUTES } from './SDM/sdm.routing';
-import { ALL_ROUTES } from './ALLOCATION/all.routeing';
+import { ALL_ROUTES } from './ALLOCATION/all.routing';
 import { PJA_ROUTES } from './PJA/pja.routing';
 
 export const routes: Routes = [
