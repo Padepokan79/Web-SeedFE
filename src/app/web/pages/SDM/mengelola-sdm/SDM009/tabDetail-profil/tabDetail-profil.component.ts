@@ -5,6 +5,8 @@ import { InputForm } from '../../../../../../core/models/input-form';
 import { CoreFactory } from '../../../../../../core/factory/core.factory';
 import { COMPARISON_OPERATOR, TYPE } from '../../../../../../core/constant/constant';
 import { LOVService } from '../../../../../../core/services/uninjectable/lov.service';
+import { ActivatedRoute } from '@angular/router';
+import { Comparison } from '../../../../../../core/enums/comparison-operator.enum';
 
 @Component({
   selector: 'app-tabDetail-profil',
@@ -35,8 +37,16 @@ export class TabDetailProfilComponent implements OnInit {
   public dataTable: DataTable;
 
   public lovProfiling: LOVService;
+  private selectedId: any;
 
-  constructor(private _factory: CoreFactory) { }
+  constructor(private _factory: CoreFactory,
+              private route: ActivatedRoute
+  ) {
+    this.route.params.subscribe((param) => {
+      this.selectedId = param.id;
+      console.log(this.selectedId);
+    });
+  }
 
   public ngOnInit() {
 
@@ -62,6 +72,7 @@ export class TabDetailProfilComponent implements OnInit {
       this.dataTable = this._factory.dataTable({
         serverSide : true,
         pagingParams : {
+          filter: Comparison.EQ('sdm_id', this.selectedId),
           limit : 10
         },
         // searchCriteria : [
@@ -73,26 +84,26 @@ export class TabDetailProfilComponent implements OnInit {
         ]
       });
 
-      if (this.form === 2) {
+    //   if (this.form === 2) {
 
-      this.dataTable = this._factory.dataTable({
-        serverSide : true,
-        pagingParams : {
-          filter: {
-            field: 'sdm_id',
-            operator: COMPARISON_OPERATOR.EQ,
-            value: this.id
-          },
-          limit : 500
-        },
-        tableColumns : [
-          { prop: 'profiling_id', name: 'id', width: 10, sortable: false },
-          { prop: 'profiling_name', name: 'No', width: 10, sortable: false },
-          { prop: 'profiling_id', name: 'Action', width: 20,
-            cellTemplate: this.tableActionTemplate, sortable: false }
-        ]
-      });
-    }
+    //   this.dataTable = this._factory.dataTable({
+    //     serverSide : true,
+    //     pagingParams : {
+    //       filter: {
+    //         field: 'sdm_id',
+    //         operator: COMPARISON_OPERATOR.EQ,
+    //         value: this.id
+    //       },
+    //       limit : 500
+    //     },
+    //     tableColumns : [
+    //       { prop: 'profiling_id', name: 'id', width: 10, sortable: false },
+    //       { prop: 'profiling_name', name: 'No', width: 10, sortable: false },
+    //       { prop: 'profiling_id', name: 'Action', width: 20,
+    //         cellTemplate: this.tableActionTemplate, sortable: false }
+    //     ]
+    //   });
+    // }
 
       this.action = this._factory.actions({
         api: 'sdm/profiling',

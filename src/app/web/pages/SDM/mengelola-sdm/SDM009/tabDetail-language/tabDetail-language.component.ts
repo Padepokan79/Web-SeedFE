@@ -5,6 +5,8 @@ import { DataTable } from '../../../../../../core/models/data-table';
 import { LOVService } from '../../../../../../core/services/uninjectable/lov.service';
 import { CoreFactory } from '../../../../../../core/factory/core.factory';
 import { COMPARISON_OPERATOR, TYPE } from '../../../../../../core/constant/constant';
+import { ActivatedRoute } from '@angular/router';
+import { Comparison } from '../../../../../../core/enums/comparison-operator.enum';
 
 @Component({
   selector: 'app-tabDetail-language',
@@ -38,7 +40,15 @@ export class TabDetailLanguageComponent implements OnInit {
 
   public listLanguage = ['', '', '', ''];
 
-  constructor(private _factory: CoreFactory) {}
+  private selectedId: any;
+  constructor(private _factory: CoreFactory,
+              private route: ActivatedRoute
+  ) {
+    this.route.params.subscribe((param) => {
+      this.selectedId = param.id;
+      console.log(this.selectedId);
+    });
+  }
 
   public ngOnInit() {
     if (this.form === 1) {
@@ -59,6 +69,7 @@ export class TabDetailLanguageComponent implements OnInit {
     this.dataTable = this._factory.dataTable({
       serverSide : true,
       pagingParams : {
+        filter: Comparison.EQ('sdm_id', this.selectedId),
         limit : 10
       },
       // searchCriteria : [
@@ -70,26 +81,26 @@ export class TabDetailLanguageComponent implements OnInit {
       ]
     });
 
-    if (this.form === 2) {
-    this.dataTable = this._factory.dataTable({
-      serverSide : true,
-      pagingParams : {
-        filter: {
-          field: 'sdm_id',
-          operator: COMPARISON_OPERATOR.EQ,
-          value: this.id
-        },
-        limit : 5
-      },
-      tableColumns : [
-        { prop: 'sdmlanguage_id', name: 'SDML ID', width: 10, sortable: false },
-        { prop: 'language_name', name: 'Bahasa', width: 30, sortable: true },
-        { prop: 'sdmlanguage_id', name: 'Action', width: 20,
-          cellTemplate: this.tableActionTemplate, sortable: false }
+  //   if (this.form === 2) {
+  //   this.dataTable = this._factory.dataTable({
+  //     serverSide : true,
+  //     pagingParams : {
+  //       filter: {
+  //         field: 'sdm_id',
+  //         operator: COMPARISON_OPERATOR.EQ,
+  //         value: this.id
+  //       },
+  //       limit : 5
+  //     },
+  //     tableColumns : [
+  //       { prop: 'sdmlanguage_id', name: 'SDML ID', width: 10, sortable: false },
+  //       { prop: 'language_name', name: 'Bahasa', width: 30, sortable: true },
+  //       { prop: 'sdmlanguage_id', name: 'Action', width: 20,
+  //         cellTemplate: this.tableActionTemplate, sortable: false }
 
-      ]
-    });
-  }
+  //     ]
+  //   });
+  // }
 
     this.action = this._factory.actions({
       api: 'allocation/mengelolaSDMLanguages',
