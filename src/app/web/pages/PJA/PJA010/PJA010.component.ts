@@ -6,7 +6,9 @@ import { DataTable } from '../../../../core/models/data-table';
 import { CoreFactory } from '../../../../core/factory/core.factory';
 import { LOVService } from '../../../../core/services/uninjectable/lov.service';
 import { Session } from '../../../../core/utils/session';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Conjunction } from '../../../../core/enums/conjunction-operator.enum';
+import { Comparison } from '../../../../core/enums/comparison-operator.enum';
 
 @Component({
   selector: 'app-PJA010',
@@ -28,15 +30,18 @@ export class PJA010Component implements OnInit {
   public inputForm: InputForm;
   public dataTable: DataTable;
   public lovClient: LOVService;
-  selected = '';
+  public picHandler: string;
+  public picContact: string;
+  private selected: any;
   // public dataRow: any;
   // public lovUser: LOVService;
-
+  
   constructor(
     private _factory: CoreFactory,
+    private route: ActivatedRoute,
     private router: Router
   ) { }
-
+  
   public ngOnInit() {
 
     this.inputForm = this._factory.inputForm({
@@ -103,6 +108,41 @@ export class PJA010Component implements OnInit {
         initializeData: true
     });
 
+    
+  }
+
+  public ambilData() {
+    const readAllApi = this._factory.api({
+      api : 'project/SdmAssignment/readAll',
+      params : {
+          value : this.selected
+      }
+    });
+
+    this._factory.http().get(readAllApi).subscribe((res: any) => {
+      this.action.patchFormData(res.data.items[this.selected]);
+      this.picHandler = res.data.items[this.selected].sdmassign_picclient;
+      this.picContact = res.data.items[this.selected].sdmassign_picclientphone;
+    });
+
+  }
+
+  public clearData(){
+    this.picHandler = '';
+    this.picContact = '';
+  }
+
+  public onSearch() {
+    const filterCriteria = [];
+    const ClientId = this.action.getFormControlValue('client_id');
+
+    this.action.setPaginationFilter(
+      Conjunction.OR(
+        Comparison.EQ('client_id', ClientId),
+      )
+    );
+
+    this.action.refreshTable();
   }
 
   public navigateEditMenu(id) {
