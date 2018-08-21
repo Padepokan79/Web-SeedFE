@@ -11,6 +11,7 @@ import { CoreFactory } from '../../../../core/factory/core.factory';
 import { HttpClient, HttpParams } from '../../../../../../node_modules/@angular/common/http';
 import { MultiInsertSdmSkill } from './MultiInsertSdmSkill';
 import { FormGroup, FormControl } from '../../../../../../node_modules/@angular/forms';
+import { DefaultNotificationService } from '../../../../core/services/default-notification.service';
 
 @Component({
   selector: 'io-ALL004',
@@ -38,13 +39,13 @@ export class ALL004Component implements OnInit {
   public title = 'app';
   public isButtonClicked = false;
   public listMultiInsert: MultiInsertSdmSkill[] = [];
-  public skillId: string;
-  public sdmId: string;
-  public skilltypeId: string;
+  public skillId: number;
+  public sdmId: number;
+  public skilltypeId: number;
   public skillsdmValue: number;
   public myGroup: FormGroup;
 
-  constructor(private _factory: CoreFactory, private http: HttpClient) {
+  constructor(public _notif: DefaultNotificationService , private _factory: CoreFactory, private http: HttpClient) {
     this.listSearchCriteria.push(new SearchCriteria(_factory));
   }
 
@@ -59,8 +60,8 @@ export class ALL004Component implements OnInit {
 
   public ngOnInit() {
     this.lovSDM = this._factory.lov({
-        api: 'lov/Sdm',
-        initializeData: true
+      api: 'lov/Sdm',
+      initializeData: true
     });
   }
 
@@ -69,35 +70,40 @@ export class ALL004Component implements OnInit {
   //     sdm_id: new FormControl()
   //   });
   //   this.isButtonClicked = true;
-  //   this.listMultiInsert.forEach((skillSdm: MultiInsertSdmSkill) => {
-  //     this.skillId = skillSdm.skillId,
-  //     this.sdmId = skillSdm.sdmId,
-  //     this.skilltypeId = skillSdm.skilltypeId,
-  //     this.skillsdmValue = skillSdm.sdmskillValue,
-  //     skillSdm.postSdmSkill();
-  //   });
+  // this.listMultiInsert.forEach((skillSdm: MultiInsertSdmSkill) => {
+  //   this.skillId = skillSdm.skillId,
+  //   this.sdmId = skillSdm.sdmId,
+  //   this.skilltypeId = skillSdm.skilltypeId,
+  //   this.skillsdmValue = skillSdm.sdmskillValue,
+  //   skillSdm.postSdmSkill();
+  // });
   // }
   // // // tslint:disable-next-line:member-ordering
-  public apiRoot: string = 'http://10.10.10.20:7979/allocation/MultiInsertSdm';
   // tslint:disable-next-line:member-ordering
+  public apiRoot: string = 'http://localhost:7979/allocation/MultiInsertSdm';
   public btnSave() {
-    console.log('POST');
-    const url = `${this.apiRoot}/MultiCreate`;
-    const httpOptions = {
-      params: new HttpParams()
-    };
-    this.http
-      .post(url, {
-          data: {
-            listdata: [{
-                sdm_id: '',
-                skilltype_id: '',
-                skill_id: '',
-                sdmskill_value: ''
-              }
-            ]
-          }
-        }, httpOptions)
-      .subscribe((res) => console.log(res));
+  const body = [];
+  this.listSearchCriteria.forEach((skillSdm: SearchCriteria) => {
+    body.push({
+      sdm_id: this.sdmId,
+      skilltype_id: skillSdm.skilltype_id,
+      skill_id: skillSdm.skill_id,
+      sdmskill_value: this.skillsdmValue
+    });
+  });
+  console.log('POST');
+  const url = `${this.apiRoot}/MultiCreate`;
+  const httpOptions = {
+    params: new HttpParams()
+  };
+  this.http
+    .post(url, {
+      listsdm: body
+    }, httpOptions)
+    .subscribe((res) => {
+      this._notif.success({
+        message: 'Input Sdm Skill Value berhasil'
+      });
+    });
   }
 }
