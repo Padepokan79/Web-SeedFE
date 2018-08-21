@@ -4,11 +4,13 @@
       <i class="glyphicon glyphicon-home"></i>
       <a [routerLink]="['/pages/dashboard']">Dashboard</a>>
       <a>Project Assignment</a>>
-      <a [routerLink]="['/pages/sdm-assignment']">SDM Assignment</a>
+      <a [routerLink]="['/pages/pja/PJA010']">SDM Assignment</a>
+      <span class="nx-time">{{ time | date:'medium'}}</span>
     </div>
   </div>
   <form class="io-form-body" [formGroup]="action?.formControls()">
     <table class="nx-table-margin" style="width: 100%">
+
       <tr>
         <td class="nx-table-range"  style="width: 100px">
           <mat-label>Client</mat-label>
@@ -18,20 +20,14 @@
         </td>
         <td class="nx-table-range" style="width: 100px">
           <mat-form-field>
-            <mat-select placeholder="- Select -" formControlName="client_name" name="client_name">
+            <mat-select placeholder="- Select -" formControlName="client_id" name="client_id">
               <mat-option *ngFor="let lov of lovClient.data" [value]="lov.key">
                 {{lov.value}}
               </mat-option>
             </mat-select>
-            <!-- <mat-select placeholder="- Select -" name="client">
-              <mat-option *ngFor="let client of clients" [value]="client.value">
-                {{client.viewValue}}
-              </mat-option>
-            </mat-select> -->
           </mat-form-field>
         </td>
-        <td>
-        </td>
+        <td></td>
       </tr>
 
       <tr>
@@ -42,7 +38,7 @@
           <mat-label>:</mat-label>
         </td>
         <td class="nx-table-range">
-          <mat-label>Get Data</mat-label>
+          <mat-label></mat-label>
         </td>
       </tr>
 
@@ -54,20 +50,19 @@
           <mat-label>:</mat-label>
         </td>
         <td class="nx-table-range">
-          <mat-label>Get Data</mat-label>
+          <mat-label></mat-label>
         </td>
         <td>
           <button mat-flat-button (click)="onSearch()">
               <span class="glyphicon glyphicon-search nx-save-button" aria-hidden="true"></span>Filter</button>&nbsp;
-          <!-- <button mat-flat-button (click)="action.onReset()">
-              <span class="glyphicon glyphicon-remove nx-save-button" aria-hidden="true"></span>Clear</button>&nbsp; -->
-          <button mat-flat-button class="cancelButton" [routerLink]="['/pages/pja/PJA012']">Assign</button>
-          <!-- <button class="btn btn-success btn-mm nx-button-range">Hire SDM</button> -->
+          <button mat-flat-button (click)="action.onReset()">
+              <span class="glyphicon glyphicon-remove nx-save-button" aria-hidden="true"></span>Clear</button>&nbsp;
+          <div class="col-md-2" style="float:right">
+            <button mat-flat-button style="float:right" [routerLink]="['/pages/pja/PJA012']">
+                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>Assign
+            </button>
+          </div>
         </td>
-        
-        <!-- <td>
-          <button class="btn btn-success btn-mm nx-button-range" [routerLink]="['/pages/pja/PJA012']">Assign</button>
-        </td> -->
       </tr>
 
     </table>
@@ -80,6 +75,14 @@
   </div>
 </io-table>
 
+<ng-template #notif let-row="row" let-value="value" ngx-datatable-cell-template>
+  <i matTooltip="Non-Aktif" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:black; font-size: 30px" *ngIf="row.sdmassign_notification == 'black'"></i>
+  <i matTooltip="Sisa 1 bulan" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:red; font-size: 30px" *ngIf="row.sdmassign_notification == 'red'"></i>
+  <i matTooltip="Sisa 2 bulan" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:#f5f515; font-size: 30px" *ngIf="row.sdmassign_notification == 'yellow'"></i>
+  <i matTooltip="Sisa 4 bulan" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:#00da00; font-size: 30px" *ngIf="row.sdmassign_notification == 'green'"></i>
+  <i matTooltip="Sisa lebih dari 4 bulan" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:#b3b3b3; font-size: 30px" *ngIf="row.sdmassign_notification == 'grey'"></i>
+</ng-template>
+
 <!-- <button class="btn btn-success btn-mm nx-button-range" (click)="action.onSave()">Save</button> -->
 
 <!-- Contoh Template Untuk meng-Override field "Action" -->
@@ -91,15 +94,6 @@
   <button type="button" class="btn btn-danger btn-mm btn-icon" (click)="action.onDelete(row)">
     <i class="glyphicon glyphicon-trash"></i>
   </button>
-</ng-template>
-
-
-<ng-template #notif let-row="row" let-value="value" ngx-datatable-cell-template>
-  <i matTooltip="Non-Aktif" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:black; font-size: 30px" *ngIf="row.project_notification == 'black'"></i>
-  <i matTooltip="Sisa 1 bulan" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:red; font-size: 30px" *ngIf="row.project_notification == 'red'"></i>
-  <i matTooltip="Sisa 2 bulan" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:#f5f515; font-size: 30px" *ngIf="row.project_notification == 'yellow'"></i>
-  <i matTooltip="Sisa 4 bulan" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:#00da00; font-size: 30px" *ngIf="row.project_notification == 'green'"></i>
-  <i matTooltip="Sisa lebih dari 4 bulan" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:#b3b3b3; font-size: 30px" *ngIf="row.project_notification == 'grey'"></i>
 </ng-template>
 
 <!-- <ng-template #viewAsDateTemplate let-row="row" let-value="value" ngx-datatable-cell-template>

@@ -11,6 +11,7 @@ export class SearchCriteria {
     public lovSkillType: LOVService = null;
     public lovSkill: LOVService = null;
     public lovSdmSkill: LOVService = null;
+    public sdmskillValue: number;
 
     constructor(private _factory: CoreFactory) {
         this.lovSkillType = this._factory.lov({
