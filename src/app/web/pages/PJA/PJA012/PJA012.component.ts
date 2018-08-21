@@ -118,11 +118,6 @@ export class PJA012Component implements OnInit {
       dataTable: this.dataTable
     });
 
-    // this.action = this._factory.actions({
-    //   api: 'allocation/MengelolaSdmSkill',
-    //   dataTable: this.dataTable
-    // });
-
     // this.lovSkill = this._factory.lov({
     //   api: 'lov/Skill',
     //   initializeData: true
@@ -147,7 +142,7 @@ export class PJA012Component implements OnInit {
       );
     });
 
-    if (this.IdSdm == null) {
+    if (this.IdSdm) {
       this.doubleFilter = Conjunction.OR(...filterComponent);
     }
 
