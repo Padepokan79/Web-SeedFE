@@ -16,8 +16,8 @@ import { BaMenuService } from '../../core/services/admin/baMenu.service';
         <router-outlet></router-outlet>
       </div>
     </div>
-    <footer class="al-footer clearfix">
-    </footer>
+    <!-- <footer class="al-footer clearfix">
+    </footer> -->
     <ba-back-top position="200"></ba-back-top>
     `
 })

@@ -28,6 +28,7 @@ export class PJA010Component implements OnInit {
   public inputForm: InputForm;
   public dataTable: DataTable;
   public lovClient: LOVService;
+  selected = '';
   // public dataRow: any;
   // public lovUser: LOVService;
 
@@ -51,6 +52,7 @@ export class PJA010Component implements OnInit {
         client_mobileClient: '',
         method_id: '',
         method_name: '',
+        sdmassign_notification: '',
       }
       // validationMessages: {
       //   task_id: {
@@ -83,7 +85,7 @@ export class PJA010Component implements OnInit {
         { prop: 'sdmassign_picclient', name: 'PIC Handler', width: 50, sortable: false },
         { prop: 'sdmassign_picclientphone', name: 'PIC Contact', width: 50, sortable: false },
         { prop: 'method_name', name: 'Method', width: 15, sortable: false },
-        { prop: 'notif', name: 'Notifikasi', width: 15,
+        { prop: 'sdmassign_notification', name: 'Notifikasi', width: 15,
           cellTemplate: this.notif, sortable: false },
         { prop: 'sdmassign_id', name: 'Action', width: 15,
           cellTemplate: this.tableActionTemplate, sortable: false }
