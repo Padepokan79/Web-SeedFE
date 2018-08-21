@@ -27,8 +27,10 @@ export class PJA007Component implements OnInit {
   public action: ActionService;
   public inputForm: InputForm;
   public dataTable: DataTable;
-
   public lovClients: LOVService;
+  public picHandler: string;
+  public picContact: string;
+  private selected: any;
 
   constructor(private _factory: CoreFactory, private router: Router) { }
 
@@ -86,6 +88,28 @@ export class PJA007Component implements OnInit {
     setInterval(() => {
     this.time = new Date();
     }, 1);
+    
+  }
+
+  public ambilData() {
+    const readAllApi = this._factory.api({
+      api : 'project/SdmAssignment/readAll',
+      params : {
+          value : this.selected
+      }
+    });
+
+    this._factory.http().get(readAllApi).subscribe((res: any) => {
+      this.action.patchFormData(res.data.items[this.selected]);
+      this.picHandler = res.data.items[this.selected].sdmassign_picclient;
+      this.picContact = res.data.items[this.selected].sdmassign_picclientphone;
+    });
+
+  }
+
+  public clearData(){
+    this.picHandler = '';
+    this.picContact = '';
   }
 
   public navigateEditMenu(id) {
@@ -94,33 +118,11 @@ export class PJA007Component implements OnInit {
 
   public onSearch() {
     const filterCriteria = [];
-
     const ClientId = this.action.getFormControlValue('client_id');
-    // const ClientPicclient = this.action.getFormControlValue('client_picclient');
-    // const SdmassignPicclientphone = this.action.getFormControlValue('client_mobileclient');
-
-    // if (ClientId) {
-    //   filterCriteria.push(Comparison.EQ('client_id', ClientId));
-    // }
-
-    // if (SdmassignPicclient) {
-    //   filterCriteria.push(Comparison.EQ('client_picclient', SdmassignPicclient));
-    // }
-
-    // if (SdmassignPicclientphone) {
-    //   filterCriteria.push(Comparison.EQ('client_mobileclient', SdmassignPicclientphone));
-    // }
 
     this.action.setPaginationFilter(
       Conjunction.OR(
-        // filterCriteria
-        // Comparison.EQ('client_mobileclient', SdmassignPicclientphone),
-        // Comparison.EQ('client_picclient', ClientPicclient),
         Comparison.EQ('client_id', ClientId),
-        // Conjunction.AND(
-        //   Comparison.EQ('project_name', SdmProject),
-        //   Comparison.EQ('sdm_id', SdmName)
-        // ),
       )
     );
 
