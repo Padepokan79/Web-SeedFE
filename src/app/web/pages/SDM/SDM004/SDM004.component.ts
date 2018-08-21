@@ -3,6 +3,13 @@ import { ActionService } from '../../../../core/services/uninjectable/action.ser
 import { DataTable } from '../../../../core/models/data-table';
 import { CoreFactory } from '../../../../core/factory/core.factory';
 import { TYPE } from '../../../../core/constant/constant';
+import { Router } from '../../../../../../node_modules/@angular/router';
+import { FormGroup, FormControl } from '../../../../../../node_modules/@angular/forms';
+import { ListOfValue } from '../../../../core/models/list-of-value';
+import { startWith, map } from '../../../../../../node_modules/rxjs/operators';
+import { InputForm } from '../../../../core/models/input-form';
+import { LOVService } from '../../../../core/services/uninjectable/lov.service';
+import { Comparison } from '../../../../core/enums/comparison-operator.enum';
 
 @Component({
   selector: 'app-SDM004',
@@ -17,12 +24,33 @@ export class SDM004Component implements OnInit {
   public tableActionTemplate: any;
   public action: ActionService;
   public dataTable: DataTable;
-  constructor(private _factory: CoreFactory) {}
+
+  public lovSdm: LOVService;
+
+  // SDM
+  public filteredSdm: any;
+  public sdmCtrl: FormControl;
+  public inputForm: InputForm;
+
+  constructor(private _factory: CoreFactory, private router: Router) {
+    this.sdmCtrl = new FormControl();
+    this.filteredSdm = this.sdmCtrl.valueChanges
+    .pipe(
+      startWith(''),
+      map((value) => this.filterSdm(value))
+    );
+  }
 
   public ngOnInit() {
     setInterval(() => {
       this.time = new Date();
     }, 1);
+    this.inputForm = this._factory.inputForm({
+      formControls: {
+        sdm_id: '',
+        sdm_name: '',
+      }
+    });
     this.dataTable = this._factory.dataTable({
       serverSide : true,
       pagingParams : {
@@ -43,9 +71,9 @@ export class SDM004Component implements OnInit {
         // },
         limit : 5
       },
-      searchCriteria : [
-        { viewValue: 'Nama', viewKey: 'sdm_name', type: TYPE.STRING }
-      ],
+      // searchCriteria : [
+      //   { viewValue: 'Nama', viewKey: 'sdm_name', type: TYPE.STRING }
+      // ],
       tableColumns : [
         { prop: 'sdmhistory_id', name: 'No', width: 20, sortable: true },
         { prop: 'sdm_name', name: 'Nama', width: 100, sortable: true },
@@ -64,7 +92,44 @@ export class SDM004Component implements OnInit {
 
     this.action = this._factory.actions({
         api: 'sdm/MengelolaHistoriSdm/ReadAll',
-        dataTable: this.dataTable
+        dataTable: this.dataTable,
+        inputForm: this.inputForm
     });
+
+    this.lovSdm = this._factory.lov({
+      api: 'lov/sdm',
+      initializeData: true
+    });
+  }
+  public navigateDetailMenu(id) {
+    this.router.navigate(['/pages/sdm/SDM009', { id }]);
+  }
+  public setSdmValue(inputForm: FormGroup, dataSdm: ListOfValue) {
+    if (dataSdm) {
+      this.lovSdm = this._factory.lov({
+        api: 'lov/sdm',
+        params: {
+          sdm_id: dataSdm.key
+        },
+        initializeData: true
+      });
+
+      this.action.patchFormData({sdm_id: dataSdm.key, sdm_name: dataSdm.values.sdm_sdm_name});
+      console.log(this.action.getFormControlValue('sdm_id'));
+    }
+  }
+
+  public filterSdm(val: string) {
+    return val ? this.lovSdm.data.filter((s) => s.values.sdm_sdm_name.toLowerCase().indexOf(val.toLocaleLowerCase()) === 0) : [];
+  }
+
+  public onSearch() {
+    const SdmName = this.action.getFormControlValue('sdm_id');
+
+    this.action.setPaginationFilter(
+        SdmName ? Comparison.EQ('sdm_id', SdmName) : Comparison.NE('sdm_id', 'sdm_id'),
+    );
+
+    this.action.refreshTable();
   }
 }

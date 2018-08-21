@@ -2,9 +2,12 @@ mat-icon{
     padding : 20px;
     color: black;
 }
-mat-form-field{
-    padding : 20px;
-}
 .time{
     float: right;
+}
+.panjang{
+    width : 150px;
+}
+.formheader{
+    margin: 12px;
 }

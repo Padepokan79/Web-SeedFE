@@ -1,12 +1,33 @@
-<mat-card style="height: 60px">
-  <div class="title-header">
-    <span><i class="fa fa-home"></i></span>
-    <a href=""><span>Dashboard</span></a><b> > </b>
-    <a href=""><span>SDM</span></a><b> > </b>
-    <a href=""><span>Historis SDM</span></a>
-    <span class="time">{{time | date:'medium'}}</span>
-  </div>
-</mat-card>
+<io-form *ngIf="action?.form()">
+    <div class="io-form-header">
+      <div class="formheader">
+        <span><i class="fa fa-home"></i></span>
+        <a href=""><span>Dashboard</span></a><b> > </b>
+        <a href=""><span>SDM</span></a><b> > </b>
+        <a href=""><span>Historis SDM</span></a>
+        <span class="time">{{time | date:'medium'}}</span>
+      </div>
+    </div>
+    <form class="io-form-body" [formGroup]="action?.formControls()">
+      <mat-list-item>
+        <mat-label class="panjang">Name</mat-label>
+          <mat-form-field class="example-full-width">
+            <input placeholder="" matInput [formControl]="sdmCtrl" [matAutocomplete]="auto" formControlName="sdm_name" name="sdm_name">
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let dataSdm of filteredSdm | async" [value]="dataSdm.values.sdm_sdm_name" (onSelectionChange)="setSdmValue(action?.formControls(), dataSdm);">
+                {{dataSdm.values.sdm_sdm_name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        <div class= "formheader" style="float:right">
+            <button mat-flat-button (click)="onSearch()">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Cari</button>
+            <button mat-flat-button (click)="action.onReset()">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Clear</button>
+        </div>
+      </mat-list-item>
+    </form>
+</io-form>
 <io-table *ngIf="action?.table()" [action]="action" style="margin-top:20px">
   <div class="io-table-header">
     <h3>List Task</h3>
@@ -14,7 +35,7 @@
 </io-table>
 
 <ng-template #tableActionTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
-  <button type="button" class="btn btn-info btn-mm btn-icon">
+  <button type="button" class="btn btn-info btn-mm btn-icon" (click)="navigateDetailMenu(row.sdm_id)">
     <i class="glyphicon glyphicon-eye-open"></i>
   </button>
 </ng-template>
