@@ -144,8 +144,8 @@ export class PJA003RComponent implements OnInit {
 
   }
 
-  public navigateMenuDetail(id) {
-    this.router.navigate(['/pages/PJA002', {id}]);
+  public navigateEditMenu(id) {
+    this.router.navigate(['/pages/pja/PJA002', {id}]);
   }
 
   public getId(id) {
