@@ -30,6 +30,15 @@ export const PJA_MENU = [
         }
       },
       {
+        path: 'PJA003R',
+        data: {
+          menu: {
+            title: 'List Detail Project SDM Ver.2',
+            icon: 'fa fa-user',
+          }
+        }
+      },
+      {
         path: 'PJA005',
         data: {
           menu: {
