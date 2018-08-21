@@ -8,6 +8,9 @@ import { SearchCriteria } from './SearchCriteria';
 import { DataTable } from '../../../../core/models/data-table';
 import { InputForm } from '../../../../core/models/input-form';
 import { CoreFactory } from '../../../../core/factory/core.factory';
+import { HttpClient, HttpParams } from '../../../../../../node_modules/@angular/common/http';
+import { MultiInsertSdmSkill } from './MultiInsertSdmSkill';
+import { FormGroup, FormControl } from '../../../../../../node_modules/@angular/forms';
 
 @Component({
   selector: 'io-ALL004',
@@ -21,8 +24,8 @@ export class ALL004Component implements OnInit {
   @ViewChild('tableActionTemplate')
   public tableActionTemplate: any;
 
-  public action: ActionService;
-  public inputForm: InputForm;
+  // public action: ActionService;
+  // public inputForm: InputForm;
   public dataTable: DataTable;
   public listSearchCriteria: SearchCriteria[] = [];
   // public listSkillSelected: SkillSelected[] = [];
@@ -32,7 +35,16 @@ export class ALL004Component implements OnInit {
   public lovSkill: LOVService;
   public lovSdmSkill: LOVService;
 
-  constructor(private _factory: CoreFactory) {
+  public title = 'app';
+  public isButtonClicked = false;
+  public listMultiInsert: MultiInsertSdmSkill[] = [];
+  public skillId: string;
+  public sdmId: string;
+  public skilltypeId: string;
+  public skillsdmValue: number;
+  public myGroup: FormGroup;
+
+  constructor(private _factory: CoreFactory, private http: HttpClient) {
     this.listSearchCriteria.push(new SearchCriteria(_factory));
   }
 
@@ -46,29 +58,46 @@ export class ALL004Component implements OnInit {
   }
 
   public ngOnInit() {
-   this.inputForm = this._factory.inputForm({
-      formControls: {
-        skilltype_id: '',
-        skill_id: '',
-        sdm_id: '',
-        sdmskill_value: ''
-      }
-    });
-   this.action = this._factory.actions({
-      api: 'allocation/MengelolaSdmSkill/',
-      inputForm: this.inputForm,
-    });
-
-   this.lovSDM = this._factory.lov({
+    this.lovSDM = this._factory.lov({
         api: 'lov/Sdm',
         initializeData: true
     });
-
-    // this.lovSkill = this._factory.lov({
-    //   api: 'lov/Skill',
-    //   initializeData: true
-    // });
-
   }
 
+  // public btnSave() {
+  //   this.myGroup = new FormGroup({
+  //     sdm_id: new FormControl()
+  //   });
+  //   this.isButtonClicked = true;
+  //   this.listMultiInsert.forEach((skillSdm: MultiInsertSdmSkill) => {
+  //     this.skillId = skillSdm.skillId,
+  //     this.sdmId = skillSdm.sdmId,
+  //     this.skilltypeId = skillSdm.skilltypeId,
+  //     this.skillsdmValue = skillSdm.sdmskillValue,
+  //     skillSdm.postSdmSkill();
+  //   });
+  // }
+  // // // tslint:disable-next-line:member-ordering
+  public apiRoot: string = 'http://10.10.10.20:7979/allocation/MultiInsertSdm';
+  // tslint:disable-next-line:member-ordering
+  public btnSave() {
+    console.log('POST');
+    const url = `${this.apiRoot}/MultiCreate`;
+    const httpOptions = {
+      params: new HttpParams()
+    };
+    this.http
+      .post(url, {
+          data: {
+            listdata: [{
+                sdm_id: '',
+                skilltype_id: '',
+                skill_id: '',
+                sdmskill_value: ''
+              }
+            ]
+          }
+        }, httpOptions)
+      .subscribe((res) => console.log(res));
+  }
 }

@@ -26,6 +26,8 @@ export class PJA009Component implements OnInit {
   public dataTable: DataTable;
   public lovHiring: LOVService;
   public clients$: Observable<any>;
+  public clientName: string;
+  public sdmName: string;
   private selectedId: number;
 
   constructor(
@@ -87,7 +89,8 @@ export class PJA009Component implements OnInit {
 
     this._factory.http().get(readAllApi).subscribe((res: any) => {
       this.action.patchFormData(res.data.items[0]);
-
+      this.clientName = res.data.items[0].client_name;
+      this.sdmName = res.data.items[0].sdm_name;
     });
   }
 
@@ -96,6 +99,7 @@ export class PJA009Component implements OnInit {
     // params: {
     // client_id: this.selectedId }
   });
+  
   this._factory.http().put(updateAPI + '?sdmhiring_id=' + this.selectedId, this.action.getFormData()).subscribe((response: any) => {
     this._notif.success({
       message: 'Update Data Berhasil'

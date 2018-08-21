@@ -1,13 +1,11 @@
-import { HttpParams } from '../../../../../../node_modules/@angular/common/http';
-import { HttpClient } from '../../../../../../node_modules/@types/selenium-webdriver/http';
+import { HttpParams, HttpClient } from '@angular/common/http';
 
 export class MultiInsert {
     public clientId: number;
     public sdmId: string = '';
     public hirestatId: number = 3;
-    public http: any;
 
-    public apiRoot: string = 'api/project/MengelolaSdmHiring/';
+    public apiRoot: string = 'api/project/MengelolaHiring';
 
     constructor(private httpClient: HttpClient) {
 
@@ -18,7 +16,7 @@ export class MultiInsert {
         const httpOptions = {
             params : new HttpParams()
         };
-        this.http.post(urlPost, {
+        this.httpClient.post(urlPost, {
             listData: [
                 {
                     client_id: this.clientId,
