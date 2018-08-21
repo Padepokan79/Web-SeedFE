@@ -139,11 +139,11 @@ export class PJA008Component implements OnInit {
       this.doubleFilter = Conjunction.OR(...filterComponent);
     }
 
-    if (this.categorySkill == null && this.varSkill == null && this.skillValue == null) {
+    if (this.categorySkill == null || this.varSkill == null || this.skillValue == null) {
       this.doubleFilter = Comparison.EQ('sdm_id', this.IdSdm);
     }
 
-    this.doubleFilter = Conjunction.AND(
+    this.doubleFilter = Conjunction.OR(
       ...filterComponent,
       Comparison.EQ('sdm_id', this.IdSdm)
     );

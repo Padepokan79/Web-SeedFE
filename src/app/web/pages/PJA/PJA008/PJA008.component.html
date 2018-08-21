@@ -67,6 +67,7 @@ CREATED 	: Thursday, ‎August 16th 2018 23:00:00 PM
       <br><br>
       <div class="action-filter">
         <button class="btn btn-filter btn-mm" (click)="selectToAssign()">Filter <i class="glyphicon glyphicon-search"></i></button>
+        <button class="btn btn-filter btn-mm" (click)="action.onReset()">Clear <i class="glyphicon glyphicon-times"></i></button>
       </div>
       <br><br>
     </form>
@@ -81,10 +82,10 @@ CREATED 	: Thursday, ‎August 16th 2018 23:00:00 PM
     </io-table>      
     <div class="action-filter col-md-12">
       <button [routerLink]="['/pages/dashboard']" class="btn btn-mm"> &lt; Back</button>
-      <button class="btn btn-primary btn-mm" [routerLink]="['/pages/pja/PJA006']" (click)="hiringSubmit()">Get</button>
+      <button class="btn btn-primary btn-mm" [routerLink]="['/pages/pja/PJA007']" (click)="hiringSubmit()">Get</button>
     </div>
   </form>
-  <ng-template #tableActionTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
-    <mat-checkbox (change)="distRedundantCheckedSdm()" value="{{row.sdm_id}}" [(ngModel)]="row.Checked" [name]="row.sdm_id"></mat-checkbox>
-  </ng-template>
 </div>
+<ng-template #tableActionTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
+  <mat-checkbox (change)="distRedundantCheckedSdm()" value="{{row.sdm_id}}" [(ngModel)]="row.Checked" [name]="row.sdm_id"></mat-checkbox>
+</ng-template>

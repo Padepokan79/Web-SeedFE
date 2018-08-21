@@ -47,7 +47,7 @@ export class PJA012Component implements OnInit {
   public categorySkill: any;
   public varSkill: string;
   public skillValue: string;
-  public apiRoot: any;
+  public apiRoot: string = 'http://localhost:7979/project/MultiAssignment';
 
   constructor(private _factory: CoreFactory, public _notif: DefaultNotificationService, private route: ActivatedRoute, private http: HttpClient) {
     this.listSearchCriteria.push(new SearchCriteria(_factory));
