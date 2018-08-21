@@ -10,9 +10,9 @@ import { Comparison } from '../../../../core/enums/comparison-operator.enum';
 import { Conjunction } from '../../../../core/enums/conjunction-operator.enum';
 import { DefaultNotificationService } from '../../../../core/services/default-notification.service';
 import { ListOfValue } from '../../../../core/models/list-of-value';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { MultiInsert } from './MultiInsert';
 
 @Component({
@@ -42,7 +42,6 @@ export class PJA008Component implements OnInit {
   public lovSkill: LOVService;
   public lovSdmSkill: LOVService;
   public isButtonClicked = false;
-  public hiringSubmit: any;
   public assignSubmit: any;
   public doubleFilter: any;
   public categorySkill: any;
@@ -50,15 +49,16 @@ export class PJA008Component implements OnInit {
   public skillValue: string;
   public hiringstatId: number;
   public methodIds: any;
+  public apiRoot: string = 'http://localhost:7979/project/MultiHiring';
 
-  constructor(private _factory: CoreFactory, public _notif: DefaultNotificationService, private route: ActivatedRoute, private httpClient: HttpClient) {
+  constructor(private _factory: CoreFactory, public _notif: DefaultNotificationService, private route: ActivatedRoute, private http: HttpClient) {
     this.listSearchCriteria.push(new SearchCriteria(_factory));
     this.sdmCtrl = new FormControl();
     this.filteredSdm = this.sdmCtrl.valueChanges
-    .startWith('')
-    .map((value) => this.filterSdm(value) );
+      .startWith('')
+      .map((value) => this.filterSdm(value));
     this.route.params.subscribe((param) => {
-      this.getClientid = param.id;
+      this.IdSdm = param.id;
     });
   }
 
@@ -66,10 +66,11 @@ export class PJA008Component implements OnInit {
     return val && val.length >= 0 ? this.lovSDM.data.filter((s) => s.values.sdm_sdm_name.toLowerCase().indexOf(val.toLocaleLowerCase()) === 0) : [];
   }
 
-  public setSdmValue(inputForm: FormGroup, dataSdm: ListOfValue) {
+  public setSdmValue(dataSdm: ListOfValue) {
     if (dataSdm) {
       this.IdSdm = dataSdm.key;
-      this.action.patchFormData({ sdm_id: dataSdm.key, sdm_name: dataSdm.values.sdm_sdm_name });
+      console.log(this.IdSdm);
+      // this.action.patchFormData({ sdm_id: dataSdm.key, sdm_name: dataSdm.values.sdm_sdm_name });
     }
   }
 
@@ -110,11 +111,6 @@ export class PJA008Component implements OnInit {
       dataTable: this.dataTable
     });
 
-    // this.action = this._factory.actions({
-    //   api: 'allocation/MengelolaSdmSkill',
-    //   dataTable: this.dataTable
-    // });
-
     // this.lovSkill = this._factory.lov({
     //   api: 'lov/Skill',
     //   initializeData: true
@@ -139,13 +135,13 @@ export class PJA008Component implements OnInit {
       );
     });
 
-    // if (this.IdSdm == null) {
-    //   this.doubleFilter = Conjunction.OR(...filterComponent);
-    // }
+    if (this.IdSdm == null) {
+      this.doubleFilter = Conjunction.OR(...filterComponent);
+    }
 
-    // if (this.categorySkill == null) {
-    //   this.doubleFilter = Comparison.EQ('sdm_id', this.IdSdm);
-    // }
+    if (this.categorySkill == null || this.varSkill == null || this.skillValue == null) {
+      this.doubleFilter = Comparison.EQ('sdm_id', this.IdSdm);
+    }
 
     this.doubleFilter = Conjunction.OR(
       ...filterComponent,
@@ -153,7 +149,7 @@ export class PJA008Component implements OnInit {
     );
 
     this._notif.success({
-      message : 'Data has been Filtered'
+      message: 'Data has been Filtered'
     });
 
     this.action.setPaginationFilter(this.doubleFilter);
@@ -172,13 +168,28 @@ export class PJA008Component implements OnInit {
     console.log(tempData);
   }
 
-  public assignSdmSubmit() {
+  public hiringSubmit() {
     this.isButtonClicked = true;
+    const bodyHiring = [];
     this.listMultiInsert.forEach((sdmHiring: MultiInsert) => {
-      this.IdSdm = sdmHiring.sdmId;
-      this.getClientid = sdmHiring.clientId;
-      this.hiringstatId = sdmHiring.hirestatId;
-      sdmHiring.postSdmHiring();
+      bodyHiring.push({
+        sdm_id: sdmHiring.sdmId,
+        client_id: sdmHiring.clientId,
+        hiringstat_id: sdmHiring.hirestatId
+      });
+    });
+    console.log('POST');
+    const url = `${this.apiRoot}/MultiCreate`;
+    const httpOptions = {
+      params: new HttpParams()
+    };
+    this.http.post(url, {
+      listhiring: bodyHiring
+    }, httpOptions)
+    .subscribe((res) => {
+      this._notif.success({
+        message: 'You have successfully Hired'
+      });
     });
   }
 

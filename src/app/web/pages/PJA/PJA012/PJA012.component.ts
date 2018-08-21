@@ -10,9 +10,9 @@ import { Comparison } from './../../../../core/enums/comparison-operator.enum';
 import { Conjunction } from './../../../../core/enums/conjunction-operator.enum';
 import { DefaultNotificationService } from './../../../../core/services/default-notification.service';
 import { ListOfValue } from './../../../../core/models/list-of-value';
-import { FormGroup, FormControl } from './../../../../../../node_modules/@angular/forms';
+import { FormControl } from './../../../../../../node_modules/@angular/forms';
 import { ActivatedRoute } from '../../../../../../node_modules/@angular/router';
-import { HttpClient } from '../../../../../../node_modules/@angular/common/http';
+import { HttpClient, HttpParams } from '../../../../../../node_modules/@angular/common/http';
 import { MultiInsert } from './MultiInsert';
 import { MultiInsertSdmAssign } from './MultiInsertSdmAssign';
 
@@ -38,35 +38,25 @@ export class PJA012Component implements OnInit {
   public listMultiInsertSdmAssign: MultiInsertSdmAssign[] = [];
   public IdSdm: any;
   public filteredSdm: any;
-  public getClientid: number;
   public lovSDM: LOVService;
   public lovSkillType: LOVService;
   public lovSkill: LOVService;
   public lovSdmSkill: LOVService;
   public isButtonClicked = false;
-  public hiringSubmit: any;
-  public assignSubmit: any;
   public doubleFilter: any;
   public categorySkill: any;
   public varSkill: string;
   public skillValue: string;
-  public hiringstatId: number;
-  public methodIds: any;
-  public sdmhiringId: string;
-  public sdmassignStartdate: string;
-  public sdmassignEnddate: string;
-  public sdmassignLoc: string;
-  public sdmassignPicclient: string;
-  public sdmassignPicclientphone: string;
+  public apiRoot: string = 'http://localhost:7979/project/MultiAssignment';
 
-  constructor(private _factory: CoreFactory, public _notif: DefaultNotificationService, private route: ActivatedRoute, private httpClient: HttpClient) {
+  constructor(private _factory: CoreFactory, public _notif: DefaultNotificationService, private route: ActivatedRoute, private http: HttpClient) {
     this.listSearchCriteria.push(new SearchCriteria(_factory));
     this.sdmCtrl = new FormControl();
     this.filteredSdm = this.sdmCtrl.valueChanges
-    .startWith('')
-    .map((value) => this.filterSdm(value) );
+      .startWith('')
+      .map((value) => this.filterSdm(value));
     this.route.params.subscribe((param) => {
-      this.getClientid = param.id;
+      this.IdSdm = param.id;
     });
   }
 
@@ -74,10 +64,11 @@ export class PJA012Component implements OnInit {
     return val && val.length >= 0 ? this.lovSDM.data.filter((s) => s.values.sdm_sdm_name.toLowerCase().indexOf(val.toLocaleLowerCase()) === 0) : [];
   }
 
-  public setSdmValue(inputForm: FormGroup, dataSdm: ListOfValue) {
+  public setSdmValue(dataSdm: ListOfValue) {
     if (dataSdm) {
       this.IdSdm = dataSdm.key;
-      this.action.patchFormData({ sdm_id: dataSdm.key, sdm_name: dataSdm.values.sdm_sdm_name });
+      console.log(this.IdSdm);
+      // this.action.patchFormData({ sdm_id: dataSdm.key, sdm_name: dataSdm.values.sdm_sdm_name });
     }
   }
 
@@ -118,11 +109,6 @@ export class PJA012Component implements OnInit {
       dataTable: this.dataTable
     });
 
-    // this.action = this._factory.actions({
-    //   api: 'allocation/MengelolaSdmSkill',
-    //   dataTable: this.dataTable
-    // });
-
     // this.lovSkill = this._factory.lov({
     //   api: 'lov/Skill',
     //   initializeData: true
@@ -155,13 +141,13 @@ export class PJA012Component implements OnInit {
       this.doubleFilter = Comparison.EQ('sdm_id', this.IdSdm);
     }
 
-    this.doubleFilter = Conjunction.OR(
+    this.doubleFilter = Conjunction.AND(
       ...filterComponent,
       Comparison.EQ('sdm_id', this.IdSdm)
     );
 
     this._notif.success({
-      message : 'Data has been Filtered'
+      message: 'Data has been Filtered'
     });
 
     this.action.setPaginationFilter(this.doubleFilter);
@@ -180,34 +166,29 @@ export class PJA012Component implements OnInit {
     console.log(tempData);
   }
 
-  public assignSdmSubmit() {
+  public assignSubmit() {
     this.isButtonClicked = true;
+    const bodyHiring = [];
     this.listMultiInsert.forEach((sdmHiring: MultiInsert) => {
-      this.IdSdm = sdmHiring.sdmId;
-      this.getClientid = sdmHiring.clientId;
-      this.hiringstatId = sdmHiring.hirestatId;
-      sdmHiring.postSdmHiring();
+      bodyHiring.push({
+        sdm_id: sdmHiring.sdmId,
+        client_id: sdmHiring.clientId,
+        hiringstat_id: sdmHiring.hirestatId
+      });
     });
-
-    if (this.listMultiInsert) {
-      this.listMultiInsertSdmAssign.forEach((sdmAssignment: MultiInsertSdmAssign) => {
-        this.methodIds = sdmAssignment.methodId;
-        this.sdmhiringId = sdmAssignment.sdmhiringId;
-        this.sdmassignStartdate = sdmAssignment.sdmassignStartdate;
-        this.sdmassignEnddate = sdmAssignment.sdmassignEnddate;
-        this.sdmassignLoc = sdmAssignment.sdmassignLoc;
-        this.sdmassignPicclient = sdmAssignment.sdmassignPicclient;
-        this.sdmassignPicclientphone = sdmAssignment.sdmassignPicclientphone;
-        sdmAssignment.postSdmAssignment();
-
-        this._notif.success({
-          message: 'Data has successfully Assigned'
-        });
+    console.log('POST');
+    const url = `${this.apiRoot}/MultiCreate`;
+    const httpOptions = {
+      params: new HttpParams()
+    };
+    this.http.post(url, {
+      listhiring: bodyHiring
+    }, httpOptions)
+    .subscribe((res) => {
+      this._notif.success({
+        message: 'You have successfully Hired'
       });
-    } else {
-      this._notif.error({
-        message: 'An error occured'
-      });
-    }
+    });
   }
+
 }
