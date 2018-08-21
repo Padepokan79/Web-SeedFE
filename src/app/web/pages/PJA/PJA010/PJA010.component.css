@@ -44,3 +44,7 @@
 .nx-table-left-align {
 	text-align: left;
 }
+
+.nx-time{
+    float: right;
+}

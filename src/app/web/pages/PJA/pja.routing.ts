@@ -15,6 +15,8 @@ import { PJA011Component } from './PJA011/PJA011.component';
 import { PJA007Component } from './PJA007/PJA007.component';
 import { PJA009Component } from './PJA009/PJA009.component';
 import { PJA008Component } from './PJA008/PJA008.component';
+import { PJA003RComponent } from './PJA003R/PJA003R.component';
+import { PopUpDetailComponent } from './PJA003R/PopUpDetail/PopUpDetail.component';
 
 export const PJA_ROUTES = [
     {
@@ -32,6 +34,8 @@ export const PJA_ROUTES = [
         { path: 'PJA010', component: PJA010Component, canActivate: [AuthGuard] },
         { path: 'PJA011', component: PJA011Component, canActivate: [AuthGuard] },
         { path: 'PJA012', component: PJA012Component, canActivate: [AuthGuard] },
+        { path: 'PJA003R', component: PJA003RComponent, canActivate: [AuthGuard] },
+        { path: 'PopUpDetail', component: PopUpDetailComponent, canActivate: [AuthGuard] },
       ]
     }
   ];

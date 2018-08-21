@@ -5,6 +5,8 @@ import { DataTable } from '../../../../../../core/models/data-table';
 import { CoreFactory } from '../../../../../../core/factory/core.factory';
 import { COMPARISON_OPERATOR, TYPE } from '../../../../../../core/constant/constant';
 import { LOVService } from '../../../../../../core/services/uninjectable/lov.service';
+import { Comparison } from '../../../../../../core/enums/comparison-operator.enum';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-tabDetail-employment',
@@ -35,8 +37,15 @@ export class TabDetailEmploymentComponent implements OnInit {
   public dataTable: DataTable;
 
   public lovEmployment: LOVService;
+  private selectedId: any;
 
-  constructor(private _factory: CoreFactory) { }
+  constructor(private _factory: CoreFactory,
+              private route: ActivatedRoute) {
+      this.route.params.subscribe((param) => {
+        this.selectedId = param.id;
+        console.log(this.selectedId);
+      });
+    }
 
   public ngOnInit() {
     if (this.form === 1) {
@@ -64,6 +73,7 @@ export class TabDetailEmploymentComponent implements OnInit {
     this.dataTable = this._factory.dataTable({
       serverSide : true,
       pagingParams : {
+        filter: Comparison.EQ('sdm_id', this.selectedId),
         limit : 10
       },
       // searchCriteria : [
@@ -77,27 +87,6 @@ export class TabDetailEmploymentComponent implements OnInit {
       ]
     });
 
-    if (this.form === 2) {
-      this.dataTable = this._factory.dataTable({
-        serverSide : true,
-        pagingParams : {
-          filter: {
-            field: 'sdm_id',
-            operator: COMPARISON_OPERATOR.EQ,
-            value: this.id
-          },
-          limit : 5
-        },
-        tableColumns : [
-          { prop: 'employment_corpname', name: 'Nama Perusahaan', width: 40, sortable: false },
-          { prop: 'employment_startdate', name: 'Tanggal masuk', width: 100, sortable: false },
-          { prop: 'employment_enddate', name: 'Tanggal keluar', width: 100, sortable: false },
-          { prop: 'employment_rolejob', name: 'Jabatan', width: 100,
-            cellTemplate: this.tableActionTemplate, sortable: false }
-
-        ]
-      });
-    }
     this.action = this._factory.actions({
       api: 'sdm/employment',
       dataTable: this.dataTable
