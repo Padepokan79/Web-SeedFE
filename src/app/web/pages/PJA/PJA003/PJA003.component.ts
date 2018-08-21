@@ -89,7 +89,7 @@ export class PJA003Component implements OnInit {
       //    { viewValue: 'Project Date', viewKey: 'project_enddate', type: TYPE.STRING },
       // ],
       tableColumns : [
-        { prop: 'project_id', name: 'No.', width: 100, sortable: true },
+        { prop: 'norut', name: 'No.', width: 100, sortable: true },
         { prop: 'sdm_name', name: 'Nama Sdm', width: 100, sortable: true },
         { prop: 'project_name', name: 'Project Name', width: 100, sortable: true },
         // { prop: 'project_desc', name: 'Project Desc.', width: 100, sortable: true },
@@ -177,34 +177,20 @@ export class PJA003Component implements OnInit {
   }
 
   public onSearch() {
-    const filterCriteria = [];
-
     const SdmName = this.action.getFormControlValue('sdm_id');
     const SdmProject = this.action.getFormControlValue('project_name');
     const Projectdate = this.action.getFormControlValue('project_enddate');
 
-    if (SdmName) {
-      filterCriteria.push(Comparison.EQ('sdm_id', SdmName));
-    }
-
-    if (SdmProject) {
-      filterCriteria.push(Comparison.EQ('project_name', SdmProject));
-    }
-
-    if (Projectdate) {
-      filterCriteria.push(Comparison.EQ('project_enddate', Projectdate));
-    }
-
     this.action.setPaginationFilter(
-      Conjunction.OR(
+      Conjunction.AND(
         // filterCriteria
-        Comparison.EQ('project_enddate', Projectdate),
-        Comparison.EQ('project_name', SdmProject),
-        Comparison.EQ('sdm_id', SdmName),
         // Conjunction.AND(
-        //   Comparison.EQ('project_name', SdmProject),
-        //   Comparison.EQ('sdm_id', SdmName)
-        // ),
+        //   Comparison.EQ('sdm_id', SdmName),
+        //   Comparison.EQ('project_name', SdmProject)),
+        // Comparison.LE('project_enddate', Projectdate),
+        Projectdate ? Comparison.LE('project_enddate', Projectdate) : Comparison.NE('project_enddate', 'project_enddate'),
+        SdmName ? Comparison.EQ('sdm_id', SdmName) : Comparison.NE('sdm_id', 'sdm_id'),
+        SdmProject ? Comparison.EQ('project_name', SdmProject) : Comparison.NE('project_name', 'project_name')
       )
     );
 

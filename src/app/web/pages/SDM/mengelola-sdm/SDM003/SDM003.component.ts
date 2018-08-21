@@ -89,7 +89,7 @@ export class SDM003Component implements OnInit {
       //   { viewValue: 'Nama', viewKey: 'sdm_name', type: TYPE.STRING }
       // ],
       tableColumns : [
-        { prop: 'sdm_id', name: 'No', width: 20, sortable: true },
+        { prop: 'norut', name: 'No', width: 20, sortable: true },
         { prop: 'sdm_name', name: 'Nama', width: 100, sortable: true },
         { prop: 'sdm_nik', name: 'NIK', width: 50, sortable: true },
         { prop: 'sdm_startcontract', name: 'Start Date', width: 50,
@@ -202,28 +202,12 @@ export class SDM003Component implements OnInit {
     const SdmName = this.action.getFormControlValue('sdm_name');
     const SdmEnddate = this.action.getFormControlValue('sdm_endcontract');
 
-    if (SdmLvl) {
-      filterCriteria.push(Comparison.EQ('sdmlvl_id', SdmLvl));
-    }
-
-    if (SdmName) {
-      filterCriteria.push(Comparison.EQ('sdm_name', SdmName));
-    }
-
-    if (SdmEnddate) {
-      filterCriteria.push(Comparison.EQ('sdm_endcontract', SdmEnddate));
-    }
-
     this.action.setPaginationFilter(
-      Conjunction.OR(
+      Conjunction.AND(
         // filterCriteria
-        Comparison.EQ('sdm_endcontract', SdmEnddate),
-        Comparison.EQ('sdmlvl_id', SdmLvl),
-        Comparison.EQ('sdm_name', SdmName),
-        // Conjunction.AND(
-        //   Comparison.EQ('project_name', SdmProject),
-        //   Comparison.EQ('sdm_id', SdmName)
-        // ),
+        SdmEnddate ? Comparison.EQ('sdm_endcontract', SdmEnddate) : Comparison.NE('sdm_endcontract', 'sdm_endcontract'),
+        SdmLvl ? Comparison.EQ('sdmlvl_id', SdmLvl) : Comparison.NE('sdmlvl_id', 'sdmlvl_id'),
+        SdmName ? Comparison.EQ('sdm_name', SdmName) : Comparison.NE('sdm_name', 'sdm_name'),
       )
     );
 
