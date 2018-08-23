@@ -45,6 +45,7 @@ export class TabEducationComponent implements OnInit {
   public ngOnInit() {
 
     this.sdmid = this.sdmId;
+    this.sdmid = this.id;
 
     this.inputForm = this._factory.inputForm({
       formControls: {
@@ -73,21 +74,6 @@ export class TabEducationComponent implements OnInit {
     });
 
     if (this.form === 2) {
-      // const readAllApi = this._factory.api({
-      //   api: 'sdm/education/readAll',
-      //   pagingParams: {
-      //     filter: {
-      //       field: 'sdm_id',
-      //       operator: COMPARISON_OPERATOR.EQ,
-      //       value: this.id
-      //     }
-      //   }
-      // });
-
-      // this._factory.http().get(readAllApi).subscribe((res: any) => {
-      //   console.log(res);
-      //   this.action.patchFormData(res.data.items[0]);
-      // });
 
       this.dataTable = this._factory.dataTable({
         serverSide: true,

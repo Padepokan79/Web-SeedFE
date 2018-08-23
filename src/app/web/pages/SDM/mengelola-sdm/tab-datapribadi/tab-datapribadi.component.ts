@@ -4,6 +4,8 @@ import { InputForm } from '../../../../../core/models/input-form';
 import { LOVService } from '../../../../../core/services/uninjectable/lov.service';
 import { CoreFactory } from '../../../../../core/factory/core.factory';
 import { COMPARISON_OPERATOR } from '../../../../../core/constant/constant';
+import { DefaultNotificationService } from '../../../../../core/services/default-notification.service';
+import { Router } from '../../../../../../../node_modules/@angular/router';
 
 @Component({
   selector: 'app-tab-datapribadi',
@@ -39,12 +41,17 @@ export class TabDatapribadiComponent implements OnInit {
   public lovStatus: LOVService;
   public lovDegree: LOVService;
 
-  constructor(private _factory: CoreFactory) { }
+  constructor(
+    private _factory: CoreFactory,
+    public _notif: DefaultNotificationService,
+    private router: Router
+  ) { }
 
     public ngOnInit() {
 
       this.inputForm = this._factory.inputForm({
         formControls: {
+          sdm_id: null,
           contracttype_id: '',
           gender_id: '1',
           health_id: '',
@@ -80,7 +87,7 @@ export class TabDatapribadiComponent implements OnInit {
           sdm_postcode: {
             pattern: 'Masukkan hanya angka'
           }
-        }
+        },
       });
 
       this.action = this._factory.actions({
@@ -108,7 +115,7 @@ export class TabDatapribadiComponent implements OnInit {
         initializeData: true
       });
 
-      if(this.form === 2) {
+      if (this.form === 2) {
         const readAllApi = this._factory.api({
           api : 'sdm/mengelolaSdm/readAll',
           pagingParams : {
@@ -121,6 +128,7 @@ export class TabDatapribadiComponent implements OnInit {
         });
 
         this._factory.http().get(readAllApi).subscribe((res: any) => {
+          res.data.items[0].sdm_status = res.data.items[0].sdm_status === 'active' ? 1 : 2;
           console.log(res);
           this.action.patchFormData(res.data.items[0]);
         });
@@ -148,6 +156,20 @@ export class TabDatapribadiComponent implements OnInit {
       this.tabEvent.emit(response.data.sdm_id);
     });
 
+  }
+
+  public onUpdate() {
+    const updateAPI = this._factory.api({
+      api : 'sdm/mengelolaSdm/update',
+    });
+
+    // tslint:disable-next-line:no-empty
+    this._factory.http().put(updateAPI + '?sdm_id=' + this.id, this.action.getFormData()).subscribe((response: any) => {
+      this._notif.success({
+        message: 'Successfully Update Data'
+      });
+      setTimeout(() => this.router.navigate(['pages/sdm/SDM008']), 1000);
+    });
   }
 
 }
