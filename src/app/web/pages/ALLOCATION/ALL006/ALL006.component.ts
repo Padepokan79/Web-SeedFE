@@ -1,17 +1,17 @@
-import { CoreFactory } from '../../../../core/factory/core.factory';
-import { DataTable } from '../../../../core/models/data-table';
-import { InputForm } from '../../../../core/models/input-form';
-import { ActionService } from '../../../../core/services/uninjectable/action.service';
+import { CoreFactory } from './../../../../core/factory/core.factory';
+import { DataTable } from './../../../../core/models/data-table';
+import { InputForm } from './../../../../core/models/input-form';
+import { ActionService } from './../../../../core/services/uninjectable/action.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { LOVService } from '../../../../core/services/uninjectable/lov.service';
+import { LOVService } from './../../../../core/services/uninjectable/lov.service';
 import { SearchCriteria } from './SearchCriteria';
-import { ISimplifiedFilterOperand } from '../../../../core/interfaces/main/i-simplified-filter-operand';
-import { Comparison } from '../../../../core/enums/comparison-operator.enum';
-import { Conjunction } from '../../../../core/enums/conjunction-operator.enum';
-import { DefaultNotificationService } from '../../../../core/services/default-notification.service';
-import { ListOfValue } from '../../../../core/models/list-of-value';
-import { FormGroup, FormControl, CheckboxControlValueAccessor } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ISimplifiedFilterOperand } from './../../../../core/interfaces/main/i-simplified-filter-operand';
+import { Comparison } from './../../../../core/enums/comparison-operator.enum';
+import { Conjunction } from './../../../../core/enums/conjunction-operator.enum';
+import { DefaultNotificationService } from './../../../../core/services/default-notification.service';
+import { ListOfValue } from './../../../../core/models/list-of-value';
+import { FormControl } from './../../../../../../node_modules/@angular/forms';
+import { ActivatedRoute } from '../../../../../../node_modules/@angular/router';
 
 @Component({
   selector: 'app-ALL006',
@@ -55,7 +55,7 @@ export class ALL006Component implements OnInit {
     .startWith('')
     .map((value) => this.filterSdm(value) );
     this.route.params.subscribe((param) => {
-      this.getClientid = param.id;
+      this.IdSdm = param.id;
     });
   }
 
@@ -63,10 +63,11 @@ export class ALL006Component implements OnInit {
     return val && val.length >= 0 ? this.lovSDM.data.filter((s) => s.values.sdm_sdm_name.toLowerCase().indexOf(val.toLocaleLowerCase()) === 0) : [];
   }
 
-  public setSdmValue(inputForm: FormGroup, dataSdm: ListOfValue) {
+  public setSdmValue(dataSdm: ListOfValue) {
     if (dataSdm) {
       this.IdSdm = dataSdm.key;
-      this.action.patchFormData({ sdm_id: dataSdm.key, sdm_name: dataSdm.values.sdm_sdm_name });
+      console.log(this.IdSdm);
+      // this.action.patchFormData({ sdm_id: dataSdm.key, sdm_name: dataSdm.values.sdm_sdm_name });
     }
   }
 
@@ -97,7 +98,7 @@ export class ALL006Component implements OnInit {
         { prop: 'skilltype_name', name: 'Category', width: 20, sortable: false },
         { prop: 'skill_name', name: 'Skills', width: 20, sortable: false },
         { prop: 'sdmskill_value', name: 'Value', width: 50, sortable: false },
-        { prop: 'sdmskill_id', name: 'Action', width: 10, cellTemplate: this.tableActionTemplate, sortable: false }
+        { prop: 'sdm_id', name: 'Select', width: 10, cellTemplate: this.tableActionTemplate, sortable: false }
       ]
     });
 
@@ -106,11 +107,6 @@ export class ALL006Component implements OnInit {
       // api: 'allocation/MultifilteringSdm',
       dataTable: this.dataTable
     });
-
-    // this.action = this._factory.actions({
-    //   api: 'allocation/MengelolaSdmSkill',
-    //   dataTable: this.dataTable
-    // });
 
     // this.lovSkill = this._factory.lov({
     //   api: 'lov/Skill',
@@ -136,13 +132,21 @@ export class ALL006Component implements OnInit {
       );
     });
 
-    this.doubleFilter = Conjunction.OR(
+    if (this.IdSdm == null) {
+      this.doubleFilter = Conjunction.OR(...filterComponent);
+    }
+
+    if (this.categorySkill == null && this.varSkill == null && this.skillValue == null) {
+      this.doubleFilter = Comparison.EQ('sdm_id', this.IdSdm);
+    }
+
+    this.doubleFilter = Conjunction.AND(
       ...filterComponent,
       Comparison.EQ('sdm_id', this.IdSdm)
     );
 
     this._notif.success({
-      message : 'Data has been Filtered'
+      message: 'Data has been Filtered'
     });
 
     this.action.setPaginationFilter(this.doubleFilter);

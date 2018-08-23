@@ -6,6 +6,7 @@ import { LOVService } from '../../../../../../core/services/uninjectable/lov.ser
 import { CoreFactory } from '../../../../../../core/factory/core.factory';
 import { COMPARISON_OPERATOR, TYPE } from '../../../../../../core/constant/constant';
 import { ActivatedRoute } from '@angular/router';
+import { Comparison } from '../../../../../../core/enums/comparison-operator.enum';
 
 @Component({
   selector: 'app-tabDetail-Education',
@@ -75,6 +76,7 @@ export class TabDetailEducationComponent implements OnInit {
     this.dataTable = this._factory.dataTable({
       serverSide : true,
       pagingParams : {
+        filter: Comparison.EQ('sdm_id', this.selectedId),
         limit : 10
       },
       // searchCriteria : [
@@ -89,34 +91,34 @@ export class TabDetailEducationComponent implements OnInit {
       ]
     });
 
-    if (this.form === 2) {
+  //   if (this.form === 2) {
 
-    this.dataTable = this._factory.dataTable({
-      serverSide : true,
-      pagingParams : {
-        filter: {
-          field: 'sdm_id',
-          operator: COMPARISON_OPERATOR.EQ,
-          value: this.id
-        },
-        limit : 5
-      },
-      searchCriteria : [
-        { viewValue: 'ID SDM', viewKey: 'sdm_id', type: TYPE.NUMBER }
-      ],
-      tableColumns : [
-        { prop: 'sdm_id', name: 'No', width: 10, sortable: false },
-        { prop: 'edu_name', name: 'Nama Sekolah', width: 30, sortable: true },
-        { prop: 'degree_name', name: 'Tingkat', width: 20, sortable: true },
-        { prop: 'edu_subject', name: 'Jurusan', width: 20, sortable: true },
-        { prop: 'edu_startdate', name: 'Tahun Masuk', width: 20, sortable: true },
-        { prop: 'edu_enddate', name: 'Tahun Keluar', width: 20, sortable: true },
-        { prop: 'edu_id', name: 'Action', width: 20,
-          cellTemplate: this.tableActionTemplate, sortable: false }
-      ]
-    });
+  //   this.dataTable = this._factory.dataTable({
+  //     serverSide : true,
+  //     pagingParams : {
+  //       filter: {
+  //         field: 'sdm_id',
+  //         operator: COMPARISON_OPERATOR.EQ,
+  //         value: this.id
+  //       },
+  //       limit : 5
+  //     },
+  //     searchCriteria : [
+  //       { viewValue: 'ID SDM', viewKey: 'sdm_id', type: TYPE.NUMBER }
+  //     ],
+  //     tableColumns : [
+  //       { prop: 'sdm_id', name: 'No', width: 10, sortable: false },
+  //       { prop: 'edu_name', name: 'Nama Sekolah', width: 30, sortable: true },
+  //       { prop: 'degree_name', name: 'Tingkat', width: 20, sortable: true },
+  //       { prop: 'edu_subject', name: 'Jurusan', width: 20, sortable: true },
+  //       { prop: 'edu_startdate', name: 'Tahun Masuk', width: 20, sortable: true },
+  //       { prop: 'edu_enddate', name: 'Tahun Keluar', width: 20, sortable: true },
+  //       { prop: 'edu_id', name: 'Action', width: 20,
+  //         cellTemplate: this.tableActionTemplate, sortable: false }
+  //     ]
+  //   });
 
-  }
+  // }
     this.action = this._factory.actions({
       api: 'sdm/Education',
       dataTable: this.dataTable,

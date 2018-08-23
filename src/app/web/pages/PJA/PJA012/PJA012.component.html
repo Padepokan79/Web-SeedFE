@@ -12,7 +12,7 @@ UPDATE		: Wednesday, August 15th 2018 08:05:00 AM
       <span><i class="fa fa-home"></i></span>
       <a [routerLink]="['/pages/dashboard']">dashboard</a><b> > </b>
       <a [routerLink]="['/pages/project']"><span>Project Assignment</span></a><b> > </b>
-      <a><span>Assign SDM untuk {{ getClientid }}</span></a>
+      <a><span>Assign SDM</span></a>
     </div>
   </div>
 </div>
@@ -26,7 +26,7 @@ UPDATE		: Wednesday, August 15th 2018 08:05:00 AM
               <mat-form-field class="sdw-full-size">
                 <input matInput [formControl]="sdmCtrl" placeholder="Input SDM Name" name="sdm_id" [matAutocomplete]="auto" class="blacky">
                 <mat-autocomplete #auto="matAutocomplete">
-                  <mat-option *ngFor="let dataSdm of filteredSdm | async" [value]="dataSdm.values.sdm_sdm_name" (onSelectionChange)="setSdmValue(action?.formControls(),dataSdm)">
+                  <mat-option *ngFor="let dataSdm of filteredSdm | async" [value]="dataSdm.values.sdm_sdm_name" (onSelectionChange)="setSdmValue(dataSdm)">
                     {{ dataSdm.values.sdm_sdm_name }}
                   </mat-option>
                 </mat-autocomplete>
@@ -82,7 +82,7 @@ UPDATE		: Wednesday, August 15th 2018 08:05:00 AM
     </io-table>      
     <div class="action-filter col-md-12">
       <button [routerLink]="['/pages/dashboard']" class="btn btn-mm"> &lt; Back</button>
-      <button class="btn btn-primary btn-mm" (click)="assignSdmSubmit()" [routerLink]="['/pages/pja/PJA010']">Submit</button>
+      <button class="btn btn-primary btn-mm" [routerLink]="['/pages/pja/PJA010']">Submit</button>
     </div>
   </form>
 </div>

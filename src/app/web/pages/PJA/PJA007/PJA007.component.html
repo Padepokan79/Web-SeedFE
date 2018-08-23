@@ -21,7 +21,7 @@
           </td>
           <td class="nx-table-range" style="width: 100px">
             <mat-form-field>
-              <mat-select placeholder="- Select -" formControlName="client_id" name="client_id">
+              <mat-select placeholder="- Select -" formControlName="client_id" name="client_id" [(ngModel)]="selected" (change)="ambilData();onSearch()">
                 <mat-option *ngFor="let lov of lovClients.data" [value]="lov.key">
                   {{lov.value}}
                 </mat-option>
@@ -32,31 +32,31 @@
         </tr>
   
         <tr>
-          <td class="nx-table-range">
+          <td class="nx-table-range nx-table-height">
             <mat-label>PIC Handler</mat-label>
           </td>
           <td>
             <mat-label>:</mat-label>
           </td>
           <td class="nx-table-range">
-            <mat-label></mat-label>
+            <mat-label>{{ picHandler }}</mat-label>
           </td>
         </tr>
   
         <tr>
-          <td class="nx-table-range">
+          <td class="nx-table-range nx-table-height">
             <mat-label>PIC Contact</mat-label>
           </td>
           <td>
             <mat-label>:</mat-label>
           </td>
           <td class="nx-table-range">
-            <mat-label></mat-label>
+            <mat-label>{{ picContact }}</mat-label>
           </td>
           <td>
-            <button mat-flat-button (click)="onSearch()">
-                <span class="glyphicon glyphicon-search nx-save-button" aria-hidden="true"></span>Filter</button>&nbsp;
-            <button mat-flat-button (click)="action.onReset()">
+            <!-- <button mat-flat-button (click)="onSearch()">
+                <span class="glyphicon glyphicon-search nx-save-button" aria-hidden="true"></span>Filter</button>&nbsp; -->
+            <button mat-flat-button (click)="action.onReset();clearData()">
                 <span class="glyphicon glyphicon-remove nx-save-button" aria-hidden="true"></span>Clear</button>&nbsp;
             <div class="col-md-2" style="float:right">
               <button mat-flat-button style="float:right" [routerLink]="['/pages/pja/PJA008']">

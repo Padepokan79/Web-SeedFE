@@ -5,6 +5,8 @@ import { DataTable } from '../../../../../../core/models/data-table';
 import { COMPARISON_OPERATOR, CONJUNCTION_OPERATOR, TYPE } from '../../../../../../core/constant/constant';
 import { InputForm } from '../../../../../../core/models/input-form';
 import { LOVService } from '../../../../../../core/services/uninjectable/lov.service';
+import { Comparison } from '../../../../../../core/enums/comparison-operator.enum';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-tabDetail-course',
@@ -12,6 +14,11 @@ import { LOVService } from '../../../../../../core/services/uninjectable/lov.ser
   styleUrls: ['./tabDetail-course.component.css']
 })
 export class TabDetailCourseComponent implements OnInit {
+
+  public selected = 0;
+  public disabled = true;
+  public disabled1 = false;
+  public sdmterbesar = 0;
 
   public lovDegree: LOVService;
   public inputForm: InputForm;
@@ -25,16 +32,17 @@ export class TabDetailCourseComponent implements OnInit {
 
   public action: ActionService;
   public dataTable: DataTable;
+  private selectedId: any;
 
-  constructor(private _factory: CoreFactory) { }
+  constructor(private _factory: CoreFactory,
+              private route: ActivatedRoute) {
+    this.route.params.subscribe((param) => {
+      this.selectedId = param.id;
+      console.log(this.selectedId);
+    });
+   }
 
   public ngOnInit() {
-    if (this.form === 1) {
-      this.sdmid = 113;
-    } else {
-      this.sdmid = this.id;
-    }
-
     this.inputForm = this._factory.inputForm({
       formControls: {
         course_id: 0,
@@ -56,6 +64,7 @@ export class TabDetailCourseComponent implements OnInit {
     this.dataTable = this._factory.dataTable({
       serverSide : true,
       pagingParams : {
+        filter: Comparison.EQ('sdm_id', this.selectedId),
         limit : 10
       },
       // searchCriteria : [
@@ -71,29 +80,6 @@ export class TabDetailCourseComponent implements OnInit {
       ]
     });
 
-    if (this.form === 2) {
-      this.dataTable = this._factory.dataTable({
-        serverSide : true,
-        pagingParams : {
-          filter: {
-            field: 'sdm_id',
-            operator: COMPARISON_OPERATOR.EQ,
-            value: this.id
-          },
-          limit : 5
-        },
-        tableColumns : [
-          { prop: 'course_title', name: 'Title', width: 10, sortable: false },
-        { prop: 'course_provider', name: 'Penyelenggara', width: 30, sortable: true },
-        { prop: 'course_place', name: 'Tempat', width: 20, sortable: true },
-        { prop: 'course_duration', name: 'Durasi', width: 20, sortable: true },
-        { prop: 'course_date', name: 'Tanggal', width: 20, sortable: true },
-        { prop: 'course_certificates', name: 'Sertifikat', width: 20,
-            cellTemplate: this.tableActionTemplate, sortable: false }
-
-        ]
-      });
-    }
     this.action = this._factory.actions({
       api: 'sdm/course',
       dataTable: this.dataTable

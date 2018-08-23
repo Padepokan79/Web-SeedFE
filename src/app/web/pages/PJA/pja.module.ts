@@ -18,6 +18,8 @@ import { PJA011Component } from './PJA011/PJA011.component';
 import { PJA007Component } from './PJA007/PJA007.component';
 import { PJA009Component } from './PJA009/PJA009.component';
 import { PJA008Component } from './PJA008/PJA008.component';
+import { PJA003RComponent } from './PJA003R/PJA003R.component';
+import { PopUpDetailComponent } from './PJA003R/PopUpDetail/PopUpDetail.component';
 // import { SearchCriteria } from './PJA012/SearchCriteria';
 
 const PJA_COMPONENTS = [
@@ -34,6 +36,8 @@ const PJA_COMPONENTS = [
     PJA010Component,
     PJA011Component,
     PJA012Component,
+    PJA003RComponent,
+    PopUpDetailComponent
     // SearchCriteria
 ];
 
