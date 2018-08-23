@@ -52,8 +52,8 @@ export class ALL006Component implements OnInit {
     this.listSearchCriteria.push(new SearchCriteria(_factory));
     this.sdmCtrl = new FormControl();
     this.filteredSdm = this.sdmCtrl.valueChanges
-    .startWith('')
-    .map((value) => this.filterSdm(value) );
+      .startWith('')
+      .map((value) => this.filterSdm(value));
     this.route.params.subscribe((param) => {
       this.IdSdm = param.id;
     });
@@ -132,18 +132,20 @@ export class ALL006Component implements OnInit {
       );
     });
 
-    if (this.IdSdm == null) {
+    if (this.IdSdm === null) {
       this.doubleFilter = Conjunction.OR(...filterComponent);
     }
 
-    if (this.categorySkill == null && this.varSkill == null && this.skillValue == null) {
+    else if (this.categorySkill === null || this.varSkill === null || this.skillValue === null) {
       this.doubleFilter = Comparison.EQ('sdm_id', this.IdSdm);
     }
 
-    this.doubleFilter = Conjunction.AND(
-      ...filterComponent,
-      Comparison.EQ('sdm_id', this.IdSdm)
-    );
+    else {
+      this.doubleFilter = Conjunction.OR(
+        ...filterComponent,
+        Comparison.EQ('sdm_id', this.IdSdm)
+      );
+    }
 
     this._notif.success({
       message: 'Data has been Filtered'
