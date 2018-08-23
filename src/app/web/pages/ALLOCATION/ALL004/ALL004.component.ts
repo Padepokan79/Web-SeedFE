@@ -12,6 +12,9 @@ import { HttpClient, HttpParams } from '../../../../../../node_modules/@angular/
 import { MultiInsertSdmSkill } from './MultiInsertSdmSkill';
 import { FormGroup, FormControl } from '../../../../../../node_modules/@angular/forms';
 import { DefaultNotificationService } from '../../../../core/services/default-notification.service';
+import { startWith, map } from '../../../../../../node_modules/rxjs/operators';
+import { ListOfValue } from '../../../../core/models/list-of-value';
+import { Router, ActivatedRoute } from '../../../../../../node_modules/@angular/router';
 
 @Component({
   selector: 'io-ALL004',
@@ -40,15 +43,21 @@ export class ALL004Component implements OnInit {
   public isButtonClicked = false;
   public listMultiInsert: MultiInsertSdmSkill[] = [];
   public skillId: number;
-  public sdmId: number;
   public skilltypeId: number;
   public skillsdmValue: number;
   public myGroup: FormGroup;
+  public filteredSdm: any;
+  public action: ActionService;
+  public sdmId: any;
+  public sdmCtrl: FormControl;
 
-  constructor(public _notif: DefaultNotificationService , private _factory: CoreFactory, private http: HttpClient) {
+  constructor(public _notif: DefaultNotificationService , private route: ActivatedRoute , private _factory: CoreFactory, private http: HttpClient) {
     this.listSearchCriteria.push(new SearchCriteria(_factory));
+    this.sdmCtrl = new FormControl();
+    this.filteredSdm = this.sdmCtrl.valueChanges
+    .startWith('')
+    .map((value) => this.filterSdm(value)); 
   }
-
   public addSearchCriteria() {
     const searchCriteria = new SearchCriteria(this._factory);
     this.listSearchCriteria.push(searchCriteria);
@@ -65,19 +74,25 @@ export class ALL004Component implements OnInit {
     });
   }
 
-  // public btnSave() {
-  //   this.myGroup = new FormGroup({
-  //     sdm_id: new FormControl()
-  //   });
-  //   this.isButtonClicked = true;
-  // this.listMultiInsert.forEach((skillSdm: MultiInsertSdmSkill) => {
-  //   this.skillId = skillSdm.skillId,
-  //   this.sdmId = skillSdm.sdmId,
-  //   this.skilltypeId = skillSdm.skilltypeId,
-  //   this.skillsdmValue = skillSdm.sdmskillValue,
-  //   skillSdm.postSdmSkill();
-  // });
-  // }
+  public setSdmValue(inputForm: FormGroup, dataSdm: ListOfValue) {
+    if (dataSdm) {
+      this.lovSDM = this._factory.lov({
+        api: 'lov/sdm',
+        params: {
+          sdm_id: dataSdm.key
+        },
+        initializeData: true
+      });
+      this.sdmId = dataSdm.key;
+      // this.action.patchFormData({sdm_id: dataSdm.key, sdm_name: dataSdm.values.sdm_sdm_name});
+      console.log(this.action.getFormControlValue('sdm_id'));
+    }
+  }
+
+  public filterSdm(val: string) {
+    return val ? this.lovSDM.data.filter((s) => s.values.sdm_sdm_name.toLowerCase().indexOf(val.toLocaleLowerCase()) === 0) : [];
+  }
+
   // // // tslint:disable-next-line:member-ordering
   // tslint:disable-next-line:member-ordering
   public apiRoot: string = 'http://localhost:7979/allocation/MultiInsertSdm';
@@ -88,7 +103,7 @@ export class ALL004Component implements OnInit {
       sdm_id: this.sdmId,
       skilltype_id: skillSdm.skilltype_id,
       skill_id: skillSdm.skill_id,
-      sdmskill_value: this.skillsdmValue
+      sdmskill_value: skillSdm.sdmskillValue
     });
   });
   console.log('POST');

@@ -271,6 +271,7 @@
     </div> -->
     <div class="col-md-6 pos" style="float:right">
     <button mat-raised-button style="margin: 10px 0px" (click)="onSave()" *ngIf=" form == 1 " [disabled]="action?.formControls()?.invalid || action?.formControls()?.pristine" >Submit</button>
-    <button mat-raised-button style="margin: 10px 0px" (click)="action.onEdit()" *ngIf=" form == 2 ">Update</button>
+    <button mat-raised-button style="margin: 10px 0px" (click)="onUpdate()" *ngIf=" form == 2 " [disabled]="action?.formControls()?.invalid || action?.formControls()?.pristine">Update</button>
+    <!-- <button mat-raised-button style="margin: 10px 0px" (click)="action.onEdit()" *ngIf=" form == 2 ">Update</button> -->
     </div>
 </form>
