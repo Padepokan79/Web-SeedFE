@@ -135,18 +135,39 @@ export class PJA008Component implements OnInit {
       );
     });
 
-    if (this.IdSdm == null) {
-      this.doubleFilter = Conjunction.OR(...filterComponent);
-    }
+    // if (this.IdSdm === null && this.categorySkill !== null) {
+    //   this.doubleFilter = Conjunction.OR(...filterComponent);
+    // }
 
-    if (this.categorySkill == null || this.varSkill == null || this.skillValue == null) {
+    if(this.IdSdm !== null && (this.categorySkill === null && this.varSkill === null && this.skillValue === null)) {
       this.doubleFilter = Comparison.EQ('sdm_id', this.IdSdm);
     }
 
-    this.doubleFilter = Conjunction.OR(
-      ...filterComponent,
-      Comparison.EQ('sdm_id', this.IdSdm)
-    );
+    else if (this.IdSdm === null && (this.categorySkill !== null || this.varSkill !== null || this.skillValue !== null)) {
+      this.doubleFilter = Conjunction.OR(...filterComponent);
+    }
+
+    else if (this.IdSdm !== null && (this.categorySkill !== null && (this.varSkill !== null || this.skillValue !== null))) {
+      this.doubleFilter = Conjunction.AND(
+        ...filterComponent,
+        Comparison.EQ('sdm_id', this.IdSdm)
+      );
+    }
+
+    else {
+      this.doubleFilter = null;
+    }
+
+    // else if (this.categorySkill === null && (this.varSkill === null || this.skillValue === null)) {
+    //   this.doubleFilter = Comparison.EQ('sdm_id', this.IdSdm);
+    // }
+
+    // else {
+      // this.doubleFilter = Conjunction.OR(
+      //   ...filterComponent,
+      //   Comparison.EQ('sdm_id', this.IdSdm)
+      // );
+    // }
 
     this._notif.success({
       message: 'Data has been Filtered'
