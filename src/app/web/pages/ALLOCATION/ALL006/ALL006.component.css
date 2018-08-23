@@ -40,6 +40,12 @@ div.go-tight {
     margin-top: 10px;
 }
 
+.btn-clear {
+    background: linear-gradient(to bottom right, #AB2314, #AD3118);
+    color: #FEFEFE;
+    margin-top: 10px;
+}
+
 .position-li {
     margin: 10px 20% -10px 20%;
 }
