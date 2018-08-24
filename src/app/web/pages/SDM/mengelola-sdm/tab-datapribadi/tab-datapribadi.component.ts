@@ -128,8 +128,7 @@ export class TabDatapribadiComponent implements OnInit {
         });
 
         this._factory.http().get(readAllApi).subscribe((res: any) => {
-          res.data.items[0].sdm_status = res.data.items[0].sdm_status === 'active' ? 1 : 2;
-          console.log(res);
+          res.data.items[0].sdm_status = res.data.items[0].sdm_status === 'Active' ? 1 : 0;
           this.action.patchFormData(res.data.items[0]);
         });
       }
@@ -168,7 +167,6 @@ export class TabDatapribadiComponent implements OnInit {
       this._notif.success({
         message: 'Successfully Update Data'
       });
-      setTimeout(() => this.router.navigate(['pages/sdm/SDM008']), 1000);
     });
   }
 

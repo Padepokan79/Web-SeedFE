@@ -4,6 +4,7 @@ import { InputForm } from '../../../../../core/models/input-form';
 import { DataTable } from '../../../../../core/models/data-table';
 import { CoreFactory } from '../../../../../core/factory/core.factory';
 import { COMPARISON_OPERATOR } from '../../../../../core/constant/constant';
+import { Comparison } from 'app/core/enums/comparison-operator.enum';
 
 @Component({
   selector: 'app-tab-profil',
@@ -42,9 +43,11 @@ export class TabProfilComponent implements OnInit {
 
     this.inputForm = this._factory.inputForm({
       formControls: {
-        sdm_id: this.sdmid,
         profiling_name: '',
         profiling_id: 0,
+      },
+      immutableFormControls: {
+        sdm_id: this.sdmid,
       },
       validationMessages: {
         profiling_name: {
@@ -58,15 +61,11 @@ export class TabProfilComponent implements OnInit {
     this.dataTable = this._factory.dataTable({
       serverSide : true,
       pagingParams : {
-        filter: {
-          field: 'sdm_id',
-          operator: COMPARISON_OPERATOR.EQ,
-          value: this.id
-        },
+        filter: Comparison.EQ('sdm_id', this.id.toString()),
         limit : 500
       },
       tableColumns : [
-        { prop: 'profiling_id', name: 'id', width: 10, sortable: false },
+        { prop: 'norut', name: 'No', width: 10, sortable: false },
         { prop: 'profiling_name', name: 'No', width: 10, sortable: false },
         { prop: 'profiling_id', name: 'Action', width: 20,
           cellTemplate: this.tableActionTemplate, sortable: false }

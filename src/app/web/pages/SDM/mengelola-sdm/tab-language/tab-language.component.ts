@@ -5,6 +5,7 @@ import { CoreFactory } from '../../../../../core/factory/core.factory';
 import { DataTable } from '../../../../../core/models/data-table';
 import { InputForm } from '../../../../../core/models/input-form';
 import { COMPARISON_OPERATOR } from '../../../../../core/constant/constant';
+import { Comparison } from 'app/core/enums/comparison-operator.enum';
 @Component({
   selector: 'app-tab-language',
   templateUrl: './tab-language.component.html',
@@ -44,8 +45,10 @@ export class TabLanguageComponent implements OnInit {
 
     this.inputForm = this._factory.inputForm({
       formControls: {
-        sdm_id: this.sdmid,
         language_id: '',
+      },
+      immutableFormControls: {
+        sdm_id: this.sdmid,
       }
     });
 
@@ -53,15 +56,10 @@ export class TabLanguageComponent implements OnInit {
     this.dataTable = this._factory.dataTable({
       serverSide : true,
       pagingParams : {
-        filter: {
-          field: 'sdm_id',
-          operator: COMPARISON_OPERATOR.EQ,
-          value: this.id
-        },
+        filter: Comparison.EQ('sdm_id', this.id.toString()),
         limit : 5
       },
       tableColumns : [
-        { prop: 'sdmlanguage_id', name: 'SDML ID', width: 10, sortable: false },
         { prop: 'language_name', name: 'Bahasa', width: 30, sortable: true },
         { prop: 'sdmlanguage_id', name: 'Action', width: 20,
           cellTemplate: this.tableActionTemplate, sortable: false }
