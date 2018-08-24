@@ -30,8 +30,7 @@ export class ALL004Component implements OnInit {
   @ViewChild('tableActionTemplate')
   public tableActionTemplate: any;
 
-  // public action: ActionService;
-  // public inputForm: InputForm;
+  public inputForm: InputForm;
   public dataTable: DataTable;
   public listSearchCriteria: SearchCriteria[] = [];
   // public listSkillSelected: SkillSelected[] = [];
@@ -52,7 +51,7 @@ export class ALL004Component implements OnInit {
   public action: ActionService;
   public sdmId: number;
   public sdmCtrl: FormControl;
-  public nik: string = '';
+  public nik: number;
   public selected: string;
 
   constructor(public _notif: DefaultNotificationService , private route: ActivatedRoute , private _factory: CoreFactory, private http: HttpClient) {
@@ -81,7 +80,6 @@ export class ALL004Component implements OnInit {
   public setSdmValue(skillSdm: SearchCriteria, dataSdm: ListOfValue) {
     if (dataSdm) {
       this.sdmId = dataSdm.key;
-      this.nik = dataSdm.key;
       this.lovSDM = this._factory.lov({
         api: 'lov/sdm',
         params: {
@@ -89,8 +87,29 @@ export class ALL004Component implements OnInit {
         },
         initializeData: true
       });
-      // this.action.patchFormData();
-      console.log(this.action.getFormControlValue('sdm_id'));
+      
+      const readAllApi = this._factory.api({
+      api : 'sdm/MengelolaSdm/readAll',
+        params : {
+          value : this.selected
+        }
+      });
+
+      this._factory.http().get(readAllApi).subscribe((res: any) => {
+        console.log(res);
+        console.log(this.sdmId);
+        // this.action.patchFormData(res.data.items[this.selected]);
+        this.nik = res.data.items[this.sdmId].sdm_nik;
+      });
+
+      if (this.nik >= 0) {
+        console.log('nik tersedia')
+      } else {
+        this._notif.error({
+          message: 'nik gaada ada'
+        });
+      }
+
     }
   }
 
@@ -127,32 +146,20 @@ export class ALL004Component implements OnInit {
     });
   }
 
-  public ambilData() {
-    const readAllApi = this._factory.api({
-      api : 'project/SdmAssignment/readAll',
-      params : {
-          value : this.selected
-      }
-    });
+  // public ambilData(){ 
+  //  const readAllApi = this._factory.api({
+  //   api : 'sdm/MengelolaSdm/readAll',
+  //     params : {
+  //       value : this.selected
+  //     }
+  // });
 
-    this._factory.http().get(readAllApi).subscribe((res: any) => {
-      this.action.patchFormData(res.data.items[this.selected]);
-      this.nik = res.data.items[this.selected].sdmassign_picclient;
-    });
+  // this._factory.http().get(readAllApi).subscribe((res: any) => {
+  // console.log(res);
+  // console.log(this.sdmId);
+  // // this.action.patchFormData(res.data.items[this.selected]);
+  // this.nik = res.data.items[this.sdmId].sdm_nik;
+  // });
 
-  }
-
-  public onSearch() {
-    const filterCriteria = [];
-    const ClientId = this.action.getFormControlValue('client_id');
-
-    this.action.setPaginationFilter(
-      Conjunction.OR(
-        Comparison.EQ('sdm_id', ClientId),
-      )
-    );
-
-    this.action.refreshTable();
-  }
-
+  // }
 }
