@@ -8,7 +8,7 @@
 
     <!-- NAMA Kursus/Pelatihan -->
     <tr>
-      <td style="width: 20%">Kursus/Pelatihan {{ form }} {{ id }}</td>
+      <td style="width: 20%">Kursus/Pelatihan</td>
       <td style="width: 5px">:</td>
       <td style="width: 80%">
         <mat-form-field class="sdw-full-size">
@@ -88,11 +88,11 @@
     </tr>
     </table>
     </div>
-    <div class="col-md-3" *ngIf=" form == 2 ">
+    <div class="col-md-6 pos" style="float:right">
         <io-form-action [action]="action"></io-form-action>
     </div>
     <div class="col-md-6 pos" style="float:right">
-        <button mat-raised-button style="margin: 10px 0px" (click)="action.onSave()" *ngIf=" form == 1 ">Submit</button>
+        <button mat-raised-button style="margin: 10px 0px" (click)="action.onSave()" *ngIf=" form == 1 ">{{action.buttonTitle}}</button>
         <!-- <button mat-raised-button style="margin: 10px 0px" (click)="action.onEdit()" *ngIf=" form == 2 ">Update</button> -->
     </div>
 </form>
@@ -100,7 +100,7 @@
 <div *ngIf="form == 2">
     <io-table *ngIf="action?.table()" [action]="action">
         <div class="io-table-header">
-        <h3>List Educations</h3>
+        <h3>List Courses</h3>
         </div>
     </io-table>
 </div>

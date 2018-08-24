@@ -15,11 +15,6 @@ import { Comparison } from '../../../../../core/enums/comparison-operator.enum';
 
 export class TabEducationComponent implements OnInit {
 
-  public selected = 0;
-  public disabled = true;
-  public disabled1 = false;
-  public sdmterbesar = 0;
-
   @Input()
   public form: number;
   @Input()
@@ -40,12 +35,15 @@ export class TabEducationComponent implements OnInit {
 
   public lovDegree: LOVService;
 
-  constructor(private _factory: CoreFactory) { }
+  constructor(private _factory: CoreFactory) {  }
 
   public ngOnInit() {
 
-    this.sdmid = this.sdmId;
-    this.sdmid = this.id;
+    if (this.form === 1) {
+      this.sdmid = this.sdmId;
+    } else {
+      this.sdmid = this.id;
+    }
 
     this.inputForm = this._factory.inputForm({
       formControls: {
@@ -69,8 +67,7 @@ export class TabEducationComponent implements OnInit {
         edu_enddate: {
           pattern: 'Masukkan tahun'
         }
-      },
-      isNewData: this.form === 1 ? true : false
+      }
     });
 
     if (this.form === 2) {
@@ -85,7 +82,7 @@ export class TabEducationComponent implements OnInit {
         //   { viewValue: 'ID SDM', viewKey: 'sdm_id', type: TYPE.NUMBER }
         // ],
         tableColumns: [
-          { prop: 'norut', name: 'No', width: 10, sortable: false },
+          { prop: 'norut', name: 'No', width: 3, sortable: false },
           { prop: 'edu_name', name: 'Nama Sekolah', width: 30, sortable: true },
           { prop: 'degree_name', name: 'Tingkat', width: 20, sortable: true },
           { prop: 'edu_subject', name: 'Jurusan', width: 20, sortable: true },
@@ -111,7 +108,4 @@ export class TabEducationComponent implements OnInit {
     });
   }
 
-  public resetForm() {
-    this.action.onReset();
-  }
 }
