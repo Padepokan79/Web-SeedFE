@@ -15,6 +15,8 @@ import { DefaultNotificationService } from '../../../../core/services/default-no
 import { startWith, map } from '../../../../../../node_modules/rxjs/operators';
 import { ListOfValue } from '../../../../core/models/list-of-value';
 import { Router, ActivatedRoute } from '../../../../../../node_modules/@angular/router';
+import { Comparison } from '../../../../core/enums/comparison-operator.enum';
+import { Conjunction } from '../../../../core/enums/conjunction-operator.enum';
 
 @Component({
   selector: 'io-ALL004',
@@ -48,8 +50,10 @@ export class ALL004Component implements OnInit {
   public myGroup: FormGroup;
   public filteredSdm: any;
   public action: ActionService;
-  public sdmId: any;
+  public sdmId: number;
   public sdmCtrl: FormControl;
+  public nik: string = '';
+  public selected: string;
 
   constructor(public _notif: DefaultNotificationService , private route: ActivatedRoute , private _factory: CoreFactory, private http: HttpClient) {
     this.listSearchCriteria.push(new SearchCriteria(_factory));
@@ -74,8 +78,10 @@ export class ALL004Component implements OnInit {
     });
   }
 
-  public setSdmValue(inputForm: FormGroup, dataSdm: ListOfValue) {
+  public setSdmValue(skillSdm: SearchCriteria, dataSdm: ListOfValue) {
     if (dataSdm) {
+      this.sdmId = dataSdm.key;
+      this.nik = dataSdm.key;
       this.lovSDM = this._factory.lov({
         api: 'lov/sdm',
         params: {
@@ -83,8 +89,7 @@ export class ALL004Component implements OnInit {
         },
         initializeData: true
       });
-      this.sdmId = dataSdm.key;
-      // this.action.patchFormData({sdm_id: dataSdm.key, sdm_name: dataSdm.values.sdm_sdm_name});
+      // this.action.patchFormData();
       console.log(this.action.getFormControlValue('sdm_id'));
     }
   }
@@ -121,4 +126,33 @@ export class ALL004Component implements OnInit {
       });
     });
   }
+
+  public ambilData() {
+    const readAllApi = this._factory.api({
+      api : 'project/SdmAssignment/readAll',
+      params : {
+          value : this.selected
+      }
+    });
+
+    this._factory.http().get(readAllApi).subscribe((res: any) => {
+      this.action.patchFormData(res.data.items[this.selected]);
+      this.nik = res.data.items[this.selected].sdmassign_picclient;
+    });
+
+  }
+
+  public onSearch() {
+    const filterCriteria = [];
+    const ClientId = this.action.getFormControlValue('client_id');
+
+    this.action.setPaginationFilter(
+      Conjunction.OR(
+        Comparison.EQ('sdm_id', ClientId),
+      )
+    );
+
+    this.action.refreshTable();
+  }
+
 }

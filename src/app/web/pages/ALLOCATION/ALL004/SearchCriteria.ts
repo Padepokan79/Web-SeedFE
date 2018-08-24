@@ -4,14 +4,15 @@ import { COMPARISON_OPERATOR } from '../../../../core/constant/constant';
 
 export class SearchCriteria {
     // tslint:disable-next-line:variable-name
-    public skilltype_id: number;
+    public skilltype_id: string;
     // tslint:disable-next-line:variable-name
-    public skill_id: number;
-    public value: number;
+    public skill_id: string;
+    public value: string;
     public lovSkillType: LOVService = null;
     public lovSkill: LOVService = null;
     public lovSdmSkill: LOVService = null;
-    public sdmskillValue: number;
+    public sdmskillValue: string;
+    public sdmId: string;
 
     constructor(private _factory: CoreFactory) {
         this.lovSkillType = this._factory.lov({
