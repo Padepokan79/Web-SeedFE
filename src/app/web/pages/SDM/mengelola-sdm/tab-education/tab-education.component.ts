@@ -70,31 +70,30 @@ export class TabEducationComponent implements OnInit {
       }
     });
 
-    if (this.form === 2) {
-
-      this.dataTable = this._factory.dataTable({
-        serverSide: true,
-        pagingParams: {
-          filter: Comparison.EQ('sdm_id', this.id.toString()),
-          limit: 5
-        },
-        // searchCriteria: [
-        //   { viewValue: 'ID SDM', viewKey: 'sdm_id', type: TYPE.NUMBER }
-        // ],
-        tableColumns: [
-          { prop: 'norut', name: 'No', width: 3, sortable: false },
-          { prop: 'edu_name', name: 'Nama Sekolah', width: 30, sortable: true },
-          { prop: 'degree_name', name: 'Tingkat', width: 20, sortable: true },
-          { prop: 'edu_subject', name: 'Jurusan', width: 20, sortable: true },
-          { prop: 'edu_startdate', name: 'Tahun Masuk', width: 20, sortable: true },
-          { prop: 'edu_enddate', name: 'Tahun Keluar', width: 20, sortable: true },
-          {
-            prop: 'edu_id', name: 'Action', width: 20,
-            cellTemplate: this.tableActionTemplate, sortable: false
-          }
-        ]
-      });
-    }
+    // if (this.form === 2) {
+    this.dataTable = this._factory.dataTable({
+      serverSide: true,
+      pagingParams: {
+        filter: Comparison.EQ('sdm_id', this.sdmid.toString()),
+        limit: 5
+      },
+      // searchCriteria: [
+      //   { viewValue: 'ID SDM', viewKey: 'sdm_id', type: TYPE.NUMBER }
+      // ],
+      tableColumns: [
+        { prop: 'norut', name: 'No', width: 3, sortable: false },
+        { prop: 'edu_name', name: 'Nama Sekolah', width: 30, sortable: true },
+        { prop: 'degree_name', name: 'Tingkat', width: 20, sortable: true },
+        { prop: 'edu_subject', name: 'Jurusan', width: 20, sortable: true },
+        { prop: 'edu_startdate', name: 'Tahun Masuk', width: 20, sortable: true },
+        { prop: 'edu_enddate', name: 'Tahun Keluar', width: 20, sortable: true },
+        {
+          prop: 'edu_id', name: 'Action', width: 20,
+          cellTemplate: this.tableActionTemplate, sortable: false
+        }
+      ]
+    });
+    // }
 
     this.action = this._factory.actions({
       api: 'sdm/Education',
