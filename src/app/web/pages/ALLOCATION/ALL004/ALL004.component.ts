@@ -51,7 +51,7 @@ export class ALL004Component implements OnInit {
   public action: ActionService;
   public sdmId: number;
   public sdmCtrl: FormControl;
-  public nik: number;
+  public nik: string;
   public selected: string;
 
   constructor(public _notif: DefaultNotificationService , private route: ActivatedRoute , private _factory: CoreFactory, private http: HttpClient) {
@@ -91,7 +91,7 @@ export class ALL004Component implements OnInit {
       const readAllApi = this._factory.api({
       api : 'sdm/MengelolaSdm/readAll',
         params : {
-          value : this.selected
+          value : this.sdmId
         }
       });
 
@@ -99,16 +99,8 @@ export class ALL004Component implements OnInit {
         console.log(res);
         console.log(this.sdmId);
         // this.action.patchFormData(res.data.items[this.selected]);
-        this.nik = res.data.items[this.sdmId].sdm_nik;
+        this.nik = res.data.items[this.sdmId-1].sdm_nik;
       });
-
-      if (this.nik >= 0) {
-        console.log('nik tersedia')
-      } else {
-        this._notif.error({
-          message: 'nik gaada ada'
-        });
-      }
 
     }
   }
@@ -119,7 +111,7 @@ export class ALL004Component implements OnInit {
 
   // // // tslint:disable-next-line:member-ordering
   // tslint:disable-next-line:member-ordering
-  public apiRoot: string = 'http://localhost:7979/allocation/MultiInsertSdm';
+  public apiRoot: string = 'http://10.10.10.26:7979/allocation/MultiInsertSdm';
   public btnSave() {
   const body = [];
   this.listSearchCriteria.forEach((skillSdm: SearchCriteria) => {
