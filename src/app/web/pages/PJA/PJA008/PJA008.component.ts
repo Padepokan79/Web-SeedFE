@@ -43,7 +43,9 @@ export class PJA008Component implements OnInit {
   public lovSdmSkill: LOVService;
   public isButtonClicked = false;
   public assignSubmit: any;
+  public keyId: any;
   public doubleFilter: any;
+  public time: Date = new Date();
   public categorySkill: any;
   public varSkill: string;
   public skillValue: string;
@@ -116,6 +118,10 @@ export class PJA008Component implements OnInit {
     //   initializeData: true
     // });
 
+    setInterval(() => {
+      this.time = new Date();
+    }, 1);
+
   }
 
   public selectToAssign() {
@@ -130,82 +136,82 @@ export class PJA008Component implements OnInit {
         Conjunction.AND(
           Comparison.EQ('skilltype_id', this.categorySkill),
           this.varSkill !== '' ? Comparison.EQ('skill_id', this.varSkill) : Comparison.NE('skill_id', this.varSkill),
-          Comparison.GE('sdmskill_value', this.skillValue)
+          this.skillValue !== '' ? Comparison.GE('sdmskill_value', this.skillValue) : Comparison.GE('sdmskill_value', '0')
         )
       );
     });
 
-    // if (this.IdSdm == null) {
-    //   this.IdSdm = '';
-    //   this.doubleFilter = Conjunction.OR(...filterComponent);
-    // }
-
-    // if (this.categorySkill === null && (this.varSkill === null || this.skillValue === null)) {
-    //   this.doubleFilter = Comparison.EQ('sdm_id', this.IdSdm);
-    // }
-
-    // this.doubleFilter = Conjunction.OR(
-    //   ...filterComponent,
-    //   Comparison.EQ('sdm_id', this.IdSdm)
-    // );
-
-    if (this.IdSdm != null) {
-      if (this.skillValue === '' && this.varSkill === '' && this.categorySkill !== '') {
-        this.doubleFilter = Conjunction.OR(
-          Comparison.EQ('skilltype_id', this.categorySkill),
-          Comparison.EQ('sdm_id', this.IdSdm)
-        );
-        this._notif.success({
-          message: 'Data filtered by Name and Category'
-        });
-      } else if (this.varSkill === '' && this.varSkill !== '' && this.categorySkill !== '') {
-        this.doubleFilter = Conjunction.OR(
-          ...filterComponent,
-          Comparison.EQ('sdm_id', this.IdSdm)
-        );
-        this._notif.success({
-          message: 'Data filtered by Name, Category and Skill'
-        });
-      } else if (this.skillValue !== '' && this.varSkill !== '' && this.categorySkill !== '') {
-        this.doubleFilter = Conjunction.OR(
-          ...filterComponent,
-          Comparison.EQ('sdm_id', this.IdSdm)
-        );
-        this._notif.success({
-          message: 'Data filtered by Name, Category, Skill and Value'
-        });
-      } else {
-        this._notif.error({
-          message: 'You have failed to filter'
-        });
-      }
-    } else if (this.IdSdm == null) {
+    if (this.IdSdm == null) {
       this.IdSdm = '';
-      if (this.skillValue === '' && this.varSkill === '' && this.categorySkill !== '') {
-        this.doubleFilter = Comparison.EQ('skilltype_id',this.categorySkill);
-        this._notif.success({
-          message: 'Data filtered by Category'
-        });
-      } else if (this.varSkill === '' && this.varSkill !== '' && this.categorySkill !== '') {
-        this.doubleFilter = Conjunction.OR(...filterComponent);
-        this._notif.success({
-          message: 'Data filtered by Category and Skill'
-        });
-      } else if (this.skillValue !== '' && this.varSkill !== '' && this.categorySkill !== '') {
-        this.doubleFilter = Conjunction.OR(...filterComponent);
-        this._notif.success({
-          message: 'Data filtered by Category, Skill and Value'
-        });
-      } else {
-        this._notif.error({
-          message: 'You have failed to filter'
-        });
-      }
-    } else {
-      this._notif.error({
-        message: 'You have failed to filter'
-      });
+      this.doubleFilter = Conjunction.OR(...filterComponent);
     }
+
+    if (this.categorySkill === null && (this.varSkill === null || this.skillValue === null)) {
+      this.doubleFilter = Comparison.EQ('sdm_id', this.IdSdm);
+    }
+
+    this.doubleFilter = Conjunction.OR(
+      ...filterComponent,
+      Comparison.EQ('sdm_id', this.IdSdm)
+    );
+
+    // if (this.IdSdm != null) {
+    //   if (this.skillValue === '' && this.varSkill === '' && this.categorySkill !== '') {
+    //     this.doubleFilter = Conjunction.OR(
+    //       ...filterComponent,
+    //       Comparison.EQ('sdm_id', this.IdSdm)
+    //     );
+    //     this._notif.success({
+    //       message: 'Data filtered by Name and Category'
+    //     });
+    //   } else if (this.varSkill === '' && this.varSkill !== '' && this.categorySkill !== '') {
+    //     this.doubleFilter = Conjunction.OR(
+    //       ...filterComponent,
+    //       Comparison.EQ('sdm_id', this.IdSdm)
+    //     );
+    //     this._notif.success({
+    //       message: 'Data filtered by Name, Category and Skill'
+    //     });
+    //   } else if (this.skillValue !== '' && this.varSkill !== '' && this.categorySkill !== '') {
+    //     this.doubleFilter = Conjunction.OR(
+    //       ...filterComponent,
+    //       Comparison.EQ('sdm_id', this.IdSdm)
+    //     );
+    //     this._notif.success({
+    //       message: 'Data filtered by Name, Category, Skill and Value'
+    //     });
+    //   } else {
+    //     this._notif.error({
+    //       message: 'You have failed to filter'
+    //     });
+    //   }
+    // } else if (this.IdSdm == null) {
+    //   this.IdSdm = '';
+    //   if (this.skillValue === '' && this.varSkill === '' && this.categorySkill !== '') {
+    //     this.doubleFilter = Conjunction.OR(...filterComponent);
+    //     this._notif.success({
+    //       message: 'Data filtered by Category'
+    //     });
+    //   } else if (this.varSkill === '' && this.varSkill !== '' && this.categorySkill !== '') {
+    //     this.doubleFilter = Conjunction.OR(...filterComponent);
+    //     this._notif.success({
+    //       message: 'Data filtered by Category and Skill'
+    //     });
+    //   } else if (this.skillValue !== '' && this.varSkill !== '' && this.categorySkill !== '') {
+    //     this.doubleFilter = Conjunction.OR(...filterComponent);
+    //     this._notif.success({
+    //       message: 'Data filtered by Category, Skill and Value'
+    //     });
+    //   } else {
+    //     this._notif.error({
+    //       message: 'You have failed to filter'
+    //     });
+    //   }
+    // } else {
+    //   this._notif.error({
+    //     message: 'You have failed to filter'
+    //   });
+    // }
 
     this.action.setPaginationFilter(this.doubleFilter);
     this.action.refreshTable();
@@ -222,8 +228,17 @@ export class PJA008Component implements OnInit {
     console.log(tempData);
   }
 
+  public onResetSdmValue(event: any) {
+    this.keyId = event.target.value;
+    if (this.keyId === '') {
+      this.IdSdm = null;
+      console.log(this.IdSdm);
+    }
+  }
+
   public resetSource() {
-    this.IdSdm = '';
+    this.IdSdm = null;
+    console.log(this.IdSdm);
     this.categorySkill = '';
     this.varSkill = '';
     this.skillValue = '';
