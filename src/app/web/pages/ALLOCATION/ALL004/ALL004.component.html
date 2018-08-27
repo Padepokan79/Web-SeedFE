@@ -15,7 +15,7 @@ Modified   : 10-08-2018 by Vikri Ramdhani -->
             <ul class="list-filter">
             <div class="col-md-2 go-tight" style="width: 25%;">
                   <mat-form-field class="sdw-full-size">
-                      <input matInput [formControl]="sdmCtrl" (change)="ambilData()" placeholder="Input SDM Name" name="sdm_id" [matAutocomplete]="auto" class="blacky">              
+                      <input matInput [formControl]="sdmCtrl" placeholder="Input SDM Name" name="sdm_id" [matAutocomplete]="auto" class="blacky">              
                       <mat-autocomplete #auto="matAutocomplete">
                         <mat-option *ngFor="let dataSdm of filteredSdm | async" [value]="dataSdm.values.sdm_sdm_name" 
                         (onSelectionChange)="setSdmValue(action?.formControls(), dataSdm);">
