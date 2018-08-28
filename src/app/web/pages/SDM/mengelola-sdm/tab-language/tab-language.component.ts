@@ -52,11 +52,11 @@ export class TabLanguageComponent implements OnInit {
       }
     });
 
-    if (this.form === 2) {
+    // if (this.form === 2) {
     this.dataTable = this._factory.dataTable({
       serverSide : true,
       pagingParams : {
-        filter: Comparison.EQ('sdm_id', this.id.toString()),
+        filter: Comparison.EQ('sdm_id', this.sdmid.toString()),
         limit : 5
       },
       tableColumns : [
@@ -66,7 +66,7 @@ export class TabLanguageComponent implements OnInit {
 
       ]
     });
-  }
+  // }
 
     this.action = this._factory.actions({
       api: 'allocation/mengelolaSDMLanguages',
@@ -83,14 +83,6 @@ export class TabLanguageComponent implements OnInit {
   public onChangeLanguage(checkedData, index) {
     this.listLanguage.splice(index, 1);
     this.listLanguage.splice(index, 0, checkedData);
-  }
-
-  // tslint:disable-next-line:no-empty
-  public save() {
-}
-
-  public resetForm() {
-    this.action.onReset();
   }
 
 }
