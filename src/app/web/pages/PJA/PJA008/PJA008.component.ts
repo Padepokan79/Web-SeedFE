@@ -210,7 +210,8 @@ export class PJA008Component implements OnInit {
           client_id: 1,
           hirestat_id: 1,
         });
-        item.Checked == false;
+        // tslint:disable-next-line:no-unused-expression
+        item.Checked === false;
         console.log(tempData);
       }
     });
