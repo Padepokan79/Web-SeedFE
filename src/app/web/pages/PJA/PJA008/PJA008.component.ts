@@ -55,7 +55,7 @@ export class PJA008Component implements OnInit {
   public apiRoot: string = 'http://localhost:7979/project/MultiHiring';
   public check: any;
   public tes: string;
-  public increment:number=0;
+  public increment: number = 0;
 
   public onKey(event: any) {
     console.log(event);
@@ -179,7 +179,7 @@ export class PJA008Component implements OnInit {
       );
     });
     console.log(this.listSearchCriteria);
-   
+
     if (this.check === true) {
       console.log('Filter dengan AND');
       if (this.IdSdm != null) {
@@ -198,32 +198,36 @@ export class PJA008Component implements OnInit {
 
     this.action.setPaginationFilter(this.doubleFilter);
     this.action.refreshTable();
-    
+
   }
 
   public distRedundantCheckedSdm() {
     const tempData = [];
     this.action.table().rows.forEach((item) => {
-      if (item.checked) {
-        tempData.push(1);
-         console.log(item);
+      if (item.Checked === true) {
+        tempData.push({
+          sdm_id: item.sdm_id,
+          client_id: 1,
+          hirestat_id: 1,
+        });
+        item.Checked == false;
+        console.log(tempData);
       }
     });
 
     console.log(tempData);
   }
 
-  public resetSource(inc) {
+  public resetSource() {
     this.IdSdm = null;
-    this.listSearchCriteria.splice(inc, this.increment);
-    console.log(inc);
+    this.listSearchCriteria.splice(null, this.increment);
     this.sdmCtrl.setValue('');
     console.log(this.IdSdm);
     this.listSearchCriteria.forEach((searchCriteria: SearchCriteria) => {
       searchCriteria.skilltype_id = '';
       searchCriteria.skill_id = '';
     });
-     this.increment = 0;
+    this.increment = 0;
   }
 
   public hiringSubmit() {
@@ -254,27 +258,6 @@ export class PJA008Component implements OnInit {
   public checkMethod(event: any, check: any) {
     console.log(event.checked);
     this.check = event.checked;
-  }
-
-  public valueDisabled() {
-    this.listSearchCriteria.forEach((searchCriteria: SearchCriteria) => {
-      this.categorySkill = searchCriteria.skilltype_id;
-      this.varSkill = searchCriteria.skill_id;
-      // if (this.categorySkill === 0) {
-      //   searchCriteria.skill_id = '';
-      //   this.varSkill = '';
-      // } else {
-      // }
-      // if (this.varSkill === 1) {
-      //   this.tes = '111';
-      // }
-      // if (this.varSkill !== '') {
-      //   this.valueCtrl = new FormControl({ value: '', disabled: false });
-      // } else {
-      //   this.valueCtrl = new FormControl({ value: '', disabled: true });
-      // }
-      console.log(this.varSkill);
-    });
   }
 
 }
