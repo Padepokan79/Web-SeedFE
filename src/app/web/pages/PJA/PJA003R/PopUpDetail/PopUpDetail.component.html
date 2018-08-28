@@ -1,0 +1,184 @@
+<!--
+AUTHOR 		: Malik Chaudhary
+CREATED 	: ‎Thursday, ‎August ‎2, ‎2018, ‏‎1:45:06 PM
+UPDATE 		:
+-->
+	<!-- <div class="io-form-header">
+   		<div class="title-header">
+		     <span><i class="fa fa-home"></i></span>
+		     <a [routerLink]="['/pages/dashboard']">dashboard</a><b> > </b>
+		     <a [routerLink]="['/pages/project']"><span>Project Assignment</span></a><b> > </b>
+		     <span>Detail Project SDM</span>
+   		</div>
+ 	</div> -->
+
+   <form class="io-form-body" [formGroup]="action?.formControls()" *ngIf="action?.form()">  
+		<table>
+			<tr>
+				<td id="td">
+				    <mat-label>SDM Name </mat-label>
+				</td>
+				<td>
+			        <mat-form-field >
+						<input matInput formControlName="sdm_name" name="sdm_name" readonly>
+			        </mat-form-field>
+				</td>
+				<td id="td">
+				    <mat-label>Role Project </mat-label>
+				</td>
+				<td>
+			        <mat-form-field>
+			          	<input matInput formControlName="project_role" name="project_role" readonly>
+			    	</mat-form-field>
+				</td>
+			</tr>
+			<tr>
+				<td id="td">
+				    <mat-label>NIP </mat-label>
+				</td>
+				<td>
+					<mat-form-field>
+					    <input matInput formControlName="sdm_nik" name="sdm_nik" readonly>
+					</mat-form-field>
+				</td>
+				<td id="td">
+				    <mat-label>App Type</mat-label>
+				</td>
+				<td>
+			        <mat-form-field>
+			          	<input matInput formControlName="project_apptype" name="project_apptype" readonly>
+			    	</mat-form-field>
+				</td>
+			</tr>
+			<tr>
+				<td id="td">
+				    <mat-label>Project Name</mat-label>
+				</td>
+				<td>
+					<mat-form-field>
+					    <input matInput formControlName="project_name" name="project_name" readonly>
+					</mat-form-field>
+				</td>
+				<td id="td">
+				    <mat-label>Dev Language</mat-label>
+				</td>
+				<td>
+			        <mat-form-field>
+			          	<input matInput formControlName="project_devlanguage" name="project_devlanguage" readonly>
+			    	</mat-form-field>
+				</td>
+			</tr> 
+			<tr>
+				<td id="td">
+				    <mat-label>Customer</mat-label>
+				</td>
+				<td>
+					<mat-form-field>
+					    <input matInput formControlName="project_customer" name="project_customer" readonly>
+					</mat-form-field>
+				</td>
+				<td id="td">
+				    <mat-label>Server OS</mat-label>
+				</td>
+				<td>
+			        <mat-form-field>
+			          	<input matInput formControlName="project_serveros" name="project_serveros" readonly>
+			    	</mat-form-field>
+				</td>
+			</tr>
+			<tr>
+				<td id="td">
+				    <mat-label>Project Site</mat-label>
+				</td>
+				<td>
+					<mat-form-field>
+					    <input matInput formControlName="project_projectsite" name="project_projectsite" readonly>
+					</mat-form-field>
+				</td>
+				<td id="td">
+				    <mat-label>Framework</mat-label>
+				</td>
+				<td>
+			        <mat-form-field>
+			          	<input matInput formControlName="project_framework" name="project_framework" readonly>
+			    	</mat-form-field>
+				</td>
+			</tr>
+			<tr>
+				<td id="td">
+				    <mat-label>Period Start</mat-label>
+				</td>
+				<td>
+					<mat-form-field>
+					  <input matInput formControlName="project_startdate" name="project_startdate" readonly>
+					</mat-form-field>
+				</td>
+				<td id="td">
+				    <mat-label>Database</mat-label>
+				</td>
+				<td>
+			        <mat-form-field>
+			          	<input matInput formControlName="project_database" name="project_database" readonly>
+			    	</mat-form-field>
+				</td>
+			</tr>
+			<tr>
+				<td id="td">
+				    <mat-label>Period End</mat-label>
+				</td>
+				<td>
+					<mat-form-field>
+			          <input matInput formControlName="project_enddate" name="project_enddate" readonly>
+			        </mat-form-field>
+				</td>
+				<td id="td">
+				    <mat-label>Dev Tools</mat-label>
+				</td>
+				<td>
+			        <mat-form-field>
+			          	<input matInput formControlName="project_devtool" name="project_devtool" readonly>
+			    	</mat-form-field>
+				</td>
+			</tr>
+			<tr>
+				<td id="td">
+				    <mat-label>Project Desc</mat-label>
+				</td>
+				<td>
+					<mat-form-field>
+					    <textarea matInput formControlName="project_desc" name="project_desc" readonly></textarea>
+					</mat-form-field>
+				</td> 
+				<td id="td">
+				    <mat-label>Other Info</mat-label>
+				</td>
+				<td>
+			        <mat-form-field>
+					    <textarea matInput formControlName="project_otherinfo" name="project_otherinfo" readonly></textarea>
+					</mat-form-field>
+				</td>
+			</tr>
+			<tr>
+				<td id="td">
+				    <mat-label>App Server</mat-label>
+				</td>
+				<td>
+			        <mat-form-field>
+			          	<input matInput formControlName="project_appserver" name="project_appserver" readonly>
+			    	</mat-form-field>
+				</td>
+				<td id="td">
+				    <mat-label>Technical Info</mat-label>
+				</td>
+				<td>
+			        <mat-form-field>
+					    <textarea matInput formControlName="project_technicalinfo" name="project_technicalinfo" readonly></textarea>
+					</mat-form-field>
+				</td>
+			</tr>
+		</table>
+	 <br>
+  	</form>
+ <ng-template #viewAsDateTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
+  {{value | date:'yyyy-MM-dd'}}
+</ng-template>

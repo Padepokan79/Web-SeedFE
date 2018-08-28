@@ -1,0 +1,46 @@
+<p></p>
+
+<form class="io-form-body" [formGroup]="action?.formControls()"> 
+  <div>
+<!-- KONTEN PROFILING -->
+<table style="width: 100%">
+
+    <!-- Profiling -->
+    <tr>
+      <td style="width: 20%">Kelebihan/Kemampuan</td>
+      <td style="width: 5px">:</td>
+      <td style="width: 80%">
+        <mat-form-field class="sdw-full-size">
+            <input matInput placeholder="" formControlName="profiling_name" name="profiling_name" required>
+            <mat-hint *ngIf="action.formErrors.profiling_name" [ngStyle]="{'color': 'red'}">
+              {{action.formErrors.profiling_name}}
+            </mat-hint>
+          </mat-form-field>
+      </td>
+    </tr>
+    </table>
+    </div>
+    <div class="col-md-6 pos" style="float:right" *ngIf=" form == 2 ">
+        <io-form-action [action]="action"></io-form-action>
+    </div>
+    <div class="col-md-6 pos" style="float:right">
+        <button mat-raised-button style="margin: 10px 0px" (click)="action.onSave()" *ngIf=" form == 1 ">Submit</button>
+        <!-- <button mat-raised-button style="margin: 10px 0px" (click)="action.onEdit()" *ngIf=" form == 2 ">Update</button> -->
+    </div>
+</form>
+
+<div *ngIf="form == 2">
+    <io-table *ngIf="action?.table()" [action]="action">
+        <div class="io-table-header">
+        <h3>List Educations</h3>
+        </div>
+    </io-table>
+</div>
+<ng-template #tableActionTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
+    <button type="button" class="btn btn-primary btn-mm btn-icon" (click)="action.onEdit(row)">
+        <i class="glyphicon glyphicon-pencil"></i>
+    </button>
+    <button type="button" class="btn btn-primary btn-mm btn-icon" (click)="action.onDelete(row)">
+        <i class="glyphicon glyphicon-trash"></i>
+    </button>
+</ng-template>

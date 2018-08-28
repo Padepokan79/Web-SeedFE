@@ -1,0 +1,101 @@
+<io-form *ngIf="action?.form()">
+  <div class="io-form-header">
+    <span><i class="fa fa-home"></i></span>
+    <a [routerLink]="['/pages/dashboard']"><span>Dashboard</span></a><b> > </b>
+    <a><span>SDM</span></a><b> > </b>
+    <a [routerLink]="['/pages/sdm/SDM008']"><span>Psychology</span></a><b> > </b>
+    <span>Input</span>
+    <span class="time">{{time | date:'medium'}}</span>
+  </div>
+  <form class="io-form-body" [formGroup]="action?.formControls()">
+    <span class="title-form">
+      Form Input Psychology
+    </span>
+    <div class="box">
+    <table width="50%" align="center">
+      <tr>
+        <td>
+          <mat-label><b>SDM Name</b></mat-label>
+        </td>
+        <td><b>:</b></td>
+        <td>
+          <mat-form-field class="sdw-full-size">
+            <!-- <mat-select formControlName="sdm_id" name="sdm_id" required>
+              <mat-option *ngFor="let lov of lovSdm.data" [value]="lov.key">
+                {{lov.value}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field> -->
+
+          <input matInput formControlName="sdm_name" name="sdm_name" [formControl]="sdmCtrl" [matAutocomplete]="auto" required>
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let dataSdm of filteredSdm | async" [value]="dataSdm.values.sdm_sdm_name" 
+            (onSelectionChange)="setSdmValue(action?.formControls(), dataSdm);">
+              {{ dataSdm.values.sdm_sdm_name }}
+            </mat-option> 
+          </mat-autocomplete>
+        </mat-form-field>
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <mat-label><b>Condition</b></mat-label>         
+        </td>
+        <td><b>:</b></td>
+        <td>
+          <mat-form-field class="sdw-full-size">
+            <mat-select formControlName="psyco_id" name="psyco_id" required>
+              <mat-option *ngFor="let lov of lovCondition.data" [value]="lov.key">
+                {{lov.value}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <mat-label><b>Description</b></mat-label>         
+        </td>
+        <td><b>:</b></td>
+        <td>
+          <mat-form-field class="sdw-full-size">
+            <textarea rows="5" matInput formControlName="sdmpsycological_desc" name="sdmpsycological_desc" required> </textarea>
+            <mat-hint *ngIf="action.formErrors.sdmpsycological_desc" [ngStyle]="{'color': 'red'}">
+              {{action.formErrors.sdmpsycological_desc}}
+            </mat-hint>
+          </mat-form-field>                   
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <mat-label><b>Date</b></mat-label>    
+        </td>
+        <td><b>:</b></td>
+        <td>
+            <mat-form-field class="sdw-full-size">
+              <input matInput [matDatepicker]="pickerStartDate" (click)="pickerStartDate.open()" formControlName="psycological_date" required>
+              <mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
+              <mat-datepicker #pickerStartDate></mat-datepicker>
+            </mat-form-field>
+        </td>
+      </tr>
+      <br><br>
+      <tr>
+        <td></td>
+        <td></td>
+        <td align="right">
+          <button [routerLink]="['/pages/sdm/SDM008']" type="button" class="btn btn-primary btn-mm btn-icon">
+            Back
+          </button>
+          <button type="button" class="btn btn-primary btn-mm btn-icon" (click)="action.onSave(timeOut())" [disabled]="action?.formControls()?.invalid || action?.formControls()?.pristine">
+            Input
+          </button>
+        </td>
+      </tr>
+      <tr style="height: 30px;"></tr>
+    </table>
+  <br>
+  </div>
+  </form>
+ </io-form>

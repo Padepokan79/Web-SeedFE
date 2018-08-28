@@ -1,0 +1,80 @@
+@import '../../sass/conf/conf';
+@import '../../sass/data-table/theme/sdw-table';
+
+
+.modal {
+      background: rgba(0,0,0,0.6);
+    }
+
+.sdw-modal-md{
+  width: 320px;
+}
+
+.modal-dialog{
+  margin-top: 18%
+}
+.modal-body{
+  height: 50px;
+}
+
+.modal-dialog{
+  margin-top: 18%;
+}
+
+.modal-content{
+  width: 80%;
+  margin-left: 30%;
+}
+
+.modal-header, .modal-footer{
+  border: none;
+  border-radius: 2px;
+  background-color: white;
+}
+
+.modal-header{
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  color: rgba(0,0,0,.8);
+  line-height: 24px;  
+  text-align: left;
+  letter-spacing: 0.03px;
+}
+.modal-footer{
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  color: rgba(0,0,0,.8);
+  line-height: 24px;  
+  text-align: left;
+  letter-spacing: 0.03px;
+}
+
+.modal{
+  background: rgba(0,0,0,0.3);
+  font-family: 'Roboto', sans-serif;
+}
+
+.modal-header::before, .modal-header::after > .io-modal-header{
+  /* Form */  
+  background-color: #FFFFFF; 
+  /* Typography */  
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  font-size: 200px;
+  color: rgba(0,0,0,.8);
+  line-height: 24px;  
+  text-align: left;
+  letter-spacing: 0.03px;
+  /* Internal padding */
+  padding-top: 0;
+  padding-left: 0;
+  padding-right: 0;
+  padding-bottom: 0;
+  /* External padding */
+  margin-top: 0;
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 0;    
+}

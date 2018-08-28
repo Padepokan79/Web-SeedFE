@@ -1,0 +1,48 @@
+<!-- Created by : Vikri Ramdhani
+Date       : 2-08-2018
+Modified   : 10-08-2018 by Vikri Ramdhani -->
+<div class="head">
+  <span style="color: #181818; margin-left: 20px;"><i class="fa fa-home"></i></span>
+  <a [routerLink]="['/pages/dashboard']"><span>SDM Allocation > </span></a>
+  <span style="color: #181818;">List Sdm Skill</span>
+</div>
+
+<div class="asu">
+ <a [routerLink]="['/pages/all/ALL004']">
+   <button style="">
+     Add Sdm Skill
+   </button>
+ </a>
+</div>
+
+<io-table *ngIf="action?.table()" [action]="action">
+<!-- <button style="width: 100px; padding: 5px;" [routerLink]="['/pages/dashboard']">
+ Tambah Skill
+</button> -->
+  <div class="io-table-header">
+    <h3>List Task</h3>
+  </div>
+</io-table>
+
+<!-- Footer Sementara -->
+<div>
+    <span style="color: #f1f1f1; margin-bottom: 20px;">
+      <h3>_____</h3>
+    </span>
+</div>
+<ng-template #notif let-row="row" let-value="value" ngx-datatable-cell-template>
+  <i matTooltip="Non-Aktif" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:black; font-size: 30px" *ngIf="row.sdm_notification == 'black'"></i>
+  <i matTooltip="Sisa 1 bulan" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:red; font-size: 30px" *ngIf="row.sdm_notification == 'red'"></i>
+  <i matTooltip="Sisa 2 bulan" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:#f5f515; font-size: 30px" *ngIf="row.sdm_notification == 'yellow'"></i>
+  <i matTooltip="Sisa 4 bulan" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:#00da00; font-size: 30px" *ngIf="row.sdm_notification == 'green'"></i>
+  <i matTooltip="Sisa lebih dari 4 bulan" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:#b3b3b3; font-size: 30px" *ngIf="row.sdm_notification == 'grey'"></i>
+</ng-template>
+<ng-template #tableActionTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
+ <button type="button" class="btn btn-primary btn-mm btn-icon" (click)="navigateEditMenu(row.sdmskill_id)">
+   <i class="glyphicon glyphicon-pencil"></i>
+ </button>
+ <button type="button" class="btn btn-danger btn-mm btn-icon" (click)="action.onDelete(row)">
+   <i class="glyphicon glyphicon-trash"></i>
+ </button>
+</ng-template>
+

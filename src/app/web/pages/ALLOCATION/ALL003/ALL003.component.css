@@ -1,0 +1,28 @@
+.asu{
+	margin-top: 20px;
+	width: 97%; 
+	background-color: transparent; 
+	float: right; 
+	margin-right: 15px;
+}
+.asu button{
+	width: 130px; 
+	padding: 7px; 
+	background-color: #fff; 
+	color: #555; 
+	border: 3px solid #fff;
+}
+.head{
+	padding-top: 25px;
+	width: 100%; 
+	padding-bottom:20px; 
+	background-color: white; 
+	float: right;
+}
+.breadcrumb{
+    font-size: 15px;
+    color: black;
+    background: white;
+    height: 55px;
+    padding-top: 20px;
+}

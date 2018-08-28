@@ -1,0 +1,33 @@
+<div class="login-body-bg">
+  <div id="dialog" class="dialog dialog-effect-in">
+    <div class="dialog-front">
+      <div class="dialog-content">
+            <label><h2 class="sdw-input">Log in</h2></label>
+            <p>&nbsp;</p>
+      <form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
+          <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !user_name.valid }">
+              <label for="username" class="control-label sdw-input">Username</label>
+              <input id="user_username" type="text" class="form-control" name="username" [(ngModel)]="model.username" #user_name="ngModel" required />
+              <div *ngIf="f.submitted && !user_name.valid" class="help-block">Username is required</div>
+          </div>
+          <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
+              <label for="password" class="control-label sdw-input">Password</label>
+              <input id="user_password" type="password" class="form-control" name="password" [(ngModel)]="model.password" #password="ngModel" required />
+              <div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div>
+          </div>
+          <br>
+          <div class="form-group">
+              <button [disabled]="loading" class="btn btn-block btn-lg">Login</button>
+          </div>
+          <br>
+            <div class="text-center">
+              <!--
+                <p>Do you wish to register<br> for <a [routerLink]="['/register']" class="btn btn-link" class="link user-actions"><strong>a new account</strong></a>?</p>              
+              -->
+              <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+            </div>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>

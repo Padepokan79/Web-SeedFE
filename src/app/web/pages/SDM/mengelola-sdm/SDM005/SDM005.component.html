@@ -1,0 +1,36 @@
+
+
+<io-form *ngIf="action?.form()">
+  <form class="io-form-body" [formGroup]="action?.formControls()">
+    <div class="label">
+      <input formControlName="sdm_name">
+    </div>  
+    
+    </form>
+</io-form>
+<io-table *ngIf="action?.table()" [action]="action" style="margin-top:20px">
+  <div class="io-table-header" style="background: white">
+    <h3>List Task</h3>
+  </div>
+</io-table>
+<io-table *ngIf="action?.table()" [action]="action2" style="margin-top:20px">
+  <div class="io-table-header" style="background: white">
+    <h3>List Task</h3>
+  </div>
+</io-table>
+<!-- <html>
+  <p>Preview CV</p>
+  <div class="container">
+    <div class="header"> <h3> Curricullum Vitae </h3></div>
+    <div>
+      <form class="io-form-body" [formGroup]="action?.formControls()">
+        <mat-form-field class="sdw-full-size">
+          <input matInput placeholder="" formControlName="sdm_id" name="sdm_id" required>
+          <mat-hint *ngIf="action.formErrors.sdm_id" [ngStyle]="{'color': 'red'}">
+            {{action.formErrors.sdm_id}}
+          </mat-hint>
+        </mat-form-field>
+      </form>
+    </div>
+  </div>
+</html> -->

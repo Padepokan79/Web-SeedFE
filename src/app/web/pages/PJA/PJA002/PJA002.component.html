@@ -1,0 +1,204 @@
+<!--
+AUTHOR 		: Malik Chaudhary
+CREATED 	: ‎Thursday, ‎August ‎2, ‎2018, ‏‎1:45:06 PM
+UPDATE 		: ‎Thursday, ‎August ‎16, ‎2018, ‏‎1:51 PM
+-->
+<io-form *ngIf="action?.form()">
+	<div class="io-form-header">
+   		<div class="title-header">
+		     <span><i class="fa fa-home"></i></span>
+		     <a [routerLink]="['/pages/dashboard']">dashboard</a><b> > </b>
+		     <a [routerLink]="['/pages/project']"><span>Project Assignment</span></a><b> > </b>
+		     <a><span>Update Project SDM</span></a>
+    		<span class="time">{{ time | date: 'medium'}}</span>
+   		</div>
+ 	</div>
+
+	<form class="io-form-body" [formGroup]="action?.formControls()">  
+		<table>
+			<tr>
+				<td id="td">
+				    <mat-label>SDM Name </mat-label>
+				</td>
+				<td>
+			        <mat-form-field >
+			          <input matInput formControlName="sdm_name" name="sdm_name" readonly>
+			        </mat-form-field>
+				</td> 
+				<td id="td">
+				    <mat-label>Role Project </mat-label>
+				</td>
+				<td>
+			        <mat-form-field>
+			          	<input matInput formControlName="project_role" name="project_role">
+			    	</mat-form-field>
+				</td>
+			</tr>
+			<tr>
+				<td id="td">
+				    <mat-label>NIK </mat-label>
+				</td>
+				<td>
+					<mat-form-field>
+					    <input matInput formControlName="sdm_nik" name="sdm_nik" readonly>
+					</mat-form-field>
+				</td>
+				<td id="td">
+				    <mat-label>App Type</mat-label>
+				</td>
+				<td>
+			        <mat-form-field>
+			          	<input matInput formControlName="project_apptype" name="project_apptype">
+			    	</mat-form-field>
+				</td>
+			</tr>
+			<tr>
+				<td id="td">
+				    <mat-label>Project Name</mat-label>
+				</td>
+				<td>
+					<mat-form-field>
+					    <input matInput formControlName="project_name" name="project_name">
+					</mat-form-field>
+				</td>
+				<td id="td">
+				    <mat-label>Dev Language</mat-label>
+				</td>
+				<td>
+			        <mat-form-field>
+			          	<input matInput formControlName="project_devlanguage" name="project_devlanguage">
+			    	</mat-form-field>
+				</td>
+			</tr> 
+			<tr>
+				<td id="td">
+				    <mat-label>Customer</mat-label>
+				</td>
+				<td>
+					<mat-form-field>
+					    <input matInput formControlName="project_customer" name="project_customer">
+					</mat-form-field>
+				</td>
+				<td id="td">
+				    <mat-label>Server OS</mat-label>
+				</td>
+				<td>
+			        <mat-form-field>
+			          	<input matInput formControlName="project_serveros" name="project_serveros">
+			    	</mat-form-field>
+				</td>
+			</tr>
+			<tr>
+				<td id="td">
+				    <mat-label>Project Site</mat-label>
+				</td>
+				<td>
+					<mat-form-field>
+					    <input matInput formControlName="project_projectsite" name="project_projectsite">
+					</mat-form-field>
+				</td>
+				<td id="td">
+				    <mat-label>Framework</mat-label>
+				</td>
+				<td>
+			        <mat-form-field>
+			          	<input matInput formControlName="project_framework" name="project_framework">
+			    	</mat-form-field>
+				</td>
+			</tr>
+			<tr>
+				<td id="td">
+				    <mat-label>Period Start</mat-label>
+				</td>
+				<td>
+					<mat-form-field>
+			          <input matInput [matDatepicker]="pickerStartDate" (click)="pickerStartDate.open()" formControlName="project_startdate" name="project_startdate">
+			          <mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
+			          <mat-datepicker #pickerStartDate></mat-datepicker>
+			        </mat-form-field>
+				</td>
+				<td id="td">
+				    <mat-label>Database</mat-label>
+				</td>
+				<td>
+			        <mat-form-field>
+			          	<input matInput formControlName="project_database" name="project_database">
+			    	</mat-form-field>
+				</td>
+			</tr>
+			<tr>
+				<td id="td">
+				    <mat-label>Period End</mat-label>
+				</td>
+				<td>
+					<mat-form-field>
+			          <input matInput [matDatepicker]="pickerEndDate" (click)="pickerEndDate.open()" formControlName="project_enddate" name="project_enddate">
+			          <mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
+			          <mat-datepicker #pickerEndDate></mat-datepicker>
+			        </mat-form-field>
+				</td>
+				<td id="td">
+				    <mat-label>Dev Tools</mat-label>
+				</td>
+				<td>
+			        <mat-form-field>
+			          	<input matInput formControlName="project_devtool" name="project_devtool">
+			    	</mat-form-field>
+				</td>
+			</tr>
+			<tr>
+				<td id="td">
+				    <mat-label>Project Desc</mat-label>
+				</td>
+				<td>
+					<mat-form-field>
+					    <textarea matInput formControlName="project_desc" name="project_desc"></textarea>
+					</mat-form-field>
+				</td> 
+				<td id="td">
+				    <mat-label>Other Info</mat-label>
+				</td>
+				<td>
+			        <mat-form-field>
+					    <textarea matInput formControlName="project_otherinfo" name="project_otherinfo"></textarea>
+					</mat-form-field>
+				</td>
+			</tr>
+			<tr>
+				<td id="td">
+				    <mat-label>App Server</mat-label>
+				</td>
+				<td>
+			        <mat-form-field>
+			          	<input matInput formControlName="project_appserver" name="project_appserver">
+			    	</mat-form-field>
+				</td>
+				<td id="td">
+				    <mat-label>Technical Info</mat-label>
+				</td>
+				<td>
+			        <mat-form-field>
+					    <textarea matInput formControlName="project_technicalinfo" name="project_technicalinfo"></textarea>
+					</mat-form-field>
+				</td>
+			</tr>
+			<tr style="height: 10px;"></tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>
+				<button type="button" class="btn btn-primary btn-mm btn-icon" (click)="onEdit()" [routerLink]="['/pages/pja/PJA003']">
+					   <b>Perbarui</b>
+				</button>&emsp;
+		     	<a class="btn btn-danger btn-mm btn-icon" [routerLink]="['/pages/pja/PJA003']">Kembali</a>
+				</td>
+			</tr>
+			<tr style="height: 10px;"></tr>
+		</table>
+	 <br>
+  	</form>
+ </io-form> 
+ <ng-template #viewAsDateTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
+  {{value | date:'yyyy-MM-dd'}}
+</ng-template>

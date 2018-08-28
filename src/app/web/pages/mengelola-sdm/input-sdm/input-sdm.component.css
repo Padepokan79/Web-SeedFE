@@ -1,0 +1,41 @@
+.judul{
+    width: 100% ;
+    text-align: center ;
+    font-size: 20px ;
+    color: black;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.margin-padding-div{
+    margin-right: 10px;
+    margin-right: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.padding-content{
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.margin-field{
+    margin-top: 10px;
+}
+
+.breadcrumb{
+    font-size: 15px;
+    color: black;
+    background: white;
+    height: 55px;
+    padding-top: 20px;
+}
+
+.time{
+float: right;
+}
+
+.breadcrumb-bar{
+    background: white;
+}

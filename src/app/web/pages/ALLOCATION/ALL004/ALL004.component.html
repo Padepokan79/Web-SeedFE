@@ -1,0 +1,72 @@
+<!-- Created by : Vikri Ramdhani
+Date       : 2-08-2018
+Modified   : 10-08-2018 by Vikri Ramdhani -->
+<io-form>
+    <div class="io-form-header">
+      <span><i class="fa fa-home"></i></span>  
+        <a [routerLink]="['/pages/dashboard']">Dashboard</a><b> > </b>
+        <a [routerLink]="['']">SDM Allocation</a><b> > </b>
+        <a [routerLink]="['']">List SDM Skill Allocation</a><b> > </b>
+        <a [routerLink]="['']">Input Nilai Skill SDM</a> 
+    </div>
+    <form class="io-form-body" style="background-color: transparent; padding-top: 10px; ">
+      <div class="filter-contents" align="center">
+          <div id="filtering" class="row row-center"> 
+            <ul class="list-filter">
+            <div class="col-md-2 go-tight" style="width: 25%;">
+                  <mat-form-field class="sdw-full-size">
+                      <input matInput [formControl]="sdmCtrl" placeholder="Input SDM Name" name="sdm_id" [matAutocomplete]="auto" class="blacky">              
+                      <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngFor="let dataSdm of filteredSdm | async" [value]="dataSdm.values.sdm_sdm_name" 
+                        (onSelectionChange)="setSdmValue(action?.formControls(), dataSdm);">
+                          {{ dataSdm.values.sdm_sdm_name }}
+                        </mat-option> 
+                      </mat-autocomplete>
+                  </mat-form-field>
+               </div>
+               <div class="col-md-2 go-tight" style="width: 25%;">
+                  <mat-form-field class="sdw-full-size">
+                    <input matInput placeholder="Nik" value="{{ nik }}" disabled>
+                  </mat-form-field>
+                </div>
+              <li style="list-style: none; margin-left: -1.5%;" *ngFor="let searchCriteria of listSearchCriteria; let inc = index" class="col-md-12">
+                <div class="col-md-2 go-tight" style="width: 25%;">
+                  <mat-form-field class="sdw-full-size">
+                    <mat-select placeholder="Choose Category" [(ngModel)]="searchCriteria.skilltype_id" name="skilltype_id{{inc}}" required>
+                      <mat-option *ngFor="let lov of searchCriteria.lovSkillType.data" [value]="lov.key" (onSelectionChange)="searchCriteria.selectedSkill($event, lov)">
+                        {{lov.value}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-2 go-tight" style="width: 25%;">
+                  <mat-form-field class="sdw-full-size">
+                    <mat-select placeholder="Choose Skill" [(ngModel)]="searchCriteria.skill_id" name="skill_id{{inc}}" required>
+                      <mat-option *ngFor="let lov of searchCriteria.lovSkill?.data" [value]="lov.key">
+                        {{lov.value}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-2 go-tight" style="width: 25%;">
+                  <mat-form-field class="sdw-full-size">
+                    <input matInput type="number" min="1" max="10"  placeholder="Value" [(ngModel)]="searchCriteria.sdmskillValue" name="sdmskill_value{{inc}}" class="blacky" required>
+                  </mat-form-field>
+                </div>
+                <div class="col-sm-1">
+                  <button class="btn btn-primary btn-sm" *ngIf="inc==0" (click)="addSearchCriteria()"><i class="fa fa-plus"></i></button>
+                  <button class="btn btn-warning btn-sm" *ngIf="inc>0" (click)="removeSearchCriteria(inc,1)"><i class="fa fa-minus"></i></button>
+                </div>
+              </li>
+            </ul>
+            <div class="action-filter col-md-12" style="width: 110%; background-color: transparent; float: left; margin-top: 20px; margin-left: 3%">
+              <button class="btn btn-success save" (click)="btnSave()">Save</button>
+              <a [routerLink]="['/pages/all/ALL003']">
+                <button class="btn btn-danger save">Back</button>
+              </a>
+            </div>
+          </div>
+          <br>
+      </div>
+    </form>
+</io-form>

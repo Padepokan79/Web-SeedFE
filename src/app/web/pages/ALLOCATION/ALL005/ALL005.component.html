@@ -1,0 +1,75 @@
+<!-- Created by : Hendra Kurniawan
+Date       : 2-08-2018
+Modified   : 3-08-2018 by Hendra Kurniawan -->
+<io-form *ngIf="action?.form()">
+    <div class="io-form-header">
+        <span><i class="fa fa-home"></i></span>  
+        <a [routerLink]="['/pages/dashboard']">Dashboard</a><b> > </b>
+        <a [routerLink]="['']">SDM Allocation</a><b> > </b>
+        <a [routerLink]="['']">List Skill SDM</a><b> > </b>
+        <a [routerLink]="['']">Update Score Skill SDM</a>
+        <span class="time">{{ time }}</span> 
+      </div>
+      <form class="io-form-body" [formGroup]="action?.formControls()">  
+        <span class="form-title">
+          Form Update Nilai Skill
+        </span>
+        <div class="form-body">
+          <div class="posisi">
+            <div class="col-md-12">
+              <div class="col-md-4">
+                  <mat-form-field class="sdw-full-size">
+                      <input matInput placeholder="Full Name" formControlName="sdm_name" name="sdm_name"  required>
+                      <mat-hint *ngIf="action.formErrors.sdm_name" [ngStyle]="{'color': 'red'}">
+                        {{action.formErrors.sdm_name}}
+                      </mat-hint>
+                    </mat-form-field>
+              </div>  
+              <div class="col-md-4">
+                  <mat-form-field class="sdw-full-size">
+                      <input matInput placeholder="NIK" formControlName="sdm_nik" name="sdm_nik"  required>
+                      <mat-hint *ngIf="action.formErrors.sdm_nik" [ngStyle]="{'color': 'red'}">
+                        {{action.formErrors.sdm_nik}}
+                      </mat-hint>
+                    </mat-form-field>
+              </div>
+          </div> 
+          <div *ngFor="let searchCriteria of listSearchCriteria; let inc = index" class="col-md-12" >
+              <div class="col-md-4 go-tight">
+                  <mat-form-field class="sdw-full-size">
+                    <mat-select placeholder="Choose Category" formControlName="skilltype_id" [(ngModel)]="searchCriteria.skilltype_id" name="skilltype_id" [disabled]="true" required>
+                      <mat-option *ngFor="let lov of searchCriteria.lovSkillType.data" [value]="lov.key" (onSelectionChange)="searchCriteria.selectedSkill($event, lov)">
+                        {{lov.value}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-4 go-tight">
+                  <mat-form-field class="sdw-full-size">
+                    <mat-select placeholder="Choose Skill" formControlName="skill_id" [(ngModel)]="searchCriteria.skill_id" name="skill_id" [disabled]="true" required>
+                      <mat-option *ngFor="let lov of searchCriteria.lovSkill?.data" [value]="lov.key">
+                        {{lov.value}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-2">
+                    <mat-form-field class="sdw-full-size">
+                        <input matInput placeholder="Value" formControlName="sdmskill_value" name="sdmskill_value" required>
+                        <mat-hint *ngIf="action.formErrors.sdmskill_value" [ngStyle]="{'color': 'red'}">
+                          {{action.formErrors.sdmskill_value}}
+                        </mat-hint>
+                      </mat-form-field>
+                </div>
+          </div>
+              <div class="pos">
+                  <a [routerLink]="['/pages/all/ALL003']"><button class="btn btn-danger btn-sip" style="font-size: 18px" >Back</button></a>
+                  <button class="btn btn-primary" (click)="onEdit()" style="font-size: 18px" >Update</button>
+                  <!-- <io-form-action [action]="action" ></io-form-action> -->
+              </div>
+          </div>
+          </div>
+      </form> 
+    </io-form>
+
+   

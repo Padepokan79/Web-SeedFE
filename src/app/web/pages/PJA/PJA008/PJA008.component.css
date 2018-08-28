@@ -1,0 +1,103 @@
+ng-template {
+    padding: 0 auto;
+}
+
+.blacky {
+    color: #202020;
+}
+
+.all-of-white {
+	background-color: #FEFEFE;
+	margin: 5px 15px;
+	height : auto;
+	border: 1px solid #CDCDCD;
+	box-sizing: border-box;
+}
+
+/* filter-contents */
+ul {
+    list-style: none;
+}
+
+li.list-filter {
+    width: 350px;
+    text-align: center;
+}
+
+div.go-tight {
+    margin-bottom: -1em;
+}
+
+.btn-flat {
+	background-color: azure;
+	box-shadow: 1px 1px #787878;
+    color: #242424;
+}
+
+.btn-filter {
+    background: linear-gradient(to bottom right, #23AB14, #31AD18);
+    color: #FEFEFE;
+    margin-top: 10px;
+}
+
+.btn-clear {
+    background: linear-gradient(to bottom right, #AB2314, #AD3118);
+    color: #FEFEFE;
+    margin-top: 10px;
+}
+
+.position-li {
+    margin: 10px 20% -10px 20%;
+}
+
+.nx-title {
+	text-align: left;
+	font-size: 150%;
+	margin: 20px;
+	color: black;
+}
+
+.nx-label-style {
+	text-align: left;
+	margin: 20px;
+	color: black;
+}
+
+.nx-table-margin {
+	margin-right: 20px;
+	margin-bottom: 25px;
+}
+
+.nx-table-range {
+	padding: 5px;
+	margin: 10px;
+}
+
+#nx-table-range {
+	padding: 5px;
+	margin: 10px;
+}
+
+.nx-table-col-width {
+	width: 250px;
+}
+
+.nx-button-range {
+	margin-top: 10px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	float: right;
+}
+
+.nx-brc-header {
+	margin: 12px;
+}
+
+.nx-table-left-align {
+	text-align: left;
+}
+
+.chk{
+	color: #000;
+	float: left;
+}

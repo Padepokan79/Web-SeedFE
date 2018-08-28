@@ -1,0 +1,74 @@
+<io-form *ngIf="action?.form()">
+  <div class="io-form-header">
+    <div class="nx-brc-header">
+      <i class="glyphicon glyphicon-home"></i>
+      <a [routerLink]="['/pages/dashboard']">Dashboard</a>>
+      <a>Project Assignment</a>>
+      <a [routerLink]="['/pages/pja/PJA007']">Hiring SDM</a>>
+      <a [routerLink]="['/pages/pja/PJA008']">Hiring SDM Update</a>
+      <span class="time">{{ time | date:'medium'}}</span>
+    </div>
+  </div>
+  <form class="io-form-body" [formGroup]="action?.formControls()">
+    <span class="nx-form-title">Form Update SDM Hiring</span>
+    <div class="nx-form-body">
+      <div class="nx-pos-pad">
+        <table class="nx-class-table">
+
+          <tr>
+            <td class="nx-table-range">
+              <mat-label>Client Name</mat-label>
+            </td>
+            <td>
+              <mat-label>:</mat-label>
+            </td>
+            <td class="nx-table-range" id="nx-table-range">
+              <mat-label>{{ clientName }}</mat-label>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="nx-table-range">
+              <mat-label>SDM Name</mat-label>
+            </td>
+            <td>
+              <mat-label>:</mat-label>
+            </td>
+            <td class="nx-table-range" id="nx-table-range">
+              <mat-label>{{ sdmName }}</mat-label>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="nx-table-range">
+              <mat-label>Status</mat-label>
+            </td>
+            <td>
+              <mat-label>:</mat-label>
+            </td>
+            <td class="nx-table-range">
+              <mat-form-field class="nx-class-data">
+                <mat-select placeholder="" formControlName="hirestat_id" name="hirestat_id">
+                  <mat-option *ngFor="let lov of lovHiring.data" [value]="lov.key">
+                    {{lov.value}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </td>
+          </tr>
+
+          <tr>
+            <td></td>
+            <td></td>
+            <td class="nx-button-range">
+              <button mat-raised-button class="action-btn nx-save-button" (click)="onUpdate()">Update</button>
+              <button mat-raised-button class="action-btn nx-cancel-button" [routerLink]="['/pages/pja/PJA007']">Cancel</button>  
+            </td>
+          </tr>
+
+        </table>
+      </div>
+    </div>
+
+  </form>
+</io-form>

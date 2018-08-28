@@ -1,0 +1,61 @@
+<!-- 
+Author        : Nurdhiat Chaudhary Malik
+Date Created  : 01 Agustus 2018
+Status        : Done
+ -->
+<io-form>
+  <div class="io-form-header">  
+    <div class="title-header">
+      <span><i class="fa fa-home"></i></span>
+      <a href=""><span>Dashboard</span></a><b> > </b>
+      <a href=""><span>SDM Allocation</span></a><b> > </b>
+      <a href=""><span>List Skill</span></a>
+    </div>
+  </div>
+
+
+  <form class="io-form-body" [formGroup]="action?.formControls()" *ngIf="action?.form()">
+    <div class="form-input">
+      <div class="title-form">
+        <p>Add/Update Skill Name</p>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <mat-form-field class="sdw-full-size">
+            <mat-select placeholder="Skill Category" formControlName="skilltype_id" name="skilltype_id" required>
+                <mat-option *ngFor="let lov of lovSkillType.data" [value]="lov.key">
+                  {{lov.value}}
+                </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <mat-form-field class="sdw-full-size">
+            <input matInput placeholder="Skill Name" formControlName="skill_name" name="skill_name" required>
+            <mat-hint *ngIf="action.formErrors.skill_name" [ngStyle]="{'color': 'red'}">
+              {{action.formErrors.skill_name}}
+            </mat-hint>
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <io-form-action [action]="action"></io-form-action>
+        </div>
+      </div>
+    </div>
+  </form>
+</io-form>
+
+<io-table *ngIf="action?.table()" [action]="action">
+  <div class="io-table-header">
+    <h3>List Skills</h3>
+  </div>
+</io-table>
+
+<ng-template #tableActionTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
+  <button type="button" matTooltip="Edit Skill" class="btn btn-primary btn-mm btn-icon" (click)="action.onEdit(row)">
+    <i class="glyphicon glyphicon-pencil"></i>
+  </button>
+  <button type="button" matTooltip="Hapus SKill" class="btn btn-danger btn-mm btn-icon" (click)="action.onDelete(row)">
+    <i class="glyphicon glyphicon-trash"></i>
+  </button>
+</ng-template>

@@ -1,0 +1,77 @@
+<io-form *ngIf="action?.form()">
+  <div class="io-form-header">
+    <div class="formheader">
+    <i class="glyphicon glyphicon-home">&emsp;</i> 
+    <a [routerLink]="['/pages/dashboard']"><span>Dashboard</span></a><b> > </b>
+    <a href=""><span>Project Assigment</span></a><b> > </b>
+    <span>List Detail SDM</span>
+    <span class="time">{{ time | date: 'medium'}}</span>
+    </div>
+  </div>
+  
+  <form class="io-form-body" [formGroup]="action?.formControls()">
+    <mat-list>
+      <mat-list-item>
+        <mat-label class="panjang">Nama</mat-label>
+        <mat-form-field class="sdw-full-size" style="width : 200px">
+          <input matInput placeholder="" (keyup)="onKeySdmName($event)" [matAutocomplete]="sdmName" formControlName="sdm_name" name="sdm_name" [formControl]="sdmCtrl">
+            <mat-autocomplete #sdmName="matAutocomplete" >
+              <mat-option *ngFor="let dataSdm of filteredSdm | async" [value]="dataSdm.values.sdm_sdm_name" (onSelectionChange)="setSdmValue(action?.formControls(), dataSdm);">
+                {{dataSdm.values.sdm_sdm_name}}
+              </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-label class="panjang" >Project Name</mat-label>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="" (keyup)="onKeyProjectName($event)" formControlName="project_name" [matAutocomplete]="projectName" name="project_name" [formControl]="projectCtrl">
+            <mat-autocomplete #projectName="matAutocomplete">
+              <mat-option *ngFor="let dataProject of filteredProject | async" [value]="dataProject.values.project_project_name" (onSelectionChange)="setProjectValue(action?.formControls(), dataProject);">
+             {{dataProject.values.project_project_name}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-label class="panjang">End Project</mat-label>
+        <mat-form-field>
+          <input matInput [matDatepicker]="picker" (keyup)="onKeyProjectEndDate($event)" formControlName="project_enddate" name="project_enddate">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <div class="col-md-3" style="float:right">
+          <button mat-flat-button (click)="onSearch()">
+              <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Cari</button>
+          <button mat-flat-button (click)="onReset()">
+              <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Clear</button>
+        </div>
+      </mat-list-item>
+    </mat-list>    
+  </form>
+</io-form>
+
+<io-table *ngIf="action?.table()" [action]="action" class="sdw-table">
+</io-table>
+
+<!-- Contoh Template Untuk meng-Override field "Action" -->
+<ng-template #tableActionTemplate let-row="row" let-value="value" ngx-datatable-cell-template id="t01">
+    <button type="button" class="btn btn-primary btn-mm btn-icon" (click)="navigateEditMenu(row.project_id)">
+      <i class="glyphicon glyphicon-pencil"></i>
+    </button>
+    <button type="button" class="btn btn-danger btn-mm btn-icon" (click)="action.onDelete(row)">
+      <i class="glyphicon glyphicon-trash"></i>
+    </button>
+  </ng-template>
+
+  <ng-template #notif let-row="row" let-value="value" ngx-datatable-cell-template>
+      <i matTooltip="Non-Aktif" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:black; font-size: 30px" *ngIf="row.project_notification == 'black'"></i>
+      <i matTooltip="Sisa 1 bulan" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:red; font-size: 30px" *ngIf="row.project_notification == 'red'"></i>
+      <i matTooltip="Sisa 2 bulan" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:#f5f515; font-size: 30px" *ngIf="row.project_notification == 'yellow'"></i>
+      <i matTooltip="Sisa 4 bulan" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:#00da00; font-size: 30px" *ngIf="row.project_notification == 'green'"></i>
+      <i matTooltip="Sisa lebih dari 4 bulan" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:#b3b3b3; font-size: 30px" *ngIf="row.project_notification == 'grey'"></i>
+   </ng-template>
+
+  <ng-template #viewAsDateTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
+      {{value | date:'yyyy-MM-dd'}}
+    </ng-template>

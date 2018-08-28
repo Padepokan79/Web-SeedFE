@@ -1,0 +1,10 @@
+<ng-template #actionTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
+  <button type="button" class="btn btn-primary btn-mm btn-icon" (click)="action.onEdit(row)">
+    <i class="glyphicon glyphicon-pencil"></i>
+  </button>
+  <button type="button" class="btn btn-danger btn-mm btn-icon" (click)="action.onDelete(row)">
+    <i class="glyphicon glyphicon-trash"></i>
+  </button>
+</ng-template>
+
+

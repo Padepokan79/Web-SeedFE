@@ -1,0 +1,162 @@
+<io-form *ngIf="action?.form()">
+  <div class="io-form-header">
+    <div class="nx-brc-header">
+      <i class="glyphicon glyphicon-home"></i>
+      <a [routerLink]="['/pages/dashboard']">Dashboard</a>>
+      <a>Project Assignment</a>>
+      <a [routerLink]="['/pages/PJA010']">SDM Assignment</a>>
+      <a [routerLink]="['/pages/PJA011']">Update SDM Assignment</a>
+      <span class="nx-time">{{ time | date:'medium' }}</span>
+    </div>
+  </div>
+
+  <form class="io-form-body" [formGroup]="action?.formControls()">
+    <span class="nx-form-title">Form Update SDM Assignment</span>
+    <div class="nx-form-body">
+      <div class="nx-pos-pad">
+        <table class="nx-class-table">
+
+          <tr>
+            <td class="nx-table-range">
+              <mat-label>SDM Name</mat-label>
+            </td>
+            <td>
+              <mat-label>:</mat-label>
+            </td>
+            <td class="nx-table-range" id="nx-table-range">
+                <mat-label>{{ sdmName }}</mat-label>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="nx-table-range">
+              <mat-label>Contact</mat-label>
+            </td>
+            <td>
+              <mat-label>:</mat-label>
+            </td>
+            <td class="nx-table-range" id="nx-table-range">
+                <mat-label>{{ sdmPhone }}</mat-label>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="nx-table-range">
+              <mat-label>Start Date</mat-label>
+            </td>
+            <td>
+              <mat-label>:</mat-label>
+            </td>
+            <td class="nx-table-range">
+              <mat-form-field class="classData">
+                <input matInput [matDatepicker]="pickStartDate" placeholder="Choose a date" formControlName="sdmassign_startdate" name="sdmassign_startdate">
+                <mat-datepicker-toggle matSuffix [for]="pickStartDate"></mat-datepicker-toggle>
+                <mat-datepicker #pickStartDate></mat-datepicker>
+              </mat-form-field>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="nx-table-range">
+              <mat-label>End Date</mat-label>
+            </td>
+            <td>
+              <mat-label>:</mat-label>
+            </td>
+            <td class="nx-table-range">
+              <mat-form-field class="classData">
+                <input matInput [matDatepicker]="pickEndDate" placeholder="Choose a date" formControlName="sdmassign_enddate" name="sdmassign_startdate">
+                <mat-datepicker-toggle matSuffix [for]="pickEndDate"></mat-datepicker-toggle>
+                <mat-datepicker #pickEndDate></mat-datepicker>
+              </mat-form-field>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="nx-table-range">
+              <mat-label>Location</mat-label>
+            </td>
+            <td>
+              <mat-label>:</mat-label>
+            </td>
+            <td class="nx-table-range">
+              <mat-form-field class="nx-class-data">
+                <input matInput placeholder="" formControlName="sdmassign_loc" name="sdmassign_loc">
+              </mat-form-field>
+            </td>
+          </tr>
+
+          <!-- <tr>
+            <td class="nx-table-range">
+              <mat-label>Role Job</mat-label>
+            </td>
+            <td>
+              <mat-label>:</mat-label>
+            </td>
+            <td class="nx-table-range">
+              <mat-form-field class="nx-class-data">
+                <input matInput placeholder="ROLE" formControlName="sdm_name" name="sdm_name" readonly>
+              </mat-form-field>
+            </td>
+          </tr> -->
+
+          <tr>
+            <td class="nx-table-range">
+              <mat-label>PIC Handler</mat-label>
+            </td>
+            <td>
+              <mat-label>:</mat-label>
+            </td>
+            <td class="nx-table-range">
+              <mat-form-field class="nx-class-data">
+                <input matInput placeholder="" formControlName="sdmassign_picclient" name="sdmassign_picclient">
+              </mat-form-field>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="nx-table-range">
+              <mat-label>PIC Contact</mat-label>
+            </td>
+            <td>
+              <mat-label>:</mat-label>
+            </td>
+            <td class="nx-table-range">
+              <mat-form-field class="nx-class-data">
+                <input matInput placeholder="" formControlName="sdmassign_picclientphone" name="sdmassign_picclientphone">
+              </mat-form-field>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="nx-table-range">
+              <mat-label>Method</mat-label>
+            </td>
+            <td>
+              <mat-label>:</mat-label>
+            </td>
+            <td class="nx-table-range">
+              <mat-form-field class="nx-class-data">
+                <mat-select placeholder="" formControlName="method_id" name="method_id">
+                  <mat-option *ngFor="let lov of lovMethod.data" [value]="lov.key">
+                    {{lov.value}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </td>
+          </tr>
+
+          <tr>
+            <td></td>
+            <td></td>
+            <td class="nx-button-range">
+              <button mat-raised-button class="action-btn nx-save-button" (click)="onUpdate()">Update</button>
+              <button mat-raised-button class="action-btn nx-cancel-button" [routerLink]="['/pages/pja/PJA010']">Cancel</button>  
+            </td>
+          </tr>
+
+        </table>
+      </div>
+    </div>
+  </form>
+</io-form>

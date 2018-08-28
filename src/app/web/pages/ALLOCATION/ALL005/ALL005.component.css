@@ -1,0 +1,29 @@
+.form-body{
+    border: 2px solid #000000;
+    padding: 50px 0px 25px 10px;
+    margin-bottom: 30px;
+}
+.form-title{
+    background: rgb(89, 89, 235);
+    color:#fff;
+    padding: 10px 10px 10px 10px;
+    position: relative;
+    top: 8.5px;
+    margin-left: 50px;
+    font-size: 20px;
+    /* z-index: 9999; */
+    margin-top: 20px;
+    /* position: absolute; */
+}
+.posisi {
+    padding: 15px 0px 15px 80px;
+}
+
+.pos{
+    padding-top: 130px;
+    padding-left: 975px;
+}
+
+.time{
+float: right;
+}

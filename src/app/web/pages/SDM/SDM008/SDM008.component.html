@@ -1,0 +1,38 @@
+<!-- 
+AUTHOR  	: Khairil Anwar
+CREATED 	: Wednesday, ‎August 1, ‎2018 14:00:12 PM
+UPDATE		: 
+-->
+<mat-toolbar>
+  Skill Category
+</mat-toolbar>
+<div class="io-form-header">
+  <div class="nx-brc-header blacky">
+    <div class="title-header">
+      <span><i class="fa fa-home"></i></span>
+      <a [routerLink]="['/pages/dashboard']">dashboard</a><b> > </b>
+      <a [routerLink]="['/pages/sdm']"><span>SDM</span></a><b> > </b>
+      <a><span>List Psychological SDM</span></a>
+    </div>
+  </div>
+</div>
+<div class="contents">
+  <button type="button" class="btn btn-flat btn-mm btn-icon" [routerLink]="['/pages/sdm/SDM006']">
+    Add SDM Psychological <i class="glyphicon glyphicon-plus"></i>
+  </button>
+  <io-table *ngIf="action?.table()" [action]="action">
+    <div class="io-table-header">
+      <h3>List Psychological</h3>
+    </div>
+  </io-table>
+  <div align="center">
+  <ng-template #tableActionTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
+    <button type="button" class="btn btn-warning btn-mm btn-icon" (click)="navigateEditMenu(row.sdmpsycological_id)">
+      <i class="glyphicon glyphicon-pencil"></i>
+    </button>
+    <button type="button" class="btn btn-danger btn-mm btn-icon" (click)="action.onDelete(row)">
+      <i class="glyphicon glyphicon-trash"></i>
+    </button>
+  </ng-template>
+  </div>
+</div>

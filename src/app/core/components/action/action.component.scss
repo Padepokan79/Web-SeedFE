@@ -1,0 +1,27 @@
+@import '../../sass/conf/conf';
+@import '../../sass/data-table/theme/sdw-table';
+
+#top,
+#bottom {
+    position: fixed;
+    width: 52px;
+    right: 0;
+    height: 50%;
+}
+
+#top {
+    top: 0;
+    background-color: $sdw-color-secondary;
+}
+
+#bottom {
+    bottom: 0;
+    background-color: $sdw-color-secondary;
+    border-style: solid none none none;
+    border-color: #ffffff;
+}
+
+.btn-action { 
+    display: block; 
+    margin: 10px auto;
+}

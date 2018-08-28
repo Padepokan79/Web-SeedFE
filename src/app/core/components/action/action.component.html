@@ -1,0 +1,48 @@
+<div id="top">
+  <div *ngIf="enableInputFormAction">
+    <div *ngIf="!saveMode">
+      <button (click)="add()" class="btn btn-primary btn-mm btn-icon btn-action" 
+        [disabled]="disableAdd"  matTooltip="Add New" [matTooltipPosition]="toolTipPosition">
+        <i class="glyphicon glyphicon-plus"></i>    
+      </button>
+      <button (click)="editFromForm()" class="btn btn-primary btn-mm btn-icon btn-action" 
+        [disabled]="disableEditForm" matTooltip="Edit Form" [matTooltipPosition]="toolTipPosition">
+        <i class="glyphicon glyphicon-pencil"></i>          
+      </button>
+    </div>
+    <div *ngIf="saveMode">
+      <button (click)="save()" class="btn btn-primary btn-mm btn-icon btn-action" 
+        [disabled]="disableSave" matTooltip="Save" [matTooltipPosition]="toolTipPosition">
+        <i class="glyphicon glyphicon-ok"></i>          
+      </button>
+      <button (click)="cancel()" class="btn btn-primary btn-mm btn-icon btn-action" 
+        [disabled]="disableCancel" matTooltip="Cancel" [matTooltipPosition]="toolTipPosition">
+        <i class="glyphicon glyphicon-remove"></i>    
+      </button>
+      <button (click)="reset()" class="btn btn-primary btn-mm btn-icon btn-action" 
+        [disabled]="disableReset" matTooltip="Reset" [matTooltipPosition]="toolTipPosition">
+        <i class="glyphicon glyphicon-repeat"></i>    
+      </button>
+    </div>
+  </div>
+</div>
+<div id="bottom">
+  <div *ngIf="enableDataTableAction">
+    <button (click)="search()" class="btn btn-primary btn-mm btn-icon btn-action" 
+      [disabled]="disableSearch" matTooltip="Search" [matTooltipPosition]="toolTipPosition">
+      <i class="glyphicon glyphicon-search"></i>              
+    </button>
+    <button (click)="editFromTable()" class="btn btn-primary btn-mm btn-icon btn-action" 
+      [disabled]="disableEditTable" matTooltip="Edit" [matTooltipPosition]="toolTipPosition">
+      <i class="glyphicon glyphicon-edit"></i>        
+    </button>
+    <button (click)="delete()" class="btn btn-primary btn-mm btn-icon btn-action" 
+      [disabled]="disableDelete" matTooltip="Delete" [matTooltipPosition]="toolTipPosition">
+      <i class="glyphicon glyphicon-trash"></i>        	
+    </button>
+    <button (click)="viewDetail()" class="btn btn-primary btn-mm btn-icon btn-action" 
+      [disabled]="disableViewDetail" matTooltip="View Detail" [matTooltipPosition]="toolTipPosition">    
+      <i class="glyphicon glyphicon-eye-open"></i>    
+    </button>
+  </div>
+</div>

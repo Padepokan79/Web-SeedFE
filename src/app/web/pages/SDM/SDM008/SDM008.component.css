@@ -1,0 +1,19 @@
+ng-template {
+    padding: 0 auto;
+}
+
+.btn-flat {
+    background-color: #FEFEFE;
+    color: #242424;
+    margin-left: 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.nx-brc-header {
+    margin: 12px;
+}
+
+.blacky {
+    color: #202020;
+}

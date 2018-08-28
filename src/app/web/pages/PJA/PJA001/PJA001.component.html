@@ -1,0 +1,340 @@
+<!-- 
+AUTHOR  	: Malik Chaudhary
+CREATED 	: Wednesday, ‎August ‎1, ‎2018, ‏‎9:48:58 AM
+UPDATE		: APN, Thursday, August 16, ‎2018, ‏‎9:37:29 AM
+UPDATE   : MLK, Tuesday, August 21, ‎2018, ‏‎4:35:00 PM
+-->
+
+<io-form *ngIf="action?.form()">
+	<div class="io-form-header">
+    	<div class="nx-brc-header">
+			<span><i class="glyphicon glyphicon-home"></i></span>
+			<a [routerLink]="['/pages/dashboard']">dashboard</a><b> > </b>
+			<a [routerLink]="['/pages/project']"><span>Project Assignment</span></a><b> > </b>
+			<a><span>Add Project SDM</span></a>
+        	<span class="nx-time">{{ time | date:'medium' }}</span>
+   		</div>
+ 	</div>
+
+	<form class="io-form-body" [formGroup]="action?.formControls()">
+		<span class="nx-form-title">Add Project SDM</span>
+		<div class="nx-form-body">
+			<div class="nx-pos-pad">
+				<table>
+
+					<tr>
+						<td id="nx-td-r">
+						    <mat-label>SDM Name</mat-label>
+						</td>
+						<td>
+							<mat-label>:</mat-label>
+						</td>
+						<td> 
+					        <mat-form-field class="nx-class-data" id="nx-td-l">
+					        	<input matInput formControlName="sdm_name" name="sdm_name" [formControl]="sdmCtrl" [matAutocomplete]="auto" (change)="ambilData()" required>
+					        	<mat-autocomplete #auto="matAutocomplete">
+					        		<mat-option *ngFor="let dataSdm of filteredSdm | async" [value]="dataSdm.values.sdm_sdm_name" 
+						            (onSelectionChange)="setSdmValue(action?.formControls(), dataSdm);">
+						            {{ dataSdm.values.sdm_sdm_name }}
+						          	</mat-option>
+					          	</mat-autocomplete>
+					          	<mat-hint *ngIf="action.formErrors.sdm_id" [ngStyle]="{'color': 'red'}">
+		                      		{{action.formErrors.sdm_id}}
+		                      	</mat-hint>
+					        </mat-form-field>
+						</td> 
+						<td id="nx-td-r">
+						    <mat-label>Role Project</mat-label>
+						</td>
+						<td>
+							<mat-label>:</mat-label>
+						</td>
+						<td>
+					        <mat-form-field class="nx-class-data" id="nx-td-l">
+					          	<input matInput formControlName="project_role" name="project_role" required>
+					          	<mat-hint *ngIf="action.formErrors.project_role" [ngStyle]="{'color': 'red'}">
+		                      		{{action.formErrors.project_role}}
+		                    	</mat-hint>
+					    	</mat-form-field>
+						</td>
+					</tr>
+
+					<tr>
+						<td id="nx-td-r">
+						    <mat-label>NIK</mat-label>
+						</td>
+						<td>
+							<mat-label>:</mat-label>
+						</td>
+						<td>
+							<mat-form-field class="nx-class-data" id="nx-td-l">
+							    <input matInput formControlName="sdm_nik" name="sdm_nik" value="{{ sdm_nik }}" readonly>
+							</mat-form-field>
+						</td>
+						<td id="nx-td-r">
+						    <mat-label>App Type</mat-label>
+						</td>
+						<td>
+							<mat-label>:</mat-label>
+						</td>
+						<td>
+					        <mat-form-field class="nx-class-data" id="nx-td-l">
+					          	<input matInput formControlName="project_apptype" name="project_apptype">
+					          	<mat-hint *ngIf="action.formErrors.project_apptype" [ngStyle]="{'color': 'red'}">
+		                      		{{action.formErrors.project_apptype}}
+		                    	</mat-hint>
+					    	</mat-form-field>
+						</td>
+					</tr>
+
+					<tr>
+						<td id="nx-td-r">
+						    <mat-label>Project Name</mat-label>
+						</td>
+						<td>
+							<mat-label>:</mat-label>
+						</td>
+						<td>
+							<mat-form-field class="nx-class-data" id="nx-td-l">
+							    <input matInput formControlName="project_name" name="project_name" required>
+							    <mat-hint *ngIf="action.formErrors.project_name" [ngStyle]="{'color': 'red'}">
+		                      		{{action.formErrors.project_name}}
+		                    	</mat-hint>
+							</mat-form-field>
+						</td>
+						<td id="nx-td-r">
+						    <mat-label>Dev Language</mat-label>
+						</td>
+						<td>
+							<mat-label>:</mat-label>
+						</td>
+						<td>
+					        <mat-form-field class="nx-class-data" id="nx-td-l">
+					          	<input matInput formControlName="project_devlanguage" name="project_devlanguage">
+					          	<mat-hint *ngIf="action.formErrors.project_devlanguage" [ngStyle]="{'color': 'red'}">
+		                      		{{action.formErrors.project_devlanguage}}
+		                    	</mat-hint>
+
+					    	</mat-form-field>
+						</td>
+					</tr>
+
+					<tr>
+						<td id="nx-td-r">
+						    <mat-label>Customer</mat-label>
+						</td>
+						<td>
+							<mat-label>:</mat-label>
+						</td>
+						<td>
+							<mat-form-field class="nx-class-data" id="nx-td-l">
+							    <input matInput formControlName="project_customer" name="project_customer">
+							    <mat-hint *ngIf="action.formErrors.project_customer" [ngStyle]="{'color': 'red'}">
+		                      		{{action.formErrors.project_customer}}
+		                    	</mat-hint>
+							</mat-form-field>
+						</td>
+						<td id="nx-td-r">
+						    <mat-label>Server OS</mat-label>
+						</td>
+						<td>
+							<mat-label>:</mat-label>
+						</td>
+						<td>
+					        <mat-form-field class="nx-class-data" id="nx-td-l">
+					          	<input matInput formControlName="project_serveros" name="project_serveros">
+					          	<mat-hint *ngIf="action.formErrors.project_serveros" [ngStyle]="{'color': 'red'}">
+		                      		{{action.formErrors.project_serveros}}
+		                    	</mat-hint>
+					    	</mat-form-field>
+						</td>
+					</tr>
+
+					<tr>
+						<td id="nx-td-r">
+						    <mat-label>Project Site</mat-label>
+						</td>
+						<td>
+							<mat-label>:</mat-label>
+						</td>
+						<td>
+							<mat-form-field class="nx-class-data" id="nx-td-l">
+							    <input matInput formControlName="project_projectsite" name="project_projectsite" required>
+							    <mat-hint *ngIf="action.formErrors.project_projectsite" [ngStyle]="{'color': 'red'}">
+		                      		{{action.formErrors.project_projectsite}}
+		                    	</mat-hint>
+							</mat-form-field>
+						</td>
+						<td id="nx-td-r">
+						    <mat-label>Framework</mat-label>
+						</td>
+						<td>
+							<mat-label>:</mat-label>
+						</td>
+						<td>
+					        <mat-form-field class="nx-class-data" id="nx-td-l">
+					          	<input matInput formControlName="project_framework" name="project_framework">
+					          	<mat-hint *ngIf="action.formErrors.project_framework" [ngStyle]="{'color': 'red'}">
+		                      		{{action.formErrors.project_framework}}
+		                    	</mat-hint>
+					    	</mat-form-field>
+						</td>
+					</tr>
+
+					<tr>
+						<td id="nx-td-r">
+						    <mat-label>Period Start</mat-label>
+						</td>
+						<td>
+							<mat-label>:</mat-label>
+						</td>
+						<td>
+							<mat-form-field class="nx-class-data" id="nx-td-l">
+					          <input matInput [matDatepicker]="pickerStartDate" (click)="pickerStartDate.open()" formControlName="project_startdate" name="project_startdate" required>
+					          <mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
+					          <mat-datepicker #pickerStartDate></mat-datepicker>
+					          <mat-hint *ngIf="action.formErrors.project_startdate" [ngStyle]="{'color': 'red'}">
+		                      		{{action.formErrors.project_startdate}}
+		                      </mat-hint>
+					        </mat-form-field>
+						</td>
+						<td id="nx-td-r">
+						    <mat-label>Database</mat-label>
+						</td>
+						<td>
+							<mat-label>:</mat-label>
+						</td>
+						<td>
+					        <mat-form-field class="nx-class-data" id="nx-td-l">
+					          	<input matInput formControlName="project_database" name="project_database">
+					          	<mat-hint *ngIf="action.formErrors.project_database" [ngStyle]="{'color': 'red'}">
+		                      		{{action.formErrors.project_database}}
+		                        </mat-hint>
+					    	</mat-form-field>
+						</td>
+					</tr>
+
+					<tr>
+						<td id="nx-td-r">
+						    <mat-label>Period End</mat-label>
+						</td>
+						<td>
+							<mat-label>:</mat-label>
+						</td>
+						<td>
+							<mat-form-field class="nx-class-data" id="nx-td-l">
+					          <input matInput [matDatepicker]="pickerEndDate" (click)="pickerEndDate.open()" formControlName="project_enddate" name="project_enddate" required>
+					          <mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
+					          <mat-datepicker #pickerEndDate></mat-datepicker>
+					          <mat-hint *ngIf="action.formErrors.project_enddate" [ngStyle]="{'color': 'red'}">
+		                      		{{action.formErrors.project_enddate}}
+		                      </mat-hint>
+					        </mat-form-field>
+						</td>
+						<td id="nx-td-r">
+						    <mat-label>Dev Tools</mat-label>
+						</td>
+						<td>
+							<mat-label>:</mat-label>
+						</td>
+						<td>
+					        <mat-form-field class="nx-class-data" id="nx-td-l">
+					          	<input matInput formControlName="project_devtool" name="project_devtool">
+					          	<mat-hint *ngIf="action.formErrors.project_devtool" [ngStyle]="{'color': 'red'}">
+		                      		{{action.formErrors.project_devtool}}
+		                        </mat-hint>
+					    	</mat-form-field>
+						</td>
+					</tr>
+
+					<tr>
+						<td id="nx-td-r">
+						    <mat-label>Project Desc</mat-label>
+						</td>
+						<td>
+							<mat-label>:</mat-label>
+						</td>
+						<td>
+							<mat-form-field class="nx-class-data" id="nx-td-l">
+							    <textarea matInput formControlName="project_desc" name="project_desc" required></textarea>
+							    <mat-hint *ngIf="action.formErrors.project_desc" [ngStyle]="{'color': 'red'}">
+		                      		{{action.formErrors.project_desc}}
+		                        </mat-hint>
+							</mat-form-field>
+						</td> 
+						<td id="nx-td-r">
+						    <mat-label>Other Info</mat-label>
+						</td>
+						<td>
+							<mat-label>:</mat-label>
+						</td>
+						<td>
+					        <mat-form-field class="nx-class-data" id="nx-td-l">
+							    <textarea matInput formControlName="project_otherinfo" name="project_otherinfo"></textarea>
+							    <mat-hint *ngIf="action.formErrors.project_otherinfo" [ngStyle]="{'color': 'red'}">
+		                      		{{action.formErrors.project_otherinfo}}
+		                        </mat-hint>
+							</mat-form-field>
+						</td>
+					</tr>
+
+					<tr>
+						<td id="nx-td-r">
+						    <mat-label>App Server</mat-label>
+						</td>
+						<td>
+							<mat-label>:</mat-label>
+						</td>
+						<td>
+					        <mat-form-field class="nx-class-data" id="nx-td-l">
+					          	<input matInput formControlName="project_appserver" name="project_appserver">
+					          	<mat-hint *ngIf="action.formErrors.project_appserver" [ngStyle]="{'color': 'red'}">
+		                      		{{action.formErrors.project_appserver}}
+		                        </mat-hint>
+					    	</mat-form-field>
+						</td>
+						<td id="nx-td-r">
+						    <mat-label>Technical Info</mat-label>
+						</td>
+						<td>
+							<mat-label>:</mat-label>
+						</td>
+						<td>
+					        <mat-form-field class="nx-class-data" id="nx-td-l">
+							    <textarea matInput formControlName="project_technicalinfo" name="project_technicalinfo"></textarea>
+							    <mat-hint *ngIf="action.formErrors.project_technicalinfo" [ngStyle]="{'color': 'red'}">
+		                      		{{action.formErrors.project_technicalinfo}}
+		                        </mat-hint>
+							</mat-form-field>
+						</td>
+					</tr>
+
+					<tr style="height: 10px;"></tr>
+
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+            			<td class="nx-button-range">
+						<!-- <button type="button" class="btn btn-primary btn-mm btn-icon" (click)="action.onSave()">
+								   <b>Tambah</b>
+						</button>&emsp;
+						<button type="button" class="btn btn-danger btn-mm btn-icon">
+							   <b>Kembali</b>
+						</button> -->
+			                <button mat-raised-button class="action-btn nx-save-button" [disabled]="action?.formControls()?.invalid || action?.formControls()?.pristine" (click)="action.onSave(timeOut())">Submit</button>&emsp;
+			                <button mat-raised-button class="action-btn nx-cancel-button" [routerLink]="['/pages/pja/PJA003']">Cancel</button>  
+						</td>
+					</tr>
+					<tr style="height: 10px;"></tr>
+				</table>
+			</div>
+		</div>
+	 <br>
+  	</form>
+ </io-form> 
+ <ng-template #viewAsDateTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
+  {{value | date:'yyyy-MM-dd'}}
+</ng-template>

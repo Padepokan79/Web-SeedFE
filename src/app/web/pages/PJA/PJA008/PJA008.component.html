@@ -1,0 +1,94 @@
+<!-- 
+AUTHOR  	: Khairil Anwar
+CREATED 	: Thursday, ‎August 16th 2018 23:00:00 PM
+-->
+<mat-toolbar>
+  SDM Assign
+</mat-toolbar>
+<div class="io-form-header">
+  <div class="nx-brc-header blacky" style="position:relative">
+    <i class="glyphicon glyphicon-home"></i>
+    <a [routerLink]="['/pages/dashboard']">Dashboard</a>>
+    <a>Project Assignment</a>>
+    <a [routerLink]="['/pages/PJA007']"><span>Data SDM Hiring</span></a><b> > </b>
+    <a><span>Hire SDM</span></a>
+    <span class="nx-time" style="position: absolute; right: 1%">{{ time | date:'medium'}}</span>
+  </div>
+</div>
+<div class="all-of-white">
+  <div class="filter-contents" align="center">
+    <form class="io-form-body">
+      <div id="filtering" class="row row-center">  
+        <ul class="list-filter">
+          <li class="col-md-12 position-li" style="margin-bottom: 1em">
+            <div class="col-md-6 go tight"> 
+              <mat-form-field class="sdw-full-size">
+                <input matInput [formControl]="sdmCtrl" (keyup)="onKey($event)" placeholder="Input SDM Name" name="sdm_id" [matAutocomplete]="auto" class="blacky">
+                <mat-autocomplete #auto="matAutocomplete">
+                  <mat-option *ngFor="let dataSdm of filteredSdm | async" [value]="dataSdm.values.sdm_sdm_name" (onSelectionChange)="setSdmValue(dataSdm)">
+                    {{ dataSdm.values.sdm_sdm_name }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+          </li>
+          <br><br>
+          <!-- <li class="col-md-12 position-li">
+             <mat-checkbox class="chk" [checked]="check" (change)="checkMethod($event, check)">Filter dengan AND</mat-checkbox>
+          </li> -->
+          <li *ngFor="let searchCriteria of listSearchCriteria; let inc = index" class="col-md-12 position-li">
+            <div class="col-md-2 go-tight">
+              <mat-form-field class="sdw-full-size">
+                <mat-select placeholder="Choose Category" [(ngModel)]="searchCriteria.skilltype_id" name="skilltype_id{{inc}}" required>
+                  <mat-option *ngFor="let lov of searchCriteria.lovSkillType.data" [value]="lov.key" (onSelectionChange)="searchCriteria.selectedSkill($event, lov)">
+                    {{lov.value}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-2 go-tight">
+              <mat-form-field class="sdw-full-size">
+                <mat-select placeholder="Choose Skill" [(ngModel)]="searchCriteria.skill_id" name="skill_id{{inc}}" required>
+                  <mat-option *ngFor="let lov of searchCriteria.lovSkill?.data" [value]="lov.key">
+                    {{lov.value}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-2 go-tight">
+              <mat-form-field class="sdw-full-size">
+                <input matInput type="text" min="1" max="10" placeholder="Value" [(ngModel)]="searchCriteria.value" name="sdmskill_value{{inc}}" class="blacky">
+              </mat-form-field>
+            </div>
+            <div class="col-sm-2 text-left">
+              <button class="btn btn-flat btn-sm" *ngIf="inc==0" (click)="addSearchCriteria()"><i class="fa fa-plus"></i></button>
+              <button class="btn btn-flat btn-sm" *ngIf="inc>0" (click)="removeSearchCriteria(inc,1)"><i class="fa fa-minus"></i></button>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <br><br>
+      <div class="action-filter">
+        <button class="btn btn-filter btn-mm" (click)="selectToAssign()">Filter <i class="glyphicon glyphicon-search"></i></button>
+        <button class="btn btn-clear btn-mm" (click)="resetSource()">Clear <i class="glyphicon glyphicon-times"></i></button>
+      </div>
+      <br><br>
+    </form>
+  </div>
+</div>
+<div class="contents" *ngIf="isButtonClicked">
+  <form class="io-form-body">
+    <io-table *ngIf="action?.table()" [action]="action">
+      <div class="io-table-header">
+        <h3>Candidates</h3>
+      </div>
+    </io-table>      
+    <div class="action-filter col-md-12">
+      <button [routerLink]="['/pages/dashboard']" class="btn btn-mm"> &lt; Back</button>
+      <button class="btn btn-primary btn-mm" [routerLink]="['/pages/pja/PJA007']" (click)="hiringSubmit()">Get</button>
+    </div>
+  </form>
+</div>
+<ng-template #tableActionTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
+  <mat-checkbox (change)="distRedundantCheckedSdm()" value="{{row.sdm_id}}" [(ngModel)]="row.Checked" [name]="row.sdm_id"></mat-checkbox>
+</ng-template>
