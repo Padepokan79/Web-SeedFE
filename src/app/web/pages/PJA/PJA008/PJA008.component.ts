@@ -211,8 +211,7 @@ export class PJA008Component implements OnInit {
     this.listSearchCriteria.forEach((searchCriteria: SearchCriteria) => {
       searchCriteria.skilltype_id = '';
       searchCriteria.skill_id = '';
-    }
-    
+    });
   }
 
   public hiringSubmit() {
