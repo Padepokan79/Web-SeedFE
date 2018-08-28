@@ -14,7 +14,7 @@ import { Router } from '../../../../../../../node_modules/@angular/router';
 })
 export class TabDatapribadiComponent implements OnInit {
 
-  public imageUrl: string = 'http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png';
+  public imageUrl: string = '';
   public fileToUpload: File = null;
   // public form = 1;
   public gender = '1';
@@ -134,14 +134,15 @@ export class TabDatapribadiComponent implements OnInit {
       }
   }
 
-  public handleFileInput(file: FileList) {
-    this.fileToUpload = file.item(0);
+  public handleFileInput(event) {
+    console.log(event);
+    // this.fileToUpload = file.item(0);
 
-    const reader = new FileReader();
-    reader.onload = (event: any) => {
-      this.imageUrl = event.target.result;
-    };
-    reader.readAsDataURL(this.fileToUpload);
+    // const reader = new FileReader();
+    // reader.onload = (event: any) => {
+    //   this.imageUrl = event.target.result;
+    // };
+    // reader.readAsDataURL(this.fileToUpload);
   }
 
   public onSave() {
