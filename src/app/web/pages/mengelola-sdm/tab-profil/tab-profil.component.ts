@@ -5,7 +5,7 @@ import { CoreFactory } from '../../../../core/factory/core.factory';
 import { DataTable } from '../../../../core/models/data-table';
 
 @Component({
-  selector: 'app-tab-profil',
+  selector: 'sdm-tab-profil',
   templateUrl: './tab-profil.component.html',
   styleUrls: ['./tab-profil.component.scss']
 })

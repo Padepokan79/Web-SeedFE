@@ -3,10 +3,10 @@ import { ActionService } from '../../../../core/services/uninjectable/action.ser
 import { InputForm } from '../../../../core/models/input-form';
 import { CoreFactory } from '../../../../core/factory/core.factory';
 import { LOVService } from '../../../../core/services/uninjectable/lov.service';
-import { FormBuilder, FormArray } from '../../../../../../node_modules/@angular/forms';
+import { FormBuilder, FormArray } from '@angular/forms';
 
 @Component({
-  selector: 'app-tab-language',
+  selector: 'sdm-tab-language',
   templateUrl: './tab-language.component.html',
   styleUrls: ['./tab-language.component.scss']
 })

@@ -5,7 +5,7 @@ import { LOVService } from '../../../../core/services/uninjectable/lov.service';
 import { CoreFactory } from '../../../../core/factory/core.factory';
 
 @Component({
-  selector: 'app-tab-datapribadi',
+  selector: 'sdm-tab-datapribadi',
   templateUrl: './tab-datapribadi.component.html',
   styleUrls: ['./tab-datapribadi.component.scss']
 })

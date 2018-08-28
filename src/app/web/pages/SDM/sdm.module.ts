@@ -1,3 +1,4 @@
+import { SDM005Component } from './mengelola-sdm/SDM005/SDM005.component';
 import { SDM001Component } from './mengelola-sdm/SDM001/SDM001.component';
 import { NgModule } from '../../../../../node_modules/@angular/core';
 import { PAGES_MODULE_PROVIDERS } from '../../../app.providers';
@@ -39,6 +40,7 @@ const SDM_COMPONENTS = [
     SDM002Component,
     SDM003Component,
     SDM004Component,
+    SDM005Component,
     SDM006Component,
     SDM007Component,
     SDM008Component,
