@@ -6,13 +6,13 @@ CREATED 	: Thursday, ‎August 16th 2018 23:00:00 PM
   SDM Assign
 </mat-toolbar>
 <div class="io-form-header">
-  <div class="nx-brc-header blacky"> 
-    <div class="title-header">
-      <span><i class="fa fa-home"></i></span>
-      <a [routerLink]="['/pages/dashboard']">dashboard</a><b> > </b>
-      <a [routerLink]="['/pages/project']"><span>Project Assignment</span></a><b> > </b>
-      <a><span>Hire SDM</span></a>
-    </div>
+  <div class="nx-brc-header blacky" style="position:relative">
+    <i class="glyphicon glyphicon-home"></i>
+    <a [routerLink]="['/pages/dashboard']">Dashboard</a>>
+    <a>Project Assignment</a>>
+    <a [routerLink]="['/pages/PJA007']"><span>Data SDM Hiring</span></a><b> > </b>
+    <a><span>Hire SDM</span></a>
+    <span class="nx-time" style="position: absolute; right: 1%">{{ time | date:'medium'}}</span>
   </div>
 </div>
 <div class="all-of-white">
@@ -27,7 +27,7 @@ CREATED 	: Thursday, ‎August 16th 2018 23:00:00 PM
                 <mat-autocomplete #auto="matAutocomplete">
                   <mat-option *ngFor="let dataSdm of filteredSdm | async" [value]="dataSdm.values.sdm_sdm_name" (onSelectionChange)="setSdmValue(dataSdm)">
                     {{ dataSdm.values.sdm_sdm_name }}
-                  </mat-option>=""
+                  </mat-option>
                 </mat-autocomplete>
               </mat-form-field>
             </div>
@@ -70,8 +70,7 @@ CREATED 	: Thursday, ‎August 16th 2018 23:00:00 PM
       <br><br>
       <div class="action-filter">
         <button class="btn btn-filter btn-mm" (click)="selectToAssign()">Filter <i class="glyphicon glyphicon-search"></i></button>
-        <button class="btn btn-clear btn-mm" type="reset" (click)="resetSource()">Clear <i class="glyphicon glyphicon-times"></i></button>
-
+        <button class="btn btn-clear btn-mm" (click)="resetSource()">Clear <i class="glyphicon glyphicon-times"></i></button>
       </div>
       <br><br>
     </form>

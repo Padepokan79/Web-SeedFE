@@ -44,31 +44,32 @@ export class PJA008Component implements OnInit {
   public lovSdmSkill: LOVService;
   public isButtonClicked = false;
   public assignSubmit: any;
+  public keyId: any;
   public doubleFilter: any;
+  public time: Date = new Date();
   public categorySkill: any;
   public varSkill: any;
   public skillValue: string;
   public hiringstatId: number;
   public methodIds: any;
   public apiRoot: string = 'http://localhost:7979/project/MultiHiring';
-  public keyId: any;
   public check: any;
-  public tes: String;
+  public tes: string;
 
-  onKey(event: any){
+  public onKey(event: any) {
     console.log(event);
     this.keyId = event.target.value;
     if (this.keyId === '') {
       this.IdSdm = null;
       console.log(this.IdSdm);
     }
-      
   }
 
+  // tslint:disable-next-line:member-ordering
   constructor(private _factory: CoreFactory, public _notif: DefaultNotificationService, private route: ActivatedRoute, private http: HttpClient) {
     this.listSearchCriteria.push(new SearchCriteria(_factory));
     this.sdmCtrl = new FormControl();
-    this.valueCtrl = new FormControl({value: '', disabled: true});
+    this.valueCtrl = new FormControl({ value: '', disabled: true });
     this.filteredSdm = this.sdmCtrl.valueChanges
       .startWith('')
       .map((value) => this.filterSdm(value));
@@ -140,6 +141,10 @@ export class PJA008Component implements OnInit {
     //   initializeData: true
     // });
 
+    setInterval(() => {
+      this.time = new Date();
+    }, 1);
+
   }
 
   public selectToAssign() {
@@ -149,10 +154,10 @@ export class PJA008Component implements OnInit {
     this.listSearchCriteria.forEach((searchCriteria: SearchCriteria) => {
       this.categorySkill = searchCriteria.skilltype_id;
       console.log(this.categorySkill);
-      if (this.categorySkill == 0) {
-        searchCriteria.skill_id = "";
-        this.varSkill = "";
-      }else{
+      if (this.categorySkill === 0) {
+        searchCriteria.skill_id = '';
+        this.varSkill = '';
+      } else {
         this.varSkill = searchCriteria.skill_id;
       }
       console.log(this.varSkill);
@@ -178,64 +183,24 @@ export class PJA008Component implements OnInit {
     //   this.doubleFilter = Conjunction.OR(...filterComponent);
     // }
 
-
     // if (this.categorySkill == null || this.varSkill == null || this.skillValue == null) {
     //   this.doubleFilter = Comparison.EQ('sdm_id', this.IdSdm);
     // }
-    if (this.check == true) {
-      console.log("Filter dengan AND");
+    if (this.check === true) {
+      console.log('Filter dengan AND');
       if (this.IdSdm != null) {
         this.doubleFilter = Conjunction.AND(...filterComponentPlusName);
-      }else{
+      } else {
         this.doubleFilter = Conjunction.AND(...filterComponent);
       }
-    }else{
-      console.log("Filter dengan OR");
+    } else {
+      console.log('Filter dengan OR');
       if (this.IdSdm != null) {
         this.doubleFilter = Conjunction.OR(...filterComponentPlusName);
-      }else{
+      } else {
         this.doubleFilter = Conjunction.OR(...filterComponent);
       }
-
-    
-
-//     if (this.IdSdm != null) {
-//       if (this.categorySkill !== '') {
-//         this._notif.success({
-//           message: 'Data filtered by Name and Category'
-//         });
-//       } else if (this.varSkill !== '' && this.categorySkill !== '') {
-//         this._notif.success({
-//           message: 'Data filtered by Name, Category and Skill'
-//         });
-//       } else if (this.skillValue !== '' && this.varSkill !== '' && this.categorySkill !== '') {
-//         this._notif.success({
-//           message: 'Data filtered by Name, Category, Skill and Value'
-//         });
-//       } else {
-//         this._notif.error({
-//           message: 'You have failed to filter'
-//         });
-//       }
-//     } else if (this.IdSdm == null) {
-//       if (this.categorySkill !== '') {
-//         this._notif.success({
-//           message: 'Data filtered by Category'
-//         });
-//       } else if (this.varSkill !== '' && this.categorySkill !== '') {
-//         this._notif.success({
-//           message: 'Data filtered by Category and Skill'
-//         });
-//       } else if (this.skillValue !== '' && this.varSkill !== '' && this.categorySkill !== '') {
-//         this._notif.success({
-//           message: 'Data filtered by Category, Skill and Value'
-//         });
-//       } else {
-//         this._notif.error({
-//           message: 'You have failed to filter'
-//         });
-//       }
-//     }
+    }
 
     this.action.setPaginationFilter(this.doubleFilter);
     this.action.refreshTable();
@@ -252,8 +217,17 @@ export class PJA008Component implements OnInit {
     console.log(tempData);
   }
 
+  public onResetSdmValue(event: any) {
+    this.keyId = event.target.value;
+    if (this.keyId === '') {
+      this.IdSdm = null;
+      console.log(this.IdSdm);
+    }
+  }
+
   public resetSource() {
-    this.IdSdm = '';
+    this.IdSdm = null;
+    console.log(this.IdSdm);
     this.categorySkill = '';
     this.varSkill = '';
     this.skillValue = '';
@@ -277,44 +251,41 @@ export class PJA008Component implements OnInit {
     this.http.post(url, {
       listhiring: bodyHiring
     }, httpOptions)
-    .subscribe((res) => {
-      this._notif.success({
-        message: 'You have successfully Hired'
+      .subscribe((res) => {
+        this._notif.success({
+          message: 'You have successfully Hired'
+        });
       });
-    });
   }
 
-//   public onReset(){
-//     this.IdSdm = null;
-//     this.sdmCtrl.setValue('');
-//   }
+  //   public onReset(){
+  //     this.IdSdm = null;
+  //     this.sdmCtrl.setValue('');
+  //   }
 
-  public checkMethod(event: any, check:any){
+  public checkMethod(event: any, check: any) {
     console.log(event.checked);
     this.check = event.checked;
   }
 
-  public valueDisabled(){
+  public valueDisabled() {
     this.listSearchCriteria.forEach((searchCriteria: SearchCriteria) => {
-        this.categorySkill = searchCriteria.skilltype_id;
-        
-
-        if (this.categorySkill == 0) {
-          searchCriteria.skill_id = "";
-          this.varSkill = "";
-        }else{
-          this.varSkill = searchCriteria.skill_id;
-        }
-        if (this.varSkill == 1) {
-          this.tes = "111";
-        }
-       if (this.varSkill !== "") {
-          this.valueCtrl = new FormControl({value: '', disabled: false});
-        }else{
-           this.valueCtrl = new FormControl({value: '', disabled: true});
-        }
-        console.log(this.varSkill);
-        
+      this.categorySkill = searchCriteria.skilltype_id;
+      if (this.categorySkill === 0) {
+        searchCriteria.skill_id = '';
+        this.varSkill = '';
+      } else {
+        this.varSkill = searchCriteria.skill_id;
+      }
+      if (this.varSkill === 1) {
+        this.tes = '111';
+      }
+      if (this.varSkill !== '') {
+        this.valueCtrl = new FormControl({ value: '', disabled: false });
+      } else {
+        this.valueCtrl = new FormControl({ value: '', disabled: true });
+      }
+      console.log(this.varSkill);
     });
   }
 
