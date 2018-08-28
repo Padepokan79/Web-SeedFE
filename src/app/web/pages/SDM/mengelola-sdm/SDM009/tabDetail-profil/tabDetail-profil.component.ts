@@ -11,7 +11,7 @@ import { Comparison } from '../../../../../../core/enums/comparison-operator.enu
 @Component({
   selector: 'app-tabDetail-profil',
   templateUrl: './tabDetail-profil.component.html',
-  styleUrls: ['./tabDetail-profil.component.css']
+  styleUrls: ['./tabDetail-profil.component.scss']
 })
 export class TabDetailProfilComponent implements OnInit {
 

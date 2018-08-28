@@ -12,7 +12,7 @@ import { Conjunction } from '../../../../core/enums/conjunction-operator.enum';
 @Component({
   selector: 'app-PJA007',
   templateUrl: './PJA007.component.html',
-  styleUrls: ['./PJA007.component.css']
+  styleUrls: ['./PJA007.component.scss']
 })
 export class PJA007Component implements OnInit {
 

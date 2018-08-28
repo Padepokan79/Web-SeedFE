@@ -9,7 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-tabDetail-dataPribadi',
   templateUrl: './tabDetail-dataPribadi.component.html',
-  styleUrls: ['./tabDetail-dataPribadi.component.css']
+  styleUrls: ['./tabDetail-dataPribadi.component.scss']
 })
 export class TabDetailDataPribadiComponent implements OnInit {
 

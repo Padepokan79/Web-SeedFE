@@ -20,7 +20,7 @@ import { Router } from '../../../../../../node_modules/@angular/router';
 @Component({
   selector: 'app-PJA001',
   templateUrl: './PJA001.component.html',
-  styleUrls: ['./PJA001.component.css']
+  styleUrls: ['./PJA001.component.scss']
 })
 export class PJA001Component implements OnInit {
 	selectedValue: String;

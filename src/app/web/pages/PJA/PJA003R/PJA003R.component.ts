@@ -17,7 +17,7 @@ import { PopUpDetailComponent } from './PopUpDetail/PopUpDetail.component';
 @Component({
   selector: 'app-PJA003R',
   templateUrl: './PJA003R.component.html',
-  styleUrls: ['./PJA003R.component.css']
+  styleUrls: ['./PJA003R.component.scss']
 })
 export class PJA003RComponent implements OnInit {
 

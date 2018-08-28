@@ -10,7 +10,7 @@ import { Comparison } from '../../../../../core/enums/comparison-operator.enum';
 @Component({
   selector: 'app-tab-education',
   templateUrl: './tab-education.component.html',
-  styleUrls: ['./tab-education.component.css']
+  styleUrls: ['./tab-education.component.scss']
 })
 
 export class TabEducationComponent implements OnInit {

@@ -10,7 +10,7 @@ import { Router } from '../../../../../../../node_modules/@angular/router';
 @Component({
   selector: 'app-tab-datapribadi',
   templateUrl: './tab-datapribadi.component.html',
-  styleUrls: ['./tab-datapribadi.component.css']
+  styleUrls: ['./tab-datapribadi.component.scss']
 })
 export class TabDatapribadiComponent implements OnInit {
 

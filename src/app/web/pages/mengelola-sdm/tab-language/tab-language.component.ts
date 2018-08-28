@@ -8,7 +8,7 @@ import { FormBuilder, FormArray } from '../../../../../../node_modules/@angular/
 @Component({
   selector: 'app-tab-language',
   templateUrl: './tab-language.component.html',
-  styleUrls: ['./tab-language.component.css']
+  styleUrls: ['./tab-language.component.scss']
 })
 export class TabLanguageComponent implements OnInit {
 

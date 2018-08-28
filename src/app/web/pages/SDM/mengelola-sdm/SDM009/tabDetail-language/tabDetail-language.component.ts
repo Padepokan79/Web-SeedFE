@@ -11,7 +11,7 @@ import { Comparison } from '../../../../../../core/enums/comparison-operator.enu
 @Component({
   selector: 'app-tabDetail-language',
   templateUrl: './tabDetail-language.component.html',
-  styleUrls: ['./tabDetail-language.component.css']
+  styleUrls: ['./tabDetail-language.component.scss']
 })
 export class TabDetailLanguageComponent implements OnInit {
   public lovLanguage: LOVService;

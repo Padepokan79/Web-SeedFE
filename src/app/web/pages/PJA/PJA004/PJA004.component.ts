@@ -9,7 +9,7 @@ import { Router } from '../../../../../../node_modules/@angular/router';
 @Component({
   selector: 'app-PJA004',
   templateUrl: './PJA004.component.html',
-  styleUrls: ['./PJA004.component.css']
+  styleUrls: ['./PJA004.component.scss']
 })
 export class PJA004Component implements OnInit {
 

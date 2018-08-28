@@ -16,7 +16,7 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-ALL006',
   templateUrl: './ALL006.component.html',
-  styleUrls: ['./ALL006.component.css']
+  styleUrls: ['./ALL006.component.scss']
 })
 
 export class ALL006Component implements OnInit {

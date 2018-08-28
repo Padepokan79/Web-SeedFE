@@ -9,7 +9,7 @@ import { InputForm } from '../../../../../core/models/input-form';
 @Component({
   selector: 'app-SDM005',
   templateUrl: './SDM005.component.html',
-  styleUrls: ['./SDM005.component.css']
+  styleUrls: ['./SDM005.component.scss']
 })
 export class SDM005Component implements OnInit {
 public action: ActionService;

@@ -18,7 +18,7 @@ import { MultiInsert } from './MultiInsert';
 @Component({
   selector: 'app-PJA008',
   templateUrl: './PJA008.component.html',
-  styleUrls: ['./PJA008.component.css']
+  styleUrls: ['./PJA008.component.scss']
 })
 
 export class PJA008Component implements OnInit {

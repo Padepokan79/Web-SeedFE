@@ -22,7 +22,7 @@ import { DefaultNotificationService } from './../../../../core/services/default-
 @Component({
   selector: 'app-PJA002',
   templateUrl: './PJA002.component.html',
-  styleUrls: ['./PJA002.component.css']
+  styleUrls: ['./PJA002.component.scss']
 })
 export class PJA002Component implements OnInit {
   @ViewChild('viewAsDateTemplate')

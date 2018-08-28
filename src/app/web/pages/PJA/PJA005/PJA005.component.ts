@@ -10,7 +10,7 @@ import { Router } from '../../../../../../node_modules/@angular/router';
 @Component({
   selector: 'app-PJA005',
   templateUrl: './PJA005.component.html',
-  styleUrls: ['./PJA005.component.css']
+  styleUrls: ['./PJA005.component.scss']
 })
 export class PJA005Component implements OnInit {
   // @ViewChild('viewAsDateTemplate')

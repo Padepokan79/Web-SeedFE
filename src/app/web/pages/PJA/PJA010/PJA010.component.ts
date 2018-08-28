@@ -13,7 +13,7 @@ import { Comparison } from '../../../../core/enums/comparison-operator.enum';
 @Component({
   selector: 'app-PJA010',
   templateUrl: './PJA010.component.html',
-  styleUrls: ['./PJA010.component.css']
+  styleUrls: ['./PJA010.component.scss']
 })
 
 export class PJA010Component implements OnInit {

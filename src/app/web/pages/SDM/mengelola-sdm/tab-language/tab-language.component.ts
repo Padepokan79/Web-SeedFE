@@ -9,7 +9,7 @@ import { Comparison } from 'app/core/enums/comparison-operator.enum';
 @Component({
   selector: 'app-tab-language',
   templateUrl: './tab-language.component.html',
-  styleUrls: ['./tab-language.component.css']
+  styleUrls: ['./tab-language.component.scss']
 })
 export class TabLanguageComponent implements OnInit {
 

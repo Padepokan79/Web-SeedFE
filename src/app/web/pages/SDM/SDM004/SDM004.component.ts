@@ -14,7 +14,7 @@ import { Comparison } from '../../../../core/enums/comparison-operator.enum';
 @Component({
   selector: 'app-SDM004',
   templateUrl: './SDM004.component.html',
-  styleUrls: ['./SDM004.component.css']
+  styleUrls: ['./SDM004.component.scss']
 })
 export class SDM004Component implements OnInit {
   public time: Date = new Date();
