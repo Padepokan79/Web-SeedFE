@@ -73,9 +73,9 @@ export class PJA008Component implements OnInit {
     this.filteredSdm = this.sdmCtrl.valueChanges
       .startWith('')
       .map((value) => this.filterSdm(value));
-    this.route.params.subscribe((param) => {
-      this.IdSdm = param.id;
-    });
+    // this.route.params.subscribe((param) => {
+    //   this.IdSdm = param.id;
+    // });
   }
 
   public filterSdm(val: string) {
@@ -206,10 +206,13 @@ export class PJA008Component implements OnInit {
 
   public resetSource() {
     this.IdSdm = null;
+    this.sdmCtrl.setValue('');
     console.log(this.IdSdm);
-    this.categorySkill = '';
-    this.varSkill = '';
-    this.skillValue = '';
+    this.listSearchCriteria.forEach((searchCriteria: SearchCriteria) => {
+      searchCriteria.skilltype_id = '';
+      searchCriteria.skill_id = '';
+    }
+    
   }
 
   public hiringSubmit() {
