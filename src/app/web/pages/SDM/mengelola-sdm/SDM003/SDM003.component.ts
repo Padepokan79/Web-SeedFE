@@ -39,7 +39,28 @@ export class SDM003Component implements OnInit {
   public filteredSdm: any;
   public sdmCtrl: FormControl;
   public inputForm: InputForm;
-  // private sdmid: number;
+   // Hapus
+   public KeyId: any;
+   public SdmName: any;
+   public SdmEndDate: any;
+
+  public onKeySdmName(event: any) {
+    this.KeyId = event.target.value;
+    if (this.KeyId === '') {
+      this.SdmName = null;
+      console.log('Nama: ', this.SdmName);
+    }
+  }
+
+  public onKeySdmEndDate(event: any) {
+    this.KeyId = event.target.value;
+    if (this.KeyId === '') {
+      this.SdmEndDate = undefined;
+      console.log('Tanggal: ', this.SdmEndDate);
+    }
+  }
+
+  // tslint:disable-next-line:member-ordering
   constructor(private _factory: CoreFactory, private router: Router, private route: ActivatedRoute) {
 
     this.sdmCtrl = new FormControl();
@@ -136,9 +157,9 @@ export class SDM003Component implements OnInit {
         },
         initializeData: true
       });
-
+      this.SdmName = dataSdm.values.sdm_sdm_name;
       this.action.patchFormData({sdm_id: dataSdm.key, sdm_name: dataSdm.values.sdm_sdm_name});
-      console.log(this.action.getFormControlValue('sdm_id'));
+      console.log(this.SdmName);
     }
   }
 
@@ -197,17 +218,16 @@ export class SDM003Component implements OnInit {
 
   public onSearch() {
     const filterCriteria = [];
-
     const SdmLvl = this.action.getFormControlValue('sdmlvl_id');
-    const SdmName = this.action.getFormControlValue('sdm_name');
-    const SdmEnddate = this.action.getFormControlValue('sdm_endcontract');
+    this.SdmEndDate = this.action.getFormControlValue('sdm_endcontract');
+    console.log('Level: ', SdmLvl , 'Nama: ', this.SdmName, 'Tanggal berakhir: ', this.SdmEndDate);
 
     this.action.setPaginationFilter(
       Conjunction.AND(
         // filterCriteria
-        SdmEnddate ? Comparison.EQ('sdm_endcontract', SdmEnddate) : Comparison.NE('sdm_endcontract', 'sdm_endcontract'),
+        this.SdmEndDate ? Comparison.LE('sdm_endcontract', this.SdmEndDate) : Comparison.NE('sdm_endcontract', 'sdm_endcontract'),
         SdmLvl ? Comparison.EQ('sdmlvl_id', SdmLvl) : Comparison.NE('sdmlvl_id', 'sdmlvl_id'),
-        SdmName ? Comparison.EQ('sdm_name', SdmName) : Comparison.NE('sdm_name', 'sdm_name'),
+        this.SdmName ? Comparison.EQ('sdm_name', this.SdmName) : Comparison.NE('sdm_name', 'sdm_name'),
       )
     );
 

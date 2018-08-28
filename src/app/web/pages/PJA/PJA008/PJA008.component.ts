@@ -55,6 +55,7 @@ export class PJA008Component implements OnInit {
   public apiRoot: string = 'http://localhost:7979/project/MultiHiring';
   public check: any;
   public tes: string;
+  public increment: number = 0;
 
   public onKey(event: any) {
     console.log(event);
@@ -73,9 +74,9 @@ export class PJA008Component implements OnInit {
     this.filteredSdm = this.sdmCtrl.valueChanges
       .startWith('')
       .map((value) => this.filterSdm(value));
-    this.route.params.subscribe((param) => {
-      this.IdSdm = param.id;
-    });
+    // this.route.params.subscribe((param) => {
+    //   this.IdSdm = param.id;
+    // });
   }
 
   public filterSdm(val: string) {
@@ -92,10 +93,16 @@ export class PJA008Component implements OnInit {
   public addSearchCriteria() {
     const searchCriteria = new SearchCriteria(this._factory);
     this.listSearchCriteria.push(searchCriteria);
+    this.increment += 1;
+    console.log(this.increment);
+
   }
 
   public removeSearchCriteria(inc) {
     this.listSearchCriteria.splice(inc, 1);
+    this.increment -= 1;
+    console.log(this.increment);
+    console.log(inc);
   }
 
   public ngOnInit() {
@@ -159,7 +166,7 @@ export class PJA008Component implements OnInit {
         Conjunction.AND(
           this.categorySkill ? Comparison.EQ('skilltype_id', this.categorySkill) : Comparison.NE('skilltype_id', this.categorySkill),
           this.varSkill ? Comparison.EQ('skill_id', this.varSkill) : Comparison.NE('skill_id', this.varSkill),
-          this.skillValue ? Comparison.GE('sdmskill_value', this.skillValue) : Comparison.NE('sdmskill_value', this.skillValue)
+          this.skillValue ? Comparison.GE('sdmskill_value', this.skillValue) : Comparison.GE('sdmskill_value', '0')
         )
       );
       filterComponentPlusName.push(
@@ -167,12 +174,12 @@ export class PJA008Component implements OnInit {
           this.IdSdm ? Comparison.EQ('sdm_id', this.IdSdm) : Comparison.NE('sdm_id', this.IdSdm),
           this.categorySkill ? Comparison.EQ('skilltype_id', this.categorySkill) : Comparison.NE('skilltype_id', this.categorySkill),
           this.varSkill ? Comparison.EQ('skill_id', this.varSkill) : Comparison.NE('skill_id', this.varSkill),
-          this.skillValue ? Comparison.GE('sdmskill_value', this.skillValue) : Comparison.NE('sdmskill_value', this.skillValue)
+          this.skillValue ? Comparison.GE('sdmskill_value', this.skillValue) : Comparison.GE('sdmskill_value', '0')
         )
       );
     });
     console.log(this.listSearchCriteria);
-   
+
     if (this.check === true) {
       console.log('Filter dengan AND');
       if (this.IdSdm != null) {
@@ -191,13 +198,20 @@ export class PJA008Component implements OnInit {
 
     this.action.setPaginationFilter(this.doubleFilter);
     this.action.refreshTable();
+
   }
 
   public distRedundantCheckedSdm() {
     const tempData = [];
     this.action.table().rows.forEach((item) => {
-      if (item.checked) {
-        tempData.push(item);
+      if (item.Checked === true) {
+        tempData.push({
+          sdm_id: item.sdm_id,
+          client_id: 1,
+          hirestat_id: 1,
+        });
+        item.Checked == false;
+        console.log(tempData);
       }
     });
 
@@ -206,8 +220,14 @@ export class PJA008Component implements OnInit {
 
   public resetSource() {
     this.IdSdm = null;
+    this.listSearchCriteria.splice(null, this.increment);
+    this.sdmCtrl.setValue('');
     console.log(this.IdSdm);
-    this.listSearchCriteria.push(new SearchCriteria(this._factory));
+    this.listSearchCriteria.forEach((searchCriteria: SearchCriteria) => {
+      searchCriteria.skilltype_id = '';
+      searchCriteria.skill_id = '';
+    });
+    this.increment = 0;
   }
 
   public hiringSubmit() {
@@ -238,27 +258,6 @@ export class PJA008Component implements OnInit {
   public checkMethod(event: any, check: any) {
     console.log(event.checked);
     this.check = event.checked;
-  }
-
-  public valueDisabled() {
-    this.listSearchCriteria.forEach((searchCriteria: SearchCriteria) => {
-      this.categorySkill = searchCriteria.skilltype_id;
-      if (this.categorySkill === 0) {
-        searchCriteria.skill_id = '';
-        this.varSkill = '';
-      } else {
-        this.varSkill = searchCriteria.skill_id;
-      }
-      if (this.varSkill === 1) {
-        this.tes = '111';
-      }
-      if (this.varSkill !== '') {
-        this.valueCtrl = new FormControl({ value: '', disabled: false });
-      } else {
-        this.valueCtrl = new FormControl({ value: '', disabled: true });
-      }
-      console.log(this.varSkill);
-    });
   }
 
 }

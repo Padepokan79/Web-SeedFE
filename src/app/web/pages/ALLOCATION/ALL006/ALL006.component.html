@@ -35,12 +35,12 @@ CREATED 	: Friday, ‎August 17th 2018 08:12:51 AM
           </li>
           <br><br>
           <li class="col-md-12 position-li">
-             <mat-checkbox class="chk" [checked]="check" (change)="checkMethod($event, check)">Filter dengan AND</mat-checkbox>
+             <mat-checkbox class="chk" [checked]="check">Filter dengan AND</mat-checkbox>
           </li>
           <li *ngFor="let searchCriteria of listSearchCriteria; let inc = index" class="col-md-12 position-li">
             <div class="col-md-2 go-tight">
               <mat-form-field class="sdw-full-size">
-                <mat-select placeholder="Choose Category" (change)="valueDisabled()" [(ngModel)]="searchCriteria.skilltype_id" name="skilltype_id{{inc}}" required>
+                <mat-select placeholder="Choose Category" [(ngModel)]="searchCriteria.skilltype_id" name="skilltype_id{{inc}}" required>
                   <mat-option *ngFor="let lov of searchCriteria.lovSkillType.data" [value]="lov.key" (onSelectionChange)="searchCriteria.selectedSkill($event, lov)">
                     {{lov.value}}
                   </mat-option>
@@ -49,7 +49,7 @@ CREATED 	: Friday, ‎August 17th 2018 08:12:51 AM
             </div>
             <div class="col-md-2 go-tight">
               <mat-form-field class="sdw-full-size">
-                <mat-select placeholder="Choose Skill" (change)="valueDisabled()" [(ngModel)]="searchCriteria.skill_id" name="skill_id{{inc}}" required>
+                <mat-select placeholder="Choose Skill" [(ngModel)]="searchCriteria.skill_id" name="skill_id{{inc}}" required>
                   <mat-option *ngFor="let lov of searchCriteria.lovSkill?.data" [value]="lov.key">
                     {{lov.value}}
                   </mat-option>

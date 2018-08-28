@@ -51,6 +51,7 @@ export class ALL006Component implements OnInit {
   public methodIds: any;
   public check: any;
   public tes: string;
+  public increment: number = 0;
 
   public onKey(event: any) {
     console.log(event);
@@ -62,7 +63,7 @@ export class ALL006Component implements OnInit {
   }
 
   // tslint:disable-next-line:member-ordering
-  constructor(private _factory: CoreFactory, public _notif: DefaultNotificationService, private route: ActivatedRoute, private http: HttpClient) {
+  constructor(private _factory: CoreFactory, public _notif: DefaultNotificationService, private route: ActivatedRoute) {
     this.listSearchCriteria.push(new SearchCriteria(_factory));
     this.sdmCtrl = new FormControl();
     this.valueCtrl = new FormControl({ value: '', disabled: true });
@@ -120,8 +121,7 @@ export class ALL006Component implements OnInit {
         { prop: 'sdm_name', name: 'Name', width: 150, sortable: false },
         { prop: 'skilltype_name', name: 'Category', width: 20, sortable: false },
         { prop: 'skill_name', name: 'Skills', width: 20, sortable: false },
-        { prop: 'sdmskill_value', name: 'Value', width: 50, sortable: false },
-        { prop: 'sdm_id', name: 'Select', width: 10, cellTemplate: this.tableActionTemplate, sortable: false }
+        { prop: 'sdmskill_value', name: 'Value', width: 50, sortable: false }
       ]
     });
 
@@ -199,9 +199,15 @@ export class ALL006Component implements OnInit {
     console.log(tempData);
   }
 
-  public resetSource(inc) {
+  public resetSource() {
     this.IdSdm = null;
+    this.listSearchCriteria.splice(null, this.increment);
+    this.sdmCtrl.setValue('');
     console.log(this.IdSdm);
-    this.listSearchCriteria.splice(inc, inc - 1);
+    this.listSearchCriteria.forEach((searchCriteria: SearchCriteria) => {
+      searchCriteria.skilltype_id = '';
+      searchCriteria.skill_id = '';
+    });
+    this.increment = 0;
   }
 }
