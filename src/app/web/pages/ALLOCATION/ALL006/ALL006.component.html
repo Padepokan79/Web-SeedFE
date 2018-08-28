@@ -12,6 +12,7 @@ CREATED 	: Friday, ‎August 17th 2018 08:12:51 AM
       <a [routerLink]="['/pages/dashboard']">dashboard</a><b> > </b>
       <a [routerLink]="['/pages/Allocation']"><span>SDM Allocation</span></a><b> > </b>
       <a><span>Multifiltering SDM</span></a>
+      <span class="nx-time" style="position: absolute; right: 1%">{{ time | date:'medium'}}</span>
     </div>
   </div>
 </div>
@@ -21,9 +22,9 @@ CREATED 	: Friday, ‎August 17th 2018 08:12:51 AM
       <div id="filtering" class="row row-center">  
         <ul class="list-filter">
           <li class="col-md-12 position-li" style="margin-bottom: 1em">
-            <div class="col-md-6 go tight">
+            <div class="col-md-6 go tight"> 
               <mat-form-field class="sdw-full-size">
-                <input matInput [formControl]="sdmCtrl" placeholder="Input SDM Name" name="sdm_id" [matAutocomplete]="auto" class="blacky">
+                <input matInput [formControl]="sdmCtrl" (keyup)="onKey($event)" placeholder="Input SDM Name" name="sdm_id" [matAutocomplete]="auto" class="blacky">
                 <mat-autocomplete #auto="matAutocomplete">
                   <mat-option *ngFor="let dataSdm of filteredSdm | async" [value]="dataSdm.values.sdm_sdm_name" (onSelectionChange)="setSdmValue(dataSdm)">
                     {{ dataSdm.values.sdm_sdm_name }}
@@ -33,10 +34,13 @@ CREATED 	: Friday, ‎August 17th 2018 08:12:51 AM
             </div>
           </li>
           <br><br>
+          <li class="col-md-12 position-li">
+             <mat-checkbox class="chk" [checked]="check" (change)="checkMethod($event, check)">Filter dengan AND</mat-checkbox>
+          </li>
           <li *ngFor="let searchCriteria of listSearchCriteria; let inc = index" class="col-md-12 position-li">
             <div class="col-md-2 go-tight">
               <mat-form-field class="sdw-full-size">
-                <mat-select placeholder="Choose Category" [(ngModel)]="searchCriteria.skilltype_id" name="skilltype_id{{inc}}" required>
+                <mat-select placeholder="Choose Category" (change)="valueDisabled()" [(ngModel)]="searchCriteria.skilltype_id" name="skilltype_id{{inc}}" required>
                   <mat-option *ngFor="let lov of searchCriteria.lovSkillType.data" [value]="lov.key" (onSelectionChange)="searchCriteria.selectedSkill($event, lov)">
                     {{lov.value}}
                   </mat-option>
@@ -45,7 +49,7 @@ CREATED 	: Friday, ‎August 17th 2018 08:12:51 AM
             </div>
             <div class="col-md-2 go-tight">
               <mat-form-field class="sdw-full-size">
-                <mat-select placeholder="Choose Skill" [(ngModel)]="searchCriteria.skill_id" name="skill_id{{inc}}" required>
+                <mat-select placeholder="Choose Skill" (change)="valueDisabled()" [(ngModel)]="searchCriteria.skill_id" name="skill_id{{inc}}" required>
                   <mat-option *ngFor="let lov of searchCriteria.lovSkill?.data" [value]="lov.key">
                     {{lov.value}}
                   </mat-option>
@@ -54,7 +58,7 @@ CREATED 	: Friday, ‎August 17th 2018 08:12:51 AM
             </div>
             <div class="col-md-2 go-tight">
               <mat-form-field class="sdw-full-size">
-                <input matInput type="number" min="1" max="10" placeholder="Value" [(ngModel)]="searchCriteria.value" name="sdmskill_value{{inc}}" class="blacky">
+                <input matInput type="text" min="1" max="10" placeholder="Value" [(ngModel)]="searchCriteria.value" name="sdmskill_value{{inc}}" class="blacky">
               </mat-form-field>
             </div>
             <div class="col-sm-2 text-left">
@@ -67,7 +71,7 @@ CREATED 	: Friday, ‎August 17th 2018 08:12:51 AM
       <br><br>
       <div class="action-filter">
         <button class="btn btn-filter btn-mm" (click)="selectToAssign()">Filter <i class="glyphicon glyphicon-search"></i></button>
-        <button class="btn btn-clear btn-mm" type="reset" (click)="resetSource()">Clear <i class="glyphicon glyphicon-times"></i></button>
+        <button class="btn btn-clear btn-mm" (click)="resetSource()">Clear <i class="glyphicon glyphicon-times"></i></button>
       </div>
       <br><br>
     </form>
