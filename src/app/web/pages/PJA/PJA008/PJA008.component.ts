@@ -178,6 +178,7 @@ export class PJA008Component implements OnInit {
     //   this.doubleFilter = Conjunction.OR(...filterComponent);
     // }
 
+
     // if (this.categorySkill == null || this.varSkill == null || this.skillValue == null) {
     //   this.doubleFilter = Comparison.EQ('sdm_id', this.IdSdm);
     // }
@@ -195,16 +196,48 @@ export class PJA008Component implements OnInit {
       }else{
         this.doubleFilter = Conjunction.OR(...filterComponent);
       }
-    }
-    
+
     
 
-    this._notif.success({
-      message: 'Data has been Filtered'
-    });
+//     if (this.IdSdm != null) {
+//       if (this.categorySkill !== '') {
+//         this._notif.success({
+//           message: 'Data filtered by Name and Category'
+//         });
+//       } else if (this.varSkill !== '' && this.categorySkill !== '') {
+//         this._notif.success({
+//           message: 'Data filtered by Name, Category and Skill'
+//         });
+//       } else if (this.skillValue !== '' && this.varSkill !== '' && this.categorySkill !== '') {
+//         this._notif.success({
+//           message: 'Data filtered by Name, Category, Skill and Value'
+//         });
+//       } else {
+//         this._notif.error({
+//           message: 'You have failed to filter'
+//         });
+//       }
+//     } else if (this.IdSdm == null) {
+//       if (this.categorySkill !== '') {
+//         this._notif.success({
+//           message: 'Data filtered by Category'
+//         });
+//       } else if (this.varSkill !== '' && this.categorySkill !== '') {
+//         this._notif.success({
+//           message: 'Data filtered by Category and Skill'
+//         });
+//       } else if (this.skillValue !== '' && this.varSkill !== '' && this.categorySkill !== '') {
+//         this._notif.success({
+//           message: 'Data filtered by Category, Skill and Value'
+//         });
+//       } else {
+//         this._notif.error({
+//           message: 'You have failed to filter'
+//         });
+//       }
+//     }
 
     this.action.setPaginationFilter(this.doubleFilter);
-    // this.action.setPaginationFilter(filterNameComponent);
     this.action.refreshTable();
   }
 
@@ -217,6 +250,13 @@ export class PJA008Component implements OnInit {
     });
 
     console.log(tempData);
+  }
+
+  public resetSource() {
+    this.IdSdm = '';
+    this.categorySkill = '';
+    this.varSkill = '';
+    this.skillValue = '';
   }
 
   public hiringSubmit() {
@@ -244,10 +284,10 @@ export class PJA008Component implements OnInit {
     });
   }
 
-  public onReset(){
-    this.IdSdm = null;
-    this.sdmCtrl.setValue('');
-  }
+//   public onReset(){
+//     this.IdSdm = null;
+//     this.sdmCtrl.setValue('');
+//   }
 
   public checkMethod(event: any, check:any){
     console.log(event.checked);

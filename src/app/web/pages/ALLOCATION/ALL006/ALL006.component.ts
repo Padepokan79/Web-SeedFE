@@ -52,8 +52,8 @@ export class ALL006Component implements OnInit {
     this.listSearchCriteria.push(new SearchCriteria(_factory));
     this.sdmCtrl = new FormControl();
     this.filteredSdm = this.sdmCtrl.valueChanges
-    .startWith('')
-    .map((value) => this.filterSdm(value) );
+      .startWith('')
+      .map((value) => this.filterSdm(value));
     this.route.params.subscribe((param) => {
       this.IdSdm = param.id;
     });
@@ -126,31 +126,72 @@ export class ALL006Component implements OnInit {
       filterComponent.push(
         Conjunction.AND(
           Comparison.EQ('skilltype_id', this.categorySkill),
-          Comparison.EQ('skill_id', this.varSkill),
+          this.varSkill !== '' ? Comparison.EQ('skill_id', this.varSkill) : Comparison.NE('skill_id', this.varSkill),
           Comparison.GE('sdmskill_value', this.skillValue)
         )
       );
     });
 
     if (this.IdSdm == null) {
+      this.IdSdm = '';
       this.doubleFilter = Conjunction.OR(...filterComponent);
     }
 
-    if (this.categorySkill == null && this.varSkill == null && this.skillValue == null) {
+    if (this.categorySkill === null && (this.varSkill === null || this.skillValue === null)) {
       this.doubleFilter = Comparison.EQ('sdm_id', this.IdSdm);
     }
 
-    this.doubleFilter = Conjunction.AND(
+    this.doubleFilter = Conjunction.OR(
       ...filterComponent,
       Comparison.EQ('sdm_id', this.IdSdm)
     );
 
-    this._notif.success({
-      message: 'Data has been Filtered'
-    });
+    if (this.IdSdm != null) {
+      if (this.categorySkill !== '') {
+        this._notif.success({
+          message: 'Data filtered by Name and Category'
+        });
+      } else if (this.varSkill !== '' && this.categorySkill !== '') {
+        this._notif.success({
+          message: 'Data filtered by Name, Category and Skill'
+        });
+      } else if (this.skillValue !== '' && this.varSkill !== '' && this.categorySkill !== '') {
+        this._notif.success({
+          message: 'Data filtered by Name, Category, Skill and Value'
+        });
+      } else {
+        this._notif.error({
+          message: 'You have failed to filter'
+        });
+      }
+    } else if (this.IdSdm == null) {
+      if (this.categorySkill !== '') {
+        this._notif.success({
+          message: 'Data filtered by Category'
+        });
+      } else if (this.varSkill !== '' && this.categorySkill !== '') {
+        this._notif.success({
+          message: 'Data filtered by Category and Skill'
+        });
+      } else if (this.skillValue !== '' && this.varSkill !== '' && this.categorySkill !== '') {
+        this._notif.success({
+          message: 'Data filtered by Category, Skill and Value'
+        });
+      } else {
+        this._notif.error({
+          message: 'You have failed to filter'
+        });
+      }
+    }
 
     this.action.setPaginationFilter(this.doubleFilter);
-    // this.action.setPaginationFilter(filterNameComponent);
     this.action.refreshTable();
+  }
+
+  public resetSource() {
+    this.IdSdm = '';
+    this.categorySkill = '';
+    this.varSkill = '';
+    this.skillValue = '';
   }
 }

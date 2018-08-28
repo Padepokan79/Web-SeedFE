@@ -27,7 +27,7 @@ CREATED 	: Thursday, ‎August 16th 2018 23:00:00 PM
                 <mat-autocomplete #auto="matAutocomplete">
                   <mat-option *ngFor="let dataSdm of filteredSdm | async" [value]="dataSdm.values.sdm_sdm_name" (onSelectionChange)="setSdmValue(dataSdm)">
                     {{ dataSdm.values.sdm_sdm_name }}
-                  </mat-option>
+                  </mat-option>=""
                 </mat-autocomplete>
               </mat-form-field>
             </div>
@@ -70,7 +70,8 @@ CREATED 	: Thursday, ‎August 16th 2018 23:00:00 PM
       <br><br>
       <div class="action-filter">
         <button class="btn btn-filter btn-mm" (click)="selectToAssign()">Filter <i class="glyphicon glyphicon-search"></i></button>
-        <button class="btn btn-clear btn-mm" (click)="onReset()">Clear <i class="glyphicon glyphicon-times"></i></button>
+        <button class="btn btn-clear btn-mm" type="reset" (click)="resetSource()">Clear <i class="glyphicon glyphicon-times"></i></button>
+
       </div>
       <br><br>
     </form>

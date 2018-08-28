@@ -1,17 +1,18 @@
 import { LOVService } from '../../../../core/services/uninjectable/lov.service';
 import { CoreFactory } from '../../../../core/factory/core.factory';
 import { COMPARISON_OPERATOR } from '../../../../core/constant/constant';
+import { DefaultNotificationService } from '../../../../core/services/default-notification.service';
 
 export class SearchCriteria {
     // tslint:disable-next-line:variable-name
     public skilltype_id: number;
     // tslint:disable-next-line:variable-name
     public skill_id: number;
-    public value: number;
     public lovSkillType: LOVService = null;
     public lovSkill: LOVService = null;
     public lovSdmSkill: LOVService = null;
     public sdmskillValue: number;
+    public sdmId: string;
 
     constructor(private _factory: CoreFactory) {
         this.lovSkillType = this._factory.lov({
@@ -31,7 +32,7 @@ export class SearchCriteria {
                 value: skillSelect.key
               }
             },
-            initializeData: true
+            initializeData: true,
           });
         }
       }

@@ -37,7 +37,7 @@
         <td >:</td>
         <td >
             <mat-form-field class="sdw-full-size">
-                <input matInput placeholder="" formControlName="sdm_nik" name="sdm_nik" pattern="^0$|^((?!(0))[0-9]{0,9})$" >
+                <input matInput placeholder="" formControlName="sdm_nik" name="sdm_nik" pattern="^([0-9]{0,})$" >
                 <mat-hint *ngIf="action.formErrors.sdm_nik" [ngStyle]="{'color': 'red'}">
                     {{action.formErrors.sdm_nik}}
                 </mat-hint>
@@ -50,7 +50,7 @@
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size">
-                <input matInput placeholder="" formControlName="sdm_ktp" name="sdm_ktp" pattern="^0$|^((?!(0))[0-9]{0,9})$" >
+                <input matInput placeholder="" formControlName="sdm_ktp" name="sdm_ktp" pattern="^([0-9]{0,})$" >
                 <mat-hint *ngIf="action.formErrors.sdm_ktp" [ngStyle]="{'color': 'red'}">
                 {{action.formErrors.sdm_ktp}}
                 </mat-hint>
