@@ -3,7 +3,7 @@ AUTHOR  	: Khairil Anwar
 CREATED 	: Friday, ‎August 17th 2018 08:12:51 AM
 -->
 <mat-toolbar>
-  SDM Assign
+  Multifiltering SDM
 </mat-toolbar>
 <div class="io-form-header">
   <div class="nx-brc-header blacky"> 
@@ -34,9 +34,9 @@ CREATED 	: Friday, ‎August 17th 2018 08:12:51 AM
             </div>
           </li>
           <br><br>
-          <li class="col-md-12 position-li">
-             <mat-checkbox class="chk" [checked]="check">Filter dengan AND</mat-checkbox>
-          </li>
+          <!-- <li class="col-md-12 position-li">
+             <mat-checkbox class="chk" [checked]="check" (change)="checkMethod($event, check)">Filter dengan AND</mat-checkbox>
+          </li> -->
           <li *ngFor="let searchCriteria of listSearchCriteria; let inc = index" class="col-md-12 position-li">
             <div class="col-md-2 go-tight">
               <mat-form-field class="sdw-full-size">

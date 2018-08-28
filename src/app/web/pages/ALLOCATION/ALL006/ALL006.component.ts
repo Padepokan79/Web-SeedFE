@@ -89,10 +89,16 @@ export class ALL006Component implements OnInit {
   public addSearchCriteria() {
     const searchCriteria = new SearchCriteria(this._factory);
     this.listSearchCriteria.push(searchCriteria);
+    this.increment += 1;
+    console.log(this.increment);
+
   }
 
   public removeSearchCriteria(inc) {
     this.listSearchCriteria.splice(inc, 1);
+    this.increment -= 1;
+    console.log(this.increment);
+    console.log(inc);
   }
 
   public ngOnInit() {
@@ -186,17 +192,6 @@ export class ALL006Component implements OnInit {
 
     this.action.setPaginationFilter(this.doubleFilter);
     this.action.refreshTable();
-  }
-
-  public distRedundantCheckedSdm() {
-    const tempData = [];
-    this.action.table().rows.forEach((item) => {
-      if (item.checked) {
-        tempData.push(item);
-      }
-    });
-
-    console.log(tempData);
   }
 
   public resetSource() {
