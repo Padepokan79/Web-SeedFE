@@ -2,6 +2,7 @@
 AUTHOR  	: Malik Chaudhary
 CREATED 	: Wednesday, ‎August ‎1, ‎2018, ‏‎9:48:58 AM
 UPDATE		: APN, Thursday, August 16, ‎2018, ‏‎9:37:29 AM
+UPDATE   : MLK, Tuesday, August 21, ‎2018, ‏‎4:35:00 PM
 -->
 
 <io-form *ngIf="action?.form()">
@@ -30,7 +31,7 @@ UPDATE		: APN, Thursday, August 16, ‎2018, ‏‎9:37:29 AM
 						</td>
 						<td> 
 					        <mat-form-field class="nx-class-data" id="nx-td-l">
-					        	<input matInput formControlName="sdm_name" name="sdm_name" [formControl]="sdmCtrl" [matAutocomplete]="auto" required>
+					        	<input matInput formControlName="sdm_name" name="sdm_name" [formControl]="sdmCtrl" [matAutocomplete]="auto" (change)="ambilData()" required>
 					        	<mat-autocomplete #auto="matAutocomplete">
 					        		<mat-option *ngFor="let dataSdm of filteredSdm | async" [value]="dataSdm.values.sdm_sdm_name" 
 						            (onSelectionChange)="setSdmValue(action?.formControls(), dataSdm);">
@@ -67,7 +68,7 @@ UPDATE		: APN, Thursday, August 16, ‎2018, ‏‎9:37:29 AM
 						</td>
 						<td>
 							<mat-form-field class="nx-class-data" id="nx-td-l">
-							    <input matInput formControlName="sdm_nik" name="sdm_nik" maxlength="10">
+							    <input matInput formControlName="sdm_nik" name="sdm_nik" value="{{ sdm_nik }}" readonly>
 							</mat-form-field>
 						</td>
 						<td id="nx-td-r">

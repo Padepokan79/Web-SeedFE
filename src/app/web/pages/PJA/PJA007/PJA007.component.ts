@@ -116,6 +116,10 @@ export class PJA007Component implements OnInit {
     this.router.navigate(['pages/pja/PJA009', { id }]);
   }
 
+  public navigatePushId(idClient) {
+    this.router.navigate(['pages/pja/PJA008', { idClient }]);
+  }
+
   public onSearch() {
     const filterCriteria = [];
     const ClientId = this.action.getFormControlValue('client_id');
