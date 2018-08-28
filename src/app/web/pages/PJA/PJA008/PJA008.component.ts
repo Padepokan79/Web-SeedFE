@@ -86,7 +86,6 @@ export class PJA008Component implements OnInit {
     if (dataSdm) {
       this.IdSdm = dataSdm.key;
       console.log(this.IdSdm);
-      // this.action.patchFormData({ sdm_id: dataSdm.key, sdm_name: dataSdm.values.sdm_sdm_name });
     }
   }
 
@@ -132,14 +131,8 @@ export class PJA008Component implements OnInit {
 
     this.action = this._factory.actions({
       api: 'allocation/MengelolaSdmSkill',
-      // api: 'allocation/MultifilteringSdm',
       dataTable: this.dataTable
     });
-
-    // this.lovSkill = this._factory.lov({
-    //   api: 'lov/Skill',
-    //   initializeData: true
-    // });
 
     setInterval(() => {
       this.time = new Date();
@@ -179,13 +172,7 @@ export class PJA008Component implements OnInit {
       );
     });
     console.log(this.listSearchCriteria);
-    // if (this.IdSdm == null) {
-    //   this.doubleFilter = Conjunction.OR(...filterComponent);
-    // }
-
-    // if (this.categorySkill == null || this.varSkill == null || this.skillValue == null) {
-    //   this.doubleFilter = Comparison.EQ('sdm_id', this.IdSdm);
-    // }
+   
     if (this.check === true) {
       console.log('Filter dengan AND');
       if (this.IdSdm != null) {
@@ -215,14 +202,6 @@ export class PJA008Component implements OnInit {
     });
 
     console.log(tempData);
-  }
-
-  public onResetSdmValue(event: any) {
-    this.keyId = event.target.value;
-    if (this.keyId === '') {
-      this.IdSdm = null;
-      console.log(this.IdSdm);
-    }
   }
 
   public resetSource() {
@@ -257,11 +236,6 @@ export class PJA008Component implements OnInit {
         });
       });
   }
-
-  //   public onReset(){
-  //     this.IdSdm = null;
-  //     this.sdmCtrl.setValue('');
-  //   }
 
   public checkMethod(event: any, check: any) {
     console.log(event.checked);
