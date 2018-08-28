@@ -4,6 +4,7 @@ import { InputForm } from '../../../../../core/models/input-form';
 import { DataTable } from '../../../../../core/models/data-table';
 import { CoreFactory } from '../../../../../core/factory/core.factory';
 import { COMPARISON_OPERATOR } from '../../../../../core/constant/constant';
+import { Comparison } from 'app/core/enums/comparison-operator.enum';
 
 @Component({
   selector: 'app-tab-employment',
@@ -43,11 +44,13 @@ export class TabEmploymentComponent implements OnInit {
     this.inputForm = this._factory.inputForm({
       formControls: {
         employment_id: 0,
-        sdm_id: this.sdmid,
         employment_corpname: '',
         employment_startdate: '',
         employment_enddate: '',
         employment_rolejob: '',
+      },
+      immutableFormControls: {
+        sdm_id: this.sdmid,
       },
       validationMessages: {
         employment_corpname: {
@@ -60,15 +63,11 @@ export class TabEmploymentComponent implements OnInit {
     this.dataTable = this._factory.dataTable({
       serverSide : true,
       pagingParams : {
-        filter: {
-          field: 'sdm_id',
-          operator: COMPARISON_OPERATOR.EQ,
-          value: this.id
-        },
+        filter: Comparison.EQ('sdm_id', this.id.toString()),
         limit : 5
       },
       tableColumns : [
-        { prop: 'employment_id', name: 'No', width: 10, sortable: false },
+        { prop: 'norut', name: 'No', width: 10, sortable: false },
         { prop: 'employment_corpname', name: 'Nama Perusahaan', width: 30, sortable: true },
         { prop: 'employment_startdate', name: 'Dari', width: 30, sortable: true },
         { prop: 'employment_enddate', name: 'Sampai', width: 30, sortable: true },
@@ -83,10 +82,6 @@ export class TabEmploymentComponent implements OnInit {
       inputForm: this.inputForm,
       dataTable: this.dataTable
     });
-  }
-
-  public resetForm() {
-    this.action.onReset();
   }
 
 }

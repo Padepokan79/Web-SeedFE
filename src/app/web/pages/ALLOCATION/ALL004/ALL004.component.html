@@ -15,22 +15,24 @@ Modified   : 10-08-2018 by Vikri Ramdhani -->
             <ul class="list-filter">
             <div class="col-md-2 go-tight" style="width: 25%;">
                   <mat-form-field class="sdw-full-size">
-                    <mat-select placeholder="Choose Sdm" [(value)]="selected" [(ngModel)]="sdmId" name="sdm_id" required>
-                        <mat-option *ngFor="let lov of lovSDM.data" [value]="lov.key">
-                          {{lov.value}}
-                      </mat-option>
-                    </mat-select>
+                      <input matInput [formControl]="sdmCtrl" placeholder="Input SDM Name" name="sdm_id" [matAutocomplete]="auto" class="blacky">              
+                      <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngFor="let dataSdm of filteredSdm | async" [value]="dataSdm.values.sdm_sdm_name" 
+                        (onSelectionChange)="setSdmValue(action?.formControls(), dataSdm);">
+                          {{ dataSdm.values.sdm_sdm_name }}
+                        </mat-option> 
+                      </mat-autocomplete>
                   </mat-form-field>
                </div>
                <div class="col-md-2 go-tight" style="width: 25%;">
                   <mat-form-field class="sdw-full-size">
-                    <input matInput placeholder="Nik" value="{{ selected }}" disabled>
+                    <input matInput placeholder="Nik" value="{{ nik }}" disabled>
                   </mat-form-field>
                 </div>
               <li style="list-style: none; margin-left: -1.5%;" *ngFor="let searchCriteria of listSearchCriteria; let inc = index" class="col-md-12">
                 <div class="col-md-2 go-tight" style="width: 25%;">
                   <mat-form-field class="sdw-full-size">
-                    <mat-select placeholder="Choose Category" [(ngModel)]="searchCriteria.skilltype_id" name="skilltype_id" required>
+                    <mat-select placeholder="Choose Category" [(ngModel)]="searchCriteria.skilltype_id" name="skilltype_id{{inc}}" required>
                       <mat-option *ngFor="let lov of searchCriteria.lovSkillType.data" [value]="lov.key" (onSelectionChange)="searchCriteria.selectedSkill($event, lov)">
                         {{lov.value}}
                       </mat-option>
@@ -39,7 +41,7 @@ Modified   : 10-08-2018 by Vikri Ramdhani -->
                 </div>
                 <div class="col-md-2 go-tight" style="width: 25%;">
                   <mat-form-field class="sdw-full-size">
-                    <mat-select placeholder="Choose Skill" [(ngModel)]="searchCriteria.skill_id" name="skill_id" required>
+                    <mat-select placeholder="Choose Skill" [(ngModel)]="searchCriteria.skill_id" name="skill_id{{inc}}" required>
                       <mat-option *ngFor="let lov of searchCriteria.lovSkill?.data" [value]="lov.key">
                         {{lov.value}}
                       </mat-option>
@@ -48,7 +50,7 @@ Modified   : 10-08-2018 by Vikri Ramdhani -->
                 </div>
                 <div class="col-md-2 go-tight" style="width: 25%;">
                   <mat-form-field class="sdw-full-size">
-                    <input matInput type="number" min="1" max="10"  placeholder="Value" [(ngModel)]="skillsdmValue" name="sdmskill_value" class="blacky" required>
+                    <input matInput type="number" min="1" max="10"  placeholder="Value" [(ngModel)]="searchCriteria.sdmskillValue" name="sdmskill_value{{inc}}" class="blacky" required>
                   </mat-form-field>
                 </div>
                 <div class="col-sm-1">

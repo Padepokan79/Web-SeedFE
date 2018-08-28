@@ -102,12 +102,12 @@
         </tr>
     </table>
     </div>
-    <div class="col-md-3" *ngIf=" form == 2 ">
+    <div class="col-md-6 pos" style="float:right" *ngIf=" form == 2 ">
         <io-form-action [action]="action"></io-form-action>
     </div>
     <div class="col-md-6 pos" style="float:right">
-        <button mat-raised-button style="margin: 10px 0px" (click)="action.onSave()" *ngIf=" form == 1 ">Submit</button>
-        <button mat-raised-button style="margin: 10px 0px" (click)="action.onEdit()" *ngIf=" form == 2 ">Update</button>
+        <button mat-raised-button style="margin: 10px 0px" (click)="action.onSave()" *ngIf=" form == 1 ">{{action.buttonTitle}}</button>
+        <!-- <button mat-raised-button style="margin: 10px 0px" (click)="action.onSave()" *ngIf=" form == 2 ">Update</button> -->
     </div>
 
 

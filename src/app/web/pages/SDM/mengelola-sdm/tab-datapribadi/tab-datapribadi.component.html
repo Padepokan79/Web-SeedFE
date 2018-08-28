@@ -37,7 +37,7 @@
         <td >:</td>
         <td >
             <mat-form-field class="sdw-full-size">
-                <input matInput placeholder="" formControlName="sdm_nik" name="sdm_nik" pattern="^0$|^((?!(0))[0-9]{0,9})$" >
+                <input matInput placeholder="" formControlName="sdm_nik" name="sdm_nik" pattern="^([0-9]{0,})$" >
                 <mat-hint *ngIf="action.formErrors.sdm_nik" [ngStyle]="{'color': 'red'}">
                     {{action.formErrors.sdm_nik}}
                 </mat-hint>
@@ -50,7 +50,7 @@
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size">
-                <input matInput placeholder="" formControlName="sdm_ktp" name="sdm_ktp" pattern="^0$|^((?!(0))[0-9]{0,9})$" >
+                <input matInput placeholder="" formControlName="sdm_ktp" name="sdm_ktp" pattern="^([0-9]{0,})$" >
                 <mat-hint *ngIf="action.formErrors.sdm_ktp" [ngStyle]="{'color': 'red'}">
                 {{action.formErrors.sdm_ktp}}
                 </mat-hint>
@@ -271,6 +271,7 @@
     </div> -->
     <div class="col-md-6 pos" style="float:right">
     <button mat-raised-button style="margin: 10px 0px" (click)="onSave()" *ngIf=" form == 1 " [disabled]="action?.formControls()?.invalid || action?.formControls()?.pristine" >Submit</button>
-    <button mat-raised-button style="margin: 10px 0px" (click)="action.onEdit()" *ngIf=" form == 2 ">Update</button>
+    <button mat-raised-button style="margin: 10px 0px" (click)="onUpdate()" *ngIf=" form == 2 " [disabled]="action?.formControls()?.invalid || action?.formControls()?.pristine">Update</button>
+    <!-- <button mat-raised-button style="margin: 10px 0px" (click)="action.onEdit()" *ngIf=" form == 2 ">Update</button> -->
     </div>
 </form>
