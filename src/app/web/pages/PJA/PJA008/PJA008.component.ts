@@ -217,20 +217,10 @@ export class PJA008Component implements OnInit {
     console.log(tempData);
   }
 
-  public onResetSdmValue(event: any) {
-    this.keyId = event.target.value;
-    if (this.keyId === '') {
-      this.IdSdm = null;
-      console.log(this.IdSdm);
-    }
-  }
-
   public resetSource() {
     this.IdSdm = null;
     console.log(this.IdSdm);
-    this.categorySkill = '';
-    this.varSkill = '';
-    this.skillValue = '';
+    this.listSearchCriteria.push(new SearchCriteria(this._factory));
   }
 
   public hiringSubmit() {
