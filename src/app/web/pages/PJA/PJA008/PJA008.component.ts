@@ -29,6 +29,7 @@ export class PJA008Component implements OnInit {
   public tableActionTemplate: any;
 
   public sdmCtrl: FormControl;
+  public valueCtrl: FormControl;
   public action: ActionService;
   public inputForm: InputForm;
   public dataTable: DataTable;
@@ -45,15 +46,29 @@ export class PJA008Component implements OnInit {
   public assignSubmit: any;
   public doubleFilter: any;
   public categorySkill: any;
-  public varSkill: string;
+  public varSkill: any;
   public skillValue: string;
   public hiringstatId: number;
   public methodIds: any;
   public apiRoot: string = 'http://localhost:7979/project/MultiHiring';
+  public keyId: any;
+  public check: any;
+  public tes: String;
+
+  onKey(event: any){
+    console.log(event);
+    this.keyId = event.target.value;
+    if (this.keyId === '') {
+      this.IdSdm = null;
+      console.log(this.IdSdm);
+    }
+      
+  }
 
   constructor(private _factory: CoreFactory, public _notif: DefaultNotificationService, private route: ActivatedRoute, private http: HttpClient) {
     this.listSearchCriteria.push(new SearchCriteria(_factory));
     this.sdmCtrl = new FormControl();
+    this.valueCtrl = new FormControl({value: '', disabled: true});
     this.filteredSdm = this.sdmCtrl.valueChanges
       .startWith('')
       .map((value) => this.filterSdm(value));
@@ -84,6 +99,15 @@ export class PJA008Component implements OnInit {
   }
 
   public ngOnInit() {
+
+    this.inputForm = this._factory.inputForm({
+      formControls: {
+        sdm_id: '',
+        skilltype_id: '',
+        skill_id: '',
+        sdmskill_value: ''
+      }
+    });
 
     this.lovSDM = this._factory.lov({
       api: 'lov/Sdm',
@@ -121,32 +145,59 @@ export class PJA008Component implements OnInit {
   public selectToAssign() {
     this.isButtonClicked = true;
     const filterComponent: ISimplifiedFilterOperand[] = [];
+    const filterComponentPlusName: ISimplifiedFilterOperand[] = [];
     this.listSearchCriteria.forEach((searchCriteria: SearchCriteria) => {
       this.categorySkill = searchCriteria.skilltype_id;
-      this.varSkill = searchCriteria.skill_id;
+      console.log(this.categorySkill);
+      if (this.categorySkill == 0) {
+        searchCriteria.skill_id = "";
+        this.varSkill = "";
+      }else{
+        this.varSkill = searchCriteria.skill_id;
+      }
+      console.log(this.varSkill);
       this.skillValue = searchCriteria.value;
-
       filterComponent.push(
         Conjunction.AND(
-          Comparison.EQ('skilltype_id', this.categorySkill),
-          Comparison.EQ('skill_id', this.varSkill),
-          Comparison.GE('sdmskill_value', this.skillValue)
+          this.categorySkill ? Comparison.EQ('skilltype_id', this.categorySkill) : Comparison.NE('skilltype_id', this.categorySkill),
+          this.varSkill ? Comparison.EQ('skill_id', this.varSkill) : Comparison.NE('skill_id', this.varSkill),
+          this.skillValue ? Comparison.GE('sdmskill_value', this.skillValue) : Comparison.NE('sdmskill_value', this.skillValue)
+        )
+      );
+      filterComponentPlusName.push(
+        Conjunction.AND(
+          this.IdSdm ? Comparison.EQ('sdm_id', this.IdSdm) : Comparison.NE('sdm_id', this.IdSdm),
+          this.categorySkill ? Comparison.EQ('skilltype_id', this.categorySkill) : Comparison.NE('skilltype_id', this.categorySkill),
+          this.varSkill ? Comparison.EQ('skill_id', this.varSkill) : Comparison.NE('skill_id', this.varSkill),
+          this.skillValue ? Comparison.GE('sdmskill_value', this.skillValue) : Comparison.NE('sdmskill_value', this.skillValue)
         )
       );
     });
+    console.log(this.listSearchCriteria);
+    // if (this.IdSdm == null) {
+    //   this.doubleFilter = Conjunction.OR(...filterComponent);
+    // }
 
-    if (this.IdSdm == null) {
-      this.doubleFilter = Conjunction.OR(...filterComponent);
+    // if (this.categorySkill == null || this.varSkill == null || this.skillValue == null) {
+    //   this.doubleFilter = Comparison.EQ('sdm_id', this.IdSdm);
+    // }
+    if (this.check == true) {
+      console.log("Filter dengan AND");
+      if (this.IdSdm != null) {
+        this.doubleFilter = Conjunction.AND(...filterComponentPlusName);
+      }else{
+        this.doubleFilter = Conjunction.AND(...filterComponent);
+      }
+    }else{
+      console.log("Filter dengan OR");
+      if (this.IdSdm != null) {
+        this.doubleFilter = Conjunction.OR(...filterComponentPlusName);
+      }else{
+        this.doubleFilter = Conjunction.OR(...filterComponent);
+      }
     }
-
-    if (this.categorySkill == null || this.varSkill == null || this.skillValue == null) {
-      this.doubleFilter = Comparison.EQ('sdm_id', this.IdSdm);
-    }
-
-    this.doubleFilter = Conjunction.OR(
-      ...filterComponent,
-      Comparison.EQ('sdm_id', this.IdSdm)
-    );
+    
+    
 
     this._notif.success({
       message: 'Data has been Filtered'
@@ -190,6 +241,40 @@ export class PJA008Component implements OnInit {
       this._notif.success({
         message: 'You have successfully Hired'
       });
+    });
+  }
+
+  public onReset(){
+    this.IdSdm = null;
+    this.sdmCtrl.setValue('');
+  }
+
+  public checkMethod(event: any, check:any){
+    console.log(event.checked);
+    this.check = event.checked;
+  }
+
+  public valueDisabled(){
+    this.listSearchCriteria.forEach((searchCriteria: SearchCriteria) => {
+        this.categorySkill = searchCriteria.skilltype_id;
+        
+
+        if (this.categorySkill == 0) {
+          searchCriteria.skill_id = "";
+          this.varSkill = "";
+        }else{
+          this.varSkill = searchCriteria.skill_id;
+        }
+        if (this.varSkill == 1) {
+          this.tes = "111";
+        }
+       if (this.varSkill !== "") {
+          this.valueCtrl = new FormControl({value: '', disabled: false});
+        }else{
+           this.valueCtrl = new FormControl({value: '', disabled: true});
+        }
+        console.log(this.varSkill);
+        
     });
   }
 

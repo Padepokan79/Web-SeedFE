@@ -2,7 +2,7 @@
 // AUTHOR  	: Malik Chaudhary
 // CREATED 	: Wednesday, ‎August ‎1, ‎2018, ‏‎9:48:58 AM
 // UPDATE	  : APN, Thursday, August 16, ‎2018, ‏‎9:37:29 AM
-// 
+// UPDATE   : MLK, Tuesday, August 21, ‎2018, ‏‎4:35:00 PM
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { InputForm } from './../../../../core/models/input-form';
 import { CoreFactory } from './../../../../core/factory/core.factory';
@@ -42,6 +42,8 @@ export class PJA001Component implements OnInit {
   public filteredSdm: any;
 	public listSkill: any[] = [];
 	public kdSdm: any;
+  public selectNik: any;
+  public sdm_nik: String;
   //public dataTable: DataTable;
 
   constructor(
@@ -135,6 +137,7 @@ export class PJA001Component implements OnInit {
   		}
   	}); 
 
+
     this.action = this._factory.actions({
         api: 'project/MengelolaProject',
         inputForm: this.inputForm
@@ -162,12 +165,28 @@ export class PJA001Component implements OnInit {
                 },
                 initializeData: true
             });
-
+            this.selectNik = dataSdm.key-1;
             // tslint:disable-next-line:max-line-length
             this.action.patchFormData({sdm_id: dataSdm.key, sdm_name: dataSdm.values.sdm_sdm_name});
 
         }
     }
+
+   public ambilData(){ 
+     const readAllApi = this._factory.api({
+      api : 'sdm/MengelolaSdm/readAll',
+        params : {
+          value : this.selectNik
+        }
+    });
+
+    this._factory.http().get(readAllApi).subscribe((res: any) => {
+    console.log(res);
+    this.action.patchFormData(res.data.items[this.selectNik]);
+    this.sdm_nik = res.data.items[this.selectNik].sdm_nik;
+    });
+
+  } 
 
   public timeOut() {
       setTimeout(() => this.router.navigate(['pages/pja/PJA003']), 1000);
