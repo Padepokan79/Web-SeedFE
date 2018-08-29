@@ -43,7 +43,6 @@ export class PJA008Component implements OnInit {
   public lovSkill: LOVService;
   public lovSdmSkill: LOVService;
   public isButtonClicked = false;
-  public assignSubmit: any;
   public keyId: any;
   public doubleFilter: any;
   public time: Date = new Date();
@@ -52,21 +51,11 @@ export class PJA008Component implements OnInit {
   public skillValue: string;
   public hiringstatId: number;
   public methodIds: any;
-  public apiRoot: string = 'http://localhost:7979/project/MultiHiring';
   public check: any;
   public tes: string;
   public increment: number = 0;
+  public apiRoot: string = 'http://localhost:7979/project/MultiHiring';
 
-  public onKey(event: any) {
-    console.log(event);
-    this.keyId = event.target.value;
-    if (this.keyId === '') {
-      this.IdSdm = null;
-      console.log(this.IdSdm);
-    }
-  }
-
-  // tslint:disable-next-line:member-ordering
   constructor(private _factory: CoreFactory, public _notif: DefaultNotificationService, private route: ActivatedRoute, private http: HttpClient) {
     this.listSearchCriteria.push(new SearchCriteria(_factory));
     this.sdmCtrl = new FormControl();
@@ -77,6 +66,15 @@ export class PJA008Component implements OnInit {
     // this.route.params.subscribe((param) => {
     //   this.IdSdm = param.id;
     // });
+  }
+
+  public onKey(event: any) {
+    console.log(event);
+    this.keyId = event.target.value;
+    if (this.keyId === '') {
+      this.IdSdm = null;
+      console.log(this.IdSdm);
+    }
   }
 
   public filterSdm(val: string) {
