@@ -14,7 +14,6 @@ import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { MultiInsert } from './MultiInsert';
-import { COMPARISON_OPERATOR } from '../../../../core/constant/constant';
 
 @Component({
   selector: 'app-PJA008',
@@ -44,7 +43,6 @@ export class PJA008Component implements OnInit {
   public lovSkill: LOVService;
   public lovSdmSkill: LOVService;
   public isButtonClicked = false;
-  public assignSubmit: any;
   public keyId: any;
   public doubleFilter: any;
   public time: Date = new Date();
@@ -53,36 +51,36 @@ export class PJA008Component implements OnInit {
   public skillValue: string;
   public hiringstatId: number;
   public methodIds: any;
-  public apiRoot: string = 'http://localhost:7979/project/MultiHiring';
   public check: any;
   public tes: string;
+  public isLocked: boolean = true;
   public increment: number = 0;
-  public clientName: string;
-  private selectedId: number;
+  public clientIds: number;
+  public apiRoot: string = 'http://localhost:7979/project/MultiHiring';
 
-  public onKey(event: any) {
-    this.keyId = event.target.value;
-    if (this.keyId === '') {
-      this.IdSdm = null;
-    }
-  }
-
-  // tslint:disable-next-line:member-ordering
-  constructor(
-    private _factory: CoreFactory,
-    public _notif: DefaultNotificationService,
-    private route: ActivatedRoute,
-    private http: HttpClient
-  ) {
+  constructor(private _factory: CoreFactory, public _notif: DefaultNotificationService, private route: ActivatedRoute, private http: HttpClient) {
     this.listSearchCriteria.push(new SearchCriteria(_factory));
     this.sdmCtrl = new FormControl();
     this.valueCtrl = new FormControl({ value: '', disabled: true });
     this.filteredSdm = this.sdmCtrl.valueChanges
       .startWith('')
       .map((value) => this.filterSdm(value));
+    // this.route.params.subscribe((param) => {
+    //   this.IdSdm = param.id;
+    // });
+    // tslint:disable-next-line:no-shadowed-variable
     this.route.params.subscribe((param) => {
-      this.selectedId = param.idClient;
+      this.clientIds = param.idClient;
     });
+  }
+
+  public onKey(event: any) {
+    console.log(event);
+    this.keyId = event.target.value;
+    if (this.keyId === '') {
+      this.IdSdm = null;
+      console.log(this.IdSdm);
+    }
   }
 
   public filterSdm(val: string) {
@@ -229,10 +227,20 @@ export class PJA008Component implements OnInit {
       if (item.Checked === true) {
         tempData.push({
           sdm_id: item.sdm_id,
-          client_id: 1,
-          hirestat_id: 1,
+          client_id: this.clientIds,
+          hirestat_id: 3,
         });
-        item.Checked == false;
+        // tslint:disable-next-line:no-unused-expression
+        item.Checked === false;
+        console.log(tempData);
+      }
+    });
+  }
+
+  public activateButton() {
+    this.action.table().rows.forEach((item) => {
+      if (item.Checked === true) {
+        this.isLocked = false;
       }
     });
   }
@@ -247,33 +255,52 @@ export class PJA008Component implements OnInit {
       searchCriteria.value = null;
     });
     this.increment = 0;
+    this.isLocked = true;
+  }
+
+  public deactivateButton() {
+    this.isLocked = true;
   }
 
   public hiringSubmit() {
     this.isButtonClicked = true;
-    const bodyHiring = [];
-    this.listMultiInsert.forEach((sdmHiring: MultiInsert) => {
-      bodyHiring.push({
-        sdm_id: sdmHiring.sdmId,
-        client_id: sdmHiring.clientId,
-        hiringstat_id: sdmHiring.hirestatId
-      });
+    // const bodyHiring = [];
+    // this.listMultiInsert.forEach((sdmHiring: MultiInsert) => {
+    //   bodyHiring.push({
+    //     sdm_id: sdmHiring.sdmId,
+    //     client_id: sdmHiring.clientId,
+    //     hiringstat_id: sdmHiring.hirestatId
+    //   });
+    // });
+    const tempData = [];
+    this.action.table().rows.forEach((item) => {
+      if (item.Checked === true) {
+        tempData.push({
+          sdmhiring_id: '',
+          sdm_id: item.sdm_id,
+          client_id: 4,
+          hirestat_id: 3,
+        });
+        // tslint:disable-next-line:no-unused-expression
+        item.Checked === false;
+        console.log(tempData);
+      }
     });
     const url = `${this.apiRoot}/MultiCreate`;
     const httpOptions = {
       params: new HttpParams()
     };
     this.http.post(url, {
-      listhiring: bodyHiring
+      listhiring: tempData
     }, httpOptions)
-      .subscribe((res) => {
-        this._notif.success({
-          message: 'You have successfully Hired'
+      .subscribe(() => {
+          this._notif.success({
+            message: 'You have successfully Hired'
+          });
         });
-      });
   }
 
-  public checkMethod(event: any, check: any) {
+  public checkMethod(event: any) {
     this.check = event.checked;
   }
 
