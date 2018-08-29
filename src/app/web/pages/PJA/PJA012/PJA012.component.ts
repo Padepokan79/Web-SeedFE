@@ -207,11 +207,11 @@ export class PJA012Component implements OnInit {
         tempData.push({
           sdm_id: item.sdm_id,
           client_id: 1,
-          hirestat_id: 1,
+          hirestat_id: 4,
         });
         // tslint:disable-next-line:no-unused-expression
         item.Checked === false;
-        console.log(tempData);
+        // console.log(tempData);
       }
     });
 
@@ -226,6 +226,7 @@ export class PJA012Component implements OnInit {
     this.listSearchCriteria.forEach((searchCriteria: SearchCriteria) => {
       searchCriteria.skilltype_id = '';
       searchCriteria.skill_id = '';
+      searchCriteria.value = '';
     });
     this.increment = 0;
   }

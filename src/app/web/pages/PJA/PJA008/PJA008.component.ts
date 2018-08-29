@@ -14,6 +14,7 @@ import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { MultiInsert } from './MultiInsert';
+import { param } from 'jquery';
 
 @Component({
   selector: 'app-PJA008',
@@ -54,6 +55,7 @@ export class PJA008Component implements OnInit {
   public check: any;
   public tes: string;
   public increment: number = 0;
+  public clientIds: number;
   public apiRoot: string = 'http://localhost:7979/project/MultiHiring';
 
   constructor(private _factory: CoreFactory, public _notif: DefaultNotificationService, private route: ActivatedRoute, private http: HttpClient) {
@@ -66,6 +68,10 @@ export class PJA008Component implements OnInit {
     // this.route.params.subscribe((param) => {
     //   this.IdSdm = param.id;
     // });
+    // tslint:disable-next-line:no-shadowed-variable
+    this.route.params.subscribe((param) => {
+      this.clientIds = param.idClient;
+    });
   }
 
   public onKey(event: any) {
@@ -205,8 +211,8 @@ export class PJA008Component implements OnInit {
       if (item.Checked === true) {
         tempData.push({
           sdm_id: item.sdm_id,
-          client_id: 1,
-          hirestat_id: 1,
+          client_id: this.clientIds,
+          hirestat_id: 3,
         });
         // tslint:disable-next-line:no-unused-expression
         item.Checked === false;
@@ -225,6 +231,7 @@ export class PJA008Component implements OnInit {
     this.listSearchCriteria.forEach((searchCriteria: SearchCriteria) => {
       searchCriteria.skilltype_id = '';
       searchCriteria.skill_id = '';
+      searchCriteria.value = '';
     });
     this.increment = 0;
   }
