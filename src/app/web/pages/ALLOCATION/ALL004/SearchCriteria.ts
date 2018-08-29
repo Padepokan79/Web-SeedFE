@@ -14,6 +14,9 @@ export class SearchCriteria {
     public sdmskillValue: number;
     public sdmId: string;
 
+    public clientId: number = 4;
+    public hirestatId: number = 3;
+
     constructor(private _factory: CoreFactory) {
         this.lovSkillType = this._factory.lov({
             api: 'lov/SkillType',
