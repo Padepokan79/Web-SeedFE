@@ -147,7 +147,33 @@ export class PJA008Component implements OnInit {
     }, 1);
 
   }
-
+   // tslint:disable-next-line:member-ordering
+   public api: string = 'http://localhost:7979/api/masterdata/MultiFiltering';
+   public btnFilter() {
+     this.isButtonClicked = true;
+     const body = [];
+     this.listSearchCriteria.forEach((skillSdm: SearchCriteria) => {
+       body.push({
+         sdm_id: this.IdSdm,
+         skilltype_id: skillSdm.skilltype_id,
+         skill_id: skillSdm.skill_id,
+         sdmskill_value: skillSdm.value,
+         operator: 2
+       });
+      });
+     console.log('POST');
+     const url = `${this.api}/multiFilter`;
+     const httpOptions = {
+       params: new HttpParams()
+     };
+     this.http.post(url, {
+       listsdm: body
+     }, httpOptions)
+       .subscribe((res: any) => {
+         this.action.table().rows = res.data;
+         console.log(this.action.table().rows);
+       });
+   }
   public selectToAssign() {
     this.isButtonClicked = true;
     const filterComponent: ISimplifiedFilterOperand[] = [];
@@ -216,8 +242,9 @@ export class PJA008Component implements OnInit {
     this.listSearchCriteria.splice(null, this.increment);
     this.sdmCtrl.setValue('');
     this.listSearchCriteria.forEach((searchCriteria: SearchCriteria) => {
-      searchCriteria.skilltype_id = '';
-      searchCriteria.skill_id = '';
+      searchCriteria.skilltype_id = null;
+      searchCriteria.skill_id = null;
+      searchCriteria.value = null;
     });
     this.increment = 0;
   }
