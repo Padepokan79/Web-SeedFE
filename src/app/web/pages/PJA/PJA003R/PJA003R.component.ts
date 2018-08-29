@@ -128,7 +128,7 @@ export class PJA003RComponent implements OnInit {
       //    { viewValue: 'Project Date', viewKey: 'project_enddate', type: TYPE.STRING },
       // ],
       tableColumns : [
-        { prop: 'project_id', name: 'No.', width: 100, sortable: true },
+        { prop: 'norut', name: 'No.', width: 100, sortable: true },
         { prop: 'sdm_name', name: 'Nama Sdm', width: 100, sortable: true },
         { prop: 'project_name', name: 'Project Name', width: 100, sortable: true },
         // { prop: 'project_desc', name: 'Project Desc.', width: 100, sortable: true },
