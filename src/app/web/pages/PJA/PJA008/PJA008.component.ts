@@ -14,7 +14,6 @@ import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { MultiInsert } from './MultiInsert';
-import { param } from 'jquery';
 
 @Component({
   selector: 'app-PJA008',
@@ -54,6 +53,7 @@ export class PJA008Component implements OnInit {
   public methodIds: any;
   public check: any;
   public tes: string;
+  public isLocked: boolean = true;
   public increment: number = 0;
   public clientIds: number;
   public apiRoot: string = 'http://localhost:7979/project/MultiHiring';
@@ -90,7 +90,6 @@ export class PJA008Component implements OnInit {
   public setSdmValue(dataSdm: ListOfValue) {
     if (dataSdm) {
       this.IdSdm = dataSdm.key;
-      console.log(this.IdSdm);
     }
   }
 
@@ -98,25 +97,21 @@ export class PJA008Component implements OnInit {
     const searchCriteria = new SearchCriteria(this._factory);
     this.listSearchCriteria.push(searchCriteria);
     this.increment += 1;
-    console.log(this.increment);
-
   }
 
   public removeSearchCriteria(inc) {
     this.listSearchCriteria.splice(inc, 1);
     this.increment -= 1;
-    console.log(this.increment);
-    console.log(inc);
   }
 
   public ngOnInit() {
-
     this.inputForm = this._factory.inputForm({
       formControls: {
         sdm_id: '',
         skilltype_id: '',
         skill_id: '',
-        sdmskill_value: ''
+        sdmskill_value: '',
+        client_id: '',
       }
     });
 
@@ -157,14 +152,12 @@ export class PJA008Component implements OnInit {
     const filterComponentPlusName: ISimplifiedFilterOperand[] = [];
     this.listSearchCriteria.forEach((searchCriteria: SearchCriteria) => {
       this.categorySkill = searchCriteria.skilltype_id;
-      console.log(this.categorySkill);
       if (this.categorySkill === 0) {
         searchCriteria.skill_id = '';
         this.varSkill = '';
       } else {
         this.varSkill = searchCriteria.skill_id;
       }
-      console.log(this.varSkill);
       this.skillValue = searchCriteria.value;
       filterComponent.push(
         Conjunction.AND(
@@ -182,17 +175,14 @@ export class PJA008Component implements OnInit {
         )
       );
     });
-    console.log(this.listSearchCriteria);
 
     if (this.check === true) {
-      console.log('Filter dengan AND');
       if (this.IdSdm != null) {
         this.doubleFilter = Conjunction.AND(...filterComponentPlusName);
       } else {
         this.doubleFilter = Conjunction.AND(...filterComponent);
       }
     } else {
-      console.log('Filter dengan OR');
       if (this.IdSdm != null) {
         this.doubleFilter = Conjunction.OR(...filterComponentPlusName);
       } else {
@@ -219,50 +209,72 @@ export class PJA008Component implements OnInit {
         console.log(tempData);
       }
     });
+  }
 
-    console.log(tempData);
+  public activateButton() {
+    this.action.table().rows.forEach((item) => {
+      if (item.Checked === true) {
+        this.isLocked = false;
+      }
+    });
   }
 
   public resetSource() {
     this.IdSdm = null;
     this.listSearchCriteria.splice(null, this.increment);
     this.sdmCtrl.setValue('');
-    console.log(this.IdSdm);
     this.listSearchCriteria.forEach((searchCriteria: SearchCriteria) => {
       searchCriteria.skilltype_id = '';
       searchCriteria.skill_id = '';
       searchCriteria.value = '';
     });
     this.increment = 0;
+    this.isLocked = true;
+  }
+
+  public deactivateButton() {
+    this.isLocked = true;
   }
 
   public hiringSubmit() {
     this.isButtonClicked = true;
-    const bodyHiring = [];
-    this.listMultiInsert.forEach((sdmHiring: MultiInsert) => {
-      bodyHiring.push({
-        sdm_id: sdmHiring.sdmId,
-        client_id: sdmHiring.clientId,
-        hiringstat_id: sdmHiring.hirestatId
-      });
+    // const bodyHiring = [];
+    // this.listMultiInsert.forEach((sdmHiring: MultiInsert) => {
+    //   bodyHiring.push({
+    //     sdm_id: sdmHiring.sdmId,
+    //     client_id: sdmHiring.clientId,
+    //     hiringstat_id: sdmHiring.hirestatId
+    //   });
+    // });
+    const tempData = [];
+    this.action.table().rows.forEach((item) => {
+      if (item.Checked === true) {
+        tempData.push({
+          sdmhiring_id: '',
+          sdm_id: item.sdm_id,
+          client_id: 4,
+          hirestat_id: 3,
+        });
+        // tslint:disable-next-line:no-unused-expression
+        item.Checked === false;
+        console.log(tempData);
+      }
     });
-    console.log('POST');
     const url = `${this.apiRoot}/MultiCreate`;
     const httpOptions = {
       params: new HttpParams()
     };
     this.http.post(url, {
-      listhiring: bodyHiring
+      listhiring: tempData
     }, httpOptions)
-      .subscribe((res) => {
-        this._notif.success({
-          message: 'You have successfully Hired'
+      .subscribe(() => {
+          this._notif.success({
+            message: 'You have successfully Hired'
+          });
         });
-      });
   }
 
-  public checkMethod(event: any, check: any) {
-    console.log(event.checked);
+  public checkMethod(event: any) {
     this.check = event.checked;
   }
 
