@@ -4,7 +4,7 @@ import { CoreFactory } from '../../../../core/factory/core.factory';
 @Component({
   selector: 'app-input-sdm',
   templateUrl: './input-sdm.component.html',
-  styleUrls: ['./input-sdm.component.css']
+  styleUrls: ['./input-sdm.component.scss']
 })
 export class InputSdmComponent implements OnInit {
 

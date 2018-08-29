@@ -22,7 +22,7 @@
       <mat-list-item>
         <mat-label class="panjang">Name</mat-label>
         <mat-form-field class="example-full-width">
-          <input placeholder="Pick one" matInput [formControl]="sdmCtrl" [matAutocomplete]="auto" formControlName="sdm_name" name="sdm_name">
+          <input placeholder="Pick one" matInput (keyup)="onKeySdmName($event)" [formControl]="sdmCtrl" [matAutocomplete]="auto" formControlName="sdm_name" name="sdm_name">
           <mat-autocomplete #auto="matAutocomplete">
             <mat-option *ngFor="let dataSdm of filteredSdm | async" [value]="dataSdm.values.sdm_sdm_name" (onSelectionChange)="setSdmValue(action?.formControls(), dataSdm);">
               {{dataSdm.values.sdm_sdm_name}}
@@ -36,7 +36,7 @@
       <mat-list-item>
         <mat-label class="panjang">Akhir Kontrak</mat-label>
         <mat-form-field>
-          <input matInput [matDatepicker]="picker" formControlName="sdm_endcontract" name="sdm_endcontract">
+          <input matInput (keyup)="onKeySdmEndDate($event)" [matDatepicker]="picker" formControlName="sdm_endcontract" name="sdm_endcontract">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>

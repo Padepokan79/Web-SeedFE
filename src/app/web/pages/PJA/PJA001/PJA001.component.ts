@@ -20,7 +20,7 @@ import { Router } from '../../../../../../node_modules/@angular/router';
 @Component({
   selector: 'app-PJA001',
   templateUrl: './PJA001.component.html',
-  styleUrls: ['./PJA001.component.css']
+  styleUrls: ['./PJA001.component.scss']
 })
 export class PJA001Component implements OnInit {
 	selectedValue: String;
@@ -179,11 +179,12 @@ export class PJA001Component implements OnInit {
           value : this.selectNik
         }
     });
-
+    console.log(this.selectNik);
     this._factory.http().get(readAllApi).subscribe((res: any) => {
     console.log(res);
     this.action.patchFormData(res.data.items[this.selectNik]);
     this.sdm_nik = res.data.items[this.selectNik].sdm_nik;
+    console.log(this.sdm_nik);
     });
 
   } 

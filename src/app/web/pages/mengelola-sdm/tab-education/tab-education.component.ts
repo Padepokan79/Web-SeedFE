@@ -9,7 +9,7 @@ import { TYPE } from '../../../../core/constant/constant';
 @Component({
   selector: 'app-tab-education',
   templateUrl: './tab-education.component.html',
-  styleUrls: ['./tab-education.component.css']
+  styleUrls: ['./tab-education.component.scss']
 })
 
 export class TabEducationComponent implements OnInit {

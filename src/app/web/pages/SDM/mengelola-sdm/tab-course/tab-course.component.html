@@ -89,15 +89,15 @@
     </table>
     </div>
     <div class="col-md-6 pos" style="float:right">
-        <io-form-action [action]="action"></io-form-action>
+        <io-form-action [action]="action" (click)="action.onReset()" ></io-form-action>
     </div>
-    <div class="col-md-6 pos" style="float:right">
+    <!-- <div class="col-md-6 pos" style="float:right">
         <button mat-raised-button style="margin: 10px 0px" (click)="action.onSave()" *ngIf=" form == 1 ">{{action.buttonTitle}}</button>
-        <!-- <button mat-raised-button style="margin: 10px 0px" (click)="action.onEdit()" *ngIf=" form == 2 ">Update</button> -->
-    </div>
+        <button mat-raised-button style="margin: 10px 0px" (click)="action.onEdit()" *ngIf=" form == 2 ">Update</button>
+    </div> -->
 </form>
 
-<div *ngIf="form == 2">
+<div>
     <io-table *ngIf="action?.table()" [action]="action">
         <div class="io-table-header">
         <h3>List Courses</h3>

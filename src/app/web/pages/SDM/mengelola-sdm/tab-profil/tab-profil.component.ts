@@ -9,7 +9,7 @@ import { Comparison } from 'app/core/enums/comparison-operator.enum';
 @Component({
   selector: 'app-tab-profil',
   templateUrl: './tab-profil.component.html',
-  styleUrls: ['./tab-profil.component.css']
+  styleUrls: ['./tab-profil.component.scss']
 })
 export class TabProfilComponent implements OnInit {
 
@@ -56,32 +56,28 @@ export class TabProfilComponent implements OnInit {
       }
     });
 
-    if (this.form === 2) {
+    // if (this.form === 2) {
 
     this.dataTable = this._factory.dataTable({
       serverSide : true,
       pagingParams : {
-        filter: Comparison.EQ('sdm_id', this.id.toString()),
+        filter: Comparison.EQ('sdm_id', this.sdmid.toString()),
         limit : 500
       },
       tableColumns : [
         { prop: 'norut', name: 'No', width: 10, sortable: false },
-        { prop: 'profiling_name', name: 'No', width: 10, sortable: false },
+        { prop: 'profiling_name', name: 'Keterangan', width: 10, sortable: false },
         { prop: 'profiling_id', name: 'Action', width: 20,
           cellTemplate: this.tableActionTemplate, sortable: false }
       ]
     });
-  }
+  // }
 
     this.action = this._factory.actions({
       api: 'sdm/profiling',
       dataTable: this.dataTable,
       inputForm: this.inputForm
     });
-  }
-
-  public resetForm() {
-    this.action.onReset();
   }
 
 }

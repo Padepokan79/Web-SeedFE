@@ -17,7 +17,7 @@ import { PopUpDetailComponent } from './PopUpDetail/PopUpDetail.component';
 @Component({
   selector: 'app-PJA003R',
   templateUrl: './PJA003R.component.html',
-  styleUrls: ['./PJA003R.component.css']
+  styleUrls: ['./PJA003R.component.scss']
 })
 export class PJA003RComponent implements OnInit {
 
@@ -55,6 +55,35 @@ export class PJA003RComponent implements OnInit {
 
   public ceritanyaFilter: any;
 
+  // Hapus
+  public KeyId: any;
+  public SdmName: any;
+  public ProjectName: any;
+  public ProjectEndDate: any;
+
+  public onKeySdmName(event: any) {
+    this.KeyId = event.target.value;
+    if (this.KeyId === '') {
+      this.SdmName = null;
+      console.log('Nama: ', this.SdmName);
+    }
+  }
+  public onKeyProjectName(event: any) {
+    this.KeyId = event.target.value;
+    if (this.KeyId === '') {
+      this.ProjectName = null;
+      console.log('Project Name: ', this.ProjectName);
+    }
+  }
+  public onKeyProjectEndDate(event: any) {
+    this.KeyId = event.target.value;
+    if (this.KeyId === '') {
+      this.ProjectEndDate = undefined;
+      console.log('Tanggal: ', this.ProjectEndDate);
+    }
+  }
+
+  // tslint:disable-next-line:member-ordering
   constructor(private _factory: CoreFactory, private router: Router) {
 
     this.sdmCtrl = new FormControl();
@@ -142,6 +171,8 @@ export class PJA003RComponent implements OnInit {
       initializeData: true
     });
 
+    this.ProjectEndDate = this.action.getFormControlValue('project_enddate');
+
   }
 
   public navigateEditMenu(id) {
@@ -161,9 +192,9 @@ export class PJA003RComponent implements OnInit {
         },
         initializeData: true
       });
-
+      this.SdmName = dataSdm.key;
       this.action.patchFormData({sdm_id: dataSdm.key, sdm_name: dataSdm.values.sdm_sdm_name});
-      console.log(this.action.getFormControlValue('sdm_id'));
+      console.log(this.SdmName);
     }
   }
 
@@ -180,9 +211,9 @@ export class PJA003RComponent implements OnInit {
         },
         initializeData: true
       });
-
+      this.ProjectName = dataProject.values.project_project_name;
       this.action.patchFormData({project_id: dataProject.key, project_name: dataProject.values.project_project_name});
-      console.log(this.action.getFormControlValue('project_id'));
+      console.log(this.ProjectName);
     }
   }
 
@@ -191,22 +222,27 @@ export class PJA003RComponent implements OnInit {
   }
 
   public onSearch() {
-    const filterCriteria = [];
-
-    const SdmName = this.action.getFormControlValue('sdm_id');
-    const SdmProject = this.action.getFormControlValue('project_name');
-    const Projectdate = this.action.getFormControlValue('project_enddate');
-
+    // const filterCriteria = [];
+    this.ProjectEndDate = this.action.getFormControlValue('project_enddate');
+    console.log('Nama: ', this.SdmName, 'Nama Project: ', this.ProjectName, 'Tanggal berakhir: ', this.ProjectEndDate);
     this.action.setPaginationFilter(
       Conjunction.AND(
         // filterCriteria
-        Projectdate ? Comparison.LE('project_enddate', Projectdate) : Comparison.NE('project_enddate', 'project_enddate'),
-        SdmName ? Comparison.EQ('sdm_id', SdmName) : Comparison.NE('sdm_id', 'sdm_id'),
-        SdmProject ? Comparison.EQ('project_name', SdmProject) : Comparison.NE('project_name', 'project_name')
+        this.ProjectEndDate ? Comparison.LE('project_enddate', this.ProjectEndDate) : Comparison.NE('project_enddate', 'project_enddate'),
+        this.SdmName ? Comparison.EQ('sdm_id', this.SdmName) : Comparison.NE('sdm_id', 'sdm_id'),
+        this.ProjectName ? Comparison.EQ('project_name', this.ProjectName) : Comparison.NE('project_name', 'project_name')
       )
     );
 
     this.action.refreshTable();
+  }
+
+  public onReset() {
+    this.action.onReset();
+    this.SdmName = null;
+    this.ProjectName = null;
+    this.ProjectEndDate = null;
+    console.log('Nama: ', this.SdmName, 'Nama Project: ', this.ProjectName, 'Tanggal berakhir: ', this.ProjectEndDate);
   }
 
 }

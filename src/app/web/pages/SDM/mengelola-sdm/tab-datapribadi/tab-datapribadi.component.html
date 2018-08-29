@@ -22,11 +22,11 @@
         <td rowspan="7">
             <div style="margin-left: 50px">
                 <!-- <img mat-card-image style="width: 200px" src="http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png" alt="Photo of a Shiba Inu"><br> -->
-                <img mat-card-image style="width: 200px"  [src]="imageUrl" ><br>
+                <img mat-card-image style="width: 200px"  [src]="imageUrl" (error)="this.imageUrl='http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png'" alt="Profil Photo"><br />
                 <label for="singleFile">Browse Image</label>
                 <!-- <input id="singleFile" type="file"> -->
-                <!-- <input type="file" #Image accept="image/*" (change)="handleFileInput($event.target.files)" formControlName="sdm_image" name="sdm_image"> -->
-
+                <!-- <input type="file" #Image accept="image/*" (change)="handleFileInput($event)" formControlName="sdm_image" name="sdm_image"> -->
+                <input type="file" (change)="handleFileInput($event)">
             </div>
         </td>
     </tr>

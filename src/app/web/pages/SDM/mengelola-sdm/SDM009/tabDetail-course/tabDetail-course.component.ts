@@ -11,7 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-tabDetail-course',
   templateUrl: './tabDetail-course.component.html',
-  styleUrls: ['./tabDetail-course.component.css']
+  styleUrls: ['./tabDetail-course.component.scss']
 })
 export class TabDetailCourseComponent implements OnInit {
 

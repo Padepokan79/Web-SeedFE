@@ -14,7 +14,7 @@ import { Comparison } from '../../../../core/enums/comparison-operator.enum';
 @Component({
   selector: 'app-SDM004',
   templateUrl: './SDM004.component.html',
-  styleUrls: ['./SDM004.component.css']
+  styleUrls: ['./SDM004.component.scss']
 })
 export class SDM004Component implements OnInit {
   public time: Date = new Date();
@@ -32,6 +32,18 @@ export class SDM004Component implements OnInit {
   public sdmCtrl: FormControl;
   public inputForm: InputForm;
 
+  // Hapus
+  public KeyId: any;
+  public SdmName: any;
+
+  public onKeySdmName(event: any) {
+    this.KeyId = event.target.value;
+    if (this.KeyId === '') {
+      this.SdmName = null;
+      console.log('Nama: ', this.SdmName);
+    }
+  }
+  // tslint:disable-next-line:member-ordering
   constructor(private _factory: CoreFactory, private router: Router) {
     this.sdmCtrl = new FormControl();
     this.filteredSdm = this.sdmCtrl.valueChanges
@@ -113,9 +125,9 @@ export class SDM004Component implements OnInit {
         },
         initializeData: true
       });
-
+      this.SdmName = dataSdm.key;
       this.action.patchFormData({sdm_id: dataSdm.key, sdm_name: dataSdm.values.sdm_sdm_name});
-      console.log(this.action.getFormControlValue('sdm_id'));
+      console.log(this.SdmName);
     }
   }
 
@@ -124,10 +136,8 @@ export class SDM004Component implements OnInit {
   }
 
   public onSearch() {
-    const SdmName = this.action.getFormControlValue('sdm_id');
-
     this.action.setPaginationFilter(
-        SdmName ? Comparison.EQ('sdm_id', SdmName) : Comparison.NE('sdm_id', 'sdm_id'),
+        this.SdmName ? Comparison.EQ('sdm_id', this.SdmName) : Comparison.NE('sdm_id', 'sdm_id'),
     );
 
     this.action.refreshTable();

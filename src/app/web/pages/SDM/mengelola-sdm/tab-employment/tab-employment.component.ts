@@ -9,7 +9,7 @@ import { Comparison } from 'app/core/enums/comparison-operator.enum';
 @Component({
   selector: 'app-tab-employment',
   templateUrl: './tab-employment.component.html',
-  styleUrls: ['./tab-employment.component.css']
+  styleUrls: ['./tab-employment.component.scss']
 })
 export class TabEmploymentComponent implements OnInit {
 
@@ -59,11 +59,11 @@ export class TabEmploymentComponent implements OnInit {
       }
     });
 
-    if (this.form === 2) {
+    // if (this.form === 2) {
     this.dataTable = this._factory.dataTable({
       serverSide : true,
       pagingParams : {
-        filter: Comparison.EQ('sdm_id', this.id.toString()),
+        filter: Comparison.EQ('sdm_id', this.sdmid.toString()),
         limit : 5
       },
       tableColumns : [
@@ -75,7 +75,7 @@ export class TabEmploymentComponent implements OnInit {
           cellTemplate: this.tableActionTemplate, sortable: false }
       ]
     });
-  }
+  // }
 
     this.action = this._factory.actions({
       api: 'sdm/Employment',

@@ -12,7 +12,7 @@ import { TYPE } from '../../../../core/constant/constant';
 @Component({
   selector: 'app-ALL002',
   templateUrl: './ALL002.component.html',
-  styleUrls: ['./ALL002.component.css']
+  styleUrls: ['./ALL002.component.scss']
 })
 export class ALL002Component implements OnInit {
 

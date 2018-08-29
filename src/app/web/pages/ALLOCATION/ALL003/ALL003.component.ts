@@ -10,7 +10,7 @@ import { Router } from '../../../../../../node_modules/@angular/router';
 @Component({
   selector: 'app-ALL003',
   templateUrl: './ALL003.component.html',
-  styleUrls: ['./ALL003.component.css']
+  styleUrls: ['./ALL003.component.scss']
 })
 export class ALL003Component implements OnInit {
   @ViewChild('viewAsDateTemplate')

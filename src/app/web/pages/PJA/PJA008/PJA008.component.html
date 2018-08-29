@@ -33,13 +33,13 @@ CREATED 	: Thursday, ‎August 16th 2018 23:00:00 PM
             </div>
           </li>
           <br><br>
-          <li class="col-md-12 position-li">
+          <!-- <li class="col-md-12 position-li">
              <mat-checkbox class="chk" [checked]="check" (change)="checkMethod($event, check)">Filter dengan AND</mat-checkbox>
-          </li>
+          </li> -->
           <li *ngFor="let searchCriteria of listSearchCriteria; let inc = index" class="col-md-12 position-li">
             <div class="col-md-2 go-tight">
               <mat-form-field class="sdw-full-size">
-                <mat-select placeholder="Choose Category" (change)="valueDisabled()" [(ngModel)]="searchCriteria.skilltype_id" name="skilltype_id{{inc}}" required>
+                <mat-select placeholder="Choose Category" [(ngModel)]="searchCriteria.skilltype_id" name="skilltype_id{{inc}}" required>
                   <mat-option *ngFor="let lov of searchCriteria.lovSkillType.data" [value]="lov.key" (onSelectionChange)="searchCriteria.selectedSkill($event, lov)">
                     {{lov.value}}
                   </mat-option>
@@ -48,7 +48,7 @@ CREATED 	: Thursday, ‎August 16th 2018 23:00:00 PM
             </div>
             <div class="col-md-2 go-tight">
               <mat-form-field class="sdw-full-size">
-                <mat-select placeholder="Choose Skill" (change)="valueDisabled()" [(ngModel)]="searchCriteria.skill_id" name="skill_id{{inc}}" required>
+                <mat-select placeholder="Choose Skill" [(ngModel)]="searchCriteria.skill_id" name="skill_id{{inc}}" required>
                   <mat-option *ngFor="let lov of searchCriteria.lovSkill?.data" [value]="lov.key">
                     {{lov.value}}
                   </mat-option>
@@ -57,7 +57,7 @@ CREATED 	: Thursday, ‎August 16th 2018 23:00:00 PM
             </div>
             <div class="col-md-2 go-tight">
               <mat-form-field class="sdw-full-size">
-                <input matInput type="text" min="1" [formControl]="valueCtrl" max="10" value="{{ tes }}" placeholder="Value" [(ngModel)]="searchCriteria.value" name="sdmskill_value{{inc}}" class="blacky">
+                <input matInput type="text" min="1" max="10" placeholder="Value" [(ngModel)]="searchCriteria.value" name="sdmskill_value{{inc}}" class="blacky">
               </mat-form-field>
             </div>
             <div class="col-sm-2 text-left">

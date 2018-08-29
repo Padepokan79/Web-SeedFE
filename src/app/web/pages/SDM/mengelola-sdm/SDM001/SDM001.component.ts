@@ -4,7 +4,7 @@ import { CoreFactory } from '../../../../../core/factory/core.factory';
 @Component({
   selector: 'app-SDM001',
   templateUrl: './SDM001.component.html',
-  styleUrls: ['./SDM001.component.css']
+  styleUrls: ['./SDM001.component.scss']
 })
 export class SDM001Component implements OnInit {
 
