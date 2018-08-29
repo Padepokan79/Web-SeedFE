@@ -28,7 +28,7 @@ export class ALL002Component implements OnInit {
   public ngOnInit() {
     this.inputForm = this._factory.inputForm({
       formControls: {
-        skilltype_id: '',
+        skilltype_id: null, 
         skilltype_name: '',
       },
       validationMessages: {
