@@ -112,7 +112,7 @@ export class ALL004Component implements OnInit {
 
   // // // tslint:disable-next-line:member-ordering
   // tslint:disable-next-line:member-ordering
-  public apiRoot: string = 'http://10.10.10.61:7979/allocation/MultiInsertSdm';
+  public apiRoot: string = 'http://localhost:7979/allocation/MultiInsertSdm';
   public btnSave() {
 
     const body = [];
@@ -159,6 +159,7 @@ export class ALL004Component implements OnInit {
     });
 
     if (this.save == true) {
+      let valid = false;
       console.log('POST');
       const url = `${this.apiRoot}/MultiCreate`;
       const httpOptions = {
@@ -170,9 +171,15 @@ export class ALL004Component implements OnInit {
         }, httpOptions)
         .subscribe((res) => {
           this._notif.success({
-            message: 'Input Sdm Skill Value berhasil'
+            message: 'data berhasil di masukan'
           });
+          valid = true;
        });
+       if (valid == false) {
+        this._notif.error({
+          message: 'Data sudah ada'
+        });
+      }
     } else {
       console.log('Ada yang kurang');
     }
