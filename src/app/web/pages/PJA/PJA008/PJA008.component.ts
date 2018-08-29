@@ -14,6 +14,7 @@ import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { MultiInsert } from './MultiInsert';
+import { COMPARISON_OPERATOR } from '../../../../core/constant/constant';
 
 @Component({
   selector: 'app-PJA008',
@@ -56,27 +57,32 @@ export class PJA008Component implements OnInit {
   public check: any;
   public tes: string;
   public increment: number = 0;
+  public clientName: string;
+  private selectedId: number;
 
   public onKey(event: any) {
-    console.log(event);
     this.keyId = event.target.value;
     if (this.keyId === '') {
       this.IdSdm = null;
-      console.log(this.IdSdm);
     }
   }
 
   // tslint:disable-next-line:member-ordering
-  constructor(private _factory: CoreFactory, public _notif: DefaultNotificationService, private route: ActivatedRoute, private http: HttpClient) {
+  constructor(
+    private _factory: CoreFactory,
+    public _notif: DefaultNotificationService,
+    private route: ActivatedRoute,
+    private http: HttpClient
+  ) {
     this.listSearchCriteria.push(new SearchCriteria(_factory));
     this.sdmCtrl = new FormControl();
     this.valueCtrl = new FormControl({ value: '', disabled: true });
     this.filteredSdm = this.sdmCtrl.valueChanges
       .startWith('')
       .map((value) => this.filterSdm(value));
-    // this.route.params.subscribe((param) => {
-    //   this.IdSdm = param.id;
-    // });
+    this.route.params.subscribe((param) => {
+      this.selectedId = param.idClient;
+    });
   }
 
   public filterSdm(val: string) {
@@ -86,7 +92,6 @@ export class PJA008Component implements OnInit {
   public setSdmValue(dataSdm: ListOfValue) {
     if (dataSdm) {
       this.IdSdm = dataSdm.key;
-      console.log(this.IdSdm);
     }
   }
 
@@ -94,25 +99,21 @@ export class PJA008Component implements OnInit {
     const searchCriteria = new SearchCriteria(this._factory);
     this.listSearchCriteria.push(searchCriteria);
     this.increment += 1;
-    console.log(this.increment);
-
   }
 
   public removeSearchCriteria(inc) {
     this.listSearchCriteria.splice(inc, 1);
     this.increment -= 1;
-    console.log(this.increment);
-    console.log(inc);
   }
 
   public ngOnInit() {
-
     this.inputForm = this._factory.inputForm({
       formControls: {
         sdm_id: '',
         skilltype_id: '',
         skill_id: '',
-        sdmskill_value: ''
+        sdmskill_value: '',
+        client_id: '',
       }
     });
 
@@ -153,14 +154,12 @@ export class PJA008Component implements OnInit {
     const filterComponentPlusName: ISimplifiedFilterOperand[] = [];
     this.listSearchCriteria.forEach((searchCriteria: SearchCriteria) => {
       this.categorySkill = searchCriteria.skilltype_id;
-      console.log(this.categorySkill);
       if (this.categorySkill === 0) {
         searchCriteria.skill_id = '';
         this.varSkill = '';
       } else {
         this.varSkill = searchCriteria.skill_id;
       }
-      console.log(this.varSkill);
       this.skillValue = searchCriteria.value;
       filterComponent.push(
         Conjunction.AND(
@@ -178,17 +177,14 @@ export class PJA008Component implements OnInit {
         )
       );
     });
-    console.log(this.listSearchCriteria);
 
     if (this.check === true) {
-      console.log('Filter dengan AND');
       if (this.IdSdm != null) {
         this.doubleFilter = Conjunction.AND(...filterComponentPlusName);
       } else {
         this.doubleFilter = Conjunction.AND(...filterComponent);
       }
     } else {
-      console.log('Filter dengan OR');
       if (this.IdSdm != null) {
         this.doubleFilter = Conjunction.OR(...filterComponentPlusName);
       } else {
@@ -211,18 +207,14 @@ export class PJA008Component implements OnInit {
           hirestat_id: 1,
         });
         item.Checked == false;
-        console.log(tempData);
       }
     });
-
-    console.log(tempData);
   }
 
   public resetSource() {
     this.IdSdm = null;
     this.listSearchCriteria.splice(null, this.increment);
     this.sdmCtrl.setValue('');
-    console.log(this.IdSdm);
     this.listSearchCriteria.forEach((searchCriteria: SearchCriteria) => {
       searchCriteria.skilltype_id = '';
       searchCriteria.skill_id = '';
@@ -240,7 +232,6 @@ export class PJA008Component implements OnInit {
         hiringstat_id: sdmHiring.hirestatId
       });
     });
-    console.log('POST');
     const url = `${this.apiRoot}/MultiCreate`;
     const httpOptions = {
       params: new HttpParams()
@@ -256,7 +247,6 @@ export class PJA008Component implements OnInit {
   }
 
   public checkMethod(event: any, check: any) {
-    console.log(event.checked);
     this.check = event.checked;
   }
 
