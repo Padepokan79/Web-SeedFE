@@ -15,7 +15,7 @@ import { Comparison } from '../../../../core/enums/comparison-operator.enum';
 @Component({
   selector: 'app-PJA003',
   templateUrl: './PJA003.component.html',
-  styleUrls: ['./PJA003.component.css']
+  styleUrls: ['./PJA003.component.scss']
 })
 export class PJA003Component implements OnInit {
 

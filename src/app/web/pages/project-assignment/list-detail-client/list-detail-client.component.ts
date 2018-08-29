@@ -8,7 +8,7 @@ import { TYPE } from '../../../../core/constant/constant';
 @Component({
   selector: 'app-list-detail-client',
   templateUrl: './list-detail-client.component.html',
-  styleUrls: ['./list-detail-client.component.css']
+  styleUrls: ['./list-detail-client.component.scss']
 })
 export class ListDetailClientComponent implements OnInit {
 

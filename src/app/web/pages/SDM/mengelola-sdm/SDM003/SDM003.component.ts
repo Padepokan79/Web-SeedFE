@@ -17,7 +17,7 @@ import { Conjunction } from '../../../../../core/enums/conjunction-operator.enum
 @Component({
   selector: 'app-SDM003',
   templateUrl: './SDM003.component.html',
-  styleUrls: ['./SDM003.component.css']
+  styleUrls: ['./SDM003.component.scss']
 })
 export class SDM003Component implements OnInit {
   public time: Date = new Date();

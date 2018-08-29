@@ -12,7 +12,7 @@ import { CoreFactory } from '../../../../core/factory/core.factory';
 @Component({
   selector: 'app-ALL001',
   templateUrl: './ALL001.component.html',
-  styleUrls: ['./ALL001.component.css']
+  styleUrls: ['./ALL001.component.scss']
 })
 export class ALL001Component implements OnInit {
 

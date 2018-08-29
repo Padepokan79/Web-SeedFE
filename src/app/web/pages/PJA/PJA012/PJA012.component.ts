@@ -19,7 +19,7 @@ import { MultiInsertSdmAssign } from './MultiInsertSdmAssign';
 @Component({
   selector: 'app-PJA012',
   templateUrl: './PJA012.component.html',
-  styleUrls: ['./PJA012.component.css']
+  styleUrls: ['./PJA012.component.scss']
 })
 
 export class PJA012Component implements OnInit {

@@ -12,7 +12,7 @@ import { SearchCriteria } from './SearchCriteria';
 @Component({
   selector: 'app-ALL005',
   templateUrl: './ALL005.component.html',
-  styleUrls: ['./ALL005.component.css']
+  styleUrls: ['./ALL005.component.scss']
 })
 export class ALL005Component implements OnInit {
 

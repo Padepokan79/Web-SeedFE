@@ -9,7 +9,7 @@ import { DefaultNotificationService } from '../../../../core/services/default-no
 @Component({
   selector: 'app-PJA006',
   templateUrl: './PJA006.component.html',
-  styleUrls: ['./PJA006.component.css']
+  styleUrls: ['./PJA006.component.scss']
 })
 export class PJA006Component implements OnInit {
 public action: ActionService;

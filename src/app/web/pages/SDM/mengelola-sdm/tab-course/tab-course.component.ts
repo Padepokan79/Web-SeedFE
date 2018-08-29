@@ -10,7 +10,7 @@ import { Comparison } from '../../../../../core/enums/comparison-operator.enum';
 @Component({
   selector: 'app-tab-course',
   templateUrl: './tab-course.component.html',
-  styleUrls: ['./tab-course.component.css']
+  styleUrls: ['./tab-course.component.scss']
 })
 export class TabCourseComponent implements OnInit {
 
@@ -62,11 +62,11 @@ export class TabCourseComponent implements OnInit {
       }
     });
 
-    if (this.form === 2) {
+    // if (this.form === 2) {
     this.dataTable = this._factory.dataTable({
       serverSide : true,
       pagingParams : {
-        filter: Comparison.EQ('sdm_id', this.id.toString()),
+        filter: Comparison.EQ('sdm_id', this.sdmid.toString()),
         limit : 5
       },
       tableColumns : [
@@ -80,7 +80,7 @@ export class TabCourseComponent implements OnInit {
           cellTemplate: this.tableActionTemplate, sortable: false }
       ]
     });
-  }
+  // }
 
     this.action = this._factory.actions({
       api: 'sdm/course',

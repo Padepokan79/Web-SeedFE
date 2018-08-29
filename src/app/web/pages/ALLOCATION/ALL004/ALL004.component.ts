@@ -9,7 +9,6 @@ import { DataTable } from '../../../../core/models/data-table';
 import { InputForm } from '../../../../core/models/input-form';
 import { CoreFactory } from '../../../../core/factory/core.factory';
 import { HttpClient, HttpParams } from '../../../../../../node_modules/@angular/common/http';
-import { MultiInsertSdmSkill } from './MultiInsertSdmSkill';
 import { FormGroup, FormControl } from '../../../../../../node_modules/@angular/forms';
 import { DefaultNotificationService } from '../../../../core/services/default-notification.service';
 import { startWith, map } from '../../../../../../node_modules/rxjs/operators';
@@ -42,7 +41,6 @@ export class ALL004Component implements OnInit {
 
   public title = 'app';
   public save = false;
-  public listMultiInsert: MultiInsertSdmSkill[] = [];
   public skillId: number;
   public skilltypeId: number;
   public skillsdmValue: number;
@@ -109,7 +107,7 @@ export class ALL004Component implements OnInit {
   }
 
   public filterSdm(val: string) {
-    return val ? this.lovSDM.data.filter((s) => s.values.sdm_sdm_name.toLowerCase().indexOf(val.toLocaleLowerCase()) === 1) : [];
+    return val ? this.lovSDM.data.filter((s) => s.values.sdm_sdm_name.toLowerCase().indexOf(val.toLocaleLowerCase()) === 0) : [];
   }
 
   // // // tslint:disable-next-line:member-ordering
@@ -176,9 +174,7 @@ export class ALL004Component implements OnInit {
           });
        });
     } else {
-      this._notif.error({
-        message: 'save is false'
-      });
+      console.log('Ada yang kurang');
     }
   }
 }

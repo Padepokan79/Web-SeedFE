@@ -10,7 +10,7 @@ import { Router } from '../../../../../../node_modules/@angular/router';
 @Component({
   selector: 'app-SDM008',
   templateUrl: './SDM008.component.html',
-  styleUrls: ['./SDM008.component.css']
+  styleUrls: ['./SDM008.component.scss']
 })
 export class SDM008Component implements OnInit {
 

@@ -5,7 +5,7 @@ import { ActivatedRoute } from '../../../../../../../node_modules/@angular/route
 @Component({
   selector: 'app-SDM009',
   templateUrl: './SDM009.component.html',
-  styleUrls: ['./SDM009.component.css']
+  styleUrls: ['./SDM009.component.scss']
 })
 export class SDM009Component implements OnInit {
 

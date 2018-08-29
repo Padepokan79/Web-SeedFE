@@ -9,7 +9,7 @@ import { ActivatedRoute } from '../../../../../../../node_modules/@angular/route
 @Component({
   selector: 'app-PopUpDetail',
   templateUrl: './PopUpDetail.component.html',
-  styleUrls: ['./PopUpDetail.component.css']
+  styleUrls: ['./PopUpDetail.component.scss']
 })
 export class PopUpDetailComponent implements OnInit {
   @ViewChild('viewAsDateTemplate')
