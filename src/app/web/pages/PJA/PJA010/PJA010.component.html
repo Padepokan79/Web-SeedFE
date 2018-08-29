@@ -58,7 +58,7 @@
           <button mat-flat-button (click)="action.onReset();clearData()">
               <span class="glyphicon glyphicon-remove nx-save-button" aria-hidden="true"></span>Clear</button>&nbsp;
           <div class="col-md-2" style="float:right">
-            <button mat-flat-button style="float:right" [routerLink]="['/pages/pja/PJA012']">
+            <button mat-flat-button style="float:right" (click)="navigatePushId(selected)">
                 <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>Assign
             </button>
           </div>

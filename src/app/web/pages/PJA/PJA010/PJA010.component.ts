@@ -108,7 +108,6 @@ export class PJA010Component implements OnInit {
         initializeData: true
     });
 
-    
   }
 
   public ambilData() {
@@ -147,6 +146,10 @@ export class PJA010Component implements OnInit {
 
   public navigateEditMenu(id) {
     this.router.navigate(['/pages/pja/PJA011', { id }]);
+  }
+  
+  public navigatePushId(idClient) {
+    this.router.navigate(['pages/pja/PJA012', { idClient }]);
   }
 
 }
