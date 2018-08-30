@@ -114,6 +114,12 @@ export class ActionService {
             .pagination()
             .setOffset(value);
     }
+    
+    public resetFilter() {
+        this.table()
+            .pagination()
+            .filters =new Map<string, IFilterOperand | IFilterComponent | ISimplifiedFilterComponent | ISimplifiedFilterOperand>();
+    }
 
     public refreshTable(params?: { [key: string]: any }) {
         this.setPaginationOffset(0);

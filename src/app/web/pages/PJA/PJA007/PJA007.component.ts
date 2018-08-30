@@ -112,6 +112,9 @@ export class PJA007Component implements OnInit {
     this.clientPic = '';
     this.clientMobile = '';
      this.btnDisabled = true;
+    
+     this.action.resetFilter() ;
+     this.action.refreshTable();
   }
 
   public navigateEditMenu(id) {

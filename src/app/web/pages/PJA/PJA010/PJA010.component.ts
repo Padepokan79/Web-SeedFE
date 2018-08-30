@@ -131,6 +131,9 @@ export class PJA010Component implements OnInit {
     this.clientPic = '';
     this.clientMobile = '';
     this.btnDisabled = true;
+    
+    this.action.resetFilter() ;
+    this.action.refreshTable();
   }
 
   public onSearch() {
