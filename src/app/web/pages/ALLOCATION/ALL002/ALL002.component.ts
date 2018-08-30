@@ -25,6 +25,10 @@ export class ALL002Component implements OnInit {
 
   constructor(private _factory: CoreFactory) { }
 
+  public refreshTabel(){
+    this.action.refreshTable();
+  }
+
   public ngOnInit() {
     this.inputForm = this._factory.inputForm({
       formControls: {

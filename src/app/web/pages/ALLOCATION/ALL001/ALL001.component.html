@@ -55,7 +55,7 @@ Status        : Done
   <button type="button" matTooltip="Edit Skill" class="btn btn-primary btn-mm btn-icon" (click)="action.onEdit(row)">
     <i class="glyphicon glyphicon-pencil"></i>
   </button>
-  <button type="button" matTooltip="Hapus SKill" class="btn btn-danger btn-mm btn-icon" (click)="action.onDelete(row)">
+  <button type="button" matTooltip="Hapus SKill" class="btn btn-danger btn-mm btn-icon" (click)="action.onDelete(row);refreshTabel()">
     <i class="glyphicon glyphicon-trash"></i>
   </button>
 </ng-template>
