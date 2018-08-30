@@ -58,6 +58,7 @@ export class PJA008Component implements OnInit {
   public clientIds: number;
   public hirestatIds: number = 3;
   public apiRoot: string = 'project/MultiHiring';
+  public router: any;
 
   constructor(private _factory: CoreFactory, public _notif: DefaultNotificationService, private route: ActivatedRoute, private http: HttpClient) {
     this.listSearchCriteria.push(new SearchCriteria(_factory));
@@ -317,6 +318,7 @@ export class PJA008Component implements OnInit {
         this._notif.success({
           message: 'You have successfully Hired'
         });
+        this.router.navigate(['pages/pja/PJA007']);
       });
   }
 
