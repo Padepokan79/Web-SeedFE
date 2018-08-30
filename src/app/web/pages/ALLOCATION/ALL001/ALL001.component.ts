@@ -27,10 +27,14 @@ export class ALL001Component implements OnInit {
 
   constructor(private _factory: CoreFactory) { }
 
+  public refreshTabel(){
+    this.action.refreshTable();
+  }
+
   public ngOnInit() {
     this.inputForm = this._factory.inputForm({
       formControls: {
-        skill_id: '',
+        skill_id: null,
         skilltype_id: '',
         skill_name: '',
       },
