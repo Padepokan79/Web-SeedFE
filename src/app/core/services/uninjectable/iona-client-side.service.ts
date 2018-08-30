@@ -15,6 +15,8 @@ import { IONAEngine } from '../../abstract/iona-engine';
 
 export class IONAClientSideService extends IONAEngine {
 
+    public forceReload = true;
+
     constructor(datePipe: DatePipe,
                 notification: DefaultNotificationService,
                 crudService: CRUDService,
@@ -24,7 +26,11 @@ export class IONAClientSideService extends IONAEngine {
     }
 
     public loadDataOnTable(params?: { [key: string]: any }) {
-        super.loadData(params);
+        if (this.forceReload) {
+            console.log('Was Here');
+            this.forceReload = false;
+            super.loadData(params);
+        }
     }
 
     public searchDataOnTable() {

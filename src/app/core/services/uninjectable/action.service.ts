@@ -22,6 +22,7 @@ export class ActionService {
         private _ionaEngine: IIONAEngine
     ) {
         this.buttonTitle = 'Submit';
+        this.IONA().loadDataOnTable();
     }
 
     get formErrors() {
