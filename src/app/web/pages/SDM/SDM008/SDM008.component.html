@@ -3,23 +3,41 @@ AUTHOR  	: Khairil Anwar
 CREATED 	: Wednesday, ‎August 1, ‎2018 14:00:12 PM
 UPDATE		: 
 -->
-<mat-toolbar>
-  Skill Category
-</mat-toolbar>
-<div class="io-form-header">
-  <div class="nx-brc-header blacky">
-    <div class="title-header">
-      <span><i class="fa fa-home"></i></span>
-      <a [routerLink]="['/pages/dashboard']">dashboard</a><b> > </b>
-      <a [routerLink]="['/pages/sdm']"><span>SDM</span></a><b> > </b>
-      <a><span>List Psychological SDM</span></a>
+<io-form *ngIf="action?.form()">
+  <div class="io-form-header">
+    <div class="nx-brc-header blacky">
+      <div class="title-header">
+        <span><i class="fa fa-home"></i></span>
+        <a [routerLink]="['/pages/dashboard']">dashboard</a><b> > </b>
+        <a [routerLink]="['/pages/sdm']"><span>SDM</span></a><b> > </b>
+        <a><span>List Psychological SDM</span></a>
+      </div>
     </div>
   </div>
-</div>
-<div class="contents">
-  <button type="button" class="btn btn-flat btn-mm btn-icon" [routerLink]="['/pages/sdm/SDM006']">
-    Add SDM Psychological <i class="glyphicon glyphicon-plus"></i>
-  </button>
+  <form class="io-form-body" [formGroup]="action?.formControls()">
+    <mat-list-item>
+      <button style="margin-bottom: 10mm" mat-flat-button [routerLink]="['/pages/sdm/SDM006']">
+        <span class="glyphicon glyphicon-plus"></span> Add SDM Psychological
+      </button>
+    </mat-list-item>
+      <mat-list-item>
+        <mat-label class="panjang">Name : </mat-label>
+          <mat-form-field class="example-full-width" style="width: 200mm">
+            <input placeholder="" matInput (keyup)="onKeySdmName($event)" [formControl]="sdmCtrl" [matAutocomplete]="auto" formControlName="sdm_name">
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let dataSdm of filteredSdm | async" [value]="dataSdm.values.sdm_sdm_name" (onSelectionChange)="setSdmValue(action?.formControls(), dataSdm);">
+                {{dataSdm.values.sdm_sdm_name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <button mat-flat-button (click)="onSearch()" style="margin-left: 20px">
+              <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Cari</button>
+            <!-- <button mat-flat-button (click)="action.onReset()">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Clear</button> -->
+      </mat-list-item>
+    </form>
+</io-form>
+
   <io-table *ngIf="action?.table()" [action]="action">
     <div class="io-table-header">
       <h3>List Psychological</h3>
@@ -35,4 +53,3 @@ UPDATE		:
     </button>
   </ng-template>
   </div>
-</div>
