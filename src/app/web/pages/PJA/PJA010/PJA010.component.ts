@@ -73,13 +73,13 @@ export class PJA010Component implements OnInit {
 
     // First Data Table Initialization
     this.dataTable = this._factory.dataTable({
-      serverSide : true,
+      serverSide : false,
       pagingParams : {
         limit : 10
       },
       searchCriteria : [
-        { viewValue: 'sdmassign_id', viewKey: 'ID', type: TYPE.NUMBER },
-        { viewValue: 'sdmassign_picclient', viewKey: 'Client', type: TYPE.STRING }
+        { viewValue: 'Name', viewKey: 'sdm_name', type: TYPE.STRING },
+        { viewValue: 'PIC Handler', viewKey: 'sdmassign_picclient', type: TYPE.STRING }
       ],
       tableColumns : [
         { prop: 'sdmassign_id', name: 'Assign ID', width: 15, sortable: false },
