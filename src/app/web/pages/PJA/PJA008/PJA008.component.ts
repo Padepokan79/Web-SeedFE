@@ -13,7 +13,6 @@ import { ListOfValue } from '../../../../core/models/list-of-value';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { MultiInsert } from './MultiInsert';
 
 @Component({
   selector: 'app-PJA008',
@@ -34,7 +33,6 @@ export class PJA008Component implements OnInit {
   public inputForm: InputForm;
   public dataTable: DataTable;
   public listSearchCriteria: SearchCriteria[] = [];
-  public listMultiInsert: MultiInsert[] = [];
   public IdSdm: any;
   public filteredSdm: any;
   public getClientid: number;
@@ -53,10 +51,13 @@ export class PJA008Component implements OnInit {
   public methodIds: any;
   public check: any;
   public tes: string;
+  public isCantFilter: boolean = true;
   public isLocked: boolean = true;
+  public isReadOnly: boolean = true;
   public increment: number = 0;
   public clientIds: number;
-  public apiRoot: string = 'http://localhost:7979/project/MultiHiring';
+  public hirestatIds: number = 3;
+  public apiRoot: string = 'project/MultiHiring';
 
   constructor(private _factory: CoreFactory, public _notif: DefaultNotificationService, private route: ActivatedRoute, private http: HttpClient) {
     this.listSearchCriteria.push(new SearchCriteria(_factory));
@@ -145,33 +146,35 @@ export class PJA008Component implements OnInit {
     }, 1);
 
   }
-   // tslint:disable-next-line:member-ordering
-   public api: string = 'http://localhost:7979/api/masterdata/MultiFiltering';
-   public btnFilter() {
-     this.isButtonClicked = true;
-     const body = [];
-     this.listSearchCriteria.forEach((skillSdm: SearchCriteria) => {
-       body.push({
-         sdm_id: this.IdSdm,
-         skilltype_id: skillSdm.skilltype_id,
-         skill_id: skillSdm.skill_id,
-         sdmskill_value: skillSdm.value,
-         operator: 2
-       });
+  // tslint:disable-next-line:member-ordering
+  public api = this._factory.api({
+    api: `${this.apiRoot}/api/masterdata/MultiFiltering`
+  });
+  public btnFilter() {
+    this.isButtonClicked = true;
+    const body = [];
+    this.listSearchCriteria.forEach((skillSdm: SearchCriteria) => {
+      body.push({
+        sdm_id: this.IdSdm,
+        skilltype_id: skillSdm.skilltype_id,
+        skill_id: skillSdm.skill_id,
+        sdmskill_value: skillSdm.value,
+        operator: 2
       });
-     console.log('POST');
-     const url = `${this.api}/multiFilter`;
-     const httpOptions = {
-       params: new HttpParams()
-     };
-     this.http.post(url, {
-       listsdm: body
-     }, httpOptions)
-       .subscribe((res: any) => {
-         this.action.table().rows = res.data;
-         console.log(this.action.table().rows);
-       });
-   }
+    });
+    console.log('POST');
+    const url = `${this.api}/multiFilter`;
+    const httpOptions = {
+      params: new HttpParams()
+    };
+    this.http.post(url, {
+      listsdm: body
+    }, httpOptions)
+      .subscribe((res: any) => {
+        this.action.table().rows = res.data;
+        console.log(this.action.table().rows);
+      });
+  }
   public selectToAssign() {
     this.isButtonClicked = true;
     const filterComponent: ISimplifiedFilterOperand[] = [];
@@ -228,7 +231,7 @@ export class PJA008Component implements OnInit {
         tempData.push({
           sdm_id: item.sdm_id,
           client_id: this.clientIds,
-          hirestat_id: 3,
+          hirestat_id: this.hirestatIds
         });
         // tslint:disable-next-line:no-unused-expression
         item.Checked === false;
@@ -241,11 +244,14 @@ export class PJA008Component implements OnInit {
     this.action.table().rows.forEach((item) => {
       if (item.Checked === true) {
         this.isLocked = false;
+      } else if (item.Checked === false) {
+        this.isLocked = true;
       }
     });
   }
 
   public resetSource() {
+    this.isButtonClicked = false;
     this.IdSdm = null;
     this.listSearchCriteria.splice(null, this.increment);
     this.sdmCtrl.setValue('');
@@ -262,42 +268,56 @@ export class PJA008Component implements OnInit {
     this.isLocked = true;
   }
 
+  // public noActionButton() {
+  //   this.listSearchCriteria.forEach((searchCriteria: SearchCriteria) => {
+  //     if (this.IdSdm === '' || searchCriteria.skilltype_id === '') {
+  //       this.isCantFilter = true;
+  //     } else {
+  //       this.isCantFilter = false;
+  //     }
+  //   });
+  // }
+
+  // public activateValue() {
+  //   this.listSearchCriteria.forEach((searchCriteria: SearchCriteria) => {
+  //     if (searchCriteria.skill_id === '') {
+  //       this.isReadOnly = true;
+  //     } else {
+  //       this.isReadOnly = false;
+  //     }
+  //   });
+  // }
+
   public hiringSubmit() {
     this.isButtonClicked = true;
-    // const bodyHiring = [];
-    // this.listMultiInsert.forEach((sdmHiring: MultiInsert) => {
-    //   bodyHiring.push({
-    //     sdm_id: sdmHiring.sdmId,
-    //     client_id: sdmHiring.clientId,
-    //     hiringstat_id: sdmHiring.hirestatId
-    //   });
-    // });
-    const tempData = [];
+    const multiInsert = [];
     this.action.table().rows.forEach((item) => {
       if (item.Checked === true) {
-        tempData.push({
-          sdmhiring_id: '',
+        multiInsert.push({
+          sdmhiring_id: null,
           sdm_id: item.sdm_id,
-          client_id: 4,
-          hirestat_id: 3,
+          client_id: this.clientIds,
+          hirestat_id: this.hirestatIds
         });
         // tslint:disable-next-line:no-unused-expression
         item.Checked === false;
-        console.log(tempData);
+        console.log(multiInsert);
       }
     });
-    const url = `${this.apiRoot}/MultiCreate`;
+    const url = this._factory.api({
+      api: `${this.apiRoot}/MultiCreate`
+    });
     const httpOptions = {
       params: new HttpParams()
     };
     this.http.post(url, {
-      listhiring: tempData
+      listhiring: multiInsert
     }, httpOptions)
       .subscribe(() => {
-          this._notif.success({
-            message: 'You have successfully Hired'
-          });
+        this._notif.success({
+          message: 'You have successfully Hired'
         });
+      });
   }
 
   public checkMethod(event: any) {
