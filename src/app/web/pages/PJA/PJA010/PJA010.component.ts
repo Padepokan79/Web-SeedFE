@@ -32,7 +32,8 @@ export class PJA010Component implements OnInit {
   public lovClient: LOVService;
   public clientPic: string;
   public clientMobile: string;
-  private selected: any;
+  public btnDisabled: boolean = true;
+  private selected: number;
   // public dataRow: any;
   // public lovUser: LOVService;
   
@@ -119,7 +120,7 @@ export class PJA010Component implements OnInit {
     });
 
     this._factory.http().get(readAllApi).subscribe((res: any) => {
-      this.action.patchFormData(res.data.items[this.selected]);
+      // this.action.patchFormData(res.data.items[this.selected]);
       this.clientPic = res.data.items[this.selected].client_picclient;
       this.clientMobile = res.data.items[this.selected].client_mobileclient;
     });
@@ -129,6 +130,10 @@ export class PJA010Component implements OnInit {
   public clearData(){
     this.clientPic = '';
     this.clientMobile = '';
+    this.btnDisabled = true;
+    
+    this.action.resetFilter() ;
+    this.action.refreshTable();
   }
 
   public onSearch() {
@@ -152,4 +157,8 @@ export class PJA010Component implements OnInit {
     this.router.navigate(['pages/pja/PJA012', { idClient }]);
   }
 
+  public setTrueClick(){
+    this.btnDisabled = false; 
+ }
+ 
 }
