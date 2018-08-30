@@ -29,14 +29,14 @@ export const ALL_MENU = [
           }
         }
       },
-      {
-        path: 'ALL004',
-        data: {
-          menu: {
-            title: 'Input Nilai Skill SDM',
-          }
-        }
-      },
+      // {
+      //   path: 'ALL004',
+      //   data: {
+      //     menu: {
+      //       title: 'Input Nilai Skill SDM',
+      //     }
+      //   }
+      // },
       {
         path: 'ALL003',
         data: {

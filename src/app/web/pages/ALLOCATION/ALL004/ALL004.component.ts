@@ -40,7 +40,6 @@ export class ALL004Component implements OnInit {
   public lovSdmSkill: LOVService;
 
   public title = 'app';
-  public save = false;
   public skillId: number;
   public skilltypeId: number;
   public skillsdmValue: number;
@@ -53,6 +52,7 @@ export class ALL004Component implements OnInit {
   public selected: string;
   public baris: number = 1;
   public valid = false;
+  public save = false;
 
   constructor(public _notif: DefaultNotificationService , private route: ActivatedRoute , private _factory: CoreFactory, private http: HttpClient) {
     this.listSearchCriteria.push(new SearchCriteria(_factory));
@@ -82,6 +82,7 @@ export class ALL004Component implements OnInit {
   public setSdmValue(skillSdm: SearchCriteria, dataSdm: ListOfValue) {
     if (dataSdm) {
       this.sdmId = dataSdm.key;
+      this.nik = '-';
       this.lovSDM = this._factory.lov({
         api: 'lov/sdm',
         params: {
@@ -91,14 +92,18 @@ export class ALL004Component implements OnInit {
       });
       
       const readAllApi = this._factory.api({
-        api : 'sdm/MengelolaSdm/readAll/readAll'
+        api : 'lov/SdmNik',
+        params: {
+          sdm_id: dataSdm.key
+        }
       });
 
-      this._factory.http().get(readAllApi).subscribe((res: any) => {
+      this.http.get(readAllApi).subscribe((res: any) => {
         console.log(res);
         console.log(this.sdmId);
         // this.action.patchFormData(res.data.items[this.selected]);
-        this.nik = res.data.items[this.sdmId-1].sdm_name;
+        this.nik = res.data[this.sdmId-1].values.sdm_sdm_nik;
+      
       });
 
     }
@@ -110,35 +115,55 @@ export class ALL004Component implements OnInit {
 
   // // // tslint:disable-next-line:member-ordering
   // tslint:disable-next-line:member-ordering
-  public apiRoot: string = 'http://localhost:7979/allocation/MultiInsertSdm';
-  public btnSave() {
 
+  public apiRoot: string = this._factory.api({
+    api : 'allocation/MultiInsertSdm'
+  })
+  // 'http://localhost:7979/allocation/MultiInsertSdm';
+  public btnSave() {
+    let save2 = true;
     const body = [];
     this.listSearchCriteria.forEach((skillSdm: SearchCriteria) => {
       if (this.sdmId == 0 || this.sdmId == null) {
         this._notif.error({
           message: 'Nama Sdm Wajib diisi'
         });
+        save2 = false;
       } else if (skillSdm.skilltype_id == 0 || skillSdm.skilltype_id == null) {
         this._notif.error({
-          message: 'Skill Type di baris ke '+this.baris+' Wajib diisi'
+          message: 'Skill Type Wajib diisi'
         });
+        save2 = false;
       } else if (skillSdm.skill_id == 0 || skillSdm.skill_id == null) {
         this._notif.error({
-          message: 'Skill di baris ke '+this.baris+' Wajib diisi'
+          message: 'Skill Wajib diisi'
         });
+        save2 = false;
       } else if (skillSdm.sdmskillValue == 0 || skillSdm.sdmskillValue == null) {
         this._notif.error({
-          message: 'Value di baris ke '+this.baris+' Wajib diisi'
+          message: 'Value Wajib diisi'
         });
+        save2 = false;
       } else {
-        body.push({
-          sdm_id: this.sdmId,
-          skilltype_id: skillSdm.skilltype_id,
-          skill_id: skillSdm.skill_id,
-          sdmskill_value: skillSdm.sdmskillValue
-        });
-        this.save = true;
+        if (skillSdm.sdmskillValue > 10) {
+          this._notif.error({
+            message: 'Value Maximal 10'
+          });
+          save2 = false;
+        } else if (skillSdm.sdmskillValue < 0) {
+          this._notif.error({
+            message: 'Value hanya bisa 0 sampai 10'
+          });
+          save2 = false;
+        } else {
+          body.push({
+            sdm_id: this.sdmId,
+            skilltype_id: skillSdm.skilltype_id,
+            skill_id: skillSdm.skill_id,
+            sdmskill_value: skillSdm.sdmskillValue
+          });
+          this.save = true;
+        }
       }
     });
 
@@ -156,7 +181,7 @@ export class ALL004Component implements OnInit {
       this.nik = res.data.items[this.sdmId-1].sdm_nik;
     });
 
-    if (this.save == true) {
+    if (this.save == true && save2 == true) {
       let valid = false;
       console.log('POST');
       const url = `${this.apiRoot}/MultiCreate`;

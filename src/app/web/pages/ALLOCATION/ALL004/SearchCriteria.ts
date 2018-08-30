@@ -16,6 +16,7 @@ export class SearchCriteria {
 
     public clientId: number = 4;
     public hirestatId: number = 3;
+    public temp = [1,2];
 
     constructor(private _factory: CoreFactory) {
         this.lovSkillType = this._factory.lov({
@@ -33,7 +34,7 @@ export class SearchCriteria {
                 field: 'skilltype_id',
                 operator: COMPARISON_OPERATOR.EQ,
                 value: skillSelect.key
-              }
+              },
             },
             initializeData: true,
           });
