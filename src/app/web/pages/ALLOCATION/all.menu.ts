@@ -4,7 +4,7 @@ export const ALL_MENU = [
     data: {
       menu: {
         title: 'ALLOCATION',
-        icon: 'fa fa-user',
+        icon: 'fa fa-random',
         selected: false,
         expanded: false,
         order: 400,

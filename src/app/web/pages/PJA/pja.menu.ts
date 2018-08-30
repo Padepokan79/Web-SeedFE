@@ -4,7 +4,7 @@ export const PJA_MENU = [
     data: {
       menu: {
         title: 'PJA',
-        icon: 'fa fa-users',
+        icon: 'fa fa-tasks',
         selected: false,
         expanded: false,
         order: 400,
