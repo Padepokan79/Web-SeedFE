@@ -51,7 +51,6 @@ export class PJA012Component implements OnInit {
   public varSkill: any;
   public skillValue: string;
   public hiringstatId: number;
-  public methodIds: any;
   public check: any;
   public tes: string;
   public isCantFilter: boolean = true;
@@ -60,6 +59,12 @@ export class PJA012Component implements OnInit {
   public increment: number = 0;
   public clientIds: number;
   public hirestatIds: number = 4;
+  public methodIds: number = 1;
+  public assignStartdate: any;
+  public assignEnddate: any;
+  public assignLoc: string = 'Bandung';
+  public assignClient: string = 'Tes Nama';
+  public assignClientPhone: string = '';
   public apiRoot: string = 'project/MultiAssignment';
 
   constructor(private _factory: CoreFactory, public _notif: DefaultNotificationService, private route: ActivatedRoute, private http: HttpClient) {
@@ -302,11 +307,11 @@ export class PJA012Component implements OnInit {
           sdm_id: item.sdm_id,
           method_id: 1,
           sdmhiring_id: null,
-          sdmassign_startdate: '2018-01-01',
-          sdmassign_enddate: '2019-01-01',
-          sdmassign_loc: 'Bandung',
-          sdmassign_picclient: 'Tes Nama',
-          sdmassign_picclientphone: '081322001322'
+          sdmassign_startdate: this.assignStartdate,
+          sdmassign_enddate: this.assignEnddate,
+          sdmassign_loc: this.assignLoc,
+          sdmassign_picclient: this.assignClient,
+          sdmassign_picclientphone: this.assignClientPhone
         });
         // tslint:disable-next-line:no-unused-expression
         item.Checked === false;

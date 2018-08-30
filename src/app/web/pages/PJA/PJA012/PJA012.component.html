@@ -67,8 +67,8 @@ UPDATE		: Wednesday, August 29th 2018 07:15:00 AM
       </div>
       <br><br>
       <div class="action-filter">
-        <button class="btn btn-filter btn-mm" [disabled]="isCantFilter" (click)="btnFilter();deactivateButton()">Filter <i class="glyphicon glyphicon-search"></i></button>
-        <button class="btn btn-clear btn-mm" (click)="resetSource();deactivateButton()">Clear <i class="glyphicon glyphicon-times"></i></button>
+        <button [routerLink]="['/pages/dashboard']" class="btn btn-mm"> &lt; Back</button>
+        <button class="btn btn-primary btn-mm" [disabled]="isLocked" [routerLink]="['/pages/pja/PJA010']" (click)="assignSubmit()">Assign</button>
       </div>
       <br><br>
     </form>
@@ -88,5 +88,5 @@ UPDATE		: Wednesday, August 29th 2018 07:15:00 AM
   </form>
 </div>
 <ng-template #tableActionTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
-  <mat-checkbox (change)="distRedundantCheckedSdm()" value="{{row.sdm_id}}" [(ngModel)]="row.Checked" [name]="row.sdm_id"></mat-checkbox>
+  <mat-checkbox (change)="distRedundantCheckedSdm();activateButton()" value="{{row.sdm_id}}" [(ngModel)]="row.Checked" [name]="row.sdm_id"></mat-checkbox>
 </ng-template>
