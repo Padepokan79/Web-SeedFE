@@ -10,6 +10,7 @@ import { FilterAdapterService } from '../adapter/filter-adapter.service';
 import { IPagingParams } from '../../interfaces/main/i-paging-params';
 import { IFilterOperand } from '../../interfaces/main/i-filter-operand';
 import { IFilterComponent } from '../../interfaces/main/i-filter-component';
+import { Comparison } from '../../enums/comparison-operator.enum';
 
 export class PaginationService {
 
@@ -147,31 +148,19 @@ export class PaginationService {
         return Conjunction.AND(...filterOperand);
     }
 
-    private convertSearchAsFilter(): IFilterComponent {
-        let result = {} as IFilterComponent;
+    private convertSearchAsFilter(): ISimplifiedFilterComponent {
+        let result = {} as ISimplifiedFilterComponent;
 
         switch (this.selectedSearchKey.type) {
             case TYPE.STRING:
-                result = {
-                    field: 'LOWER(' + this.selectedSearchKey.viewKey + ')',
-                    operator: COMPARISON_OPERATOR.LIKE,
-                    value: '%25' + this.searchValue.toLowerCase() + '%25'
-                };
+                result = Comparison.LIKE('LOWER(' + this.selectedSearchKey.viewKey + ')',this.searchValue.toLowerCase() + '%25');
                 break;
             case TYPE.NUMBER:
-                result = {
-                    field: this.selectedSearchKey.viewKey,
-                    operator: COMPARISON_OPERATOR.EQ,
-                    value: this.searchValue
-                };
+                result = Comparison.EQ(this.selectedSearchKey.viewKey, this.searchValue);
                 break;
             case TYPE.DATE:
-                let dateString = this._datePipe.transform(new Date(this.searchValue), DATE.DEFAULT_FORMAT);
-                result = {
-                    field: this.selectedSearchKey.viewKey,
-                    operator: COMPARISON_OPERATOR.EQ,
-                    value: dateString
-                };
+                const dateString = this._datePipe.transform(new Date(this.searchValue), DATE.DEFAULT_FORMAT);
+                result = Comparison.EQ(this.selectedSearchKey.viewKey, dateString);
                 break;
             default :
                 break;

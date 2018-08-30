@@ -10,7 +10,8 @@ export enum ComparisonOperator {
     LT,
     LE,
     GT,
-    GE
+    GE,
+    LIKE
 }
 
 export class Comparison {
@@ -36,6 +37,10 @@ export class Comparison {
 
     public static GE(field: string, value: string): ISimplifiedFilterComponent {
         return { criterion : [field, ComparisonOperator.GE, value] };
+    }
+
+    public static LIKE(field: string, value: string): ISimplifiedFilterComponent {
+        return { criterion : [field, ComparisonOperator.LIKE, value] };
     }
 
 }
