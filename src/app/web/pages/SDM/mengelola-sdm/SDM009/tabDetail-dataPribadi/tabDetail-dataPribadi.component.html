@@ -1,6 +1,6 @@
 <p></p>
 
-<form class="io-form-body" [formGroup]="action?.formControls()"> 
+<form class="io-form-body" [formGroup]="action?.formControls()">
 
     <div style="width: 100%; padding-left: 20px; padding-right: 20px">
     <!-- KONTEN DATA PRIBADI-->
@@ -10,14 +10,15 @@
     <!-- NAMA LENGKKAP -->
     <tr>
         <td style="width: 20%">Nama Lengkap</td>
-        <td style="width: 5px">:</td>
+        <td style="width: 5px">: </td>
         <td style="width: 80%">
             <mat-form-field class="sdw-full-size">
-                <input matInput placeholder="" formControlName="sdm_name" name="sdm_name" required>
+                <input matInput placeholder="" formControlName="sdm_name" name="sdm_name" readonly>
                 <mat-hint *ngIf="action.formErrors.sdm_name" [ngStyle]="{'color': 'red'}">
                 {{action.formErrors.sdm_name}}
                 </mat-hint>
             </mat-form-field>
+
         </td>
         <td rowspan="7">
             <div style="margin-left: 50px">
@@ -37,7 +38,7 @@
         <td >:</td>
         <td >
             <mat-form-field class="sdw-full-size">
-                <input matInput placeholder="" formControlName="sdm_nik" name="sdm_nik" pattern="^0$|^((?!(0))[0-9]{0,9})$" >
+                <input matInput placeholder="" formControlName="sdm_nik" name="sdm_nik" pattern="^0$|^((?!(0))[0-9]{0,9})$" readonly>
                 <mat-hint *ngIf="action.formErrors.sdm_nik" [ngStyle]="{'color': 'red'}">
                     {{action.formErrors.sdm_nik}}
                 </mat-hint>
@@ -50,7 +51,7 @@
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size">
-                <input matInput placeholder="" formControlName="sdm_ktp" name="sdm_ktp" pattern="^0$|^((?!(0))[0-9]{0,9})$" >
+                <input matInput placeholder="" formControlName="sdm_ktp" name="sdm_ktp" pattern="^0$|^((?!(0))[0-9]{0,9})$" readonly>
                 <mat-hint *ngIf="action.formErrors.sdm_ktp" [ngStyle]="{'color': 'red'}">
                 {{action.formErrors.sdm_ktp}}
                 </mat-hint>
@@ -63,7 +64,7 @@
         <td>Jenis Kelamin</td>
         <td>:</td>
         <td>
-            <mat-radio-group class="margin-field" formControlName="gender_id" name="gender_id" >
+            <mat-radio-group class="margin-field" formControlName="gender_id" name="gender_id" disabled>
             <mat-radio-button value="1">Laki-laki</mat-radio-button>
             <mat-radio-button value="2">Perempuan</mat-radio-button>
             </mat-radio-group>
@@ -76,7 +77,7 @@
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size">
-                <input matInput placeholder="" formControlName="sdm_placebirth" name="sdm_placebirth">
+                <input matInput placeholder="" formControlName="sdm_placebirth" name="sdm_placebirth" readonly>
             </mat-form-field>
         </td>
     </tr>
@@ -88,7 +89,7 @@
         <td>
             <div class="example-container">
             <mat-form-field class="sdw-full-size">
-                <input matInput placeholder="" formControlName="sdm_datebirth" name="sdm_datebirth">
+                <input matInput placeholder="" formControlName="sdm_datebirth" name="sdm_datebirth" readonly>
                 <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
             </mat-form-field>
             </div>
@@ -101,7 +102,7 @@
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size"  >
-            <textarea matInput placeholder="" formControlName="sdm_address"></textarea>
+            <textarea matInput placeholder="" formControlName="sdm_address" readonly></textarea>
             </mat-form-field>
         </td>
     </tr>
@@ -112,7 +113,7 @@
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size">
-                <input matInput placeholder="" formControlName="sdm_postcode" name="sdm_postcode" pattern="^0$|^((?!(0))[0-9]{0,9})$" >
+                <input matInput placeholder="" formControlName="sdm_postcode" name="sdm_postcode" pattern="^0$|^((?!(0))[0-9]{0,9})$" readonly>
                 <mat-hint *ngIf="action.formErrors.sdm_postcode" [ngStyle]="{'color': 'red'}">
                 {{action.formErrors.sdm_postcode}}
                 </mat-hint>
@@ -138,7 +139,7 @@
         <td>
             <div class="example-container">
             <mat-form-field class="sdw-full-size">
-                <input matInput placeholder="" formControlName="sdm_email" name="sdm_email">
+                <input matInput placeholder="" formControlName="sdm_email" name="sdm_email" readonly>
                 <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
             </mat-form-field>
             </div>
@@ -151,7 +152,7 @@
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size">
-                <input matInput placeholder="" formControlName="sdm_linkedin" name="sdm_linkedin" >
+                <input matInput placeholder="" formControlName="sdm_linkedin" name="sdm_linkedin" readonly>
                 </mat-form-field>
         </td>
     </tr>
@@ -162,7 +163,7 @@
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size">
-                <mat-select placeholder="" formControlName="religion_id" name="religion_id" >
+                <mat-select placeholder="" formControlName="religion_id" name="religion_id" disabled>
                 <!-- <mat-option></mat-option> -->
                 <mat-option *ngFor="let lov of lovReligion.data" [value]="lov.key">
                     {{lov.value}}
@@ -178,7 +179,7 @@
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size">
-                <mat-select placeholder="" formControlName="health_id" name="health_id" required>
+                <mat-select placeholder="" formControlName="health_id" name="health_id" required disabled>
                 <mat-option *ngFor="let lov of lovHealth.data" [value]="lov.key">
                     {{lov.value}}
                 </mat-option>
@@ -193,7 +194,7 @@
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size">
-                <input matInput placeholder="" formControlName="sdm_objective" name="sdm_objective">
+                <input matInput placeholder="" formControlName="sdm_objective" name="sdm_objective" readonly>
                 </mat-form-field>
         </td>
     </tr>
@@ -204,7 +205,7 @@
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size">
-                <mat-select placeholder="" formControlName="sdmlvl_id" name="sdmlvl_id" required>
+                <mat-select placeholder="" formControlName="sdmlvl_id" name="sdmlvl_id" required disabled>
                 <mat-option *ngFor="let lov of lovLevel.data" [value]="lov.key">
                     {{lov.value}}
                 </mat-option>
@@ -219,7 +220,7 @@
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size">
-                <mat-select placeholder="" formControlName="contracttype_id" name="contracttype_id" required>
+                <mat-select placeholder="" formControlName="contracttype_id" name="contracttype_id" required disabled>
                 <mat-option *ngFor="let lov of lovStatus.data" [value]="lov.key">
                     {{lov.value}}
                 </mat-option>
@@ -234,7 +235,7 @@
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size">
-                <input matInput placeholder="" formControlName="sdm_contractloc" name="sdm_contractloc">
+                <input matInput placeholder="" formControlName="sdm_contractloc" name="sdm_contractloc" readonly>
                 </mat-form-field>
         </td>
     </tr>
@@ -245,7 +246,7 @@
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size">
-                <input matInput [matDatepicker]="pickerStartDate" (click)="pickerStartDate.open()" placeholder="" formControlName="sdm_startcontract">
+                <input matInput [matDatepicker]="pickerStartDate" (click)="pickerStartDate.open()" placeholder="" formControlName="sdm_startcontract" disabled readonly>
                 <mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
                 <mat-datepicker #pickerStartDate></mat-datepicker>
                 </mat-form-field>
@@ -258,7 +259,7 @@
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size">
-                <input matInput [matDatepicker]="pickerEndDate" (click)="pickerEndDate.open()" placeholder="" formControlName="sdm_endcontract">
+                <input matInput [matDatepicker]="pickerEndDate" (click)="pickerEndDate.open()" placeholder="" formControlName="sdm_endcontract" disabled readonly>
                 <mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
                 <mat-datepicker #pickerEndDate></mat-datepicker>
                 </mat-form-field>
