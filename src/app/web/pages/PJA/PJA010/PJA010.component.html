@@ -20,7 +20,7 @@
         </td>
         <td class="nx-table-range" style="width: 100px">
           <mat-form-field>
-            <mat-select placeholder="- Select -" formControlName="client_id" name="client_id" [(ngModel)]="selected" (change)="ambilData();onSearch()">
+            <mat-select placeholder="- Select -" (change)="setTrueClick()" formControlName="client_id" name="client_id" [(ngModel)]="selected" (change)="ambilData();onSearch()">
               <mat-option *ngFor="let lov of lovClient.data" [value]="lov.key">
                 {{lov.value}}
               </mat-option>
@@ -58,7 +58,7 @@
           <button mat-flat-button (click)="action.onReset();clearData()">
               <span class="glyphicon glyphicon-remove nx-save-button" aria-hidden="true"></span>Clear</button>&nbsp;
           <div class="col-md-2" style="float:right">
-            <button mat-flat-button style="float:right" (click)="navigatePushId(selected)">
+            <button mat-flat-button style="float:right" [disabled]="btnDisabled" (click)="navigatePushId(selected)">
                 <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>Assign
             </button>
           </div>

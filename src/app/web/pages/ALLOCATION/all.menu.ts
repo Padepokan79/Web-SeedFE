@@ -4,7 +4,7 @@ export const ALL_MENU = [
     data: {
       menu: {
         title: 'ALLOCATION',
-        icon: 'fa fa-user',
+        icon: 'fa fa-random',
         selected: false,
         expanded: false,
         order: 400,
@@ -16,7 +16,7 @@ export const ALL_MENU = [
         data: {
           menu: {
             title: 'List Skill',
-            icon: 'fa fa-bars',
+            icon: 'fa fa-list',
           }
         }
       },
@@ -25,18 +25,18 @@ export const ALL_MENU = [
         data: {
           menu: {
             title: 'List Category',
-            icon: 'fa fa-category',
+            icon: 'fa fa-list',
           }
         }
       },
-      {
-        path: 'ALL004',
-        data: {
-          menu: {
-            title: 'Input Nilai Skill SDM',
-          }
-        }
-      },
+      // {
+      //   path: 'ALL004',
+      //   data: {
+      //     menu: {
+      //       title: 'Input Nilai Skill SDM',
+      //     }
+      //   }
+      // },
       {
         path: 'ALL003',
         data: {
@@ -51,6 +51,7 @@ export const ALL_MENU = [
         data: {
           menu: {
             title: 'Multi-filtering SDM',
+            icon: 'fa fa-search',
           }
         }
       }

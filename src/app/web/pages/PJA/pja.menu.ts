@@ -4,7 +4,7 @@ export const PJA_MENU = [
     data: {
       menu: {
         title: 'PJA',
-        icon: 'fa fa-users',
+        icon: 'fa fa-tasks',
         selected: false,
         expanded: false,
         order: 400,
@@ -16,7 +16,7 @@ export const PJA_MENU = [
         data: {
           menu: {
             title: 'Input Project SDM',
-            icon: 'fa fa-user',
+            icon: 'fa fa-pencil',
           }
         }
       },
@@ -34,7 +34,7 @@ export const PJA_MENU = [
         data: {
           menu: {
             title: 'List Detail Project SDM',
-            icon: 'fa fa-user',
+            icon: 'fa fa-users',
           }
         }
       },
@@ -43,7 +43,7 @@ export const PJA_MENU = [
         data: {
           menu: {
             title: 'Input Detail Client',
-            icon: 'fa fa-user',
+            icon: 'fa fa-user-plus',
           }
         }
       },
@@ -52,7 +52,7 @@ export const PJA_MENU = [
         data: {
           menu: {
             title: 'List Detail Client',
-            icon: 'fa fa-user',
+            icon: 'fa fa-eye',
           }
         }
       },
@@ -61,7 +61,7 @@ export const PJA_MENU = [
         data: {
           menu: {
             title: 'Hiring SDM',
-            icon: 'fa fa-user',
+            icon: 'fa fa-send',
           }
         }
       },
@@ -70,7 +70,7 @@ export const PJA_MENU = [
         data: {
           menu: {
             title: 'SDM Assignment',
-            icon: 'fa fa-user',
+            icon: 'fa fa-address-book',
           }
         }
       }
