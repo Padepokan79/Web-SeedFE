@@ -276,7 +276,7 @@ export class PJA008Component implements OnInit {
     this.action.table().rows.forEach((item) => {
       if (item.Checked === true) {
         tempData.push({
-          sdmhiring_id: '',
+          sdmhiring_id: null,
           sdm_id: item.sdm_id,
           client_id: 4,
           hirestat_id: 3,
