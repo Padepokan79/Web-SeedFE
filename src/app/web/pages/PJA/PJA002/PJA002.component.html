@@ -112,7 +112,7 @@ UPDATE 		: ‎Thursday, ‎August ‎16, ‎2018, ‏‎1:51 PM
 				</td>
 				<td>
 					<mat-form-field>
-			          <input matInput [matDatepicker]="pickerStartDate" (click)="pickerStartDate.open()" formControlName="project_startdate" name="project_startdate">
+			          <input matInput [matDatepicker]="pickerStartDate" (click)="pickerStartDate.open()" formControlName="project_startdate" name="project_startdate" readonly>
 			          <mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
 			          <mat-datepicker #pickerStartDate></mat-datepicker>
 			        </mat-form-field>
@@ -132,7 +132,7 @@ UPDATE 		: ‎Thursday, ‎August ‎16, ‎2018, ‏‎1:51 PM
 				</td>
 				<td>
 					<mat-form-field>
-			          <input matInput [matDatepicker]="pickerEndDate" (click)="pickerEndDate.open()" formControlName="project_enddate" name="project_enddate">
+			          <input matInput [matDatepicker]="pickerEndDate" (click)="pickerEndDate.open()" formControlName="project_enddate" name="project_enddate" readonly>
 			          <mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
 			          <mat-datepicker #pickerEndDate></mat-datepicker>
 			        </mat-form-field>
