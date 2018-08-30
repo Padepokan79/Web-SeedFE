@@ -16,7 +16,7 @@ export const SDM_MENU = [
         data: {
           menu: {
             title: 'Input SDM',
-            icon: 'fa fa-user',
+            icon: 'fa fa-user-plus',
           }
         }
       },
