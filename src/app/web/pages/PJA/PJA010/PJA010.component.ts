@@ -36,13 +36,13 @@ export class PJA010Component implements OnInit {
   private selected: number;
   // public dataRow: any;
   // public lovUser: LOVService;
-  
+
   constructor(
     private _factory: CoreFactory,
     private route: ActivatedRoute,
     private router: Router
   ) { }
-  
+
   public ngOnInit() {
 
     this.inputForm = this._factory.inputForm({
@@ -127,11 +127,11 @@ export class PJA010Component implements OnInit {
 
   }
 
-  public clearData(){
+  public clearData() {
     this.clientPic = '';
     this.clientMobile = '';
     this.btnDisabled = true;
-    
+
     this.action.resetFilter() ;
     this.action.refreshTable();
   }
@@ -152,13 +152,13 @@ export class PJA010Component implements OnInit {
   public navigateEditMenu(id) {
     this.router.navigate(['/pages/pja/PJA011', { id }]);
   }
-  
+
   public navigatePushId(idClient) {
     this.router.navigate(['pages/pja/PJA012', { idClient }]);
   }
 
-  public setTrueClick(){
-    this.btnDisabled = false; 
+  public setTrueClick() {
+    this.btnDisabled = false;
  }
- 
+
 }

@@ -13,9 +13,6 @@ import { ListOfValue } from './../../../../core/models/list-of-value';
 import { FormControl } from './../../../../../../node_modules/@angular/forms';
 import { ActivatedRoute, Router } from '../../../../../../node_modules/@angular/router';
 import { HttpClient, HttpParams } from '../../../../../../node_modules/@angular/common/http';
-import { MultiInsert } from './MultiInsert';
-import { MultiInsertSdmAssign } from './MultiInsertSdmAssign';
-import { COMPARISON_OPERATOR } from '../../../../core/constant/constant';
 
 @Component({
   selector: 'app-PJA012',
@@ -62,10 +59,11 @@ export class PJA012Component implements OnInit {
   public methodIds: number = 1;
   public assignStartdate: any;
   public assignEnddate: any;
-  public assignLoc: string = 'Bandung';
-  public assignClient: string = 'Tes Nama';
+  public assignLoc: string = '';
+  public assignClient: string = '';
   public assignClientPhone: string = '';
   public apiRoot: string = 'project/MultiAssignment';
+  public router: any;
 
   constructor(private _factory: CoreFactory, public _notif: DefaultNotificationService, private route: ActivatedRoute, private http: HttpClient) {
     this.listSearchCriteria.push(new SearchCriteria(_factory));
@@ -339,8 +337,9 @@ export class PJA012Component implements OnInit {
     }, httpOptions)
       .subscribe(() => {
         this._notif.success({
-          message: 'You have successfully Hired'
+          message: 'You have successfully Assigned'
         });
+        this.router.navigate(['pages/pja/PJA010']);
       });
   }
 
