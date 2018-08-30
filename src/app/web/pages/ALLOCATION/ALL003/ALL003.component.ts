@@ -48,7 +48,7 @@ export class ALL003Component implements OnInit {
     //   // }
     });
     this.dataTable = this._factory.dataTable({
-      serverSide : true,
+      serverSide : false,
       pagingParams : {
         // filter: {
         //   operator: CONJUNCTION_OPERATOR.AND,
@@ -68,9 +68,10 @@ export class ALL003Component implements OnInit {
         limit : 8
       },
       searchCriteria : [
+        { viewValue: 'Skill Type Name', viewKey: 'skilltype_name', type: TYPE.STRING },
         { viewValue: 'Skill Name', viewKey: 'skill_name', type: TYPE.STRING },
-        { viewValue: 'Sdm id', viewKey: 'sdm_id', type: TYPE.NUMBER },
-        { viewValue: 'Skill Type id', viewKey: 'skilltype_id', type: TYPE.NUMBER }
+        { viewValue: 'Sdm Name', viewKey: 'sdm_name', type: TYPE.STRING },
+        { viewValue: 'NIK', viewKey: 'sdm_nik', type: TYPE.NUMBER }
       ],
       tableColumns : [
         { prop: 'sdm_nik', name: 'NIK', width: 100, sortable: false },

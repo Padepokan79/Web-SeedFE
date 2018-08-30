@@ -52,6 +52,7 @@ export class ALL004Component implements OnInit {
   public nik: string;
   public selected: string;
   public baris: number = 1;
+  public valid = false;
 
   constructor(public _notif: DefaultNotificationService , private route: ActivatedRoute , private _factory: CoreFactory, private http: HttpClient) {
     this.listSearchCriteria.push(new SearchCriteria(_factory));
@@ -90,17 +91,14 @@ export class ALL004Component implements OnInit {
       });
       
       const readAllApi = this._factory.api({
-      api : 'sdm/MengelolaSdm/readAll',
-        params : {
-          value : this.sdmId
-        }
+        api : 'sdm/MengelolaSdm/readAll/readAll'
       });
 
       this._factory.http().get(readAllApi).subscribe((res: any) => {
         console.log(res);
         console.log(this.sdmId);
         // this.action.patchFormData(res.data.items[this.selected]);
-        this.nik = res.data.items[this.sdmId-1].sdm_nik;
+        this.nik = res.data.items[this.sdmId-1].sdm_name;
       });
 
     }
@@ -112,7 +110,7 @@ export class ALL004Component implements OnInit {
 
   // // // tslint:disable-next-line:member-ordering
   // tslint:disable-next-line:member-ordering
-  public apiRoot: string = 'http://10.10.10.61:7979/allocation/MultiInsertSdm';
+  public apiRoot: string = 'http://localhost:7979/allocation/MultiInsertSdm';
   public btnSave() {
 
     const body = [];
@@ -159,6 +157,7 @@ export class ALL004Component implements OnInit {
     });
 
     if (this.save == true) {
+      let valid = false;
       console.log('POST');
       const url = `${this.apiRoot}/MultiCreate`;
       const httpOptions = {
@@ -168,10 +167,16 @@ export class ALL004Component implements OnInit {
         .post(url, {
           listsdm: body
         }, httpOptions)
-        .subscribe((res) => {
+        .subscribe(
+          (res: any) => {
           this._notif.success({
-            message: 'Input Sdm Skill Value berhasil'
+            message: 'Input data berhasil'
           });
+          console.clear();
+          console.log(res)
+       },(error: any) => {
+          this._notif.error(error);
+          console.clear();
        });
     } else {
       console.log('Ada yang kurang');

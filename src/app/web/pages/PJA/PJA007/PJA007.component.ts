@@ -28,9 +28,10 @@ export class PJA007Component implements OnInit {
   public inputForm: InputForm;
   public dataTable: DataTable;
   public lovClients: LOVService;
-  public picHandler: string;
-  public picContact: string;
+  public clientPic: string;
+  public clientMobile: string;
   private selected: any;
+  public btnDisabled: boolean=true;
 
   constructor(private _factory: CoreFactory, private router: Router) { }
 
@@ -93,23 +94,24 @@ export class PJA007Component implements OnInit {
 
   public ambilData() {
     const readAllApi = this._factory.api({
-      api : 'project/SdmAssignment/readAll',
+      api : 'project/MengelolaClient/readAll',
       params : {
           value : this.selected
       }
     });
-
+    console.log(this.selected);
     this._factory.http().get(readAllApi).subscribe((res: any) => {
       this.action.patchFormData(res.data.items[this.selected]);
-      this.picHandler = res.data.items[this.selected].sdmassign_picclient;
-      this.picContact = res.data.items[this.selected].sdmassign_picclientphone;
+      this.clientPic = res.data.items[this.selected].client_picclient;
+      this.clientMobile = res.data.items[this.selected].client_mobileclient;
     });
 
   }
 
   public clearData(){
-    this.picHandler = '';
-    this.picContact = '';
+    this.clientPic = '';
+    this.clientMobile = '';
+     this.btnDisabled = true; 
   }
 
   public navigateEditMenu(id) {
@@ -131,6 +133,10 @@ export class PJA007Component implements OnInit {
     );
 
     this.action.refreshTable();
+  }
+
+  public setTrueClick(){
+     this.btnDisabled = false; 
   }
 
 }

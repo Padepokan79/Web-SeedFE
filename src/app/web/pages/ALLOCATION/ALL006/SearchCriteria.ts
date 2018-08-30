@@ -5,10 +5,10 @@ import { LOVService } from '../../../../core/services/uninjectable/lov.service';
 
 export class SearchCriteria {
     // tslint:disable-next-line:variable-name
-    public skilltype_id: string = '';
+    public skilltype_id: string = null;
     // tslint:disable-next-line:variable-name
-    public skill_id: string = '';
-    public value: string = '';
+    public skill_id: string = null;
+    public value: string = null;
     public lovSkillType: LOVService = null;
     public lovSkill: LOVService = null;
     public lovSdmSkill: LOVService = null;

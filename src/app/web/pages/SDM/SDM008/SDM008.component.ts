@@ -6,6 +6,10 @@ import { ActionService } from './../../../../core/services/uninjectable/action.s
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { LOVService } from '../../../../core/services/uninjectable/lov.service';
 import { Router } from '../../../../../../node_modules/@angular/router';
+import { FormControl, FormGroup } from '../../../../../../node_modules/@angular/forms';
+import { ListOfValue } from '../../../../core/models/list-of-value';
+import { Comparison } from '../../../../core/enums/comparison-operator.enum';
+import { startWith, map } from '../../../../../../node_modules/rxjs/operators';
 
 @Component({
   selector: 'app-SDM008',
@@ -23,19 +27,40 @@ export class SDM008Component implements OnInit {
   public inputForm: InputForm;
   public dataTable: DataTable;
 
-  public lovSDM: LOVService;
+  public lovSdm: LOVService;
   public lovPsychologicals: LOVService;
 
-  constructor(private _factory: CoreFactory, private router: Router) { }
+  // SDM
+  public filteredSdm: any;
+  public sdmCtrl: FormControl;
+
+  // Hapus
+  public KeyId: any;
+  public SdmName: any;
+
+  public onKeySdmName(event: any) {
+    this.KeyId = event.target.value;
+    if (this.KeyId === '') {
+      this.SdmName = null;
+      console.log('Nama: ', this.SdmName);
+    }
+  }
+  // tslint:disable-next-line:member-ordering
+  constructor(private _factory: CoreFactory, private router: Router) {
+    this.sdmCtrl = new FormControl();
+    this.filteredSdm = this.sdmCtrl.valueChanges
+    .pipe(
+      startWith(''),
+      map((value) => this.filterSdm(value))
+    );
+  }
 
   public ngOnInit() {
     this.inputForm = this._factory.inputForm({
-      // formControls: {
-      //   sdm_id: '',
-      //   psycho_id: '',
-      //   sdmpsycological_desc: '',
-      //   psycological_date: '',
-      // },
+      formControls: {
+        sdm_id: '',
+        sdm_name: '',
+      },
       // validationMessages: {
       //   sdm_id: {
       //     required: '',
@@ -67,9 +92,9 @@ export class SDM008Component implements OnInit {
         // },
         limit : 5
       },
-      searchCriteria : [
-        { viewValue: 'Name', viewKey: 'sdm_id', type: TYPE.STRING },
-      ],
+      // searchCriteria : [
+      //   { viewValue: 'Name', viewKey: 'sdm_id', type: TYPE.STRING },
+      // ],
       tableColumns : [
         { prop: 'norut', name: 'No', width: 5, sortable: false },
         { prop: 'sdm_name', name: 'Name', width: 135, sortable: false },
@@ -87,7 +112,7 @@ export class SDM008Component implements OnInit {
         dataTable: this.dataTable
     });
 
-    this.lovSDM = this._factory.lov({
+    this.lovSdm = this._factory.lov({
         api: 'lov/Sdm',
         initializeData: true
     });
@@ -102,4 +127,30 @@ export class SDM008Component implements OnInit {
     this.router.navigate(['/pages/sdm/SDM007', { id }]);
   }
 
+  public setSdmValue(inputForm: FormGroup, dataSdm: ListOfValue) {
+    if (dataSdm) {
+      this.lovSdm = this._factory.lov({
+        api: 'lov/sdm',
+        params: {
+          sdm_id: dataSdm.key
+        },
+        initializeData: true
+      });
+      this.SdmName = dataSdm.key;
+      this.action.patchFormData({sdm_id: dataSdm.key, sdm_name: dataSdm.values.sdm_sdm_name});
+      console.log(this.SdmName);
+    }
+  }
+
+  public filterSdm(val: string) {
+    return val ? this.lovSdm.data.filter((s) => s.values.sdm_sdm_name.toLowerCase().indexOf(val.toLocaleLowerCase()) === 0) : [];
+  }
+
+  public onSearch() {
+    this.action.setPaginationFilter(
+      this.SdmName ? Comparison.EQ('sdm_id', this.SdmName) : Comparison.NE('sdm_id', 'sdm_id'),
+    );
+
+    this.action.refreshTable();
+  }
 }
