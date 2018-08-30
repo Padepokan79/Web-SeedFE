@@ -110,7 +110,7 @@ export class ALL004Component implements OnInit {
 
   // // // tslint:disable-next-line:member-ordering
   // tslint:disable-next-line:member-ordering
-  public apiRoot: string = 'http://10.10.10.47:7979/allocation/MultiInsertSdm';
+  public apiRoot: string = 'http://localhost:7979/allocation/MultiInsertSdm';
   public btnSave() {
 
     const body = [];
