@@ -71,7 +71,7 @@ export class SDM008Component implements OnInit {
         { viewValue: 'Name', viewKey: 'sdm_id', type: TYPE.STRING },
       ],
       tableColumns : [
-        { prop: 'num', name: 'No', width: 5, sortable: false },
+        { prop: 'norut', name: 'No', width: 5, sortable: false },
         { prop: 'sdm_name', name: 'Name', width: 135, sortable: false },
         { prop: 'psyco_name', name: 'Condition', width: 10, sortable: false },
         { prop: 'sdmpsycological_desc', name: 'Reason', width: 300, sortable: false },

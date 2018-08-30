@@ -202,6 +202,7 @@ export class ALL006Component implements OnInit {
     this.listSearchCriteria.forEach((searchCriteria: SearchCriteria) => {
       searchCriteria.skilltype_id = '';
       searchCriteria.skill_id = '';
+      searchCriteria.value = '';
     });
     this.increment = 0;
   }
