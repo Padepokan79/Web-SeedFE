@@ -79,7 +79,10 @@ export class PJA012Component implements OnInit {
     // });
     // tslint:disable-next-line:no-shadowed-variable
     this.route.params.subscribe((param) => {
-      this.clientIds = param.idClient;
+      this.clientIds    = param.idClient;
+      this.assignClient = param.client_name;
+      this.assignLoc = param.client_address;
+      this.assignClientPhone = param.client_mobileclient;
     });
   }
 
@@ -237,9 +240,16 @@ export class PJA012Component implements OnInit {
     this.action.table().rows.forEach((item) => {
       if (item.Checked === true) {
         tempData.push({
-          sdm_id: item.sdm_id,
           client_id: this.clientIds,
-          hirestat_id: this.hirestatIds
+          hirestat_id: this.hirestatIds,
+          sdm_id: item.sdm_id,
+          method_id: 1,
+          sdmhiring_id: null,
+          sdmassign_startdate: this.assignStartdate,
+          sdmassign_enddate: this.assignEnddate,
+          sdmassign_loc: this.assignLoc,
+          sdmassign_picclient: this.assignClient,
+          sdmassign_picclientphone: this.assignClientPhone
         });
         // tslint:disable-next-line:no-unused-expression
         item.Checked === false;
