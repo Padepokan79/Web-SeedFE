@@ -11,10 +11,11 @@ import { Conjunction } from './../../../../core/enums/conjunction-operator.enum'
 import { DefaultNotificationService } from './../../../../core/services/default-notification.service';
 import { ListOfValue } from './../../../../core/models/list-of-value';
 import { FormControl } from './../../../../../../node_modules/@angular/forms';
-import { ActivatedRoute } from '../../../../../../node_modules/@angular/router';
+import { ActivatedRoute, Router } from '../../../../../../node_modules/@angular/router';
 import { HttpClient, HttpParams } from '../../../../../../node_modules/@angular/common/http';
 import { MultiInsert } from './MultiInsert';
 import { MultiInsertSdmAssign } from './MultiInsertSdmAssign';
+import { COMPARISON_OPERATOR } from '../../../../core/constant/constant';
 
 @Component({
   selector: 'app-PJA012',
@@ -32,6 +33,7 @@ export class PJA012Component implements OnInit {
   public sdmCtrl: FormControl;
   public valueCtrl: FormControl;
   public action: ActionService;
+  public action2: ActionService;
   public inputForm: InputForm;
   public dataTable: DataTable;
   public listSearchCriteria: SearchCriteria[] = [];
@@ -57,15 +59,25 @@ export class PJA012Component implements OnInit {
   public tes: string;
   public increment: number = 0;
   public apiRoot: string = 'http://localhost:7979/project/MultiAssignment';
+  public clientName: any;
+  public clientAddress: any;
+  public clientPic: any;
+  public clientMobile: any;
+  public selectedId: number;
 
-  constructor(private _factory: CoreFactory, public _notif: DefaultNotificationService, private route: ActivatedRoute, private http: HttpClient) {
+  constructor(
+    private _factory: CoreFactory,
+    public _notif: DefaultNotificationService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private http: HttpClient) {
     this.listSearchCriteria.push(new SearchCriteria(_factory));
     this.sdmCtrl = new FormControl();
     this.filteredSdm = this.sdmCtrl.valueChanges
       .startWith('')
       .map((value) => this.filterSdm(value));
     this.route.params.subscribe((param) => {
-      this.IdSdm = param.id;
+      this.selectedId = param.idClient;
     });
   }
 
@@ -144,6 +156,30 @@ export class PJA012Component implements OnInit {
       this.time = new Date();
     }, 1);
 
+    this.action2 = this._factory.actions({
+      api: 'project/MengelolaClient',
+      inputForm: this.inputForm,
+  });
+
+  const readAllApi = this._factory.api({
+      api : 'project/MengelolaClient/readAll',
+      pagingParams : {
+        filter : {
+          field : 'client_id',
+          operator : COMPARISON_OPERATOR.EQ,
+          value : this.selectedId
+        }
+      }
+    });
+
+  this._factory.http().get(readAllApi).subscribe((res: any) => {
+    // this.action2.patchFormData(res.data.items[0]);
+    // this.clientName = res.data.items[0].client_name;
+    // this.clientAddress = res.data.items[0].client_address;
+    // this.clientPic = res.data.items[0].client_picclient;
+    // this.clientMobile = res.data.items[0].client_mobileclient;
+  });
+
   }
 
   public selectToAssign() {
@@ -214,8 +250,6 @@ export class PJA012Component implements OnInit {
         // console.log(tempData);
       }
     });
-
-    console.log(tempData);
   }
 
   public resetSource() {
@@ -241,7 +275,6 @@ export class PJA012Component implements OnInit {
         hiringstat_id: sdmHiring.hirestatId
       });
     });
-    console.log('POST');
     const url = `${this.apiRoot}/MultiCreate`;
     const httpOptions = {
       params: new HttpParams()
