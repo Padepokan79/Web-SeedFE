@@ -22,7 +22,9 @@ export class ActionService {
         private _ionaEngine: IIONAEngine
     ) {
         this.buttonTitle = 'Submit';
-        this.IONA().loadDataOnTable();
+        if (this.table() && !this.table().externalPaging) {
+            this.IONA().loadDataOnTable();
+        }
     }
 
     get formErrors() {
@@ -120,15 +122,15 @@ export class ActionService {
 
     public refreshButtonTitle() {
         switch (this.IONA().actionMode) {
-            case ACTION.SAVE :
-            case ACTION.CREATE :
-            case ACTION.DELETE_CREATE :
+            case ACTION.SAVE:
+            case ACTION.CREATE:
+            case ACTION.DELETE_CREATE:
                 this.buttonTitle = 'Submit';
                 break;
-            case ACTION.UPDATE :
+            case ACTION.UPDATE:
                 this.buttonTitle = 'Update';
                 break;
-            default :
+            default:
                 break;
         }
     }
@@ -142,16 +144,16 @@ export class ActionService {
         }
 
         switch (this.IONA().actionMode) {
-            case ACTION.CREATE :
-                this.IONA().create({item});
+            case ACTION.CREATE:
+                this.IONA().create({ item });
                 break;
-            case ACTION.UPDATE :
-                this.IONA().update({item});
+            case ACTION.UPDATE:
+                this.IONA().update({ item });
                 break;
-            case ACTION.DELETE_CREATE :
-                this.IONA().deleteCreate({item});
+            case ACTION.DELETE_CREATE:
+                this.IONA().deleteCreate({ item });
                 break;
-            default :
+            default:
                 break;
         }
     }
