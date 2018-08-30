@@ -31,6 +31,7 @@ export class PJA007Component implements OnInit {
   public clientPic: string;
   public clientMobile: string;
   private selected: any;
+  public btnDisabled: boolean=true;
 
   constructor(private _factory: CoreFactory, private router: Router) { }
 
@@ -98,7 +99,7 @@ export class PJA007Component implements OnInit {
           value : this.selected
       }
     });
-
+    console.log(this.selected);
     this._factory.http().get(readAllApi).subscribe((res: any) => {
       this.action.patchFormData(res.data.items[this.selected]);
       this.clientPic = res.data.items[this.selected].client_picclient;
@@ -110,6 +111,7 @@ export class PJA007Component implements OnInit {
   public clearData(){
     this.clientPic = '';
     this.clientMobile = '';
+     this.btnDisabled = true; 
   }
 
   public navigateEditMenu(id) {
@@ -131,6 +133,10 @@ export class PJA007Component implements OnInit {
     );
 
     this.action.refreshTable();
+  }
+
+  public setTrueClick(){
+     this.btnDisabled = false; 
   }
 
 }
