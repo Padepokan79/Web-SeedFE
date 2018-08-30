@@ -26,6 +26,7 @@ export class SDM007Component implements OnInit {
   // public tableActionTemplate: any;
 
   public time: Date = new Date();
+  public maxDate: Date = new Date();
   public action: ActionService;
   public inputForm: InputForm;
   public dataTable: DataTable;
@@ -51,6 +52,7 @@ export class SDM007Component implements OnInit {
 
     setInterval(() => {
       this.time = new Date();
+      this.maxDate = new Date();
     }, 1);
     this.inputForm = this._factory.inputForm({
       formControls: {
