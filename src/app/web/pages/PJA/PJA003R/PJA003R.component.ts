@@ -53,8 +53,6 @@ export class PJA003RComponent implements OnInit {
   public projectCtrl: FormControl;
   public selectedId: any;
 
-  public ceritanyaFilter: any;
-
   // Hapus
   public KeyId: any;
   public SdmName: any;
