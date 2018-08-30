@@ -12,7 +12,7 @@ import { DefaultNotificationService } from '../../../../core/services/default-no
 import { ListOfValue } from '../../../../core/models/list-of-value';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { HttpParams } from '../../../../../../node_modules/@angular/common/http';
+import { HttpParams, HttpClient } from '../../../../../../node_modules/@angular/common/http';
 
 @Component({
   selector: 'app-ALL006',
@@ -64,7 +64,7 @@ export class ALL006Component implements OnInit {
   }
 
   // tslint:disable-next-line:member-ordering
-  constructor(private _factory: CoreFactory, public _notif: DefaultNotificationService, private route: ActivatedRoute) {
+  constructor(private _factory: CoreFactory, public _notif: DefaultNotificationService, private route: ActivatedRoute, private http: HttpClient) {
     this.listSearchCriteria.push(new SearchCriteria(_factory));
     this.sdmCtrl = new FormControl();
     this.valueCtrl = new FormControl({ value: '', disabled: true });
@@ -142,33 +142,33 @@ export class ALL006Component implements OnInit {
     }, 1);
 
   }
-  // tslint:disable-next-line:member-ordering
-  public api: string = 'http://localhost:7979/api/masterdata/MultiFiltering';
-  public btnFilter() {
-    this.isButtonClicked = true;
-    const body = [];
-    this.listSearchCriteria.forEach((skillSdm: SearchCriteria) => {
-      body.push({
-        sdm_id: this.IdSdm,
-        skilltype_id: skillSdm.skilltype_id,
-        skill_id: skillSdm.skill_id,
-        sdmskill_value: skillSdm.value,
-        operator: 2
-      });
+ // tslint:disable-next-line:member-ordering
+ public api: string = 'http://localhost:7979/api/masterdata/MultiFiltering';
+ public btnFilter() {
+   this.isButtonClicked = true;
+   const body = [];
+   this.listSearchCriteria.forEach((skillSdm: SearchCriteria) => {
+     body.push({
+       sdm_id: this.IdSdm,
+       skilltype_id: skillSdm.skilltype_id,
+       skill_id: skillSdm.skill_id,
+       sdmskill_value: skillSdm.value,
+       operator: 2
      });
-    console.log('POST');
-    const url = `${this.api}/multiFilter`;
-    const httpOptions = {
-      params: new HttpParams()
-    };
-    this.http.post(url, {
-      listsdm: body
-    }, httpOptions)
-      .subscribe((res: any) => {
-        this.action.table().rows = res.data;
-        console.log(this.action.table().rows);
-      });
-  }
+    });
+   console.log('POST');
+   const url = `${this.api}/multiFilter`;
+   const httpOptions = {
+     params: new HttpParams()
+   };
+   this.http.post(url, {
+     listsdm: body
+   }, httpOptions)
+     .subscribe((res: any) => {
+       this.action.table().rows = res.data;
+       console.log(this.action.table().rows);
+     });
+ }
   public selectToAssign() {
     this.isButtonClicked = true;
     const filterComponent: ISimplifiedFilterOperand[] = [];
