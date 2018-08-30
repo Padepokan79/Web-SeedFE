@@ -87,7 +87,7 @@ export class SDM004Component implements OnInit {
       //   { viewValue: 'Nama', viewKey: 'sdm_name', type: TYPE.STRING }
       // ],
       tableColumns : [
-        { prop: 'sdmhistory_id', name: 'No', width: 20, sortable: true },
+        { prop: 'norut', name: 'No', width: 20, sortable: true },
         { prop: 'sdm_name', name: 'Nama', width: 100, sortable: true },
         { prop: 'sdm_nik', name: 'NIK', width: 100, sortable: true },
         { prop: 'sdm_address', name: 'Alamat', width: 100, sortable: true },

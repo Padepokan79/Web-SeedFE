@@ -16,7 +16,7 @@ export const ALL_MENU = [
         data: {
           menu: {
             title: 'List Skill',
-            icon: 'fa fa-bars',
+            icon: 'fa fa-list',
           }
         }
       },
@@ -25,7 +25,7 @@ export const ALL_MENU = [
         data: {
           menu: {
             title: 'List Category',
-            icon: 'fa fa-category',
+            icon: 'fa fa-list',
           }
         }
       },
@@ -34,6 +34,7 @@ export const ALL_MENU = [
         data: {
           menu: {
             title: 'Input Nilai Skill SDM',
+            icon: 'fa fa-pencil',
           }
         }
       },
@@ -51,6 +52,7 @@ export const ALL_MENU = [
         data: {
           menu: {
             title: 'Multi-filtering SDM',
+            icon: 'fa fa-search',
           }
         }
       }

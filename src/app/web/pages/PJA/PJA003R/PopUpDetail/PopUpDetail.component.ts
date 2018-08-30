@@ -5,7 +5,6 @@ import { ActionService } from '../../../../../core/services/uninjectable/action.
 import { LOVService } from '../../../../../core/services/uninjectable/lov.service';
 import { CoreFactory } from '../../../../../core/factory/core.factory';
 import { ActivatedRoute } from '../../../../../../../node_modules/@angular/router';
-import { ModalComponent } from '../../../../../core/components/modal/modal.component';
 
 @Component({
   selector: 'app-PopUpDetail',
@@ -16,16 +15,6 @@ export class PopUpDetailComponent implements OnInit {
   @ViewChild('viewAsDateTemplate')
   public viewAsDateTemplate: any;
 
-  // @Input()
-  // public ceritanyaPopUp: any;
-
-  // @Input()
-  // public namaProject: ModalComponent;
-
-  // @Input()
-  // public projectSdm: any;
-  @ViewChild('popUp')
-  public popUp: ModalComponent;
   @Input()
   public value: number;
 
