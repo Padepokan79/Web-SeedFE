@@ -33,12 +33,9 @@ export class PJA012Component implements OnInit {
   public sdmCtrl: FormControl;
   public valueCtrl: FormControl;
   public action: ActionService;
-  public action2: ActionService;
   public inputForm: InputForm;
   public dataTable: DataTable;
   public listSearchCriteria: SearchCriteria[] = [];
-  public listMultiInsert: MultiInsert[] = [];
-  public listMultiInsertSdmAssign: MultiInsertSdmAssign[] = [];
   public IdSdm: any;
   public filteredSdm: any;
   public getClientid: number;
@@ -57,27 +54,27 @@ export class PJA012Component implements OnInit {
   public methodIds: any;
   public check: any;
   public tes: string;
+  public isCantFilter: boolean = true;
+  public isLocked: boolean = true;
+  public isReadOnly: boolean = true;
   public increment: number = 0;
-  public apiRoot: string = 'http://localhost:7979/project/MultiAssignment';
-  public clientName: any;
-  public clientAddress: any;
-  public clientPic: any;
-  public clientMobile: any;
-  public selectedId: number;
+  public clientIds: number;
+  public hirestatIds: number = 4;
+  public apiRoot: string = 'project/MultiAssignment';
 
-  constructor(
-    private _factory: CoreFactory,
-    public _notif: DefaultNotificationService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private http: HttpClient) {
+  constructor(private _factory: CoreFactory, public _notif: DefaultNotificationService, private route: ActivatedRoute, private http: HttpClient) {
     this.listSearchCriteria.push(new SearchCriteria(_factory));
     this.sdmCtrl = new FormControl();
+    this.valueCtrl = new FormControl({ value: '', disabled: true });
     this.filteredSdm = this.sdmCtrl.valueChanges
       .startWith('')
       .map((value) => this.filterSdm(value));
+    // this.route.params.subscribe((param) => {
+    //   this.IdSdm = param.id;
+    // });
+    // tslint:disable-next-line:no-shadowed-variable
     this.route.params.subscribe((param) => {
-      this.selectedId = param.idClient;
+      this.clientIds = param.idClient;
     });
   }
 
@@ -97,7 +94,6 @@ export class PJA012Component implements OnInit {
   public setSdmValue(dataSdm: ListOfValue) {
     if (dataSdm) {
       this.IdSdm = dataSdm.key;
-      console.log(this.IdSdm);
     }
   }
 
@@ -105,25 +101,21 @@ export class PJA012Component implements OnInit {
     const searchCriteria = new SearchCriteria(this._factory);
     this.listSearchCriteria.push(searchCriteria);
     this.increment += 1;
-    console.log(this.increment);
-
   }
 
   public removeSearchCriteria(inc) {
     this.listSearchCriteria.splice(inc, 1);
     this.increment -= 1;
-    console.log(this.increment);
-    console.log(inc);
   }
 
   public ngOnInit() {
-
     this.inputForm = this._factory.inputForm({
       formControls: {
         sdm_id: '',
         skilltype_id: '',
         skill_id: '',
-        sdmskill_value: ''
+        sdmskill_value: '',
+        client_id: '',
       }
     });
 
@@ -133,7 +125,7 @@ export class PJA012Component implements OnInit {
     });
 
     this.dataTable = this._factory.dataTable({
-      serverSide: true,
+      serverSide: false,
       pagingParams: {
         limit: 10
       },
@@ -156,46 +148,48 @@ export class PJA012Component implements OnInit {
       this.time = new Date();
     }, 1);
 
-    this.action2 = this._factory.actions({
-      api: 'project/MengelolaClient',
-      inputForm: this.inputForm,
-  });
-
-  const readAllApi = this._factory.api({
-      api : 'project/MengelolaClient/readAll',
-      pagingParams : {
-        filter : {
-          field : 'client_id',
-          operator : COMPARISON_OPERATOR.EQ,
-          value : this.selectedId
-        }
-      }
-    });
-
-  this._factory.http().get(readAllApi).subscribe((res: any) => {
-    // this.action2.patchFormData(res.data.items[0]);
-    // this.clientName = res.data.items[0].client_name;
-    // this.clientAddress = res.data.items[0].client_address;
-    // this.clientPic = res.data.items[0].client_picclient;
-    // this.clientMobile = res.data.items[0].client_mobileclient;
-  });
-
   }
-
+  // tslint:disable-next-line:member-ordering
+  public api = this._factory.api({
+    api: `${this.apiRoot}/api/masterdata/MultiFiltering`
+  });
+  public btnFilter() {
+    this.isButtonClicked = true;
+    const body = [];
+    this.listSearchCriteria.forEach((skillSdm: SearchCriteria) => {
+      body.push({
+        sdm_id: this.IdSdm,
+        skilltype_id: skillSdm.skilltype_id,
+        skill_id: skillSdm.skill_id,
+        sdmskill_value: skillSdm.value,
+        operator: 2
+      });
+    });
+    console.log('POST');
+    const url = `${this.api}/multiFilter`;
+    const httpOptions = {
+      params: new HttpParams()
+    };
+    this.http.post(url, {
+      listsdm: body
+    }, httpOptions)
+      .subscribe((res: any) => {
+        this.action.table().rows = res.data;
+        console.log(this.action.table().rows);
+      });
+  }
   public selectToAssign() {
     this.isButtonClicked = true;
     const filterComponent: ISimplifiedFilterOperand[] = [];
     const filterComponentPlusName: ISimplifiedFilterOperand[] = [];
     this.listSearchCriteria.forEach((searchCriteria: SearchCriteria) => {
       this.categorySkill = searchCriteria.skilltype_id;
-      console.log(this.categorySkill);
       if (this.categorySkill === 0) {
         searchCriteria.skill_id = '';
         this.varSkill = '';
       } else {
         this.varSkill = searchCriteria.skill_id;
       }
-      console.log(this.varSkill);
       this.skillValue = searchCriteria.value;
       filterComponent.push(
         Conjunction.AND(
@@ -213,17 +207,14 @@ export class PJA012Component implements OnInit {
         )
       );
     });
-    console.log(this.listSearchCriteria);
 
     if (this.check === true) {
-      console.log('Filter dengan AND');
       if (this.IdSdm != null) {
         this.doubleFilter = Conjunction.AND(...filterComponentPlusName);
       } else {
         this.doubleFilter = Conjunction.AND(...filterComponent);
       }
     } else {
-      console.log('Filter dengan OR');
       if (this.IdSdm != null) {
         this.doubleFilter = Conjunction.OR(...filterComponentPlusName);
       } else {
@@ -242,55 +233,103 @@ export class PJA012Component implements OnInit {
       if (item.Checked === true) {
         tempData.push({
           sdm_id: item.sdm_id,
-          client_id: 1,
-          hirestat_id: 4,
+          client_id: this.clientIds,
+          hirestat_id: this.hirestatIds
         });
         // tslint:disable-next-line:no-unused-expression
         item.Checked === false;
-        // console.log(tempData);
+        console.log(tempData);
+      }
+    });
+  }
+
+  public activateButton() {
+    this.action.table().rows.forEach((item) => {
+      if (item.Checked === true) {
+        this.isLocked = false;
+      } else if (item.Checked === false) {
+        this.isLocked = true;
       }
     });
   }
 
   public resetSource() {
+    this.isButtonClicked = false;
     this.IdSdm = null;
     this.listSearchCriteria.splice(null, this.increment);
     this.sdmCtrl.setValue('');
-    console.log(this.IdSdm);
     this.listSearchCriteria.forEach((searchCriteria: SearchCriteria) => {
-      searchCriteria.skilltype_id = '';
-      searchCriteria.skill_id = '';
-      searchCriteria.value = '';
+      searchCriteria.skilltype_id = null;
+      searchCriteria.skill_id = null;
+      searchCriteria.value = null;
     });
     this.increment = 0;
+    this.isLocked = true;
   }
+
+  public deactivateButton() {
+    this.isLocked = true;
+  }
+
+  // public noActionButton() {
+  //   this.listSearchCriteria.forEach((searchCriteria: SearchCriteria) => {
+  //     if (this.IdSdm === '' || searchCriteria.skilltype_id === '') {
+  //       this.isCantFilter = true;
+  //     } else {
+  //       this.isCantFilter = false;
+  //     }
+  //   });
+  // }
+
+  // public activateValue() {
+  //   this.listSearchCriteria.forEach((searchCriteria: SearchCriteria) => {
+  //     if (searchCriteria.skill_id === '') {
+  //       this.isReadOnly = true;
+  //     } else {
+  //       this.isReadOnly = false;
+  //     }
+  //   });
+  // }
 
   public assignSubmit() {
     this.isButtonClicked = true;
-    const bodyHiring = [];
-    this.listMultiInsert.forEach((sdmHiring: MultiInsert) => {
-      bodyHiring.push({
-        sdm_id: sdmHiring.sdmId,
-        client_id: sdmHiring.clientId,
-        hiringstat_id: sdmHiring.hirestatId
-      });
+    const multiInsert = [];
+    this.action.table().rows.forEach((item) => {
+      if (item.Checked === true) {
+        multiInsert.push({
+          client_id: this.clientIds,
+          hirestat_id: this.hirestatIds,
+          sdm_id: item.sdm_id,
+          method_id: 1,
+          sdmhiring_id: null,
+          sdmassign_startdate: '2018-01-01',
+          sdmassign_enddate: '2019-01-01',
+          sdmassign_loc: 'Bandung',
+          sdmassign_picclient: 'Tes Nama',
+          sdmassign_picclientphone: '081322001322'
+        });
+        // tslint:disable-next-line:no-unused-expression
+        item.Checked === false;
+        console.log(multiInsert);
+      }
     });
-    const url = `${this.apiRoot}/MultiCreate`;
+    const url = this._factory.api({
+      api: `${this.apiRoot}/MultiCreate`
+    });
     const httpOptions = {
       params: new HttpParams()
     };
     this.http.post(url, {
-      listhiring: bodyHiring
+      listhiring: multiInsert
     }, httpOptions)
-      .subscribe((res) => {
+      .subscribe(() => {
         this._notif.success({
-          message: 'You have successfully Assigned'
+          message: 'You have successfully Hired'
         });
       });
   }
 
-  public checkMethod(event: any, check: any) {
-    console.log(event.checked);
+  public checkMethod(event: any) {
     this.check = event.checked;
   }
 
