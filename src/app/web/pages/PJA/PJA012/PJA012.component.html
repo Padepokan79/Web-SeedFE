@@ -67,8 +67,8 @@ UPDATE		: Wednesday, August 29th 2018 07:15:00 AM
       </div>
       <br><br>
       <div class="action-filter">
-        <button [routerLink]="['/pages/dashboard']" class="btn btn-mm"> &lt; Back</button>
-        <button class="btn btn-primary btn-mm" [disabled]="isLocked" (click)="assignSubmit()">Assign</button>
+        <button class="btn btn-filter btn-mm" (click)="btnFilter();deactivateButton()">Filter <i class="glyphicon glyphicon-search"></i></button>
+        <button class="btn btn-clear btn-mm" (click)="resetSource();deactivateButton()">Clear <i class="glyphicon glyphicon-times"></i></button>
       </div>
       <br><br>
     </form>
