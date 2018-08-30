@@ -121,7 +121,7 @@ export class PJA008Component implements OnInit {
     });
 
     this.dataTable = this._factory.dataTable({
-      serverSide: true,
+      serverSide: false,
       pagingParams: {
         limit: 10
       },
