@@ -83,9 +83,12 @@
 
 <sdw-modal-lg #popUp>
   <div class="sdw-modal-body sdw-modal-scroll sdw-input">
-    <div>
-      <app-PopUpDetail [value]="selectedId" *ngIf="popUp.visible" #modalDataPopUp>
-      </app-PopUpDetail>
-    </div>
+    <app-PopUpDetail [value]="selectedId" *ngIf="popUp.visible" #modalDataPopUp>
+    </app-PopUpDetail>
+  </div>
+  <div class="sdw-modal-footer">
+    <button type="button" class="btn btn-danger btn-mm btn-icon" (click)="popUp.hide()">
+        <b>Kembali</b>
+      </button>
   </div>
 </sdw-modal-lg>

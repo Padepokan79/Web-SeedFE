@@ -20,20 +20,20 @@ export const PJA_MENU = [
           }
         }
       },
-      {
-        path: 'PJA003',
-        data: {
-          menu: {
-            title: 'List Detail Project SDM',
-            icon: 'fa fa-user',
-          }
-        }
-      },
+      // {
+      //   path: 'PJA003',
+      //   data: {
+      //     menu: {
+      //       title: 'List Detail Project SDM',
+      //       icon: 'fa fa-user',
+      //     }
+      //   }
+      // },
       {
         path: 'PJA003R',
         data: {
           menu: {
-            title: 'List Detail Project SDM Ver.2',
+            title: 'List Detail Project SDM',
             icon: 'fa fa-user',
           }
         }

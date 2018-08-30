@@ -12,7 +12,7 @@ UPDATE 		:
    		</div>
  	</div> -->
 
-   <form class="io-form-body" [formGroup]="action?.formControls()" *ngIf="action?.form()">  
+   <form class="io-form-body" [formGroup]="action?.formControls()" *ngIf="action?.form()" >
 		<table>
 			<tr>
 				<td id="td">
@@ -176,8 +176,19 @@ UPDATE 		:
 					</mat-form-field>
 				</td>
 			</tr>
+			<tr style="height: 10px;"></tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>
+				<!-- <button type="button" class="btn btn-danger btn-mm btn-icon" (click)="popUp.hide()">
+					<b>Kembali</b>
+				</button> -->
+				</td>
+			</tr>
+			<tr style="height: 10px;"></tr>
 		</table>
-	 <br>
   	</form>
  <ng-template #viewAsDateTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
   {{value | date:'yyyy-MM-dd'}}
