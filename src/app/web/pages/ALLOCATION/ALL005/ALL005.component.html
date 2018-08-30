@@ -19,7 +19,7 @@ Modified   : 3-08-2018 by Hendra Kurniawan -->
             <div class="col-md-12">
               <div class="col-md-4">
                   <mat-form-field class="sdw-full-size">
-                      <input matInput placeholder="Full Name" formControlName="sdm_name" name="sdm_name"  required>
+                      <input matInput placeholder="Full Name" formControlName="sdm_name" name="sdm_name"  readonly required >
                       <mat-hint *ngIf="action.formErrors.sdm_name" [ngStyle]="{'color': 'red'}">
                         {{action.formErrors.sdm_name}}
                       </mat-hint>
@@ -27,7 +27,7 @@ Modified   : 3-08-2018 by Hendra Kurniawan -->
               </div>  
               <div class="col-md-4">
                   <mat-form-field class="sdw-full-size">
-                      <input matInput placeholder="NIK" formControlName="sdm_nik" name="sdm_nik"  required>
+                      <input matInput placeholder="NIK" formControlName="sdm_nik" name="sdm_nik"  readonly required >
                       <mat-hint *ngIf="action.formErrors.sdm_nik" [ngStyle]="{'color': 'red'}">
                         {{action.formErrors.sdm_nik}}
                       </mat-hint>

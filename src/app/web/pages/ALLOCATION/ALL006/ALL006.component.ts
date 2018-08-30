@@ -54,6 +54,9 @@ export class ALL006Component implements OnInit {
   public tes: string;
   public increment: number = 0;
 
+  @ViewChild('notif')
+  public notif: any;
+
   public onKey(event: any) {
     console.log(event);
     this.keyId = event.target.value;
@@ -119,7 +122,7 @@ export class ALL006Component implements OnInit {
     });
 
     this.dataTable = this._factory.dataTable({
-      serverSide: true,
+      serverSide: false,
       pagingParams: {
         limit: 10
       },
@@ -128,7 +131,10 @@ export class ALL006Component implements OnInit {
         { prop: 'sdm_name', name: 'Name', width: 150, sortable: false },
         { prop: 'skilltype_name', name: 'Category', width: 20, sortable: false },
         { prop: 'skill_name', name: 'Skills', width: 20, sortable: false },
-        { prop: 'sdmskill_value', name: 'Value', width: 50, sortable: false }
+        { prop: 'sdmskill_value', name: 'Value', width: 50, sortable: false },
+        { prop: 'end_contractproject', name: 'End date project', width: 50, sortable: false },
+        { prop: 'sdm_notification', name: 'Notifikasi', width: 50,
+        cellTemplate: this.notif, sortable: false },
       ]
     });
 
