@@ -52,6 +52,7 @@ export class ALL004Component implements OnInit {
   public nik: string;
   public selected: string;
   public baris: number = 1;
+  public valid = false;
 
   constructor(public _notif: DefaultNotificationService , private route: ActivatedRoute , private _factory: CoreFactory, private http: HttpClient) {
     this.listSearchCriteria.push(new SearchCriteria(_factory));
@@ -90,17 +91,14 @@ export class ALL004Component implements OnInit {
       });
       
       const readAllApi = this._factory.api({
-      api : 'sdm/MengelolaSdm/readAll',
-        params : {
-          value : this.sdmId
-        }
+        api : 'sdm/MengelolaSdm/readAll/readAll'
       });
 
       this._factory.http().get(readAllApi).subscribe((res: any) => {
         console.log(res);
         console.log(this.sdmId);
         // this.action.patchFormData(res.data.items[this.selected]);
-        this.nik = res.data.items[this.sdmId-1].sdm_nik;
+        this.nik = res.data.items[this.sdmId-1].sdm_name;
       });
 
     }
@@ -169,17 +167,17 @@ export class ALL004Component implements OnInit {
         .post(url, {
           listsdm: body
         }, httpOptions)
-        .subscribe((res) => {
+        .subscribe(
+          (res: any) => {
           this._notif.success({
-            message: 'data berhasil di masukan'
+            message: 'Input data berhasil'
           });
-          valid = true;
+          console.clear();
+          console.log(res)
+       },(error: any) => {
+          this._notif.error(error);
+          console.clear();
        });
-       if (valid == false) {
-        this._notif.error({
-          message: 'Data sudah ada'
-        });
-      }
     } else {
       console.log('Ada yang kurang');
     }
