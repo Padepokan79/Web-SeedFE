@@ -6,6 +6,7 @@ import { DataTable } from '../../../../core/models/data-table';
 import { TYPE } from '../../../../core/constant/constant';
 import { LOVService } from '../../../../core/services/uninjectable/lov.service';
 import { Router } from '../../../../../../node_modules/@angular/router';
+import { DefaultNotificationService } from '../../../../core/services/default-notification.service';
 
 @Component({
   selector: 'app-PJA005',
@@ -21,7 +22,12 @@ export class PJA005Component implements OnInit {
   public inputForm: InputForm;
   public dataTable: DataTable;
   public time: Date = new Date();
+  public clientName: string;
+  public clientPicclient: string;
+  public clientMobileclient: number;
+
   constructor(
+    public _notif: DefaultNotificationService,
     private _factory: CoreFactory,
     private router: Router
     ) {}
@@ -30,6 +36,8 @@ export class PJA005Component implements OnInit {
    setInterval(() => {
      this.time = new Date();
    }, 1);
+
+
    this.inputForm = this._factory.inputForm({
      formControls: {
        client_name: '',
@@ -46,7 +54,8 @@ export class PJA005Component implements OnInit {
         patern: 'Hanya boleh angka'
       },
       client_mobileclient: {
-        required: 'Silahkan masukan Kontak Client'
+        required: 'Silahkan masukan Kontak Client',
+        maxlength: 'Maksimal 13 karakter'
       },
       client_address: {
         required: 'Silahkan masukan Alamat Client'
@@ -79,15 +88,46 @@ export class PJA005Component implements OnInit {
       { prop: 'client_name', name: 'Client Name', width: 200, sortable: false}
     ]
   });
-
-  this.action = this._factory.actions({
+   this.action = this._factory.actions({
     api: 'project/MengelolaClient/Create',
     inputForm: this.inputForm,
     // dataTable: this.dataTable
   });
 
   }
-  public timeOut() {
-      setTimeout(() => this.router.navigate(['pages/pja/PJA004']), 1000);
+  public onSave() {
+    const createAPI = this._factory.api({
+      api : 'project/MengelolaClient/create',
+      // params : {
+      //   client_id : this.selectedId
+      // }
+    });
+    console.log(this.clientName);
+    console.log(this.clientMobileclient);
+    if (this.clientName === undefined ) {
+      this._notif.error({
+        message: 'Client Name Harus Diisi'
+      });
+      } else if (this.clientPicclient === undefined) {
+        this._notif.error({
+          message: 'PIC Handler Harus Diisi'
+        });
+      } else if (this.clientMobileclient === undefined) {
+        this._notif.error({
+          message: 'Contact Person Harus Diisi'
+        });
+      } else if (this.clientMobileclient > 9999999999999) {
+        this._notif.error({
+          message: 'Contact Person Max 13 Digit'
+        });
+      } else {
+        this._factory.http().post(createAPI, this.action.getFormData()).subscribe((response: any) => {
+          this._notif.success({
+            message: 'Data Berhasil Disimpan'
+            });
+          setTimeout(() => this.router.navigate(['pages/pja/PJA004']), 1000);
+           });
+      }
+   }
   }
 }
