@@ -3,7 +3,7 @@ export const PJA_MENU = [
     path: 'pja',
     data: {
       menu: {
-        title: 'PJA',
+        title: 'Project Assignment',
         icon: 'fa fa-tasks',
         selected: false,
         expanded: false,
@@ -35,15 +35,6 @@ export const PJA_MENU = [
           menu: {
             title: 'List Detail Project SDM',
             icon: 'fa fa-users',
-          }
-        }
-      },
-      {
-        path: 'PJA005',
-        data: {
-          menu: {
-            title: 'Input Detail Client',
-            icon: 'fa fa-user-plus',
           }
         }
       },

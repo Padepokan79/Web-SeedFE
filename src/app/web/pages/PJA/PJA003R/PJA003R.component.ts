@@ -115,7 +115,7 @@ export class PJA003RComponent implements OnInit {
     });
 
     this.dataTable = this._factory.dataTable({
-      serverSide : true,
+      serverSide : false,
       pagingParams : {
         limit: 10
       },
@@ -221,13 +221,15 @@ export class PJA003RComponent implements OnInit {
 
   public onSearch() {
     // const filterCriteria = [];
+    // this.SdmName =  this.action.getFormControlValue('sdm_name');
+    this.ProjectName =  this.action.getFormControlValue('project_name');
     this.ProjectEndDate = this.action.getFormControlValue('project_enddate');
     console.log('Nama: ', this.SdmName, 'Nama Project: ', this.ProjectName, 'Tanggal berakhir: ', this.ProjectEndDate);
     this.action.setPaginationFilter(
       Conjunction.AND(
         // filterCriteria
         this.ProjectEndDate ? Comparison.LE('project_enddate', this.ProjectEndDate) : Comparison.NE('project_enddate', 'project_enddate'),
-        this.SdmName ? Comparison.EQ('sdm_id', this.SdmName) : Comparison.NE('sdm_id', 'sdm_id'),
+        this.SdmName ? Comparison.EQ('sdm_id', this.SdmName) : Comparison.NE('sdm_id', 'sdm_name'),
         this.ProjectName ? Comparison.EQ('project_name', this.ProjectName) : Comparison.NE('project_name', 'project_name')
       )
     );
@@ -241,6 +243,8 @@ export class PJA003RComponent implements OnInit {
     this.ProjectName = null;
     this.ProjectEndDate = null;
     console.log('Nama: ', this.SdmName, 'Nama Project: ', this.ProjectName, 'Tanggal berakhir: ', this.ProjectEndDate);
+    this.action.resetFilter() ;
+    this.action.refreshTable();
   }
 
 }

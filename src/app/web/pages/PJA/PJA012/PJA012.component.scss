@@ -2,6 +2,11 @@ ng-template {
     padding: 0 auto;
 }
 
+.centering {
+	margin: 0 auto;
+	width: 100%;
+}
+
 .blacky {
     color: #202020;
 }
@@ -20,7 +25,7 @@ ul {
 }
 
 li.list-filter {
-    width: 350px;
+    width: auto;
     text-align: center;
 }
 
@@ -31,23 +36,27 @@ div.go-tight {
 .btn-flat {
 	background-color: azure;
 	box-shadow: 1px 1px #787878;
-    color: #242424;
+	color: #242424;
+	position: relative;
+    right: 1.8em;
+    top: 0.8em;
 }
 
 .btn-filter {
     background: linear-gradient(to bottom right, #23AB14, #31AD18);
     color: #FEFEFE;
-    margin-top: 10px;
+    margin-top: 40px;
 }
 
 .btn-clear {
     background: linear-gradient(to bottom right, #AB2314, #AD3118);
     color: #FEFEFE;
-    margin-top: 10px;
+    margin-top: 40px;
 }
 
 .position-li {
-    margin: 10px 20% -10px 20%;
+	margin: 10px 20% -10px 0;
+	padding: 0 10% 0 20%;
 }
 
 .nx-title {
@@ -100,6 +109,11 @@ div.go-tight {
 .chk{
 	color: #000;
 	float: left;
+}
+
+mat-checkbox {
+	width: 25%;
+	height: 25%;
 }
 
 .relative-post {

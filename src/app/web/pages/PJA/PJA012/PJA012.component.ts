@@ -64,6 +64,10 @@ export class PJA012Component implements OnInit {
   public assignClientPhone: string = '';
   public apiRoot: string = 'project/MultiAssignment';
   public router: any;
+  public operator: any = 1;
+
+  @ViewChild('notif')
+  public notif: any;
 
   constructor(private _factory: CoreFactory, public _notif: DefaultNotificationService, private route: ActivatedRoute, private http: HttpClient) {
     this.listSearchCriteria.push(new SearchCriteria(_factory));
@@ -141,6 +145,8 @@ export class PJA012Component implements OnInit {
         { prop: 'skilltype_name', name: 'Category', width: 20, sortable: false },
         { prop: 'skill_name', name: 'Skills', width: 20, sortable: false },
         { prop: 'sdmskill_value', name: 'Value', width: 50, sortable: false },
+        { prop: 'end_contractproject', name: 'End date project', width: 50, sortable: false },
+        { prop: 'sdm_notification', name: 'Notifikasi', width: 50, cellTemplate: this.notif, sortable: false },
         { prop: 'sdm_id', name: 'Select', width: 10, cellTemplate: this.tableActionTemplate, sortable: false }
       ]
     });
@@ -156,8 +162,8 @@ export class PJA012Component implements OnInit {
 
   }
   // tslint:disable-next-line:member-ordering
-  public api = this._factory.api({
-    api: `${this.apiRoot}/api/masterdata/MultiFiltering`
+  public apiFilter = this._factory.api({
+    api: `api/masterdata/MultiFiltering`
   });
   public btnFilter() {
     this.isButtonClicked = true;
@@ -172,7 +178,7 @@ export class PJA012Component implements OnInit {
       });
     });
     console.log('POST');
-    const url = `${this.api}/multiFilter`;
+    const url = `${this.apiFilter}/multiFilter`;
     const httpOptions = {
       params: new HttpParams()
     };
@@ -345,6 +351,14 @@ export class PJA012Component implements OnInit {
 
   public checkMethod(event: any) {
     this.check = event.checked;
+  }
+
+  public setOperatorAnd() {
+    if (this.operator === 2 ) {
+      this.operator = 1;
+    } else if (this.operator === 1) {
+      this.operator = 2;
+    }
   }
 
 }
