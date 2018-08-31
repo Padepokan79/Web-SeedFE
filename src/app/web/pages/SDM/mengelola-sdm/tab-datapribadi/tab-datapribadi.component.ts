@@ -141,11 +141,11 @@ export class TabDatapribadiComponent implements OnInit {
   }
 
   public handleFileInput(event) {
-    console.log(event);
-    // const files = event.target['files'];
-    // if (event.target['files']) {
-    //   this.readFiles(event.target['files'], 0);
-    // }
+    // console.log(event);
+    const files = event.target['files'];
+    if (event.target['files']) {
+      this.readFiles(event.target['files'], 0);
+    }
   }
 
   public readFiles (files: any[], index: number) {

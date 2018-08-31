@@ -90,7 +90,7 @@ export class SDM008Component implements OnInit {
         //       }
         //   ]
         // },
-        limit : 5
+        limit : 10
       },
       // searchCriteria : [
       //   { viewValue: 'Name', viewKey: 'sdm_id', type: TYPE.STRING },
