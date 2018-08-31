@@ -12,7 +12,7 @@
       <mat-list-item>
         <mat-label class="panjang">Level</mat-label>
         <mat-form-field class="sdw-full-size" style="width : 200px">
-          <mat-select placeholder="Parent Task" formControlName="sdmlvl_id" name="sdmlvl_id">
+          <mat-select placeholder="Pick Level" formControlName="sdmlvl_id" name="sdmlvl_id">
             <mat-option *ngFor="let lov of lovSdmLvl.data" [value]="lov.key">
               {{lov.value}}
             </mat-option>
@@ -22,7 +22,7 @@
       <mat-list-item>
         <mat-label class="panjang">Name</mat-label>
         <mat-form-field class="example-full-width">
-          <input placeholder="Pick one" matInput (keyup)="onKeySdmName($event)" [formControl]="sdmCtrl" [matAutocomplete]="auto" formControlName="sdm_name" name="sdm_name">
+          <input placeholder="Name" matInput (keyup)="onKeySdmName($event)" [formControl]="sdmCtrl" [matAutocomplete]="auto" formControlName="sdm_name" name="sdm_name">
           <mat-autocomplete #auto="matAutocomplete">
             <mat-option *ngFor="let dataSdm of filteredSdm | async" [value]="dataSdm.values.sdm_sdm_name" (onSelectionChange)="setSdmValue(action?.formControls(), dataSdm);">
               {{dataSdm.values.sdm_sdm_name}}
