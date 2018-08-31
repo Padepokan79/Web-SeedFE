@@ -43,6 +43,7 @@ export class SDM003Component implements OnInit {
    public KeyId: any;
    public SdmName: any;
    public SdmEndDate: any;
+   public SdmLvl: any;
 
   public onKeySdmName(event: any) {
     this.KeyId = event.target.value;
@@ -110,7 +111,7 @@ export class SDM003Component implements OnInit {
       //   { viewValue: 'Nama', viewKey: 'sdm_name', type: TYPE.STRING }
       // ],
       tableColumns : [
-        { prop: 'norut', name: 'No', width: 20, sortable: true },
+        { prop: 'norut', name: 'No', width: 20, sortable: false },
         { prop: 'sdm_name', name: 'Nama', width: 100, sortable: true },
         { prop: 'sdm_nik', name: 'NIK', width: 50, sortable: true },
         { prop: 'sdm_startcontract', name: 'Start Date', width: 50,
@@ -218,19 +219,27 @@ export class SDM003Component implements OnInit {
 
   public onSearch() {
     const filterCriteria = [];
-    const SdmLvl = this.action.getFormControlValue('sdmlvl_id');
+    this.SdmLvl = this.action.getFormControlValue('sdmlvl_id');
     this.SdmEndDate = this.action.getFormControlValue('sdm_endcontract');
-    console.log('Level: ', SdmLvl , 'Nama: ', this.SdmName, 'Tanggal berakhir: ', this.SdmEndDate);
+    console.log('Level: ', this.SdmLvl , 'Nama: ', this.SdmName, 'Tanggal berakhir: ', this.SdmEndDate);
 
     this.action.setPaginationFilter(
       Conjunction.AND(
         // filterCriteria
         this.SdmEndDate ? Comparison.LE('sdm_endcontract', this.SdmEndDate) : Comparison.NE('sdm_endcontract', 'sdm_endcontract'),
-        SdmLvl ? Comparison.EQ('sdmlvl_id', SdmLvl) : Comparison.NE('sdmlvl_id', 'sdmlvl_id'),
+        this.SdmLvl ? Comparison.EQ('sdmlvl_id', this.SdmLvl) : Comparison.NE('sdmlvl_id', 'sdmlvl_id'),
         this.SdmName ? Comparison.EQ('sdm_name', this.SdmName) : Comparison.NE('sdm_name', 'sdm_name'),
       )
     );
 
+    this.action.refreshTable();
+  }
+  public onReset() {
+    this.action.onReset();
+    this.SdmName = null;
+    this.SdmEndDate = null;
+    this.SdmLvl = null;
+    this.action.resetFilter() ;
     this.action.refreshTable();
   }
 }
