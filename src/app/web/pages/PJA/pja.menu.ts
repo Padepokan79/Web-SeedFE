@@ -39,15 +39,6 @@ export const PJA_MENU = [
         }
       },
       {
-        path: 'PJA005',
-        data: {
-          menu: {
-            title: 'Input Detail Client',
-            icon: 'fa fa-user-plus',
-          }
-        }
-      },
-      {
         path: 'PJA004',
         data: {
           menu: {

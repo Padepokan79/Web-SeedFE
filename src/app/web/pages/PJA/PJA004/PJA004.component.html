@@ -14,6 +14,14 @@
   <span class="time">{{ time | date:'medium' }}</span>  
 </div> -->
 
+<div class="posisiAdd">
+  <a [routerLink]="['/pages/pja/PJA005']">
+    <button style="">
+      Add Sdm Skill
+    </button>
+  </a>
+ </div>
+
 <io-table *ngIf="action?.table()" [action]="action" style="text-align: center;">
   <div class="io-table-header">
     <h3>List Detail Client</h3>
