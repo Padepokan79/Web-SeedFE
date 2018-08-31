@@ -14,9 +14,15 @@ import { Router } from '../../../../../../../node_modules/@angular/router';
 })
 export class TabDatapribadiComponent implements OnInit {
 
-  public imageUrl: string = '';
-  public fileToUpload: File = null;
-  // public form = 1;
+  /*
+  * Updated by Alifhar Juliansyah
+  * 31/08/2018
+  */
+  public pathFoto: string;
+  public imageFiles: any;
+  public files: any[] = [];
+  public fileReader = new FileReader();
+
   public gender = '1';
 
   @Input()
@@ -136,13 +142,26 @@ export class TabDatapribadiComponent implements OnInit {
 
   public handleFileInput(event) {
     console.log(event);
-    // this.fileToUpload = file.item(0);
+    // const files = event.target['files'];
+    // if (event.target['files']) {
+    //   this.readFiles(event.target['files'], 0);
+    // }
+  }
 
-    // const reader = new FileReader();
-    // reader.onload = (event: any) => {
-    //   this.imageUrl = event.target.result;
-    // };
-    // reader.readAsDataURL(this.fileToUpload);
+  public readFiles (files: any[], index: number) {
+    this.pathFoto = null;
+    this.imageFiles = [];
+    const file = files[index];
+    this.fileReader.onload = () => {
+      this.imageFiles.push(this.fileReader.result);
+      if (files[index+1]) {
+        this.readFiles(files, index+1);
+      } else {
+        console.log('Succes Read Photo');
+      }
+    };
+    this.fileReader.readAsDataURL(file);
+    console.log('file: ' + file);
   }
 
   public onSave() {
