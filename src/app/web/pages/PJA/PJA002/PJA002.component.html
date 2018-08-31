@@ -188,11 +188,12 @@ UPDATE 		: ‎Thursday, ‎August ‎16, ‎2018, ‏‎1:51 PM
 				<td></td>
 				<td></td>
 				<td>
-				<button type="button" class="btn btn-primary btn-mm btn-icon" (click)="onEdit()" [routerLink]="['/pages/pja/PJA003R']">
+				<button mat-raised-button class="action-btn nx-save-button" (click)="onEdit()" [routerLink]="['/pages/pja/PJA003R']">
 					   <b>Perbarui</b>
 				</button>&emsp;
-		     	<a class="btn btn-danger btn-mm btn-icon" [routerLink]="['/pages/pja/PJA003R']">Kembali</a>
-				</td>
+				<button mat-raised-button class="action-btn nx-cancel-button" [routerLink]="['/pages/pja/PJA003R']">
+					   <b>Cancel</b>
+				</button>
 			</tr>
 			<tr style="height: 10px;"></tr>
 		</table>

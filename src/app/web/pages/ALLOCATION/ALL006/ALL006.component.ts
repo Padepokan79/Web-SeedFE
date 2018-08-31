@@ -53,6 +53,7 @@ export class ALL006Component implements OnInit {
   public check: any;
   public tes: string;
   public increment: number = 0;
+  public operator: any = 1;
 
   @ViewChild('notif')
   public notif: any;
@@ -149,7 +150,9 @@ export class ALL006Component implements OnInit {
 
   }
  // tslint:disable-next-line:member-ordering
- public api: string = 'http://localhost:7979/api/masterdata/MultiFiltering';
+ public apiFilter: string = this._factory.api({
+  api: `api/masterdata/MultiFiltering`
+});
  public btnFilter() {
    this.isButtonClicked = true;
    const body = [];
@@ -159,11 +162,11 @@ export class ALL006Component implements OnInit {
        skilltype_id: skillSdm.skilltype_id,
        skill_id: skillSdm.skill_id,
        sdmskill_value: skillSdm.value,
-       operator: 2
+       operator: this.operator
      });
     });
    console.log('POST');
-   const url = `${this.api}/multiFilter`;
+   const url = `${this.apiFilter}/multiFilter`;
    const httpOptions = {
      params: new HttpParams()
    };
@@ -238,5 +241,13 @@ export class ALL006Component implements OnInit {
       searchCriteria.value = null;
     });
     this.increment = 0;
+  }
+
+  public setOperatorAnd() {
+    if (this.operator === 2 ) {
+      this.operator = 1;
+    } else if (this.operator === 1) {
+      this.operator = 2;
+    }
   }
 }

@@ -64,6 +64,7 @@ export class PJA012Component implements OnInit {
   public assignClientPhone: string = '';
   public apiRoot: string = 'project/MultiAssignment';
   public router: any;
+  public operator: any = 1;
 
   @ViewChild('notif')
   public notif: any;
@@ -350,6 +351,14 @@ export class PJA012Component implements OnInit {
 
   public checkMethod(event: any) {
     this.check = event.checked;
+  }
+
+  public setOperatorAnd() {
+    if (this.operator === 2 ) {
+      this.operator = 1;
+    } else if (this.operator === 1) {
+      this.operator = 2;
+    }
   }
 
 }

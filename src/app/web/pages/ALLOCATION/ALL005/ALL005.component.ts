@@ -3,7 +3,7 @@ import { ActionService } from '../../../../core/services/uninjectable/action.ser
 import { InputForm } from '../../../../core/models/input-form';
 import { CoreFactory } from '../../../../core/factory/core.factory';
 import { LOVService } from '../../../../core/services/uninjectable/lov.service';
-import { ActivatedRoute } from '../../../../../../node_modules/@angular/router';
+import { ActivatedRoute, Router } from '../../../../../../node_modules/@angular/router';
 import { COMPARISON_OPERATOR, TYPE } from '../../../../core/constant/constant';
 import { DataTable } from '../../../../core/models/data-table';
 import { DefaultNotificationService } from '../../../../core/services/default-notification.service';
@@ -20,6 +20,7 @@ export class ALL005Component implements OnInit {
   public action: ActionService;
   public inputForm: InputForm;
   public time: Date = new Date();
+  public sdmskillValue: number; 
 
   @ViewChild('viewAsDateTemplate')
   public viewAsDateTemplate: any;
@@ -33,7 +34,8 @@ export class ALL005Component implements OnInit {
   constructor(
     public _notif: DefaultNotificationService,
     private _factory: CoreFactory,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     this.route.params.subscribe((param) => {
       this.selectedId = param.id;
@@ -110,18 +112,29 @@ export class ALL005Component implements OnInit {
   }
 
   public onEdit() {
+    const savee = false;
     const updateAPI = this._factory.api({
       api : 'allocation/mengelolaSdmSkill/update',
       // params : {
       //   client_id : this.selectedId
       // }
     });
-
-    this._factory.http().put(updateAPI + '?sdmskill_id=' + this.selectedId, this.action.getFormData()).subscribe((response: any) => {
-      console.log('Berhasil');
-      this._notif.success({
-        message: 'Data Updated'
+    if (this.sdmskillValue < 0) {
+      this._notif.error({
+        message: 'Nilai Tidak Boleh negatif'
       });
-    });
+    } else if(this.sdmskillValue > 10) {
+    this._notif.error({
+        message: 'Nilai Tidak Boleh Lebih dari 10'
+      });
+    } else {
+      this._factory.http().put(updateAPI + '?sdmskill_id=' + this.selectedId, this.action.getFormData()).subscribe((response: any) => {
+        console.log('Berhasil');
+        this._notif.success({
+          message: 'Data Updated'
+        });
+        setTimeout(() => this.router.navigate(['pages/all/ALL003']), 1000);
+      });
+    }
   }
 }

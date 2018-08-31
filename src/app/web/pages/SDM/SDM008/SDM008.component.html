@@ -30,7 +30,7 @@ UPDATE		:
               </mat-option>
             </mat-autocomplete>
           </mat-form-field>
-          <button mat-flat-button (click)="onSearch()" style="margin-left: 20px">
+          <button mat-raised-button class="btn btn-search btn-mm" (click)="onSearch()">
               <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Cari</button>
             <!-- <button mat-flat-button (click)="action.onReset()">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Clear</button> -->
@@ -38,7 +38,7 @@ UPDATE		:
     </form>
 </io-form>
 
-  <io-table *ngIf="action?.table()" [action]="action">
+  <io-table *ngIf="action?.table()" [action]="action" style="text-align: center;">
     <div class="io-table-header">
       <h3>List Psychological</h3>
     </div>

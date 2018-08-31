@@ -123,6 +123,7 @@ export class ActionService {
 
     public refreshTable(params?: { [key: string]: any }) {
         this.setPaginationOffset(0);
+        this.IONA().forceReload = true;
         this.IONA().loadDataOnTable(params);
     }
 

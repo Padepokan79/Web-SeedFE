@@ -59,6 +59,7 @@ export class PJA008Component implements OnInit {
   public hirestatIds: number = 3;
   public apiRoot: string = 'project/MultiHiring';
   public router: any;
+  public operator: any = 1;
 
   @ViewChild('notif')
   public notif: any;
@@ -345,4 +346,11 @@ export class PJA008Component implements OnInit {
     }
   }
 
+  public setOperatorAnd() {
+    if (this.operator === 2 ) {
+      this.operator = 1;
+    } else if (this.operator === 1) {
+      this.operator = 2;
+    }
+  }
 }

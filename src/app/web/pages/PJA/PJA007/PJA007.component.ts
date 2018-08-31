@@ -111,10 +111,10 @@ export class PJA007Component implements OnInit {
   public clearData(){
     this.clientPic = '';
     this.clientMobile = '';
-     this.btnDisabled = true;
-    
-     this.action.resetFilter() ;
-     this.action.refreshTable();
+    this.btnDisabled = true;
+  
+    this.action.resetFilter() ;
+    this.action.refreshTable();
   }
 
   public navigateEditMenu(id) {
