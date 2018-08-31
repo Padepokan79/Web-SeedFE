@@ -44,7 +44,7 @@ export class PJA004Component implements OnInit {
         { viewValue: 'Client Name', viewKey: 'client_name', type: TYPE.STRING }
       ],
       tableColumns : [
-        { prop: 'no_urut', name: 'No', width: 100, sortable: false },
+        { prop: 'norut', name: 'No', width: 100, sortable: false },
         { prop: 'client_name', name: 'Client Name', width: 30, sortable: true },
         { prop: 'client_picclient', name: 'PIC Handler', width: 20, sortable: true },
         { prop: 'client_mobileclient', name: 'Contact Person', width: 20, sortable: true },

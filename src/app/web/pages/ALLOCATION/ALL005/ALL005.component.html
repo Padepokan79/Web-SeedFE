@@ -55,7 +55,7 @@ Modified   : 3-08-2018 by Hendra Kurniawan -->
                 </div>
                 <div class="col-md-2">
                     <mat-form-field class="sdw-full-size">
-                        <input matInput placeholder="Value" formControlName="sdmskill_value" name="sdmskill_value" required>
+                        <input matInput type="number" min="1" max="10" placeholder="Value" [(ngModel)]="sdmskillValue" formControlName="sdmskill_value" name="sdmskill_value" required>
                         <mat-hint *ngIf="action.formErrors.sdmskill_value" [ngStyle]="{'color': 'red'}">
                           {{action.formErrors.sdmskill_value}}
                         </mat-hint>

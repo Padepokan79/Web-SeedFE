@@ -37,7 +37,7 @@ UPDATED   : Tuesday, August 28th 2018 15:45:00 PM
           <br>
           <li class="col-md-12 position-li text-left" style="margin-bottom: 1em;">
             <div class="col-md-12 go tight relative-post">
-              <mat-checkbox value="AND" name="conjAnd" class="blacky absolute-post-left">Combine Filtering Mode</mat-checkbox>
+              <mat-checkbox value="AND" name="conjAnd" (change)="setOperatorAnd()"  class="blacky absolute-post-left">Combine Filtering Mode</mat-checkbox>
             </div>
           </li>
           <br>
@@ -83,7 +83,7 @@ UPDATED   : Tuesday, August 28th 2018 15:45:00 PM
 </div>
 <div class="contents" *ngIf="isButtonClicked">
   <form class="io-form-body">
-    <io-table *ngIf="action?.table()" [action]="action">
+    <io-table *ngIf="action?.table()" [action]="action" style="text-align: center;">
       <div class="io-table-header">
         <h3>Candidates</h3>
       </div>

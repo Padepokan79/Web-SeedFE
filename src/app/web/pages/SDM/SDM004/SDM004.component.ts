@@ -64,7 +64,7 @@ export class SDM004Component implements OnInit {
       }
     });
     this.dataTable = this._factory.dataTable({
-      serverSide : true,
+      serverSide : false,
       pagingParams : {
         // filter: {
         //   operator: CONJUNCTION_OPERATOR.AND,
@@ -91,7 +91,7 @@ export class SDM004Component implements OnInit {
         { prop: 'sdm_name', name: 'Nama', width: 100, sortable: true },
         { prop: 'sdm_nik', name: 'NIK', width: 100, sortable: true },
         { prop: 'sdm_address', name: 'Alamat', width: 100, sortable: true },
-        { prop: 'sdm_phone', name: 'Telfon', width: 100, sortable: true },
+        { prop: 'sdm_phone', name: 'Nomor Telepon', width: 100, sortable: true },
         { prop: 'sdm_startcontract', name: 'Start Date', width: 100,
           cellTemplate: this.viewAsDateTemplate, sortable: true },
         { prop: 'sdm_endcontract', name: 'End Date', width: 100,
@@ -140,6 +140,14 @@ export class SDM004Component implements OnInit {
         this.SdmName ? Comparison.EQ('sdm_id', this.SdmName) : Comparison.NE('sdm_id', 'sdm_id'),
     );
 
+    this.action.refreshTable();
+  }
+
+  public onReset() {
+    this.action.onReset();
+    this.SdmName = null;
+    console.log('Nama: ', this.SdmName);
+    this.action.resetFilter() ;
     this.action.refreshTable();
   }
 }

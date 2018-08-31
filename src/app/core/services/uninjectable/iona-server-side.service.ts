@@ -11,6 +11,8 @@ import { IONAEngine } from '../../abstract/iona-engine';
 
 export class IONAServerSideService extends IONAEngine {
 
+    public forceReload = false;
+
     constructor(datePipe: DatePipe,
                 notification: DefaultNotificationService,
                 crudService: CRUDService,
