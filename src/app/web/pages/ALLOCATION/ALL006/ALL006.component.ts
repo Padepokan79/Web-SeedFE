@@ -54,6 +54,7 @@ export class ALL006Component implements OnInit {
   public tes: string;
   public increment: number = 0;
   public operator: any = 1;
+  public isCantFilter: boolean = true;
 
   @ViewChild('notif')
   public notif: any;
@@ -165,6 +166,7 @@ export class ALL006Component implements OnInit {
        operator: this.operator
      });
     });
+    
    console.log('POST');
    const url = `${this.apiFilter}/multiFilter`;
    const httpOptions = {
@@ -248,6 +250,19 @@ export class ALL006Component implements OnInit {
       this.operator = 1;
     } else if (this.operator === 1) {
       this.operator = 2;
+    }
+  }
+
+  public setUnbutton() {
+    if (this.IdSdm === null) {
+      this.listSearchCriteria.forEach((searchCriteria: SearchCriteria) => {
+        if (searchCriteria.skilltype_id === null) {
+          this.isCantFilter = true;
+        }
+        this.isCantFilter = true;
+      });
+    } else {
+      this.isCantFilter = false;
     }
   }
 }
