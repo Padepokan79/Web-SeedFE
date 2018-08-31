@@ -3,7 +3,7 @@ export const PJA_MENU = [
     path: 'pja',
     data: {
       menu: {
-        title: 'PJA',
+        title: 'Project Assignment',
         icon: 'fa fa-tasks',
         selected: false,
         expanded: false,
