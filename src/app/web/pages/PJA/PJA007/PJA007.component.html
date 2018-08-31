@@ -21,7 +21,7 @@
           </td>
           <td class="nx-table-range" style="width: 100px">
             <mat-form-field>
-              <mat-select placeholder="- Select -" (change)="setTrueClick()" formControlName="client_id" name="client_id" [(ngModel)]="selected" (change)="ambilData();onSearch()">
+              <mat-select placeholder="- Select -" formControlName="client_id" name="client_id" [(ngModel)]="selected" (change)="ambilData();onSearch();setTrueClick()">
                 <mat-option *ngFor="let lov of lovClients.data" [value]="lov.key">
                   {{lov.value}}
                 </mat-option>
