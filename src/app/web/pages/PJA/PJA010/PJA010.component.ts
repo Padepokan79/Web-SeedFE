@@ -82,7 +82,7 @@ export class PJA010Component implements OnInit {
         { viewValue: 'PIC Handler', viewKey: 'sdmassign_picclient', type: TYPE.STRING }
       ],
       tableColumns : [
-        { prop: 'sdmassign_id', name: 'Assign ID', width: 15, sortable: false },
+        { prop: 'norut', name: 'No', width: 15, sortable: false },
         { prop: 'sdm_name', name: 'Name', width: 15, sortable: false },
         { prop: 'sdm_phone', name: 'Contact', width: 15, sortable: false },
         { prop: 'sdmassign_startdate', name: 'Start', width: 15, sortable: false },
