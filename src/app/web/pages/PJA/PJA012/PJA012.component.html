@@ -33,7 +33,13 @@ UPDATE		: Wednesday, August 29th 2018 07:15:00 AM
               </mat-form-field>
             </div>
           </li>
-          <br><br>
+          <br>
+          <li class="col-md-12 position-li text-left" style="margin-bottom: 1em;">
+            <div class="col-md-12 go tight relative-post">
+              <mat-checkbox value="AND" name="conjAnd" class="blacky absolute-post-left">Combine Filtering Mode</mat-checkbox>
+            </div>
+          </li>
+          <br>
           <li *ngFor="let searchCriteria of listSearchCriteria; let inc = index" class="col-md-12 position-li">
             <div class="col-md-2 go-tight">
               <mat-form-field class="sdw-full-size">
@@ -67,8 +73,8 @@ UPDATE		: Wednesday, August 29th 2018 07:15:00 AM
       </div>
       <br><br>
       <div class="action-filter">
-        <button [routerLink]="['/pages/dashboard']" class="btn btn-mm"> &lt; Back</button>
-        <button class="btn btn-primary btn-mm" [disabled]="isLocked" (click)="assignSubmit()">Assign</button>
+        <button class="btn btn-filter btn-mm" (click)="btnFilter();deactivateButton()">Filter <i class="glyphicon glyphicon-search"></i></button>
+        <button class="btn btn-clear btn-mm" (click)="resetSource();deactivateButton()">Clear <i class="glyphicon glyphicon-times"></i></button>
       </div>
       <br><br>
     </form>
