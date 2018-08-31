@@ -1,7 +1,8 @@
 <!-- 
 AUTHOR  	: Khairil Anwar
 CREATED 	: Friday, ‎August 17th 2018 08:12:51 AM
-UPDATED   : Tuesday, August 28th 2018 15:45:00 PM
+UPDATE BY : Khairil Anwar
+UPDATED   : Friday, August 31st 2018 08:45:00 AM
 -->
 <mat-toolbar>
   Multifiltering SDM
@@ -20,12 +21,12 @@ UPDATED   : Tuesday, August 28th 2018 15:45:00 PM
 <div class="all-of-white">
   <div class="filter-contents" align="center">
     <form class="io-form-body">
-      <div id="filtering" class="row row-center">  
+      <div id="filtering" style="margin-bottom: 1em">  
         <ul class="list-filter">
           <li class="col-md-12 position-li" style="margin-bottom: 1em">
-            <div class="col-md-6 go tight"> 
+            <div class="col-md-9 go tight">
               <mat-form-field class="sdw-full-size">
-                <input matInput [formControl]="sdmCtrl" (keyup)="onKey($event)" placeholder="Input SDM Name" name="sdm_id" [matAutocomplete]="auto" class="blacky">
+                <input matInput [formControl]="sdmCtrl" (change)="setUnbutton()" (keyup)="onKey($event)" placeholder="Input SDM Name" name="sdm_id" [matAutocomplete]="auto" class="blacky">
                 <mat-autocomplete #auto="matAutocomplete">
                   <mat-option *ngFor="let dataSdm of filteredSdm | async" [value]="dataSdm.values.sdm_sdm_name" (onSelectionChange)="setSdmValue(dataSdm)">
                     {{ dataSdm.values.sdm_sdm_name }}
@@ -37,21 +38,25 @@ UPDATED   : Tuesday, August 28th 2018 15:45:00 PM
           <br>
           <li class="col-md-12 position-li text-left" style="margin-bottom: 1em;">
             <div class="col-md-12 go tight relative-post">
+<<<<<<< HEAD
+              <mat-checkbox value="AND" name="conjAnd" class="blacky absolute-post">Combine Filtering Mode</mat-checkbox>
+=======
               <mat-checkbox value="AND" name="conjAnd" (change)="setOperatorAnd()"  class="blacky absolute-post-left">Combine Filtering Mode</mat-checkbox>
+>>>>>>> origin
             </div>
           </li>
           <br>
           <li *ngFor="let searchCriteria of listSearchCriteria; let inc = index" class="col-md-12 position-li">
-            <div class="col-md-2 go-tight">
+            <div class="col-md-3 go-tight">
               <mat-form-field class="sdw-full-size">
-                <mat-select placeholder="Choose Category" [(ngModel)]="searchCriteria.skilltype_id" name="skilltype_id{{inc}}" required>
+                <mat-select placeholder="Choose Category" (change)="setUnbutton()" [(ngModel)]="searchCriteria.skilltype_id" name="skilltype_id{{inc}}" required>
                   <mat-option *ngFor="let lov of searchCriteria.lovSkillType.data" [value]="lov.key" (onSelectionChange)="searchCriteria.selectedSkill($event, lov)">
                     {{lov.value}}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
-            <div class="col-md-2 go-tight">
+            <div class="col-md-3 go-tight">
               <mat-form-field class="sdw-full-size">
                 <mat-select placeholder="Choose Skill" [(ngModel)]="searchCriteria.skill_id" name="skill_id{{inc}}" required>
                   <mat-option *ngFor="let lov of searchCriteria.lovSkill?.data" [value]="lov.key">
@@ -60,12 +65,12 @@ UPDATED   : Tuesday, August 28th 2018 15:45:00 PM
                 </mat-select>
               </mat-form-field>
             </div>
-            <div class="col-md-2 go-tight">
+            <div class="col-md-3 go-tight">
               <mat-form-field class="sdw-full-size">
-                <input matInput type="text" min="1" max="10" placeholder="Value" [(ngModel)]="searchCriteria.value" name="sdmskill_value{{inc}}" class="blacky">
+                <input matInput type="number" min="1" max="10" placeholder="Value" [(ngModel)]="searchCriteria.value" name="sdmskill_value{{inc}}" class="blacky">
               </mat-form-field>
             </div>
-            <div class="col-sm-2 text-left">
+            <div class="col-sm-1 text-left">
               <button class="btn btn-flat btn-sm" *ngIf="inc==0" (click)="addSearchCriteria()"><i class="fa fa-plus"></i></button>
               <button class="btn btn-flat btn-sm" *ngIf="inc>0" (click)="removeSearchCriteria(inc,1)"><i class="fa fa-minus"></i></button>
             </div>
@@ -89,7 +94,6 @@ UPDATED   : Tuesday, August 28th 2018 15:45:00 PM
       </div>
     </io-table>      
   </form>
-
 </div>
 <ng-template #notif let-row="row" let-value="value" ngx-datatable-cell-template>
   <i matTooltip="Non-Aktif" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:black; font-size: 30px" *ngIf="row.sdm_notification == 'black'"></i>

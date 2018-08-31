@@ -249,6 +249,5 @@ export class ALL006Component implements OnInit {
     } else if (this.operator === 1) {
       this.operator = 2;
     }
-
- }
+  }
 }
