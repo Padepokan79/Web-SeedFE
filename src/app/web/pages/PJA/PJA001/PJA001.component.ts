@@ -190,7 +190,7 @@ export class PJA001Component implements OnInit {
   } 
 
   public timeOut() {
-      setTimeout(() => this.router.navigate(['pages/pja/PJA003']), 1000);
+      setTimeout(() => this.router.navigate(['pages/pja/PJA003R']), 1000);
   }
   // public aksi = this._factory.lov({api: 'lov/Skill', initializeData:true});
   // private _filter(value: string): string[] {

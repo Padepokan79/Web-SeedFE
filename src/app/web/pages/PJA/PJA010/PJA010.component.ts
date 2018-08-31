@@ -114,15 +114,19 @@ export class PJA010Component implements OnInit {
   public ambilData() {
     const readAllApi = this._factory.api({
       api : 'project/MengelolaClient/readAll',
-      params : {
+      pagingParams : {
+        filter : {
+          field : 'client_id',
+          operator : COMPARISON_OPERATOR.EQ,
           value : this.selected
+        }
       }
     });
 
     this._factory.http().get(readAllApi).subscribe((res: any) => {
       // this.action.patchFormData(res.data.items[this.selected]);
-      this.clientPic = res.data.items[this.selected].client_picclient;
-      this.clientMobile = res.data.items[this.selected].client_mobileclient;
+      this.clientPic = res.data.items[0].client_picclient;
+      this.clientMobile = res.data.items[0].client_mobileclient;
     });
 
   }
