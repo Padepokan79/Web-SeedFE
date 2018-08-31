@@ -76,7 +76,7 @@ export class PJA008Component implements OnInit {
     // });
     // tslint:disable-next-line:no-shadowed-variable
     this.route.params.subscribe((param) => {
-      this.clientIds = param.idClient;
+      this.clientIds = +param.idClient;
     });
   }
 
@@ -237,9 +237,9 @@ export class PJA008Component implements OnInit {
     this.action.table().rows.forEach((item) => {
       if (item.Checked === true) {
         tempData.push({
-          sdm_id: item.sdm_id,
           client_id: this.clientIds,
-          hirestat_id: this.hirestatIds
+          hirestat_id: this.hirestatIds,
+          sdm_id: item.sdm_id
         });
         // tslint:disable-next-line:no-unused-expression
         item.Checked === false;
@@ -303,9 +303,9 @@ export class PJA008Component implements OnInit {
       if (item.Checked === true) {
         multiInsert.push({
           sdmhiring_id: null,
-          sdm_id: item.sdm_id,
           client_id: this.clientIds,
-          hirestat_id: this.hirestatIds
+          hirestat_id: this.hirestatIds,
+          sdm_id: item.sdm_id
         });
         // tslint:disable-next-line:no-unused-expression
         item.Checked === false;
@@ -313,7 +313,7 @@ export class PJA008Component implements OnInit {
       }
     });
     const url = this._factory.api({
-      api: `${this.apiRoot}/MultiCreate`
+      api: `${this.apiRoot}/multiCreate`
     });
     const httpOptions = {
       params: new HttpParams()
