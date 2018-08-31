@@ -130,4 +130,3 @@ export class PJA005Component implements OnInit {
       }
    }
   }
-}
