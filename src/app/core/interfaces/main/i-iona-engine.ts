@@ -16,6 +16,8 @@ export interface IIONAEngine {
     inputForm?: InputForm;
     crudService?: CRUDService;
 
+    forceReload?: boolean;
+
     setTable(dataTable: DataTable);
     setForm(inputForm: InputForm);
 

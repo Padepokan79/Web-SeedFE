@@ -56,11 +56,11 @@
           <td>
             <!-- <button mat-flat-button (click)="onSearch()">
                 <span class="glyphicon glyphicon-search nx-save-button" aria-hidden="true"></span>Filter</button>&nbsp; -->
-            <button mat-flat-button (click)="action.onReset();clearData()">
-                <span class="glyphicon glyphicon-remove nx-save-button" aria-hidden="true"></span>Clear</button>&nbsp;
+            <button mat-raised-button class="action-btn nx-reset-button" (click)="action.onReset();clearData()">
+                Reset</button>&nbsp;
             <div class="col-md-2" style="float:right">
-              <button mat-flat-button style="float:right" [disabled]="btnDisabled" (click)="navigatePushId(selected)">
-                  <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>Hire SDM
+              <button mat-raised-button class="action-btn nx-hiring-button" style="float:right" [disabled]="btnDisabled" (click)="navigatePushId(selected)">
+                  <span class="glyphicon glyphicon-plus-sign" aria-hidden="true">&nbsp;</span>Hire SDM
               </button>
             </div>
           </td>
@@ -70,7 +70,7 @@
   </form>
 </io-form>
 
-<io-table style="margin-bottom:40px" *ngIf="action?.table()" [action]="action">
+<io-table style="margin-bottom:40px" *ngIf="action?.table()" [action]="action" style="text-align: center;">
   <div class="io-table-header">
     <h3>List Task</h3>
   </div>
