@@ -32,7 +32,13 @@ CREATED 	: Thursday, ‎August 16th 2018 23:00:00 PM
               </mat-form-field>
             </div>
           </li>
-          <br><br>
+          <br>
+          <li class="col-md-12 position-li text-left" style="margin-bottom: 1em;">
+            <div class="col-md-12 go tight relative-post">
+              <mat-checkbox value="AND" name="conjAnd" class="blacky absolute-post">Combine Filtering Mode</mat-checkbox>
+            </div>
+          </li>
+          <br>
           <li *ngFor="let searchCriteria of listSearchCriteria; let inc = index" class="col-md-12 position-li">
             <div class="col-md-2 go-tight">
               <mat-form-field class="sdw-full-size">
