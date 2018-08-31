@@ -26,7 +26,7 @@
                 <label for="singleFile">Browse Image</label>
                 <!-- <input id="singleFile" type="file"> -->
                 <!-- <input type="file" #Image accept="image/*" (change)="handleFileInput($event)" formControlName="sdm_image" name="sdm_image"> -->
-                <input type="file" (change)="handleFileInput($event)">
+                <input #uploadFile type="file" (change)="handleFileInput($event)">
             </div>
         </td>
     </tr>
