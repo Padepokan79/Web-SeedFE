@@ -171,7 +171,7 @@ export class PJA012Component implements OnInit {
         skilltype_id: skillSdm.skilltype_id,
         skill_id: skillSdm.skill_id,
         sdmskill_value: skillSdm.value,
-        operator: 2
+        operator: this.operator
       });
     });
     console.log('POST');
