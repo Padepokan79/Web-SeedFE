@@ -5,9 +5,6 @@ import { ActionService } from './../../../../core/services/uninjectable/action.s
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { LOVService } from './../../../../core/services/uninjectable/lov.service';
 import { SearchCriteria } from './SearchCriteria';
-import { ISimplifiedFilterOperand } from './../../../../core/interfaces/main/i-simplified-filter-operand';
-import { Comparison } from './../../../../core/enums/comparison-operator.enum';
-import { Conjunction } from './../../../../core/enums/conjunction-operator.enum';
 import { DefaultNotificationService } from './../../../../core/services/default-notification.service';
 import { ListOfValue } from './../../../../core/models/list-of-value';
 import { FormControl } from './../../../../../../node_modules/@angular/forms';
@@ -81,9 +78,9 @@ export class PJA012Component implements OnInit {
     // });
     // tslint:disable-next-line:no-shadowed-variable
     this.route.params.subscribe((param) => {
-      this.clientIds    = param.idClient;
+      this.clientIds    = +param.idClient;
       this.assignClient = param.client_name;
-      this.assignLoc = param.client_address;
+      this.assignLoc = 'Bandung';
       this.assignClientPhone = param.client_mobileclient;
     });
   }
@@ -190,54 +187,6 @@ export class PJA012Component implements OnInit {
         console.log(this.action.table().rows);
       });
   }
-  public selectToAssign() {
-    this.isButtonClicked = true;
-    const filterComponent: ISimplifiedFilterOperand[] = [];
-    const filterComponentPlusName: ISimplifiedFilterOperand[] = [];
-    this.listSearchCriteria.forEach((searchCriteria: SearchCriteria) => {
-      this.categorySkill = searchCriteria.skilltype_id;
-      if (this.categorySkill === 0) {
-        searchCriteria.skill_id = '';
-        this.varSkill = '';
-      } else {
-        this.varSkill = searchCriteria.skill_id;
-      }
-      this.skillValue = searchCriteria.value;
-      filterComponent.push(
-        Conjunction.AND(
-          this.categorySkill ? Comparison.EQ('skilltype_id', this.categorySkill) : Comparison.NE('skilltype_id', this.categorySkill),
-          this.varSkill ? Comparison.EQ('skill_id', this.varSkill) : Comparison.NE('skill_id', this.varSkill),
-          this.skillValue ? Comparison.GE('sdmskill_value', this.skillValue) : Comparison.GE('sdmskill_value', '0')
-        )
-      );
-      filterComponentPlusName.push(
-        Conjunction.AND(
-          this.IdSdm ? Comparison.EQ('sdm_id', this.IdSdm) : Comparison.NE('sdm_id', this.IdSdm),
-          this.categorySkill ? Comparison.EQ('skilltype_id', this.categorySkill) : Comparison.NE('skilltype_id', this.categorySkill),
-          this.varSkill ? Comparison.EQ('skill_id', this.varSkill) : Comparison.NE('skill_id', this.varSkill),
-          this.skillValue ? Comparison.GE('sdmskill_value', this.skillValue) : Comparison.GE('sdmskill_value', '0')
-        )
-      );
-    });
-
-    if (this.check === true) {
-      if (this.IdSdm != null) {
-        this.doubleFilter = Conjunction.AND(...filterComponentPlusName);
-      } else {
-        this.doubleFilter = Conjunction.AND(...filterComponent);
-      }
-    } else {
-      if (this.IdSdm != null) {
-        this.doubleFilter = Conjunction.OR(...filterComponentPlusName);
-      } else {
-        this.doubleFilter = Conjunction.OR(...filterComponent);
-      }
-    }
-
-    this.action.setPaginationFilter(this.doubleFilter);
-    this.action.refreshTable();
-
-  }
 
   public distRedundantCheckedSdm() {
     const tempData = [];
@@ -289,26 +238,6 @@ export class PJA012Component implements OnInit {
   public deactivateButton() {
     this.isLocked = true;
   }
-
-  // public noActionButton() {
-  //   this.listSearchCriteria.forEach((searchCriteria: SearchCriteria) => {
-  //     if (this.IdSdm === '' || searchCriteria.skilltype_id === '') {
-  //       this.isCantFilter = true;
-  //     } else {
-  //       this.isCantFilter = false;
-  //     }
-  //   });
-  // }
-
-  // public activateValue() {
-  //   this.listSearchCriteria.forEach((searchCriteria: SearchCriteria) => {
-  //     if (searchCriteria.skill_id === '') {
-  //       this.isReadOnly = true;
-  //     } else {
-  //       this.isReadOnly = false;
-  //     }
-  //   });
-  // }
 
   public assignSubmit() {
     this.isButtonClicked = true;

@@ -37,7 +37,7 @@ UPDATED   : Friday, August 31st 2018 08:45:00 AM
           <br>
           <li class="col-md-12 position-li text-left" style="margin-bottom: 1em;">
             <div class="col-md-12 go tight relative-post">
-              <mat-checkbox value="AND" name="conjAnd" (change)="setOperatorAnd()" class="blacky absolute-post">Combine Filtering Mode</mat-checkbox>
+              <mat-checkbox value="AND" name="conjAnd" (change)="setOperatorAnd();setUnbutton()" class="blacky absolute-post">Combine Filtering Mode</mat-checkbox>
             </div>
           </li>
           <br>
@@ -89,7 +89,7 @@ UPDATED   : Friday, August 31st 2018 08:45:00 AM
       </div>
     </io-table>      
     <div class="action-filter col-md-12">
-      <button [routerLink]="['/pages/dashboard']" class="btn btn-mm"> &lt; Back</button>
+      <button [routerLink]="['/pages/pja/PJA007']" class="btn btn-mm"> &lt; Back</button>
       <button class="btn btn-primary btn-mm" [disabled]="isLocked" (click)="hiringSubmit()">Get</button>
     </div>
   </form>
