@@ -3,7 +3,7 @@ export const ALL_MENU = [
     path: 'all',
     data: {
       menu: {
-        title: 'ALLOCATION',
+        title: 'SDM Allocation',
         icon: 'fa fa-random',
         selected: false,
         expanded: false,

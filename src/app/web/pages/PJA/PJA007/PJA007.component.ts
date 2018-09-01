@@ -4,7 +4,7 @@ import { InputForm } from '../../../../core/models/input-form';
 import { DataTable } from '../../../../core/models/data-table';
 import { LOVService } from '../../../../core/services/uninjectable/lov.service';
 import { CoreFactory } from '../../../../core/factory/core.factory';
-import { TYPE } from '../../../../core/constant/constant';
+import { TYPE, COMPARISON_OPERATOR } from '../../../../core/constant/constant';
 import { Router } from '@angular/router';
 import { Comparison } from '../../../../core/enums/comparison-operator.enum';
 import { Conjunction } from '../../../../core/enums/conjunction-operator.enum';
@@ -31,7 +31,7 @@ export class PJA007Component implements OnInit {
   public clientPic: string;
   public clientMobile: string;
   public btnDisabled: boolean = true;
-  private selected: number;
+  public selected: number;
 
   constructor(private _factory: CoreFactory, private router: Router) { }
 
@@ -67,7 +67,7 @@ export class PJA007Component implements OnInit {
         { viewValue: 'Name', viewKey: 'sdm_name', type: TYPE.STRING}
       ],
       tableColumns : [
-        { prop: 'sdmhiring_id', name: 'No', width: 20, sortable: false },
+        { prop: 'norut', name: 'No', width: 20, sortable: false },
         { prop: 'sdm_name', name: 'Name', width: 100, sortable: false },
         { prop: 'sdm_phone', name: 'Contact', width: 100, sortable: false },
         { prop: 'hirestat_name', name: 'Status', width: 100, sortable: false },
@@ -95,15 +95,19 @@ export class PJA007Component implements OnInit {
   public ambilData() {
     const readAllApi = this._factory.api({
       api : 'project/MengelolaClient/readAll',
-      params : {
+      pagingParams : {
+        filter : {
+          field : 'client_id',
+          operator : COMPARISON_OPERATOR.EQ,
           value : this.selected
+        }
       }
     });
-
+    
     this._factory.http().get(readAllApi).subscribe((res: any) => {
       // this.action.patchFormData(res.data.items[this.selected]);
-      this.clientPic = res.data.items[this.selected].client_picclient;
-      this.clientMobile = res.data.items[this.selected].client_mobileclient;
+      this.clientPic = res.data.items[0].client_picclient;
+      this.clientMobile = res.data.items[0].client_mobileclient;
     });
 
   }
@@ -130,9 +134,7 @@ export class PJA007Component implements OnInit {
     const ClientId = this.action.getFormControlValue('client_id');
 
     this.action.setPaginationFilter(
-      Conjunction.OR(
-        Comparison.EQ('client_id', ClientId),
-      )
+        Comparison.EQ('client_id', ClientId)
     );
 
     this.action.refreshTable();

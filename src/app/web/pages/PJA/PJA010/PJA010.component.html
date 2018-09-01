@@ -55,11 +55,11 @@
         <td>
           <!-- <button mat-flat-button (click)="onSearch()">
               <span class="glyphicon glyphicon-search nx-save-button" aria-hidden="true"></span>Filter</button>&nbsp; -->
-          <button mat-flat-button (click)="action.onReset();clearData()">
-              <span class="glyphicon glyphicon-remove nx-save-button" aria-hidden="true"></span>Clear</button>&nbsp;
+          <button mat-raised-button class="action-btn nx-reset-button" (click)="action.onReset();clearData()">
+              Reset</button>&nbsp;
           <div class="col-md-2" style="float:right">
-            <button mat-flat-button style="float:right" [disabled]="btnDisabled" (click)="navigatePushId(selected)">
-                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>Assign
+            <button mat-raised-button class="action-btn nx-assign-button" style="float:right" [disabled]="btnDisabled" (click)="navigatePushId(selected)">
+                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true">&nbsp;</span>Assign
             </button>
           </div>
         </td>

@@ -26,7 +26,7 @@ Modified   : 15-08-2018 by APN -->
               </td>
               <td class="nx-table-range">
                 <mat-form-field class="nx-class-data">
-                  <input matInput placeholder="" formControlName="client_name" name="client_name" required>
+                  <input matInput placeholder="" [(ngModel)]="clientName" formControlName="client_name" name="client_name" required>
                   <mat-hint *ngIf="action.formErrors.client_name" [ngStyle]="{'color': 'red'}">
                     {{action.formErrors.client_name}}
                   </mat-hint>
@@ -43,7 +43,7 @@ Modified   : 15-08-2018 by APN -->
               </td>
               <td class="nx-table-range">
                 <mat-form-field class="nx-class-data">
-                  <input matInput placeholder="" formControlName="client_picclient" name="client_picclient">
+                  <input matInput placeholder="" [(ngModel)]="clientPicclient" formControlName="client_picclient" name="client_picclient">
                   <mat-hint *ngIf="action.formErrors.client_picclient" [ngStyle]="{'color': 'red'}">
                     {{action.formErrors.client_picclient}}
                   </mat-hint>
@@ -60,7 +60,7 @@ Modified   : 15-08-2018 by APN -->
               </td>
               <td class="nx-table-range">
                 <mat-form-field class="nx-class-data">
-                  <input matInput placeholder="" formControlName="client_mobileclient" name="client_mobileclient">
+                  <input matInput placeholder="" maxlength="13"  type="number" [(ngModel)]="clientMobileclient" formControlName="client_mobileclient" name="client_mobileclient">
                   <mat-hint *ngIf="action.formErrors.client_mobileclient" [ngStyle]="{'color': 'red'}">
                     {{action.formErrors.client_mobileclient}}
                   </mat-hint>
@@ -89,7 +89,7 @@ Modified   : 15-08-2018 by APN -->
               <td></td>
               <td></td>
               <td class="nx-button-range">
-                <button mat-raised-button class="action-btn nx-save-button" [disabled]="action?.formControls()?.invalid || action?.formControls()?.pristine" (click)="action.onSave(timeOut())">Submit</button>
+                <button mat-raised-button class="action-btn nx-save-button" (click)="onSave()">Submit</button>
                 <button mat-raised-button class="action-btn nx-cancel-button" [routerLink]="['/pages/pja/PJA004']">Cancel</button>  
               </td>
             </tr>
