@@ -54,6 +54,13 @@ div.go-tight {
     margin-top: 40px;
 }
 
+.btn-flat:disabled, .btn-flat[disabled], .btn-clear:disabled, .btn-clear[disabled] {
+	border: 1px solid #999999;
+	background-color: #cccccc;
+	color: #666666;
+	margin-top: 40px;
+}
+
 .position-li {
 	margin: 10px 20% -10px 0;
 	padding: 0 10% 0 20%;

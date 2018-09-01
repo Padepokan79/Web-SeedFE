@@ -25,7 +25,7 @@ UPDATED		: Friday, August 31st 2018 08:45:00 AM
           <li class="col-md-12 position-li" style="margin-bottom: 1em">
             <div class="col-md-9 go tight">
               <mat-form-field class="sdw-full-size">
-                <input matInput [formControl]="sdmCtrl" (change)="setUnbutton()" (keyup)="onKey($event)" placeholder="Input SDM Name" name="sdm_id" [matAutocomplete]="auto" class="blacky">
+                <input matInput [formControl]="sdmCtrl" (keyup)="onKey($event)" placeholder="Input SDM Name" name="sdm_id" [matAutocomplete]="auto" class="blacky">
                 <mat-autocomplete #auto="matAutocomplete">
                   <mat-option *ngFor="let dataSdm of filteredSdm | async" [value]="dataSdm.values.sdm_sdm_name" (onSelectionChange)="setSdmValue(dataSdm)">
                     {{ dataSdm.values.sdm_sdm_name }}
@@ -37,14 +37,14 @@ UPDATED		: Friday, August 31st 2018 08:45:00 AM
           <br>
           <li class="col-md-12 position-li text-left" style="margin-bottom: 1em;">
             <div class="col-md-12 go tight relative-post">
-              <mat-checkbox value="AND" name="conjAnd" (change)="setOperatorAnd()" class="blacky absolute-post">Combine Filtering Mode</mat-checkbox>
+              <mat-checkbox value="AND" name="conjAnd" (change)="setOperatorAnd();" class="blacky absolute-post">Combine Filtering Mode</mat-checkbox>
             </div>
           </li>
           <br>
           <li *ngFor="let searchCriteria of listSearchCriteria; let inc = index" class="col-md-12 position-li">
             <div class="col-md-3 go-tight">
               <mat-form-field class="sdw-full-size">
-                <mat-select placeholder="Choose Category" (change)="setUnbutton()" [(ngModel)]="searchCriteria.skilltype_id" name="skilltype_id{{inc}}" required>
+                <mat-select placeholder="Choose Category" [(ngModel)]="searchCriteria.skilltype_id" name="skilltype_id{{inc}}" required>
                   <mat-option *ngFor="let lov of searchCriteria.lovSkillType.data" [value]="lov.key" (onSelectionChange)="searchCriteria.selectedSkill($event, lov)">
                     {{lov.value}}
                   </mat-option>
@@ -89,7 +89,7 @@ UPDATED		: Friday, August 31st 2018 08:45:00 AM
       </div>
     </io-table>      
     <div class="action-filter col-md-12">
-      <button [routerLink]="['/pages/dashboard']" class="btn btn-mm"> &lt; Back</button>
+      <button [routerLink]="['/pages/pja/PJA010']" class="btn btn-mm"> &lt; Back</button>
       <button class="btn btn-primary btn-mm" [routerLink]="['/pages/pja/PJA010']" (click)="assignSubmit()">Submit</button>
     </div>
   </form>
