@@ -163,7 +163,7 @@ export class PJA008Component implements OnInit {
         skilltype_id: skillSdm.skilltype_id,
         skill_id: skillSdm.skill_id,
         sdmskill_value: skillSdm.value,
-        operator: 2
+        operator: this.operator
       });
     });
     console.log('POST');
@@ -177,6 +177,7 @@ export class PJA008Component implements OnInit {
       .subscribe((res: any) => {
         this.action.table().rows = res.data;
         console.log(this.action.table().rows);
+        console.log(body);
       });
   }
 
