@@ -50,16 +50,18 @@ export class PJA012Component implements OnInit {
   public isCantFilter: boolean = true;
   public isLocked: boolean = true;
   public isReadOnly: boolean = true;
+  public defaultDate1: string = this.time.getFullYear() + '-' + ((this.time.getMonth() + 1) < 10 ? '0' + this.time.getMonth() + 1 : this.time.getMonth() + 1) + '-' + ((this.time.getDate() + 1) < 10 ? '0' + this.time.getDate() + 1 : this.time.getDate() + 1);
+  public defaultDate2: string = (this.time.getFullYear() + 1) + '-' + ((this.time.getMonth() + 1) < 10 ? '0' + this.time.getMonth() + 1 : this.time.getMonth() + 1) + '-' + ((this.time.getDate() + 1) < 10 ? '0' + this.time.getDate() + 1 : this.time.getDate() + 1);
   public increment: number = 0;
   public clientIds: number;
   public hirestatIds: number = 4;
   public methodIds: number = 1;
-  public assignStartdate: any;
-  public assignEnddate: any;
-  public assignLoc: string = '';
+  public assignStartdate: Date;
+  public assignEnddate: Date;
+  public assignLoc: string = 'Bandung';
   public assignClient: string = '';
   public assignClientPhone: string = '';
-  public apiRoot: string = 'project/MultiAssignment';
+  public apiRoot: string = 'project/MultiInsertHiringAssign';
   public router: any;
   public operator: any = 1;
 
@@ -79,9 +81,11 @@ export class PJA012Component implements OnInit {
     // tslint:disable-next-line:no-shadowed-variable
     this.route.params.subscribe((param) => {
       this.clientIds    = +param.idClient;
-      this.assignClient = param.client_name;
+      this.assignClient = 'Tes';
       this.assignLoc = 'Bandung';
-      this.assignClientPhone = param.client_mobileclient;
+      this.assignClientPhone = '08132231232323';
+      this.assignStartdate = new Date (Date.parse(this.defaultDate1));
+      this.assignEnddate = new Date (Date.parse(this.defaultDate2));
     });
   }
 
@@ -262,7 +266,7 @@ export class PJA012Component implements OnInit {
       }
     });
     const url = this._factory.api({
-      api: `${this.apiRoot}/MultiCreate`
+      api: `${this.apiRoot}/multiCreate`
     });
     const httpOptions = {
       params: new HttpParams()
@@ -271,10 +275,18 @@ export class PJA012Component implements OnInit {
       listhiring: multiInsert
     }, httpOptions)
       .subscribe(() => {
-        this._notif.success({
-          message: 'You have successfully Assigned'
+        this.action.table().rows.forEach((item) => {
+          if (this.clientIds != null && this.hirestatIds != null && item.sdm_id != null && this.assignStartdate != null && this.assignEnddate != null) {
+            this._notif.success({
+              message: 'You have successfully Assigned'
+            });
+            setTimeout(() => this.router.navigate(['pages/pja/PJA010']), 1000);
+          } else {
+            this._notif.error({
+              message: 'Failed to Assigned'
+            });
+          }
         });
-        this.router.navigate(['pages/pja/PJA010']);
       });
   }
 
