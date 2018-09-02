@@ -150,10 +150,12 @@ export class PJA008Component implements OnInit {
     }, 1);
 
   }
+
   // tslint:disable-next-line:member-ordering
   public apiFilter: string = this._factory.api({
     api: `api/masterdata/MultiFiltering`
   });
+
   public btnFilter() {
     this.isButtonClicked = true;
     const body = [];
@@ -251,10 +253,18 @@ export class PJA008Component implements OnInit {
       listhiring: multiInsert
     }, httpOptions)
       .subscribe(() => {
-        this._notif.success({
-          message: 'You have successfully Hired'
+        this.action.table().rows.forEach((item) => {
+          if (this.clientIds != null && this.hirestatIds != null && item.sdm_id != null) {
+            this._notif.success({
+              message: 'You have successfully Hired'
+            });
+            setTimeout(() => this.router.navigate(['pages/pja/PJA007']), 1000);
+          } else {
+            this._notif.error({
+              message: 'Failed to Hired'
+            });
+          }
         });
-        this.router.navigate(['pages/pja/PJA007']);
       });
   }
 
