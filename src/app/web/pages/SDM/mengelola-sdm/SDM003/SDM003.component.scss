@@ -1,6 +1,9 @@
 .panjang{
     width : 150px;
 }
+.formheader{
+    margin: 12px;
+}
 io-table{
     background: whitesmoke;
 }
@@ -10,10 +13,8 @@ io-table{
 .btn-search {
     background: linear-gradient(to bottom right, #23AB14, #31AD18);
     color: #FEFEFE;
-    margin-left: 20px;
 }
 .btn-clear {
     background: linear-gradient(to bottom right, #AB2314, #AD3118);
     color: #FEFEFE;
-    margin-left: 10px;
 }

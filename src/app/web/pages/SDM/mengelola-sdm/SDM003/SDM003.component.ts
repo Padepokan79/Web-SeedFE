@@ -111,7 +111,7 @@ export class SDM003Component implements OnInit {
       //   { viewValue: 'Nama', viewKey: 'sdm_name', type: TYPE.STRING }
       // ],
       tableColumns : [
-        { prop: 'norut', name: 'No', width: 20, sortable: false },
+        { prop: 'norut', name: 'No', width: 5, sortable: false },
         { prop: 'sdm_name', name: 'Nama', width: 100, sortable: true },
         { prop: 'sdm_nik', name: 'NIK', width: 50, sortable: true },
         { prop: 'sdm_startcontract', name: 'Start Date', width: 50,
@@ -119,7 +119,7 @@ export class SDM003Component implements OnInit {
         { prop: 'sdm_endcontract', name: 'End Date', width: 50,
           cellTemplate: this.viewAsDateTemplate, sortable: true },
         { prop: 'sdm_status', name: 'Status', width: 50, sortable: false },
-        { prop: 'sdm_id', name: 'Action', width: 100,
+        { prop: 'sdm_id', name: 'Action', width: 150,
           cellTemplate: this.tableActionTemplate, sortable: false },
         { prop: 'notif', name: 'Notifikasi', width: 50,
           cellTemplate: this.notif, sortable: false }
