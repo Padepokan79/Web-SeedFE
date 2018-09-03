@@ -13,6 +13,7 @@ import { ListOfValue } from '../../../../core/models/list-of-value';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { HttpParams, HttpClient } from '../../../../../../node_modules/@angular/common/http';
+import { Message } from '../../../../../../node_modules/@angular/compiler/src/i18n/i18n_ast';
 
 @Component({
   selector: 'app-ALL006',
@@ -55,6 +56,8 @@ export class ALL006Component implements OnInit {
   public increment: number = 0;
   public operator: any = 1;
   public isCantFilter: boolean = true;
+  public data: number[];
+  public cek: boolean = true;
 
   @ViewChild('notif')
   public notif: any;
@@ -141,10 +144,9 @@ export class ALL006Component implements OnInit {
     });
 
     this.action = this._factory.actions({
-      api: 'allocation/MengelolaSdmSkill',
-      dataTable: this.dataTable
-    });
-
+        api: 'allocation/MengelolaSdmSkill',
+        dataTable: this.dataTable
+      });
     setInterval(() => {
       this.time = new Date();
     }, 1);
@@ -166,19 +168,37 @@ export class ALL006Component implements OnInit {
        operator: this.operator
      });
     });
-    
    console.log('POST');
    const url = `${this.apiFilter}/multiFilter`;
    const httpOptions = {
      params: new HttpParams()
    };
-   this.http.post(url, {
-     listsdm: body
-   }, httpOptions)
-     .subscribe((res: any) => {
-       this.action.table().rows = res.data;
-       console.log(this.action.table().rows);
+   this.listSearchCriteria.forEach((skillSdm: SearchCriteria) => {
+    if (skillSdm.value > 10) {
+      this.cek = false;
+    }
+   });
+   if (this.cek === true) {
+    this.http.post(url, {
+      listsdm: body
+    }, httpOptions)
+      .subscribe((res: any) => {
+        this.action.table().rows = res.data;
+        console.log(this.action.table().rows);
+      });
+   } else {
+    this.http.post(url, {
+      listsdm: body
+    }, httpOptions)
+      .subscribe((res: any) => {
+        this.action.table().rows = res.null;
+        console.log(this.action.table().rows);
+      });
+    this._notif .error({
+      message : 'Nilai tidak boleh lebih dari 10'
      });
+   }
+   this.cek = true;
  }
   public selectToAssign() {
     this.isButtonClicked = true;
@@ -194,7 +214,7 @@ export class ALL006Component implements OnInit {
         this.varSkill = searchCriteria.skill_id;
       }
       console.log(this.varSkill);
-      this.skillValue = searchCriteria.value;
+      // this.skillValue = searchCriteria.value;
       filterComponent.push(
         Conjunction.AND(
           this.categorySkill ? Comparison.EQ('skilltype_id', this.categorySkill) : Comparison.NE('skilltype_id', this.categorySkill),
