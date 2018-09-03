@@ -7,22 +7,11 @@ Modified   : 10-08-2018 by Vikri Ramdhani -->
   <span style="color: #181818;">List Sdm Skill</span>
 </div>
 
-<div class="asu">
- <a [routerLink]="['/pages/all/ALL004']">
-   <button style="">
-     Add Sdm Skill
-   </button>
- </a>
-</div>
-
-<io-table *ngIf="action?.table()" [action]="action" style="text-align: center;">
-<!-- <button style="width: 100px; padding: 5px;" [routerLink]="['/pages/dashboard']">
- Tambah Skill
-</button> -->
+<io-table-with-add *ngIf="action?.table()" [action]="action" style="text-align: center;">
   <div class="io-table-header">
     <h3>List Task</h3>
   </div>
-</io-table>
+</io-table-with-add>
 
 <!-- Footer Sementara -->
 <div>
