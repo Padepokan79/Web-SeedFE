@@ -13,39 +13,46 @@
 
       <mat-list>
           <mat-list-item>
-            <mat-label class="panjang">Nama</mat-label>
-            <mat-form-field class="sdw-full-size" style="width : 200px">
-              <input matInput placeholder="" (keyup)="onKeySdmName($event)" [matAutocomplete]="sdmName" formControlName="sdm_name" name="sdm_name" [formControl]="sdmCtrl">
-                <mat-autocomplete #sdmName="matAutocomplete" >
-                  <mat-option *ngFor="let dataSdm of filteredSdm | async" [value]="dataSdm.values.sdm_sdm_name" (onSelectionChange)="setSdmValue(action?.formControls(), dataSdm);">
-                    {{dataSdm.values.sdm_sdm_name}}
+            <div>
+              <mat-label class="panjang">Nama : </mat-label>
+              <mat-form-field class="sdw-full-size" style="width : 200px">
+                <input matInput placeholder="" (keyup)="onKeySdmName($event)" [matAutocomplete]="sdmName" formControlName="sdm_name" name="sdm_name" [formControl]="sdmCtrl">
+                  <mat-autocomplete #sdmName="matAutocomplete" >
+                    <mat-option *ngFor="let dataSdm of filteredSdm | async" [value]="dataSdm.values.sdm_sdm_name" (onSelectionChange)="setSdmValue(action?.formControls(), dataSdm);">
+                      {{dataSdm.values.sdm_sdm_name}}
+                    </mat-option>
+                  </mat-autocomplete>
+              </mat-form-field>
+            </div>
+            <div style="margin-left: 30px">
+              <mat-label class="panjang" >Project Name : </mat-label>
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="" (keyup)="onKeyProjectName($event)" formControlName="project_name" [matAutocomplete]="projectName" name="project_name" [formControl]="projectCtrl">
+                  <mat-autocomplete #projectName="matAutocomplete">
+                    <mat-option *ngFor="let dataProject of filteredProject | async" [value]="dataProject.values.project_project_name" (onSelectionChange)="setProjectValue(action?.formControls(), dataProject);">
+                    {{dataProject.values.project_project_name}}
                   </mat-option>
                 </mat-autocomplete>
-            </mat-form-field>
-          </mat-list-item>
-          <mat-list-item>
-            <mat-label class="panjang" >Project Name</mat-label>
-            <mat-form-field class="example-full-width">
-              <input matInput placeholder="" (keyup)="onKeyProjectName($event)" formControlName="project_name" [matAutocomplete]="projectName" name="project_name" [formControl]="projectCtrl">
-                <mat-autocomplete #projectName="matAutocomplete">
-                  <mat-option *ngFor="let dataProject of filteredProject | async" [value]="dataProject.values.project_project_name" (onSelectionChange)="setProjectValue(action?.formControls(), dataProject);">
-                 {{dataProject.values.project_project_name}}
-                </mat-option>
-              </mat-autocomplete>
-            </mat-form-field>
-          </mat-list-item>
-          <mat-list-item>
-            <mat-label class="panjang">End Project</mat-label>
-            <mat-form-field>
-              <input matInput [matDatepicker]="picker" (keyup)="onKeyProjectEndDate($event)" formControlName="project_enddate" name="project_enddate" readonly>
-              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
-            <div class="col-md-3" style="float:right">
-              <button mat-raised-button class="action-btn nx-filter-button" (click)="onSearch()">Cari</button>
-              <button mat-raised-button class="action-btn nx-reset-button" (click)="onReset()">Reset</button>
+              </mat-form-field>
+            </div>
+            <div style="margin-left: 30px">
+              <mat-label class="panjang">End Project : </mat-label>
+              <mat-form-field>
+                <input matInput [matDatepicker]="picker" (keyup)="onKeyProjectEndDate($event)" formControlName="project_enddate" name="project_enddate" readonly>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>  
             </div>
           </mat-list-item>
+          <mat-list-item>
+            <mat-label></mat-label>
+          </mat-list-item>
+            <div style="float:right;margin-top:-41px">
+              <button mat-raised-button class="action-btn nx-filter-button btn btn-mm" (click)="onSearch()">
+                  <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Cari</button>
+              <button mat-raised-button class="action-btn nx-reset-button btn btn-mm" (click)="onReset()">
+                  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Reset</button>
+            </div>
         </mat-list>
   </form>
 </io-form>
