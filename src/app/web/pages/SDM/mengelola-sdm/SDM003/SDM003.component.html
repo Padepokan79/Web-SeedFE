@@ -1,61 +1,64 @@
 <io-form *ngIf="action?.form()">
-  <div class="io-form-header">
-    <span><i class="fa fa-home"></i></span>
-    <a href=""><span>Dashboard</span></a><b> > </b>
-    <a href=""><span>SDM</span></a><b> > </b>
-    <a href=""><span>List SDM</span></a>
-    <span class="time">{{time | date:'medium'}}</span>
-  </div>
-
+    <div class="io-form-header">
+      <div class="formheader">
+      <i class="glyphicon glyphicon-home">&emsp;</i>
+      <a [routerLink]="['/pages/dashboard']"><span>Dashboard</span></a><b> > </b>
+      <a href=""><span>SDM</span></a><b> > </b>
+      <span>List SDM</span>
+      <span class="time">{{ time | date: 'medium'}}</span>
+      </div>
+    </div>
+    
   <form class="io-form-body" [formGroup]="action?.formControls()">
     <mat-list>
       <mat-list-item>
-        <mat-label class="panjang">Level</mat-label>
+      <div>
+        <mat-label class="panjang">Level : </mat-label>
         <mat-form-field class="sdw-full-size" style="width : 200px">
-          <mat-select placeholder="Pick Level" formControlName="sdmlvl_id" name="sdmlvl_id">
+          <mat-select placeholder="Level" formControlName="sdmlvl_id" name="sdmlvl_id">
             <mat-option *ngFor="let lov of lovSdmLvl.data" [value]="lov.key">
               {{lov.value}}
             </mat-option>
           </mat-select>
         </mat-form-field>
-      </mat-list-item>
-      <mat-list-item>
-        <mat-label class="panjang">Name</mat-label>
+      </div>
+      <div style="margin-left: 30px">
+        <mat-label class="panjang">Name : </mat-label>
         <mat-form-field class="example-full-width">
-          <input placeholder="Name" matInput (keyup)="onKeySdmName($event)" [formControl]="sdmCtrl" [matAutocomplete]="auto" formControlName="sdm_name" name="sdm_name">
+          <input placeholder="Nama" matInput (keyup)="onKeySdmName($event)" [formControl]="sdmCtrl" [matAutocomplete]="auto" formControlName="sdm_name" name="sdm_name">
           <mat-autocomplete #auto="matAutocomplete">
             <mat-option *ngFor="let dataSdm of filteredSdm | async" [value]="dataSdm.values.sdm_sdm_name" (onSelectionChange)="setSdmValue(action?.formControls(), dataSdm);">
               {{dataSdm.values.sdm_sdm_name}}
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
+      </div>
+      <div style="margin-left: 30px">
+        <mat-label class="panjang">Akhir Kontrak : </mat-label>
+        <mat-form-field>
+          <input matInput (keyup)="onKeySdmEndDate($event)" [matDatepicker]="picker" formControlName="sdm_endcontract" name="sdm_endcontract">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      </mat-list-item>
+      <mat-list-item>
         <!-- <mat-form-field>
           <input matInput type="search">
         </mat-form-field> -->
       </mat-list-item>
-      <mat-list-item>
-        <mat-label class="panjang">Akhir Kontrak</mat-label>
-        <mat-form-field>
-          <input matInput (keyup)="onKeySdmEndDate($event)" [matDatepicker]="picker" formControlName="sdm_endcontract" name="sdm_endcontract" readonly>
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-        <div class="col-md-3" style="float:right">
-          <button mat-raised-button class="btn btn-search btn-mm" (click)="onSearch()">
-              <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Cari</button>
-          <button mat-raised-button class="btn btn-clear btn-mm" (click)="onReset()">
+        <div style="float:right;margin-top:-41px">
+          <button mat-flat-button (click)="onSearch()" class="btn btn-search btn-mm">
+              <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Filter</button>
+          <button mat-flat-button (click)="onReset()" class="btn btn-clear btn-mm">
               <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Clear</button>
-        </div>
-      </mat-list-item>
-        <div class="col-md-2" style="float:right;margin-top:-41px">
-          <button mat-raised-button style="float:right" (click)="navigate()">
-              <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> New
-          </button>
+          <button mat-flat-button (click)="navigate()" class="btn btn-mm" style="margin-left: 30px">
+              <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> New</button>
         </div>
     </mat-list>
   </form>
 </io-form>
-<io-table *ngIf="action?.table()" [action]="action" style="margin-top:20px; text-align: center;">
+<io-table *ngIf="action?.table()" [action]="action" style="margin-top:20px;text-align: center;">
   <div class="io-table-header" style="background: white">
     <h3>List Task</h3>
   </div>

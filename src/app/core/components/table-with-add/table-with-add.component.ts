@@ -4,11 +4,11 @@ import { DatatableComponent } from '@swimlane/ngx-datatable/release';
 import { Component, OnInit, Input, ViewChild, DoCheck, TemplateRef, AfterViewInit } from '@angular/core';
 
 @Component({
-  selector: 'io-table',
-  templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss']
+  selector: 'io-table-with-add',
+  templateUrl: './table-with-add.component.html',
+  styleUrls: ['./table-with-add.component.scss']
 })
-export class TableComponent implements OnInit {
+export class TableWithAddComponent implements OnInit {
 
   showBtn: boolean = true;
 
