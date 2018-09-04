@@ -1,7 +1,7 @@
-<!-- 
+<!--
 AUTHOR  	: Khairil Anwar
 CREATED 	: Wednesday, ‎August 1, ‎2018 14:00:12 PM
-UPDATE		: 
+UPDATE		:
 -->
 <io-form *ngIf="action?.form()">
   <div class="io-form-header">
@@ -29,7 +29,7 @@ UPDATE		:
             <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Cari</button>
           <!-- <button mat-flat-button (click)="action.onReset()">
               <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Clear</button> -->
-      <button style="float: right; margin-top: 10px;" mat-flat-button [routerLink]="['/pages/sdm/SDM006']">
+      <button style="float: right; margin-top: 10px;background: linear-gradient(to bottom right, rgb(49, 144, 221), rgb(49, 144, 221));" mat-flat-button [routerLink]="['/pages/sdm/SDM006']">
         <span class="glyphicon glyphicon-plus"></span> Add SDM Psychological
       </button>
     </mat-list-item>
@@ -43,7 +43,7 @@ UPDATE		:
   </io-table>
   <div align="center">
   <ng-template #tableActionTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
-    <button type="button" class="btn btn-warning btn-mm btn-icon" (click)="navigateEditMenu(row.sdmpsycological_id)">
+    <button type="button" class="btn btn-mm btn-icon" (click)="navigateEditMenu(row.sdmpsycological_id)" style="background: linear-gradient(to bottom right, rgb(49, 144, 221), rgb(49, 144, 221));">
       <i class="glyphicon glyphicon-pencil"></i>
     </button>
     <button type="button" class="btn btn-danger btn-mm btn-icon" (click)="action.onDelete(row)">
