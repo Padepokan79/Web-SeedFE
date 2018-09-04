@@ -10,6 +10,8 @@ import { ListOfValue } from './../../../../core/models/list-of-value';
 import { FormControl } from './../../../../../../node_modules/@angular/forms';
 import { ActivatedRoute, Router } from '../../../../../../node_modules/@angular/router';
 import { HttpClient, HttpParams } from '../../../../../../node_modules/@angular/common/http';
+import { COMPARISON_OPERATOR } from '../../../../core/constant/constant';
+import { isNgTemplate } from '../../../../../../node_modules/@angular/compiler';
 
 @Component({
   selector: 'app-PJA012',
@@ -27,6 +29,7 @@ export class PJA012Component implements OnInit {
   public sdmCtrl: FormControl;
   public valueCtrl: FormControl;
   public action: ActionService;
+  public actionClient: ActionService;
   public inputForm: InputForm;
   public dataTable: DataTable;
   public listSearchCriteria: SearchCriteria[] = [];
@@ -48,7 +51,7 @@ export class PJA012Component implements OnInit {
   public check: any;
   public tes: string;
   public isCantFilter: boolean = true;
-  public isLocked: boolean = true;
+  public isLocked: boolean;
   public isReadOnly: boolean = true;
   public defaultDate1: string = this.time.getFullYear() + '-' + ((this.time.getMonth() + 1) < 10 ? '0' + this.time.getMonth() + 1 : this.time.getMonth() + 1) + '-' + ((this.time.getDate() + 1) < 10 ? '0' + this.time.getDate() + 1 : this.time.getDate() + 1);
   public defaultDate2: string = (this.time.getFullYear() + 1) + '-' + ((this.time.getMonth() + 1) < 10 ? '0' + this.time.getMonth() + 1 : this.time.getMonth() + 1) + '-' + ((this.time.getDate() + 1) < 10 ? '0' + this.time.getDate() + 1 : this.time.getDate() + 1);
@@ -56,6 +59,7 @@ export class PJA012Component implements OnInit {
   public clientIds: number;
   public hirestatIds: number = 4;
   public methodIds: number = 1;
+  public assignClientName: string;
   public assignStartdate: Date;
   public assignEnddate: Date;
   public assignLoc: string = 'Bandung';
@@ -64,6 +68,10 @@ export class PJA012Component implements OnInit {
   public apiRoot: string = 'project/MultiInsertHiringAssign';
   public router: any;
   public operator: any = 1;
+  public btndisabled: boolean = true;
+  public btnjumlah: number = 0;
+  public val: boolean = true;
+  public cek: boolean = true;
 
   @ViewChild('notif')
   public notif: any;
@@ -83,9 +91,9 @@ export class PJA012Component implements OnInit {
       this.clientIds    = +param.idClient;
       this.assignClient = 'Tes';
       this.assignLoc = 'Bandung';
-      this.assignClientPhone = '08132231232323';
-      this.assignStartdate = new Date (Date.parse(this.defaultDate1));
-      this.assignEnddate = new Date (Date.parse(this.defaultDate2));
+      this.assignClientPhone = param.client_name;
+      this.assignStartdate = new Date (this.defaultDate1);
+      this.assignEnddate = new Date (this.defaultDate2);
     });
   }
 
@@ -157,10 +165,32 @@ export class PJA012Component implements OnInit {
       dataTable: this.dataTable
     });
 
+    this.actionClient = this._factory.actions({
+      api: 'project/MengelolaClient',
+      dataTable: this.dataTable
+    });
+
+    const readAllApi = this._factory.api({
+      api : 'project/MengelolaClient',
+      pagingParams : {
+        filter : {
+          field : 'client_id',
+          operator : COMPARISON_OPERATOR.EQ,
+          value : this.clientIds
+        }
+      }
+    });
+
+    this._factory.http().get(readAllApi).subscribe((res: any) => {
+      this.actionClient.patchFormData(res.data.items[0]);
+      this.assignClientName = res.data.items[0].client_name;
+      this.assignClient = res.data.items[0].client_pic;
+      this.assignClientPhone = res.data.items[0].client_mobileclient;
+    });
+
     setInterval(() => {
       this.time = new Date();
     }, 1);
-
   }
   // tslint:disable-next-line:member-ordering
   public apiFilter = this._factory.api({
@@ -177,19 +207,38 @@ export class PJA012Component implements OnInit {
         sdmskill_value: skillSdm.value,
         operator: this.operator
       });
-    });
+     });
     console.log('POST');
     const url = `${this.apiFilter}/multiFilter`;
     const httpOptions = {
       params: new HttpParams()
     };
-    this.http.post(url, {
-      listsdm: body
-    }, httpOptions)
-      .subscribe((res: any) => {
-        this.action.table().rows = res.data;
-        console.log(this.action.table().rows);
+    this.listSearchCriteria.forEach((skillSdm: SearchCriteria) => {
+     if (skillSdm.value > 10) {
+       this.cek = false;
+     }
+    });
+    if (this.cek === true) {
+     this.http.post(url, {
+       listsdm: body
+     }, httpOptions)
+       .subscribe((res: any) => {
+         this.action.table().rows = res.data;
+         console.log(this.action.table().rows);
+       });
+    } else {
+     this.http.post(url, {
+       listsdm: body
+     }, httpOptions)
+       .subscribe((res: any) => {
+         this.action.table().rows = res.null;
+         console.log(this.action.table().rows);
+       });
+     this._notif .error({
+       message : 'Nilai tidak boleh lebih dari 10'
       });
+    }
+    this.cek = true;
   }
 
   public distRedundantCheckedSdm() {
@@ -218,11 +267,23 @@ export class PJA012Component implements OnInit {
   public activateButton() {
     this.action.table().rows.forEach((item) => {
       if (item.Checked === true) {
-        this.isLocked = false;
+        this.val = true;
       } else if (item.Checked === false) {
-        this.isLocked = true;
+        this.val = false;
       }
     });
+    if (this.val === true || this.btnjumlah === 0) {
+      this.btnjumlah++;
+    } else if (this.val === false && this.btnjumlah !== 0) {
+     this.btnjumlah--;
+    }
+    if (this.btnjumlah >= 1) {
+      this.btndisabled = false;
+    } else {
+      this.btndisabled = true;
+    }
+    console.log(this.btnjumlah);
+    console.log(this.btndisabled);
   }
 
   public resetSource() {
@@ -244,6 +305,8 @@ export class PJA012Component implements OnInit {
   }
 
   public assignSubmit() {
+    console.log(this.defaultDate1);
+    console.log(this.defaultDate2);
     this.isButtonClicked = true;
     const multiInsert = [];
     this.action.table().rows.forEach((item) => {
@@ -257,8 +320,8 @@ export class PJA012Component implements OnInit {
           sdmassign_startdate: this.assignStartdate,
           sdmassign_enddate: this.assignEnddate,
           sdmassign_loc: this.assignLoc,
-          sdmassign_picclient: this.assignClient,
-          sdmassign_picclientphone: this.assignClientPhone
+          // sdmassign_picclient: this.assignClient,
+          // sdmassign_picclientphone: this.assignClientPhone
         });
         // tslint:disable-next-line:no-unused-expression
         item.Checked === false;
@@ -272,21 +335,28 @@ export class PJA012Component implements OnInit {
       params: new HttpParams()
     };
     this.http.post(url, {
-      listhiring: multiInsert
+      listassignment: multiInsert
     }, httpOptions)
       .subscribe(() => {
-        this.action.table().rows.forEach((item) => {
-          if (this.clientIds != null && this.hirestatIds != null && item.sdm_id != null && this.assignStartdate != null && this.assignEnddate != null) {
-            this._notif.success({
-              message: 'You have successfully Assigned'
-            });
-            setTimeout(() => this.router.navigate(['pages/pja/PJA010']), 1000);
-          } else {
-            this._notif.error({
-              message: 'Failed to Assigned'
-            });
-          }
-        });
+        // this.action.table().rows.forEach((item) => {
+        // });
+        // if (this.clientIds != null && this.hirestatIds != null && item.sdm_id != null && this.assignStartdate != null && this.assignEnddate != null) {
+        // if (this.clientIds != null && this.hirestatIds != null && item.sdm_id != null && this.assignStartdate != null && this.assignEnddate != null) {
+                            // if (assignSubmit(this.item.Checked === true))  {
+                              this._notif.success({
+                                message: 'You have successfully Assigned'
+                              });
+                              setTimeout(() => this.router.navigate(['pages/pja/PJA010']), 1000);
+                            // } else {
+                            //   this._notif.error({
+                            //     message: 'no item checked, please check first to assgin'
+                            //   });
+                            // }
+        // } else {
+          // this._notif.error({
+          //   message: 'Failed to Assigned'
+          // });
+        // }
       });
   }
 

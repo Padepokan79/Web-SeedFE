@@ -94,7 +94,7 @@ private selectedId: string;
     this._notif.success({
       message: 'Update Data Berhasil'
       });
-      setTimeout(() => this.router.navigate(['pages/pja/PJA004']), 1000);
+    setTimeout(() => this.router.navigate(['pages/pja/PJA004']), 1000);
      });
   }
 }
