@@ -48,10 +48,26 @@ div.go-tight {
     margin-top: 40px;
 }
 
+
 .btn-clear {
     background: linear-gradient(to bottom right, #AB2314, #AD3118);
     color: #FEFEFE;
     margin-top: 40px;
+}
+
+.btn-submit {
+    background: linear-gradient(to bottom right, rgb(43, 93, 218), rgb(16, 96, 114));
+    color: #FEFEFE;
+	margin-top: 40px;
+	
+}
+
+.btn-back {
+    background: linear-gradient(to bottom right, #c9abab, rgb(235, 236, 240));
+    color: #FEFEFE;
+	margin-top: 40px;
+	margin-left:  300px;
+	
 }
 
 .btn-flat:disabled, .btn-clear:disabled {

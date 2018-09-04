@@ -76,6 +76,10 @@ UPDATED		: Friday, August 31st 2018 08:45:00 AM
       <div class="action-filter">
         <button class="btn btn-filter btn-mm" (click)="btnFilter();deactivateButton()">Filter <i class="glyphicon glyphicon-search"></i></button>
         <button class="btn btn-clear btn-mm" (click)="resetSource();deactivateButton()">Clear <i class="glyphicon glyphicon-times"></i></button>
+       
+          <button [routerLink]="['/pages/pja/PJA010']" class="btn btn-back btn-mm"> &lt; Back</button>
+          <button class="btn btn-submit btn-mm" [routerLink]="['/pages/pja/PJA010']" (click)="assignSubmit()" [disabled]="btndisabled" >Submit</button>
+        
       </div>
       <br><br>
     </form>
@@ -88,10 +92,7 @@ UPDATED		: Friday, August 31st 2018 08:45:00 AM
         <h3>Candidates</h3>
       </div>
     </io-table>      
-    <div class="action-filter col-md-12">
-      <button [routerLink]="['/pages/pja/PJA010']" class="btn btn-mm"> &lt; Back</button>
-      <button class="btn btn-primary btn-mm" [routerLink]="['/pages/pja/PJA010']" (click)="assignSubmit()">Submit</button>
-    </div>
+    
   </form>
 </div>
 <ng-template #notif let-row="row" let-value="value" ngx-datatable-cell-template>
@@ -102,5 +103,5 @@ UPDATED		: Friday, August 31st 2018 08:45:00 AM
   <i matTooltip="Sisa lebih dari 4 bulan" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:#b3b3b3; font-size: 30px" *ngIf="row.sdm_notification == 'grey'"></i>
 </ng-template>
 <ng-template #tableActionTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
-  <mat-checkbox (change)="distRedundantCheckedSdm();activateButton()" value="{{row.sdm_id}}" [(ngModel)]="row.Checked" [name]="row.sdm_id"></mat-checkbox>
+  <mat-checkbox (change)="distRedundantCheckedSdm();activateButton()"  value="{{row.sdm_id}}" [(ngModel)]="row.Checked" [name]="row.sdm_id"></mat-checkbox>
 </ng-template>

@@ -8,6 +8,7 @@ import { DataTable } from '../../../../core/models/data-table';
 import { InputForm } from '../../../../core/models/input-form';
 import { ActionService } from '../../../../core/services/uninjectable/action.service';
 import { DefaultNotificationService } from '../../../../core/services/default-notification.service';
+import { HttpParams, HttpClient } from '../../../../../../node_modules/@angular/common/http';
 
 @Component({
   selector: 'app-PJA009',
@@ -28,13 +29,19 @@ export class PJA009Component implements OnInit {
   public clients$: Observable<any>;
   public clientName: string;
   public sdmName: string;
+  public apiRoot: string = 'project/MultiInsertHiringAssign';
+  public clientIds: string;
+  public sdmId: string;
+  public methodId: number;
+  public hirestatId: number;
   private selectedId: number;
 
   constructor(
     public _notif: DefaultNotificationService,
     private _factory: CoreFactory,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private http: HttpClient
   ) {
     this.route.params.subscribe((param) => {
       this.selectedId = param.id;
@@ -89,23 +96,52 @@ export class PJA009Component implements OnInit {
 
     this._factory.http().get(readAllApi).subscribe((res: any) => {
       this.action.patchFormData(res.data.items[0]);
+      this.clientIds = res.data.items[0].client_id;
       this.clientName = res.data.items[0].client_name;
       this.sdmName = res.data.items[0].sdm_name;
+      this.sdmId = res.data.items[0].sdm_id;
+      this.methodId = res.data.items[0].method_id;
     });
   }
 
-  public onUpdate() {    const updateAPI = this._factory.api({
+  public onUpdate() {
+    const updateAPI = this._factory.api({
     api: 'project/mengelolaHiring/update',
     // params: {
     // client_id: this.selectedId }
   });
-  
-  this._factory.http().put(updateAPI + '?sdmhiring_id=' + this.selectedId, this.action.getFormData()).subscribe((response: any) => {
+    this.hirestatId = 4;
+    this._factory.http().put(updateAPI + '?sdmhiring_id=' + this.selectedId, this.action.getFormData()).subscribe((response: any) => {
     this._notif.success({
       message: 'Update Data Berhasil'
     });
     setTimeout(() => this.router.navigate(['pages/pja/PJA007']), 1000);
    });
+
+    if (this.hirestatId === 4) {
+    const insertAssign = [];
+    insertAssign.push({
+      client_id: this.clientIds,
+      sdm_id: this.sdmId,
+      method_id: 1,
+      sdmhiring_id: 10,
+    });
+    const url = this._factory.api({
+      api: `${this.apiRoot}/multiCreate`
+    });
+    const httpOption = {
+      params: new HttpParams()
+    };
+    this.http.post(url, {
+      listassignment: insertAssign
+    }, httpOption)
+    .subscribe(() => {
+      this._notif.success({
+        message: 'You have successfully Assigned'
+      });
+    });
+   }
+
  }
 
 }
