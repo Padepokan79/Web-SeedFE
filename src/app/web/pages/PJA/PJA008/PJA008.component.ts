@@ -58,7 +58,9 @@ export class PJA008Component implements OnInit {
   public router: any;
   public operator: any = 1;
   public cek: boolean = true;
-
+  public btndisabled: boolean = true;
+  public jumlahDataCheck: number = 0;
+  public validasiCheck: boolean = true;
   @ViewChild('notif')
   public notif: any;
 
@@ -175,7 +177,10 @@ export class PJA008Component implements OnInit {
       params: new HttpParams()
     };
     this.listSearchCriteria.forEach((skillSdm: SearchCriteria) => {
-      if ( skillSdm.value > 10) {
+      console.log(' nilai skill ' + skillSdm.value);
+      if (skillSdm.value == null) {
+        this.cek = true;
+      } else if ( skillSdm.value < 1 || skillSdm.value > 10) {
         this.cek = false;
       }
      });
@@ -196,7 +201,7 @@ export class PJA008Component implements OnInit {
           console.log(this.action.table().rows);
         });
       this._notif .error({
-        message : 'Nilai tidak boleh lebih dari 10'
+        message : 'Input Value Between 1 and 10'
        });
      }
     this.cek = true;
@@ -221,13 +226,24 @@ export class PJA008Component implements OnInit {
   public activateButton() {
     this.action.table().rows.forEach((item) => {
       if (item.Checked === true) {
-        this.isLocked = false;
+        this.validasiCheck = true;
       } else if (item.Checked === false) {
-        this.isLocked = true;
+        this.validasiCheck = false;
       }
     });
+    if (this.validasiCheck === true || this.jumlahDataCheck === 0) {
+      this.jumlahDataCheck++;
+    } else if (this.validasiCheck === false && this.jumlahDataCheck !== 0) {
+     this.jumlahDataCheck--;
+    }
+    if (this.jumlahDataCheck >= 1) {
+      this.btndisabled = false;
+    } else {
+      this.btndisabled = true;
+    }
+    console.log(this.jumlahDataCheck);
+    console.log(this.btndisabled);
   }
-
   public resetSource() {
     this.isButtonClicked = false;
     this.IdSdm = null;

@@ -69,8 +69,8 @@ export class PJA012Component implements OnInit {
   public router: any;
   public operator: any = 1;
   public btndisabled: boolean = true;
-  public btnjumlah: number = 0;
-  public val: boolean = true;
+  public jumlahDataCheck: number = 0;
+  public validasiCheck: boolean = true;
   public cek: boolean = true;
 
   @ViewChild('notif')
@@ -214,9 +214,12 @@ export class PJA012Component implements OnInit {
       params: new HttpParams()
     };
     this.listSearchCriteria.forEach((skillSdm: SearchCriteria) => {
-     if (skillSdm.value > 10) {
-       this.cek = false;
-     }
+      console.log(' nilai skill ' + skillSdm.value);
+      if (skillSdm.value == null) {
+        this.cek = true;
+      } else if ( skillSdm.value < 1 || skillSdm.value > 10) {
+        this.cek = false;
+      }
     });
     if (this.cek === true) {
      this.http.post(url, {
@@ -235,7 +238,7 @@ export class PJA012Component implements OnInit {
          console.log(this.action.table().rows);
        });
      this._notif .error({
-       message : 'Nilai tidak boleh lebih dari 10'
+       message : 'Input Value Between 1 and 10'
       });
     }
     this.cek = true;
@@ -267,22 +270,22 @@ export class PJA012Component implements OnInit {
   public activateButton() {
     this.action.table().rows.forEach((item) => {
       if (item.Checked === true) {
-        this.val = true;
+        this.validasiCheck = true;
       } else if (item.Checked === false) {
-        this.val = false;
+        this.validasiCheck = false;
       }
     });
-    if (this.val === true || this.btnjumlah === 0) {
-      this.btnjumlah++;
-    } else if (this.val === false && this.btnjumlah !== 0) {
-     this.btnjumlah--;
+    if (this.validasiCheck === true || this.jumlahDataCheck === 0) {
+      this.jumlahDataCheck++;
+    } else if (this.validasiCheck === false && this.jumlahDataCheck !== 0) {
+     this.jumlahDataCheck--;
     }
-    if (this.btnjumlah >= 1) {
+    if (this.jumlahDataCheck >= 1) {
       this.btndisabled = false;
     } else {
       this.btndisabled = true;
     }
-    console.log(this.btnjumlah);
+    console.log(this.jumlahDataCheck);
     console.log(this.btndisabled);
   }
 
