@@ -29,11 +29,12 @@ export class PJA009Component implements OnInit {
   public clients$: Observable<any>;
   public clientName: string;
   public sdmName: string;
-  public apiRoot: string = 'project/MultiInsertHiringAssign';
+  public apiRoot: string = 'project/InsertAssignment';
   public clientIds: string;
   public sdmId: string;
   public methodId: number;
   public hirestatId: number;
+  public sdmhiringId: number;
   private selectedId: number;
 
   constructor(
@@ -101,6 +102,7 @@ export class PJA009Component implements OnInit {
       this.sdmName = res.data.items[0].sdm_name;
       this.sdmId = res.data.items[0].sdm_id;
       this.methodId = res.data.items[0].method_id;
+      this.sdmhiringId = res.data.items[0].sdmhiring_id;
     });
   }
 
@@ -110,7 +112,7 @@ export class PJA009Component implements OnInit {
     // params: {
     // client_id: this.selectedId }
   });
-    this.hirestatId = 4;
+    console.log(this.hirestatId);
     this._factory.http().put(updateAPI + '?sdmhiring_id=' + this.selectedId, this.action.getFormData()).subscribe((response: any) => {
     this._notif.success({
       message: 'Update Data Berhasil'
@@ -118,13 +120,15 @@ export class PJA009Component implements OnInit {
     setTimeout(() => this.router.navigate(['pages/pja/PJA007']), 1000);
    });
 
+    this.hirestatId = this.action.getFormData().hirestat_id;
+    console.log('hire stat id' + this.hirestatId);
     if (this.hirestatId === 4) {
     const insertAssign = [];
     insertAssign.push({
       client_id: this.clientIds,
       sdm_id: this.sdmId,
       method_id: 1,
-      sdmhiring_id: 10,
+      sdmhiring_id: this.sdmhiringId,
     });
     const url = this._factory.api({
       api: `${this.apiRoot}/multiCreate`
@@ -140,6 +144,7 @@ export class PJA009Component implements OnInit {
         message: 'You have successfully Assigned'
       });
     });
+    console.log(insertAssign);
    }
 
  }

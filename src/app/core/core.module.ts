@@ -37,6 +37,7 @@ import { FormComponent } from './components/form/form.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { TableComponent } from './components/table/table.component';
 import { TableWithAddComponent } from './components/table-with-add/table-with-add.component';
+import { TableWithAddClientComponent } from './components/table-with-add-client/table-with-add-client.component';
 import { BaContentTop } from './components/admin/baContentTop/baContentTop.component';
 import { BaMenu } from './components/admin/baMenu/baMenu.component';
 import { BaMenuItem } from './components/admin/baMenu/components/baMenuItem/baMenuItem.component';
@@ -117,6 +118,7 @@ const CORE_COMPONENTS = [
     ModalComponent,
     TableComponent,
     TableWithAddComponent,
+    TableWithAddClientComponent,
     TableActionComponent,
     InputValidationComponent,
     BaMenuUserInformationComponent,

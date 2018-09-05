@@ -14,19 +14,12 @@
   <span class="time">{{ time | date:'medium' }}</span>  
 </div> -->
 
-<div class="posisiAdd">
-  <a [routerLink]="['/pages/pja/PJA005']">
-    <button style="">
-      Add Client
-    </button>
-  </a>
- </div>
 
-<io-table *ngIf="action?.table()" [action]="action" style="text-align: center;">
+<io-table-with-add-client *ngIf="action?.table()" [action]="action" style="text-align: center;">
   <div class="io-table-header">
     <h3>List Detail Client</h3>
   </div>
-</io-table>
+</io-table-with-add-client>>
 
 <ng-template #tableActionTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
   <button type="button" class="btn btn-primary btn-mm btn-icon" (click)="navigateEditMenu(row.client_id)" >
