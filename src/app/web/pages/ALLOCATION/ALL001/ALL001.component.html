@@ -1,10 +1,10 @@
-<!-- 
+<!--
 Author        : Nurdhiat Chaudhary Malik
 Date Created  : 01 Agustus 2018
 Status        : Done
  -->
 <io-form>
-  <div class="io-form-header">  
+  <div class="io-form-header">
     <div class="title-header">
       <span><i class="fa fa-home"></i></span>
       <a href=""><span>Dashboard</span></a><b> > </b>
@@ -52,7 +52,7 @@ Status        : Done
 </io-table>
 
 <ng-template #tableActionTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
-  <button type="button" matTooltip="Edit Skill" class="btn btn-primary btn-mm btn-icon" (click)="action.onEdit(row)">
+  <button type="button" matTooltip="Edit Skill" class="btn btn-primary btn-mm btn-ico btn-new" (click)="action.onEdit(row)">
     <i class="glyphicon glyphicon-pencil"></i>
   </button>
   <button type="button" matTooltip="Hapus SKill" class="btn btn-danger btn-mm btn-icon" (click)="action.onDelete(row);refreshTabel()">

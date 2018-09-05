@@ -64,7 +64,7 @@
   </div>
 </io-table>
 
-<ng-template #tableActionTemplate let-row="row" let-value="value" ngx-datatable-cell-template style="background: linear-gradient(to bottom right, rgb(49, 144, 221), rgb(49, 144, 221))">
+<ng-template #tableActionTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
   <button matTooltip="Preview CV" type="button" class="btn btn-primary btn-mm btn-icon" (click)="action.onEdit(row)">
     <i class="glyphicon glyphicon-file"></i>
   </button>
