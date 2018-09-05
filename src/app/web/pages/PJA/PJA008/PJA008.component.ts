@@ -57,6 +57,7 @@ export class PJA008Component implements OnInit {
   public apiRoot: string = 'project/MultiHiring';
   public router: any;
   public operator: any = 1;
+  public cek: boolean = true;
 
   @ViewChild('notif')
   public notif: any;
@@ -173,14 +174,32 @@ export class PJA008Component implements OnInit {
     const httpOptions = {
       params: new HttpParams()
     };
-    this.http.post(url, {
-      listsdm: body
-    }, httpOptions)
-      .subscribe((res: any) => {
-        this.action.table().rows = res.data;
-        console.log(this.action.table().rows);
-        console.log(body);
-      });
+    this.listSearchCriteria.forEach((skillSdm: SearchCriteria) => {
+      if ( skillSdm.value > 10) {
+        this.cek = false;
+      }
+     });
+    if (this.cek === true) {
+      this.http.post(url, {
+        listsdm: body
+      }, httpOptions)
+        .subscribe((res: any) => {
+          this.action.table().rows = res.data;
+          console.log(this.action.table().rows);
+        });
+     } else {
+      this.http.post(url, {
+        listsdm: body
+      }, httpOptions)
+        .subscribe((res: any) => {
+          this.action.table().rows = res.null;
+          console.log(this.action.table().rows);
+        });
+      this._notif .error({
+        message : 'Nilai tidak boleh lebih dari 10'
+       });
+     }
+    this.cek = true;
   }
 
   public distRedundantCheckedSdm() {

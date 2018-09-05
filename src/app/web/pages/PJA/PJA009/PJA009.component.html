@@ -48,7 +48,7 @@
             </td>
             <td class="nx-table-range">
               <mat-form-field class="nx-class-data">
-                <mat-select placeholder="" formControlName="hirestat_id" name="hirestat_id">
+                <mat-select placeholder="" formControlName="hirestat_id" name="hirestat_id" [(ngModel)]="hirestatId">
                   <mat-option *ngFor="let lov of lovHiring.data" [value]="lov.key">
                     {{lov.value}}
                   </mat-option>

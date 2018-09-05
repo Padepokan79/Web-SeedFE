@@ -8,7 +8,7 @@ export class SearchCriteria {
     public skilltype_id: string = null;
     // tslint:disable-next-line:variable-name
     public skill_id: string = null;
-    public value: string = null;
+    public value: number = null;
     public lovSkillType: LOVService = null;
     public lovSkill: LOVService = null;
     public lovSdmSkill: LOVService = null;

@@ -199,60 +199,61 @@ export class ALL006Component implements OnInit {
      });
    }
    this.cek = true;
- }
-  public selectToAssign() {
-    this.isButtonClicked = true;
-    const filterComponent: ISimplifiedFilterOperand[] = [];
-    const filterComponentPlusName: ISimplifiedFilterOperand[] = [];
-    this.listSearchCriteria.forEach((searchCriteria: SearchCriteria) => {
-      this.categorySkill = searchCriteria.skilltype_id;
-      console.log(this.categorySkill);
-      if (this.categorySkill === 0) {
-        searchCriteria.skill_id = '';
-        this.varSkill = '';
-      } else {
-        this.varSkill = searchCriteria.skill_id;
-      }
-      console.log(this.varSkill);
-      // this.skillValue = searchCriteria.value;
-      filterComponent.push(
-        Conjunction.AND(
-          this.categorySkill ? Comparison.EQ('skilltype_id', this.categorySkill) : Comparison.NE('skilltype_id', this.categorySkill),
-          this.varSkill ? Comparison.EQ('skill_id', this.varSkill) : Comparison.NE('skill_id', this.varSkill),
-          this.skillValue ? Comparison.GE('sdmskill_value', this.skillValue) : Comparison.GE('sdmskill_value', '0')
-        )
-      );
-      filterComponentPlusName.push(
-        Conjunction.AND(
-          this.IdSdm ? Comparison.EQ('sdm_id', this.IdSdm) : Comparison.NE('sdm_id', this.IdSdm),
-          this.categorySkill ? Comparison.EQ('skilltype_id', this.categorySkill) : Comparison.NE('skilltype_id', this.categorySkill),
-          this.varSkill ? Comparison.EQ('skill_id', this.varSkill) : Comparison.NE('skill_id', this.varSkill),
-          this.skillValue ? Comparison.GE('sdmskill_value', this.skillValue) : Comparison.GE('sdmskill_value', '0')
-        )
-      );
-    });
-    console.log(this.listSearchCriteria);
-    if (this.check === true) {
-      console.log('Filter dengan AND');
-      if (this.IdSdm != null) {
-        this.doubleFilter = Conjunction.AND(...filterComponentPlusName);
-      } else {
-        this.doubleFilter = Conjunction.AND(...filterComponent);
-      }
-    } else {
-      console.log('Filter dengan OR');
-      if (this.IdSdm != null) {
-        this.doubleFilter = Conjunction.OR(...filterComponentPlusName);
-      } else {
-        this.doubleFilter = Conjunction.OR(...filterComponent);
-      }
-    }
-
-    this.action.setPaginationFilter(this.doubleFilter);
-    this.action.refreshTable();
   }
+//   public selectToAssign() {
+//     this.isButtonClicked = true;
+//     const filterComponent: ISimplifiedFilterOperand[] = [];
+//     const filterComponentPlusName: ISimplifiedFilterOperand[] = [];
+//     this.listSearchCriteria.forEach((searchCriteria: SearchCriteria) => {
+//       this.categorySkill = searchCriteria.skilltype_id;
+//       console.log(this.categorySkill);
+//       if (this.categorySkill === 0) {
+//         searchCriteria.skill_id = '';
+//         this.varSkill = '';
+//       } else {
+//         this.varSkill = searchCriteria.skill_id;
+//       }
+//       console.log(this.varSkill);
+//       // this.skillValue = searchCriteria.value;
+//       filterComponent.push(
+//         Conjunction.AND(
+//           this.categorySkill ? Comparison.EQ('skilltype_id', this.categorySkill) : Comparison.NE('skilltype_id', this.categorySkill),
+//           this.varSkill ? Comparison.EQ('skill_id', this.varSkill) : Comparison.NE('skill_id', this.varSkill),
+//           this.skillValue ? Comparison.GE('sdmskill_value', this.skillValue) : Comparison.GE('sdmskill_value', '0')
+//         )
+//       );
+//       filterComponentPlusName.push(
+//         Conjunction.AND(
+//           this.IdSdm ? Comparison.EQ('sdm_id', this.IdSdm) : Comparison.NE('sdm_id', this.IdSdm),
+//           this.categorySkill ? Comparison.EQ('skilltype_id', this.categorySkill) : Comparison.NE('skilltype_id', this.categorySkill),
+//           this.varSkill ? Comparison.EQ('skill_id', this.varSkill) : Comparison.NE('skill_id', this.varSkill),
+//           this.skillValue ? Comparison.GE('sdmskill_value', this.skillValue) : Comparison.GE('sdmskill_value', '0')
+//         )
+//       );
+//     });
+//     console.log(this.listSearchCriteria);
+//     if (this.check === true) {
+//       console.log('Filter dengan AND');
+//       if (this.IdSdm != null) {
+//         this.doubleFilter = Conjunction.AND(...filterComponentPlusName);
+//       } else {
+//         this.doubleFilter = Conjunction.AND(...filterComponent);
+//       }
+//     } else {
+//       console.log('Filter dengan OR');
+//       if (this.IdSdm != null) {
+//         this.doubleFilter = Conjunction.OR(...filterComponentPlusName);
+//       } else {
+//         this.doubleFilter = Conjunction.OR(...filterComponent);
+//       }
+//     }
+
+//     this.action.setPaginationFilter(this.doubleFilter);
+//     this.action.refreshTable();
+//   }
 
   public resetSource() {
+    this.isButtonClicked = false;
     this.IdSdm = null;
     this.listSearchCriteria.splice(null, this.increment);
     this.sdmCtrl.setValue('');
