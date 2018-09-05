@@ -1,8 +1,8 @@
 <div class="row" *ngIf="action?.form()">
-  <div class="col-md-12">
+  <div class="col-md-12" style="margin-left:330px">
     <button mat-raised-button type="button"
             class="sdw-btn-primary"
-            style="background: linear-gradient(to bottom right, rgb(49, 144, 221), rgb(49, 144, 221))"
+            style="background: linear-gradient(to bottom right, rgb(49, 144, 221), rgb(49, 144, 221));"
             (click)="action.onSave()"
             [disabled]="
               action?.isFormPristine() ||
@@ -12,7 +12,7 @@
     </button>
     <button mat-raised-button type="button"
             class="sdw-btn-default"
-            style="background: linear-gradient(to bottom right, rgb(224, 48, 29), rgb(224, 48, 29))"
+            style="background: linear-gradient(to bottom right, rgb(224, 48, 29), rgb(224, 48, 29));"
             (click)="action.onReset()">
       Reset
     </button>
