@@ -171,6 +171,7 @@ export class PJA008Component implements OnInit {
         operator: this.operator
       });
     });
+    
     console.log('POST');
     const url = `${this.apiFilter}/multiFilter`;
     const httpOptions = {
@@ -326,5 +327,9 @@ export class PJA008Component implements OnInit {
     } else if (this.operator === 1) {
       this.operator = 2;
     }
+  }
+
+  public ActivateCheckbox(){
+    
   }
 }

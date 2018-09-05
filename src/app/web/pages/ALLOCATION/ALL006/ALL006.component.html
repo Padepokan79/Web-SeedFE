@@ -46,7 +46,7 @@ UPDATED   : Friday, August 31st 2018 08:45:00 AM
             <div class="col-md-3 go-tight">
               <mat-form-field class="sdw-full-size">
                 <mat-select placeholder="Choose Category" (change)="setUnbutton()" [(ngModel)]="searchCriteria.skilltype_id" name="skilltype_id{{inc}}" required>
-                  <mat-option *ngFor="let lov of searchCriteria.lovSkillType.data" [value]="lov.key" (onSelectionChange)="searchCriteria.selectedSkill($event, lov)">
+                  <mat-option *ngFor="let lov of searchCriteria.lovSkillType.data" [value]="lov.key" (onSelectionChange)="searchCriteria.selectedSkill($event, lov);setSkill()">
                     {{lov.value}}
                   </mat-option>
                 </mat-select>
@@ -54,8 +54,8 @@ UPDATED   : Friday, August 31st 2018 08:45:00 AM
             </div>
             <div class="col-md-3 go-tight">
               <mat-form-field class="sdw-full-size">
-                <mat-select placeholder="Choose Skill" [(ngModel)]="searchCriteria.skill_id" name="skill_id{{inc}}" required>
-                  <mat-option *ngFor="let lov of searchCriteria.lovSkill?.data" [value]="lov.key">
+                <mat-select placeholder="Choose Skill" [(ngModel)]="searchCriteria.skill_id" name="skill_id{{inc}}" [disabled]="unlockSkill">
+                  <mat-option *ngFor="let lov of searchCriteria.lovSkill?.data" [value]="lov.key" (onSelectionChange)="setValue()">
                     {{lov.value}}
                   </mat-option>
                 </mat-select>
@@ -63,7 +63,7 @@ UPDATED   : Friday, August 31st 2018 08:45:00 AM
             </div>
             <div class="col-md-3 go-tight">
               <mat-form-field class="sdw-full-size">
-                <input matInput type="number" min="1" max="10" placeholder="Value" [(ngModel)]="searchCriteria.value" name="sdmskill_value{{inc}}" class="blacky">
+                <input matInput type="number" min="1" max="10" placeholder="Value" [(ngModel)]="searchCriteria.value" name="sdmskill_value{{inc}}" class="blacky" [disabled]="unlockValue">
               </mat-form-field>
             </div>
             <div class="col-sm-1 text-left">

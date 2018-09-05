@@ -58,6 +58,8 @@ export class ALL006Component implements OnInit {
   public isCantFilter: boolean = true;
   public data: number[];
   public cek: boolean = true;
+  public unlockSkill: boolean = true;
+  public unlockValue: boolean = true;
 
   @ViewChild('notif')
   public notif: any;
@@ -142,11 +144,11 @@ export class ALL006Component implements OnInit {
         cellTemplate: this.notif, sortable: false },
       ]
     });
-
     this.action = this._factory.actions({
-        api: 'allocation/MengelolaSdmSkill',
-        dataTable: this.dataTable
-      });
+    api: 'allocation/MengelolaSdmSkill',
+    dataTable: this.dataTable
+  });
+
     setInterval(() => {
       this.time = new Date();
     }, 1);
@@ -207,6 +209,8 @@ export class ALL006Component implements OnInit {
   public resetSource() {
     this.isButtonClicked = false;
     this.IdSdm = null;
+    this.unlockSkill = true;
+    this.unlockValue = true;
     this.listSearchCriteria.splice(null, this.increment);
     this.sdmCtrl.setValue('');
     console.log(this.IdSdm);
@@ -237,5 +241,13 @@ export class ALL006Component implements OnInit {
     } else {
       this.isCantFilter = false;
     }
+  }
+
+  public setSkill() {
+    this.unlockSkill = false;
+  }
+
+  public setValue() {
+    this.unlockValue = false;
   }
 }

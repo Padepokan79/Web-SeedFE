@@ -20,14 +20,14 @@ Modified   : 14-08-2018 by APN -->
 
             <tr>
               <td class="nx-table-range">
-                <mat-label>Client Name</mat-label>
+                <mat-label>Client Name<span style="color: red"> * </span></mat-label>
               </td>
               <td>
                 <mat-label>:</mat-label>
               </td>
             <td class="nx-table-range">
               <mat-form-field class="nx-class-data">
-                  <input matInput placeholder="" formControlName="client_name" name="client_name" required>
+                  <input matInput placeholder="" [(ngModel)]="clientName" formControlName="client_name" name="client_name" required>
                   <mat-hint *ngIf="action.formErrors.client_name" [ngStyle]="{'color': 'red'}">
                     {{action.formErrors.client_name}}
                   </mat-hint>
@@ -46,14 +46,14 @@ Modified   : 14-08-2018 by APN -->
 
             <tr>
               <td class="nx-table-range">
-                <mat-label>PIC Handler</mat-label>
+                <mat-label>PIC Handler<span style="color: red"> * </span></mat-label>
               </td>
               <td>
                 <mat-label>:</mat-label>
               </td>
               <td class="nx-table-range">
                 <mat-form-field class="nx-class-data">
-                  <input matInput placeholder="" formControlName="client_picclient" name="client_picclient" required>
+                  <input matInput placeholder="" [(ngModel)]="clientPicclient" formControlName="client_picclient" name="client_picclient" required>
                   <mat-hint *ngIf="action.formErrors.client_picclient" [ngStyle]="{'color': 'red'}">
                     {{action.formErrors.client_picclient}}
                   </mat-hint>
@@ -63,14 +63,14 @@ Modified   : 14-08-2018 by APN -->
 
             <tr>
               <td class="nx-table-range">
-                <mat-label>Contact Person</mat-label>
+                <mat-label>Contact Person<span style="color: red"> * </span></mat-label>
               </td>
               <td>
                 <mat-label>:</mat-label>
               </td>
               <td class="nx-table-range">
                 <mat-form-field class="nx-class-data">
-                <input matInput placeholder="" formControlName="client_mobileclient" name="client_mobileclient" required>
+                <input matInput type="number" placeholder="" [(ngModel)]="clientMobileclient" formControlName="client_mobileclient" name="client_mobileclient" required>
                 <mat-hint *ngIf="action.formErrors.client_mobileclient" [ngStyle]="{'color': 'red'}">
                   {{action.formErrors.client_mobileclient}}
                 </mat-hint>
