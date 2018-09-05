@@ -54,6 +54,21 @@ div.go-tight {
     margin-top: 40px;
 }
 
+.btn-submit {
+    background: linear-gradient(to bottom right, rgb(43, 93, 218), rgb(16, 96, 114));
+    color: #FEFEFE;
+	margin-top: 40px;
+	
+}
+
+.btn-back {
+    background: linear-gradient(to bottom right, #c9abab, rgb(235, 236, 240));
+    color: #FEFEFE;
+	margin-top: 40px;
+	margin-left:  300px;
+	
+}
+
 .btn-flat:disabled, .btn-clear:disabled {
 	border: 1px solid #999999;
 	background-color: #cccccc;
