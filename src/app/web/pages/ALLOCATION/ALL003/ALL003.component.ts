@@ -6,7 +6,7 @@ import { DataTable } from '../../../../core/models/data-table';
 import { LOVService } from '../../../../core/services/uninjectable/lov.service';
 import { CoreFactory } from '../../../../core/factory/core.factory';
 import { Router } from '../../../../../../node_modules/@angular/router';
-
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-ALL003',
   templateUrl: './ALL003.component.html',
@@ -109,5 +109,8 @@ export class ALL003Component implements OnInit {
 
   public navigateEditMenu(id) {
     this.router.navigate(['pages/all/ALL005' , {id}]);
+  }
+  public refreshData(){
+    this.action.refreshTable();
   }
 }
