@@ -18,13 +18,13 @@ table{
 }
 
 .nx-filter-button{
-    background-color: green;
+    background: linear-gradient(to bottom left, rgb(20, 190, 1), rgb(20, 190, 1));
     color: white;
     text-transform: capitalize;
 }
 
 .nx-reset-button{
-    background-color: red;
+    background: linear-gradient(to bottom right, rgb(224, 48, 29), rgb(224, 48, 29));
     color: white;
     text-transform: capitalize;
 }

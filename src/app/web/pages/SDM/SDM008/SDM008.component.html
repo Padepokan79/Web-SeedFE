@@ -16,6 +16,7 @@ UPDATE		:
   </div>
   <form class="io-form-body" [formGroup]="action?.formControls()">
     <mat-list-item>
+      <div style="margin-bottom:8px">
       <mat-label class="panjang">Name : </mat-label>
         <mat-form-field class="example-full-width" style="width: 120mm">
           <input placeholder="" matInput (keyup)="onKeySdmName($event)" [formControl]="sdmCtrl" [matAutocomplete]="auto" formControlName="sdm_name">
@@ -33,6 +34,8 @@ UPDATE		:
         <button style="margin-top: 10px;background: linear-gradient(to bottom right, rgb(49, 144, 221), rgb(49, 144, 221));" mat-flat-button [routerLink]="['/pages/sdm/SDM006']">
           <span class="glyphicon glyphicon-plus"></span> Add SDM Psychological
         </button>
+
+        </div>
       <!-- </div> -->
     </mat-list-item>
     </form>
