@@ -25,13 +25,15 @@ UPDATE		:
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
-        <button mat-raised-button class="btn btn-search btn-mm" (click)="onSearch()">
-            <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Cari</button>
-          <!-- <button mat-flat-button (click)="action.onReset()">
-              <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Clear</button> -->
-      <button style="float: right; margin-top: 10px;background: linear-gradient(to bottom right, rgb(49, 144, 221), rgb(49, 144, 221));" mat-flat-button [routerLink]="['/pages/sdm/SDM006']">
-        <span class="glyphicon glyphicon-plus"></span> Add SDM Psychological
-      </button>
+      <!-- <div style=""> -->
+        <button mat-raised-button class="btn btn-search btn-mm" (click)="onSearch()" style="margin-left:265px">
+              <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Cari</button>
+            <!-- <button mat-flat-button (click)="action.onReset()">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Clear</button> -->
+        <button style="margin-top: 10px;background: linear-gradient(to bottom right, rgb(49, 144, 221), rgb(49, 144, 221));" mat-flat-button [routerLink]="['/pages/sdm/SDM006']">
+          <span class="glyphicon glyphicon-plus"></span> Add SDM Psychological
+        </button>
+      <!-- </div> -->
     </mat-list-item>
     </form>
 </io-form>
