@@ -101,5 +101,5 @@ UPDATED   : Friday, August 31st 2018 08:45:00 AM
   <i matTooltip="Sisa lebih dari 4 bulan" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:#b3b3b3; font-size: 30px" *ngIf="row.sdm_notification == 'grey'"></i>
 </ng-template>
 <ng-template #tableActionTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
-  <mat-checkbox (change)="distRedundantCheckedSdm();activateButton()" value="{{row.sdm_id}}" [(ngModel)]="row.Checked" [name]="row.sdm_id"></mat-checkbox>
+  <mat-checkbox (change)="distRedundantCheckedSdm();activateButton()" value="{{row.sdm_id}}" [(ngModel)]="row.Checked" [name]="row.sdm_id" [disabled]=""></mat-checkbox>
 </ng-template>

@@ -22,9 +22,9 @@ export class PJA005Component implements OnInit {
   public inputForm: InputForm;
   public dataTable: DataTable;
   public time: Date = new Date();
-  public clientName: string;
-  public clientPicclient: string;
-  public clientMobileclient: number;
+  public clientName: string = null;
+  public clientPicclient: string = null;
+  public clientMobileclient: number = null;
 
   constructor(
     public _notif: DefaultNotificationService,
@@ -36,7 +36,6 @@ export class PJA005Component implements OnInit {
    setInterval(() => {
      this.time = new Date();
    }, 1);
-
 
    this.inputForm = this._factory.inputForm({
      formControls: {
@@ -104,15 +103,15 @@ export class PJA005Component implements OnInit {
     });
     console.log(this.clientName);
     console.log(this.clientMobileclient);
-    if (this.clientName === undefined ) {
+    if (this.clientName === null || this.clientName === '') {
       this._notif.error({
         message: 'Client Name Harus Diisi'
       });
-      } else if (this.clientPicclient === undefined) {
+      } else if (this.clientPicclient === null || this.clientPicclient === '') {
         this._notif.error({
           message: 'PIC Handler Harus Diisi'
         });
-      } else if (this.clientMobileclient === undefined) {
+      } else if (this.clientMobileclient === undefined || this.clientMobileclient === null) {
         this._notif.error({
           message: 'Contact Person Harus Diisi'
         });
@@ -128,5 +127,8 @@ export class PJA005Component implements OnInit {
           setTimeout(() => this.router.navigate(['pages/pja/PJA004']), 1000);
            });
       }
+    console.log('bai' + this.clientName);
+    console.log('nai' + this.clientPicclient);
+    console.log('hai ' + this.clientMobileclient);
    }
   }
