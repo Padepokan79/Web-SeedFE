@@ -155,7 +155,7 @@ export class PJA012Component implements OnInit {
         { prop: 'skill_name', name: 'Skills', width: 20, sortable: false },
         { prop: 'sdmskill_value', name: 'Value', width: 50, sortable: false },
         { prop: 'end_contractproject', name: 'End date project', width: 50, sortable: false },
-        { prop: 'sdm_notification', name: 'Notifikasi', width: 50, cellTemplate: this.notif, sortable: false },
+        { prop: 'sdm_notification', name: 'Notifikasi Kontrak', width: 50, cellTemplate: this.notif, sortable: false },
         { prop: 'sdm_id', name: 'Select', width: 10, cellTemplate: this.tableActionTemplate, sortable: false }
       ]
     });
