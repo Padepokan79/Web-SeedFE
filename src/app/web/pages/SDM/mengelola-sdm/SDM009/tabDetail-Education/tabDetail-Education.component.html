@@ -1,13 +1,13 @@
 <p></p>
 
-<io-table style="margin-bottom:40px" *ngIf="action?.table()" [action]="action" style="text-align: center;">
+<io-table style="margin-bottom:40px" *ngIf="action?.table()" [action]="action">
   <div class="io-table-header">
     <h3>List Task</h3>
   </div>
 </io-table>
 
 <div *ngIf="form == 2">
-    <io-table *ngIf="action?.table()" [action]="action" style="text-align: center;">
+    <io-table *ngIf="action?.table()" [action]="action">
         <div class="io-table-header">
         <h3>List Educations</h3>
         </div>
