@@ -1,9 +1,9 @@
-/* 
+/*
   Author        : Nurdhiat Chaudhary Malik
   Date Created  : 01 Agustus 2018
   Status        : Done
 */
-  
+
 @import '../../../../core/sass/conf/conf';
 @import '../../../../core/sass/auth';
 @import '../../../../core/sass/data-table/theme/sdw-table';
@@ -15,4 +15,7 @@
 .title-form{
     font-weight: bold;
     font-family: "Roboto", sans-serif;
+}
+.time {
+  float:right;
 }

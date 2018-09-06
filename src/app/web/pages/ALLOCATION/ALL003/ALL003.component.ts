@@ -13,6 +13,7 @@ import { Location } from '@angular/common';
   styleUrls: ['./ALL003.component.scss']
 })
 export class ALL003Component implements OnInit {
+  public time: Date = new Date();
   @ViewChild('viewAsDateTemplate')
   public viewAsDateTemplate: any;
 
@@ -32,6 +33,9 @@ export class ALL003Component implements OnInit {
 
   // tslint:disable-next-line:no-empty
   public ngOnInit() {
+    setInterval(() => {
+      this.time = new Date();
+    }, 1);
     this.inputForm = this._factory.inputForm({
       formControls: {
         skilltype_id: '',

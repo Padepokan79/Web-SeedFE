@@ -1,16 +1,17 @@
-<!-- 
+<!--
   Author        : Nurdhiat Chaudhary Malik
   Date Created  : 01 Agustus 2018
   Status        : Done
  -->
 
 <io-form *ngIf="action?.form()">
-  <div class="io-form-header">  
+  <div class="io-form-header">
       <div class="title-header">
         <span><i class="fa fa-home"></i></span>
         <a href=""><span>Dashboard</span></a><b> > </b>
         <a href=""><span>SDM Allocation</span></a><b> > </b>
         <a href=""><span>List Category</span></a>
+        <span class="time">{{ time | date: 'medium'}}</span>
       </div>
   </div>
 
@@ -31,8 +32,8 @@
         <div class="col-md-3" style="margin-left:272px">
             <io-form-action [action]="action"></io-form-action>
         </div>
-      </div>  
-    </div>    
+      </div>
+    </div>
   </form>
 </io-form>
 
