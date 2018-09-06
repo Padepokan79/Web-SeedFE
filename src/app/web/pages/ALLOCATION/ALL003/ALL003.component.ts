@@ -84,7 +84,6 @@ export class ALL003Component implements OnInit {
         cellTemplate: this.notif, sortable: false },
         { prop: 'sdmskill_id', name: 'Action', width: 100,
         cellTemplate: this.tableActionTemplate, sortable: false },
-        
       ]
     });
     this.action = this._factory.actions({
@@ -110,7 +109,10 @@ export class ALL003Component implements OnInit {
   public navigateEditMenu(id) {
     this.router.navigate(['pages/all/ALL005' , {id}]);
   }
-  public refreshData(){
+  public refreshData() {
     this.action.refreshTable();
+  }
+  public refresh(): void {
+    window.location.reload();
   }
 }

@@ -80,7 +80,7 @@ export class TabDetailEmploymentComponent implements OnInit {
       //   { viewValue: 'Corp Name', viewKey: 'employment_corpname', type: TYPE.STRING}
       // ],
       tableColumns : [
-        { prop: 'employment_corpname', name: 'Nama Perusahaan', width: 40, sortable: false },
+        { prop: 'employment_corpname', name: 'Nama Perusahaan', width: 100, sortable: false },
         { prop: 'employment_startdate', name: 'Tanggal masuk', width: 100, sortable: false },
         { prop: 'employment_enddate', name: 'Tanggal keluar', width: 100, sortable: false },
         { prop: 'employment_rolejob', name: 'Jabatan', width: 100, sortable: false }

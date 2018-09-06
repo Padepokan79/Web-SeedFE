@@ -57,7 +57,6 @@ export class PJA007Component implements OnInit {
         }
       }
     });
-    
     this.dataTable = this._factory.dataTable({
       serverSide : false,
       pagingParams : {
@@ -89,7 +88,6 @@ export class PJA007Component implements OnInit {
     setInterval(() => {
     this.time = new Date();
     }, 1);
-    
   }
 
   public ambilData() {
@@ -103,7 +101,6 @@ export class PJA007Component implements OnInit {
         }
       }
     });
-    
     this._factory.http().get(readAllApi).subscribe((res: any) => {
       // this.action.patchFormData(res.data.items[this.selected]);
       this.clientPic = res.data.items[0].client_picclient;
@@ -112,11 +109,10 @@ export class PJA007Component implements OnInit {
 
   }
 
-  public clearData(){
+  public clearData() {
     this.clientPic = '';
     this.clientMobile = '';
     this.btnDisabled = true;
-  
     this.action.resetFilter() ;
     this.action.refreshTable();
   }
@@ -140,8 +136,8 @@ export class PJA007Component implements OnInit {
     this.action.refreshTable();
   }
 
-  public setTrueClick(){
-     this.btnDisabled = false; 
+  public setTrueClick() {
+     this.btnDisabled = false;
   }
 
 }
