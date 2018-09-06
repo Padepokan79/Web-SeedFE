@@ -18,6 +18,7 @@ import { startWith, map } from '../../../../../../node_modules/rxjs/operators';
 })
 export class SDM008Component implements OnInit {
 
+  public time: Date = new Date();
   @ViewChild('viewAsDateTemplate')
   public viewAsDateTemplate: any;
   @ViewChild('tableActionTemplate')
@@ -56,6 +57,9 @@ export class SDM008Component implements OnInit {
   }
 
   public ngOnInit() {
+    setInterval(() => {
+      this.time = new Date();
+    }, 1);
     this.inputForm = this._factory.inputForm({
       formControls: {
         sdm_id: '',
