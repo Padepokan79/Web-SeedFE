@@ -11,6 +11,7 @@ UPDATE		:
         <a [routerLink]="['/pages/dashboard']">dashboard</a><b> > </b>
         <a [routerLink]="['/pages/sdm']"><span>SDM</span></a><b> > </b>
         <a><span>List Psychological SDM</span></a>
+        <span class="time">{{ time | date: 'medium'}}</span>
       </div>
     </div>
   </div>
@@ -27,7 +28,7 @@ UPDATE		:
           </mat-autocomplete>
         </mat-form-field>
       <!-- <div style=""> -->
-        <button mat-raised-button class="btn btn-search btn-mm" (click)="onSearch()" style="margin-left:265px">
+        <button mat-raised-button class="btn btn-search btn-mm" (click)="onSearch()" style="margin-left:260px">
               <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Cari</button>
             <!-- <button mat-flat-button (click)="action.onReset()">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Clear</button> -->

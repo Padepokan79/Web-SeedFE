@@ -1,7 +1,7 @@
   // Author        : Nurdhiat Chaudhary Malik
   // Date Created  : 01 Agustus 2018
   // Status        : Done
-  
+
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActionService } from '../../../../core/services/uninjectable/action.service';
 import { InputForm } from '../../../../core/models/input-form';
@@ -16,6 +16,7 @@ import { CoreFactory } from '../../../../core/factory/core.factory';
 })
 export class ALL001Component implements OnInit {
 
+  public time: Date = new Date();
   @ViewChild('tableActionTemplate')
   public tableActionTemplate: any;
 
@@ -27,11 +28,14 @@ export class ALL001Component implements OnInit {
 
   constructor(private _factory: CoreFactory) { }
 
-  public refreshTabel(){
+  public refreshTabel() {
     this.action.refreshTable();
   }
 
   public ngOnInit() {
+    setInterval(() => {
+      this.time = new Date();
+    }, 1);
     this.inputForm = this._factory.inputForm({
       formControls: {
         skill_id: null,

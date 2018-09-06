@@ -114,6 +114,9 @@ export class ALL006Component implements OnInit {
 
   public ngOnInit() {
 
+    setInterval(() => {
+      this.time = new Date();
+    }, 1);
     this.inputForm = this._factory.inputForm({
       formControls: {
         sdm_id: '',
