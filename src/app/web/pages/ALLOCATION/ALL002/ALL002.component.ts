@@ -16,6 +16,7 @@ import { TYPE } from '../../../../core/constant/constant';
 })
 export class ALL002Component implements OnInit {
 
+  public time: Date = new Date();
   @ViewChild('tableActionTemplate')
   public tableActionTemplate: any;
 
@@ -25,14 +26,17 @@ export class ALL002Component implements OnInit {
 
   constructor(private _factory: CoreFactory) { }
 
-  public refreshTabel(){
+  public refreshTabel() {
     this.action.refreshTable();
   }
 
   public ngOnInit() {
+    setInterval(() => {
+      this.time = new Date();
+    }, 1);
     this.inputForm = this._factory.inputForm({
       formControls: {
-        skilltype_id: null, 
+        skilltype_id: null,
         skilltype_name: '',
       },
       validationMessages: {

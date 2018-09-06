@@ -1,10 +1,20 @@
 <!-- Created by : Vikri Ramdhani
 Date       : 2-08-2018
 Modified   : 10-08-2018 by Vikri Ramdhani -->
+<!-- <div class="io-form-header">
+    <div class="title-header">
+      <span><i class="fa fa-home"></i></span>
+      <a href=""><span>Dashboard</span></a><b> > </b>
+      <a href=""><span>SDM Allocation</span></a><b> > </b>
+      <a href=""><span>List Category</span></a>
+      <span class="time">{{ time | date: 'medium'}}</span>
+    </div>
+</div> -->
 <div class="head">
   <span style="color: #181818; margin-left: 20px;"><i class="fa fa-home"></i></span>
   <a [routerLink]="['/pages/dashboard']"><span>SDM Allocation > </span></a>
   <span style="color: #181818;">List Sdm Skill</span>
+  <span class="time">{{ time | date: 'medium'}}</span>
 </div>
 
 <io-table-with-add *ngIf="action?.table()" [action]="action" style="text-align: center;">

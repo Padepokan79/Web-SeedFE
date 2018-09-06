@@ -4,8 +4,8 @@ CREATED 	: Friday, ‎August 17th 2018 08:12:51 AM
 UPDATE BY : Khairil Anwar
 UPDATED   : Friday, August 31st 2018 08:45:00 AM
 -->
-<mat-toolbar>
-  <!-- Multifiltering SDM -->
+<!-- <mat-toolbar>
+  Multifiltering SDM
   <div class="io-form-header">
     <div class="nx-brc-header blacky">
       <div class="title-header">
@@ -17,7 +17,14 @@ UPDATED   : Friday, August 31st 2018 08:45:00 AM
       </div>
     </div>
   </div>
-</mat-toolbar>
+</mat-toolbar> -->
+<div class="head">
+    <span style="color: #181818; margin-left: 20px;"><i class="fa fa-home"></i></span>
+    <a [routerLink]="['/pages/dashboard']"><span>SDM Allocation > </span></a>
+    <span style="color: #181818;">List Sdm Skill</span>
+    <span class="time">{{ time | date: 'medium'}}</span>
+</div>
+
 <div class="all-of-white">
   <div class="filter-contents" align="center">
     <form class="io-form-body">
