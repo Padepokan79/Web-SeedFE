@@ -8,7 +8,7 @@ import { SearchCriteria } from './SearchCriteria';
 import { DefaultNotificationService } from '../../../../core/services/default-notification.service';
 import { ListOfValue } from '../../../../core/models/list-of-value';
 import { FormControl } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Component({
@@ -64,7 +64,7 @@ export class PJA008Component implements OnInit {
   @ViewChild('notif')
   public notif: any;
 
-  constructor(private _factory: CoreFactory, public _notif: DefaultNotificationService, private route: ActivatedRoute, private http: HttpClient) {
+  constructor(private _factory: CoreFactory, public _notif: DefaultNotificationService, private route: ActivatedRoute, private routers: Router , private http: HttpClient) {
     this.listSearchCriteria.push(new SearchCriteria(_factory));
     this.sdmCtrl = new FormControl();
     this.valueCtrl = new FormControl({ value: '', disabled: true });
@@ -138,7 +138,7 @@ export class PJA008Component implements OnInit {
         { prop: 'skill_name', name: 'Skills', width: 20, sortable: false },
         { prop: 'sdmskill_value', name: 'Value', width: 50, sortable: false },
         { prop: 'end_contractproject', name: 'End date project', width: 50, sortable: false },
-        { prop: 'sdm_notification', name: 'Notifikasi', width: 50, cellTemplate: this.notif, sortable: false },
+        { prop: 'sdm_notification', name: 'Notifikasi Kontrak', width: 50, cellTemplate: this.notif, sortable: false },
         { prop: 'sdm_id', name: 'Select', width: 10, cellTemplate: this.tableActionTemplate, sortable: false }
       ]
     });
@@ -171,7 +171,7 @@ export class PJA008Component implements OnInit {
         operator: this.operator
       });
     });
-    
+
     console.log('POST');
     const url = `${this.apiFilter}/multiFilter`;
     const httpOptions = {
@@ -289,18 +289,19 @@ export class PJA008Component implements OnInit {
       listhiring: multiInsert
     }, httpOptions)
       .subscribe(() => {
-        this.action.table().rows.forEach((item) => {
-          if (this.clientIds != null && this.hirestatIds != null && item.sdm_id != null) {
+        // this.action.table().rows.forEach((item) => {
+          // if (this.clientIds != null && this.hirestatIds != null && item.sdm_id != null) {
             this._notif.success({
               message: 'You have successfully Hired'
             });
-            setTimeout(() => this.router.navigate(['pages/pja/PJA007']), 1000);
-          } else {
-            this._notif.error({
-              message: 'Failed to Hired'
-            });
-          }
-        });
+            setTimeout(() => this.routers.navigate(['pages/pja/PJA007']), 1000);
+          // } else {
+            // this._notif.error({
+            //   message: 'Failed to Hired'
+            // });
+          // }
+      //   }
+      // );
       });
   }
 
@@ -329,7 +330,6 @@ export class PJA008Component implements OnInit {
     }
   }
 
-  public ActivateCheckbox(){
-    
-  }
+  // tslint:disable-next-line:no-empty
+  public ActivateCheckbox() {}
 }
