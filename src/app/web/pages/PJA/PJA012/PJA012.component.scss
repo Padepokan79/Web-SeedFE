@@ -43,31 +43,31 @@ div.go-tight {
 }
 
 .btn-filter {
-    background: linear-gradient(to bottom right, #23AB14, #31AD18);
-    color: #FEFEFE;
+    // background: linear-gradient(to bottom right, #23AB14, #31AD18);
+    // color: #FEFEFE;
     margin-top: 40px;
 }
 
 
 .btn-clear {
-    background: linear-gradient(to bottom right, #AB2314, #AD3118);
-    color: #FEFEFE;
+    // background: linear-gradient(to bottom right, #AB2314, #AD3118);
+    // color: #FEFEFE;
     margin-top: 40px;
 }
 
 .btn-submit {
-    background: linear-gradient(to bottom right, rgb(43, 93, 218), rgb(16, 96, 114));
-    color: #FEFEFE;
+    // background: linear-gradient(to bottom right, rgb(43, 93, 218), rgb(16, 96, 114));
+    color: white;
 	margin-top: 40px;
-	
+
 }
 
 .btn-back {
-    background: linear-gradient(to bottom right, #c9abab, rgb(235, 236, 240));
+    // background: linear-gradient(to bottom right, #c9abab, rgb(235, 236, 240));
     color: #FEFEFE;
 	margin-top: 40px;
-	margin-left:  300px;
-	
+	margin-left:  0px;
+
 }
 
 .btn-flat:disabled, .btn-clear:disabled {
@@ -145,4 +145,28 @@ mat-checkbox {
 
 .absolute-post {
 	position:absolute;
+}
+
+.nx-filter-button{
+  background: linear-gradient(to bottom left, rgb(20, 190, 1), rgb(20, 190, 1));
+  color: white;
+  text-transform: capitalize;
+}
+
+.nx-reset-button{
+  background: linear-gradient(to bottom right, rgb(224, 48, 29), rgb(224, 48, 29));
+  color: white;
+  text-transform: capitalize;
+}
+
+.nx-back-button{
+  background: linear-gradient(to bottom left, rgb(121, 121, 121), rgb(121, 121, 121));
+  color: white;
+  text-transform: capitalize;
+}
+
+.nx-submit-button{
+  background: linear-gradient(to bottom right, rgb(43, 93, 218), rgb(16, 96, 114));
+  color: white;
+  text-transform: capitalize;
 }

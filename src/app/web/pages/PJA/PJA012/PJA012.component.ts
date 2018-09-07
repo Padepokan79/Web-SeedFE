@@ -305,6 +305,7 @@ export class PJA012Component implements OnInit {
 
   public deactivateButton() {
     this.isLocked = true;
+    this.btndisabled = true;
   }
 
   public assignSubmit() {
