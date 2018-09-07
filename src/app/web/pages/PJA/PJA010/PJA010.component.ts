@@ -43,9 +43,6 @@ export class PJA010Component implements OnInit {
     private router: Router
   ) { }
 
-  public refreshTabel() {
-    this.action.refreshTable();
-  }
 
   public ngOnInit() {
 
