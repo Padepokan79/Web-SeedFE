@@ -43,6 +43,10 @@ export class PJA010Component implements OnInit {
     private router: Router
   ) { }
 
+  public refreshTabel() {
+    this.action.refreshTable();
+  }
+
   public ngOnInit() {
 
     this.inputForm = this._factory.inputForm({
@@ -129,6 +133,10 @@ export class PJA010Component implements OnInit {
       this.clientMobile = res.data.items[0].client_mobileclient;
     });
 
+  }
+
+  public refreshTabel() {
+    this.action.refreshTable();
   }
 
   public clearData() {

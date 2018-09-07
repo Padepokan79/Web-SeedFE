@@ -269,7 +269,7 @@
     <!-- <div class="col-md-3" *ngIf=" form == 2 ">
         <io-form-action [action]="action"></io-form-action>
     </div> -->
-    <div class="col-md-6 pos" style="float:right">
+    <div class="col-md-6 pos" style="float:left; margin-bottom:10px">
     <button mat-raised-button style="margin: 10px 0px" (click)="onSave()" *ngIf=" form == 1 " [disabled]="action?.formControls()?.invalid || action?.formControls()?.pristine" >Submit</button>
     <button mat-raised-button style="margin: 10px 0px" (click)="onUpdate()" *ngIf=" form == 2 " [disabled]="action?.formControls()?.invalid || action?.formControls()?.pristine">Update</button>
     <!-- <button mat-raised-button style="margin: 10px 0px" (click)="action.onEdit()" *ngIf=" form == 2 ">Update</button> -->
