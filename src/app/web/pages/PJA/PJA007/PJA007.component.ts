@@ -34,6 +34,10 @@ export class PJA007Component implements OnInit {
   public selected: number;
 
   constructor(private _factory: CoreFactory, private router: Router) { }
+  
+  public refreshTabel() {
+    this.action.refreshTable();
+  }
 
   // tslint:disable-next-line:no-empty
   public ngOnInit() {
