@@ -7,6 +7,10 @@ import { LOVService } from '../../../../core/services/uninjectable/lov.service';
 import { CoreFactory } from '../../../../core/factory/core.factory';
 import { Router } from '../../../../../../node_modules/@angular/router';
 import { Location } from '@angular/common';
+import { FormControl, FormGroup } from '../../../../../../node_modules/@angular/forms';
+import { ListOfValue } from '../../../../core/models/list-of-value';
+import { Comparison } from '../../../../core/enums/comparison-operator.enum';
+import { startWith, map } from '../../../../../../node_modules/rxjs/operators';
 @Component({
   selector: 'app-ALL003',
   templateUrl: './ALL003.component.html',
@@ -16,11 +20,11 @@ export class ALL003Component implements OnInit {
   public time: Date = new Date();
   @ViewChild('viewAsDateTemplate')
   public viewAsDateTemplate: any;
-
   @ViewChild('tableActionTemplate')
   public tableActionTemplate: any;
   @ViewChild('notif')
   public notif: any;
+
   public action: ActionService;
   public inputForm: InputForm;
   public dataTable: DataTable;
@@ -69,7 +73,7 @@ export class ALL003Component implements OnInit {
         //       }
         //   ]
         // },
-        limit : 8
+        limit : 10
       },
       searchCriteria : [
         { viewValue: 'Skill Type Name', viewKey: 'skilltype_name', type: TYPE.STRING },
