@@ -40,7 +40,7 @@ export class PJA012Component implements OnInit {
   public lovSkillType: LOVService;
   public lovSkill: LOVService;
   public lovSdmSkill: LOVService;
-  public isButtonClicked = false;
+  public isButtonClicked = true;
   public keyId: any;
   public doubleFilter: any;
   public time: Date = new Date();
