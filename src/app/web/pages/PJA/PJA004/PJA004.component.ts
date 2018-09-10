@@ -27,6 +27,10 @@ export class PJA004Component implements OnInit {
   public dataTable: DataTable;
 
   constructor(private _factory: CoreFactory, private router: Router) { }
+  
+  public refreshTabel() {
+    this.action.refreshTable();
+  }
 
   public ngOnInit() {
 

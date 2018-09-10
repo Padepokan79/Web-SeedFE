@@ -66,7 +66,7 @@ export class TabProfilComponent implements OnInit {
       },
       tableColumns : [
         { prop: 'norut', name: 'No', width: 10, sortable: false },
-        { prop: 'profiling_name', name: 'Keterangan', width: 10, sortable: false },
+        { prop: 'profiling_name', name: 'Keterangan', width: 170 , sortable: false },
         { prop: 'profiling_id', name: 'Action', width: 20,
           cellTemplate: this.tableActionTemplate, sortable: false }
       ]
