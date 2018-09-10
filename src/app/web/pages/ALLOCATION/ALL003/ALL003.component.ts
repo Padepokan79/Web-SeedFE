@@ -56,7 +56,7 @@ export class ALL003Component implements OnInit {
     //   // }
     });
     this.dataTable = this._factory.dataTable({
-      serverSide : false,
+      serverSide : true,
       pagingParams : {
         // filter: {
         //   operator: CONJUNCTION_OPERATOR.AND,
