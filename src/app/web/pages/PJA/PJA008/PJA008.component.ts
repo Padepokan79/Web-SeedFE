@@ -288,21 +288,18 @@ export class PJA008Component implements OnInit {
     this.http.post(url, {
       listhiring: multiInsert
     }, httpOptions)
-      .subscribe(() => {
-        // this.action.table().rows.forEach((item) => {
-          // if (this.clientIds != null && this.hirestatIds != null && item.sdm_id != null) {
+      .subscribe((res: any) => {
             this._notif.success({
               message: 'You have successfully Hired'
             });
             setTimeout(() => this.routers.navigate(['pages/pja/PJA007']), 1000);
-          // } else {
-            // this._notif.error({
-            //   message: 'Failed to Hired'
-            // });
-          // }
-      //   }
-      // );
-      });
+      }, (error: any) => {
+        this._notif.error({
+          message: 'Data SDM sudah pernah di hiring'
+        });
+      }
+
+    );
   }
 
   public checkMethod(event: any) {
