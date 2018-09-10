@@ -14,6 +14,7 @@ import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { HttpParams, HttpClient } from '../../../../../../node_modules/@angular/common/http';
 import { Message } from '../../../../../../node_modules/@angular/compiler/src/i18n/i18n_ast';
+import { COMPARISON_OPERATOR } from '../../../../core/constant/constant';
 
 @Component({
   selector: 'app-ALL006',
@@ -128,7 +129,14 @@ export class ALL006Component implements OnInit {
 
     this.lovSDM = this._factory.lov({
       api: 'lov/Sdm',
-      initializeData: true
+      initializeData: true,
+      pagingParams: {
+        filter: {
+          field: 'sdm_status',
+          operator: COMPARISON_OPERATOR.EQ,
+          value: 1
+        }
+      }
     });
 
     this.dataTable = this._factory.dataTable({
@@ -149,7 +157,7 @@ export class ALL006Component implements OnInit {
     });
     this.action = this._factory.actions({
     api: 'allocation/MengelolaSdmSkill',
-    dataTable: this.dataTable
+    dataTable: this.dataTable,
   });
 
     setInterval(() => {

@@ -101,8 +101,6 @@ export class PJA005Component implements OnInit {
       //   client_id : this.selectedId
       // }
     });
-    console.log(this.clientName);
-    console.log(this.clientMobileclient);
     if (this.clientName === null || this.clientName === '') {
       this._notif.error({
         message: 'Client Name Harus Diisi'
@@ -127,8 +125,5 @@ export class PJA005Component implements OnInit {
           setTimeout(() => this.router.navigate(['pages/pja/PJA004']), 1000);
            });
       }
-    console.log('bai' + this.clientName);
-    console.log('nai' + this.clientPicclient);
-    console.log('hai ' + this.clientMobileclient);
    }
   }
