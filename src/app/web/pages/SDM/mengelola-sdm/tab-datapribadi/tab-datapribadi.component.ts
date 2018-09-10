@@ -50,6 +50,7 @@ export class TabDatapribadiComponent implements OnInit {
 
   public date: Date = new Date();
   public mulaiDari: Date = new Date(1990, 0 , 1);
+  public maxDate: Date = new Date(this.date.getFullYear(), this.date.getMonth(), this.date.getDate() - 1);
 
   // coba
   public uploaderFoto: FileUploader;
@@ -252,16 +253,6 @@ export class TabDatapribadiComponent implements OnInit {
         message: 'Successfully Update Data'
       });
     });
-  }
-
-  public dateDOB() {
-    if (this.date.toDateString) {
-      this._notif.error({
-        message: 'data salah'
-      });
-    } else {
-      console.log('masuk');
-    }
   }
 
 }

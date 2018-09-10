@@ -95,7 +95,7 @@
         <td class="td2">:</td>
         <td class="td3">
             <mat-form-field class="sdw-full-size">
-                <input matInput [readonly]="true" [max]="date" [matDatepicker]="picker" (click)="pickerStartDate.open()" placeholder="" formControlName="sdm_datebirth">
+                <input matInput [readonly]="true" [max]="maxDate" [matDatepicker]="picker" (click)="pickerStartDate.open()" placeholder="" formControlName="sdm_datebirth">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker startview="year" [startAt]="mulaiDari"></mat-datepicker>
             </mat-form-field>
