@@ -22,11 +22,19 @@
         <td rowspan="7">
             <div style="margin-left: 50px">
                 <!-- <img mat-card-image style="width: 200px" src="http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png" alt="Photo of a Shiba Inu"><br> -->
-                <img mat-card-image style="width: 200px"  [src]="imageUrl" (error)="this.imageUrl='http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png'" alt="Profil Photo"><br />
-                <label for="singleFile">Browse Image</label>
+                <div *ngFor="let fileUrl of imageFiles">
+                    <img style="width: 200px;height: 200px" [src]="fileUrl" (error)="this.imageUrl='http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png'" alt="Profil Photo"><br />
+                </div>
+                <div *ngIf="pathFoto && !imageFiles">
+                    <img src="{{pathFoto}}" style="width: 200px;height: 200px">
+                </div>
+                <label>Browse Image</label>
                 <!-- <input id="singleFile" type="file"> -->
                 <!-- <input type="file" #Image accept="image/*" (change)="handleFileInput($event)" formControlName="sdm_image" name="sdm_image"> -->
-                <input #uploadFile type="file" (change)="handleFileInput($event)">
+                <input #uploadFile type="file"
+                        ng2FileSelect [uploader]="uploaderFoto"
+                        title="Ukuran File Maksimal 500kb"
+                        (change)="handleFileInput($event)" accept=".jpg,.png,.jpeg,.img"/>
             </div>
         </td>
     </tr>
@@ -87,9 +95,9 @@
         <td class="td2">:</td>
         <td class="td3">
             <mat-form-field class="sdw-full-size">
-                <input matInput [matDatepicker]="picker" (click)="pickerStartDate.open()" placeholder="" formControlName="sdm_datebirth">
+                <input matInput [readonly]="true" [max]="date" [matDatepicker]="picker" (click)="pickerStartDate.open()" placeholder="" formControlName="sdm_datebirth">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
+                <mat-datepicker #picker startview="year" [startAt]="mulaiDari"></mat-datepicker>
             </mat-form-field>
         </td>
     </tr>
@@ -245,7 +253,7 @@
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size">
-                <input matInput [matDatepicker]="pickerStartDate" (click)="pickerStartDate.open()" placeholder="" formControlName="sdm_startcontract" required>
+                <input matInput [readonly]="true" [matDatepicker]="pickerStartDate" (click)="pickerStartDate.open()" placeholder="" formControlName="sdm_startcontract" required>
                 <mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
                 <mat-datepicker #pickerStartDate></mat-datepicker>
                 </mat-form-field>
@@ -258,7 +266,7 @@
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size">
-                <input matInput [matDatepicker]="pickerEndDate" (click)="pickerEndDate.open()" placeholder="" formControlName="sdm_endcontract" required>
+                <input matInput [readonly]="true" [min]="this.action.getFormControlValue('sdm_startcontract')" [matDatepicker]="pickerEndDate" (click)="pickerEndDate.open()" placeholder="" formControlName="sdm_endcontract" required>
                 <mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
                 <mat-datepicker #pickerEndDate></mat-datepicker>
                 </mat-form-field>
