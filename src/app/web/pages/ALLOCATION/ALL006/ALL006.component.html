@@ -73,22 +73,24 @@ UPDATED   : Friday, August 31st 2018 08:45:00 AM
                 <input matInput type="number" min="1" max="10" placeholder="Value" [(ngModel)]="searchCriteria.value" name="sdmskill_value{{inc}}" class="blacky" [disabled]="unlockValue">
               </mat-form-field>
             </div>
-            <div class="col-sm-1 text-left" style="margin-bottom:50px">
+            <div class="col-sm-1 text-left">
               <button class="btn btn-flat btn-sm" *ngIf="inc==0" (click)="addSearchCriteria()"><i class="fa fa-plus"></i></button>
               <button class="btn btn-flat btn-sm" *ngIf="inc>0" (click)="removeSearchCriteria(inc,1)"><i class="fa fa-minus"></i></button>
+            </div>
+          </li>
+          <li>
+            <div class="action-filter">
+              <button mat-raised-button class="action-btn nx-filter-button btn btn-mm" (click)="btnFilter()" style="margin-top: 50px;">
+                  <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Filter</button>
+              <button mat-raised-button class="action-btn nx-reset-button btn btn-mm" (click)="resetSource()" style="margin-top: 50px;">
+                  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Clear</button>
+              <!-- <button class="btn btn-filter btn-mm" (click)="btnFilter()">Filter <i class="glyphicon glyphicon-search"></i></button>
+              <button class="btn btn-clear btn-mm" (click)="resetSource()">Clear <i class="glyphicon glyphicon-times"></i></button> -->
             </div>
           </li>
         </ul>
       </div>
       <br><br>
-      <div class="action-filter">
-        <button mat-raised-button class="action-btn nx-filter-button btn btn-mm" (click)="btnFilter()">
-            <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Filter</button>
-        <button mat-raised-button class="action-btn nx-reset-button btn btn-mm" (click)="resetSource()">
-            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Clear</button>
-        <!-- <button class="btn btn-filter btn-mm" (click)="btnFilter()">Filter <i class="glyphicon glyphicon-search"></i></button>
-        <button class="btn btn-clear btn-mm" (click)="resetSource()">Clear <i class="glyphicon glyphicon-times"></i></button> -->
-      </div>
       <br><br>
     </form>
   </div>
