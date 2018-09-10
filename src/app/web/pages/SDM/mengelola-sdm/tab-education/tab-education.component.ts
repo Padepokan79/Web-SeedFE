@@ -6,11 +6,33 @@ import { LOVService } from '../../../../../core/services/uninjectable/lov.servic
 import { CoreFactory } from '../../../../../core/factory/core.factory';
 import { COMPARISON_OPERATOR, CONJUNCTION_OPERATOR, TYPE } from '../../../../../core/constant/constant';
 import { Comparison } from '../../../../../core/enums/comparison-operator.enum';
+import { DefaultNotificationService } from '../../../../../core/services/default-notification.service';
+
+// import { default as _rollupMoment, Moment } from 'moment';
+// import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS, } from '../../../../../../../node_modules/@angular/material';
+
+// import * as _moment from 'moment';
+// // tslint:disable-next-line:no-duplicate-imports
+
+// const moment = _rollupMoment || _moment;
+
+// export const MY_FORMATS = {
+//   parse: {
+//     dateInput: 'YYYY',
+//   },
+//   display: {
+//     dateInput: 'YYYY',
+//   },
+// };
 
 @Component({
   selector: 'app-tab-education',
   templateUrl: './tab-education.component.html',
-  styleUrls: ['./tab-education.component.scss']
+  styleUrls: ['./tab-education.component.scss'],
+  // providers: [
+  //   {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+  //   {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
+  // ],
 })
 
 export class TabEducationComponent implements OnInit {
@@ -35,7 +57,8 @@ export class TabEducationComponent implements OnInit {
 
   public lovDegree: LOVService;
 
-  constructor(private _factory: CoreFactory) {  }
+  constructor(private _factory: CoreFactory,
+              public _notif: DefaultNotificationService) {  }
 
   public ngOnInit() {
 
@@ -105,6 +128,20 @@ export class TabEducationComponent implements OnInit {
       api: 'lov/degree',
       initializeData: true
     });
+  }
+
+  public validasiTahun() {
+      if (this.action.getFormControlValue('edu_startdate') < this.action.getFormControlValue('edu_enddate') ) {
+        // tslint:disable-next-line:no-unused-expression
+        this.action.onSave();
+        this._notif.success({
+          message: 'Berhasil'
+        });
+      } else {
+        this._notif.error({
+          message: 'Cek kembali tahun masuk dan keluar'
+        });
+      }
   }
 
 }
