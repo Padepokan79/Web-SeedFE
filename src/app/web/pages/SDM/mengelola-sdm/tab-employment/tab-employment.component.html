@@ -39,7 +39,7 @@
         <td>:</td>
         <td>
           <mat-form-field class="sdw-full-size">
-              <input matInput [matDatepicker]="pickerEnd" placeholder="" formControlName="employment_enddate">
+              <input matInput [matDatepicker]="pickerEnd" [min]="this.action.getFormControlValue('employment_startdate')" placeholder="" formControlName="employment_enddate">
               <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
               <mat-datepicker #pickerEnd></mat-datepicker>
             </mat-form-field>

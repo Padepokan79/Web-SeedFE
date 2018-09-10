@@ -6,6 +6,7 @@ import { CoreFactory } from '../../../../../core/factory/core.factory';
 import { COMPARISON_OPERATOR } from '../../../../../core/constant/constant';
 import { DefaultNotificationService } from '../../../../../core/services/default-notification.service';
 import { Router } from '../../../../../../../node_modules/@angular/router';
+import { FileUploader } from '../../../../../../../node_modules/ng2-file-upload';
 
 @Component({
   selector: 'app-tab-datapribadi',
@@ -47,13 +48,35 @@ export class TabDatapribadiComponent implements OnInit {
   public lovStatus: LOVService;
   public lovDegree: LOVService;
 
-  constructor(
-    private _factory: CoreFactory,
-    public _notif: DefaultNotificationService,
-    private router: Router
-  ) { }
+  public date: Date = new Date();
+  public mulaiDari: Date = new Date(1990, 0 , 1);
+  public maxDate: Date = new Date(this.date.getFullYear(), this.date.getMonth(), this.date.getDate() - 1);
+
+  // coba
+  public uploaderFoto: FileUploader;
+  public uploader: FileUploader;
+
+  constructor(private _factory: CoreFactory,
+              public _notif: DefaultNotificationService,
+              private router: Router) {
+                const URL = this._factory.api({
+                  api: 'sdm\Upload',
+                  params: {
+                    sdm_id: this.id
+                  }
+                });
+
+                // tslint:disable-next-line:prefer-const
+                let token = 'bearer' + JSON.parse((localStorage.getItem('loggedInUser')))['access_token'];
+                this.uploader = new FileUploader({url: URL, authToken: token, authTokenHeader: 'authorization'});
+                this.uploaderFoto = new FileUploader({});
+              }
 
     public ngOnInit() {
+
+      setInterval(() => {
+        this.date = new Date();
+      }, 1);
 
       this.inputForm = this._factory.inputForm({
         formControls: {
@@ -148,14 +171,14 @@ export class TabDatapribadiComponent implements OnInit {
     }
   }
 
-  public readFiles (files: any[], index: number) {
+  public readFiles(files: any[], index: number) {
     this.pathFoto = null;
     this.imageFiles = [];
     const file = files[index];
     this.fileReader.onload = () => {
       this.imageFiles.push(this.fileReader.result);
-      if (files[index+1]) {
-        this.readFiles(files, index+1);
+      if (files[index + 1]) {
+        this.readFiles(files, index + 1);
       } else {
         console.log('Succes Read Photo');
       }
@@ -177,10 +200,52 @@ export class TabDatapribadiComponent implements OnInit {
 
   }
 
+  public masukanPhoto() {
+    // tslint:disable-next-line:prefer-const
+    let token = 'bearer ' + JSON.parse((localStorage.getItem('loggedInUser')))['access_token'];
+    console.log(token);
+    // tslint:disable-next-line:prefer-const
+    let URL = this._factory.api ({
+      api: 'sdm/Upload/upload',
+      params: {
+        sdm_id: this.id
+      }
+    });
+    if (this.uploaderFoto.queue.length > 0) {
+      this.uploaderFoto.setOptions({ url: URL,
+                                      authToken: token,
+                                    authTokenHeader: 'authorization'});
+      this.uploaderFoto.onBuildItemForm = (item, form) => {
+        // tslint:disable-next-line:prefer-const
+        let fileName = this.action.getFormControlValue('sdm_name') + '.'
+                      + item._file.type.replace('image/', '');
+        item.file.name = fileName.replace(' ', '_');
+      };
+      if (this.uploaderFoto.queue.length > 0) {
+        if (this.uploaderFoto.queue[0].file.size > 500000) {
+          this._notif.error({
+            message: 'File tidak boleh melebihi 500kb'
+          });
+          this.uploaderFoto.clearQueue();
+        } else {
+          this.uploaderFoto.uploadAll();
+        }
+      }
+    } else {
+      this.uploaderFoto.clearQueue();
+      this.action.onSave();
+    }
+  }
+
   public onUpdate() {
     const updateAPI = this._factory.api({
       api : 'sdm/mengelolaSdm/update',
     });
+
+    this.action.patchFormData({
+      sdm_image: this.uploaderFoto.queue[0].file.name
+    });
+    console.log(this.uploaderFoto.queue[0].file.name);
 
     // tslint:disable-next-line:no-empty
     this._factory.http().put(updateAPI + '?sdm_id=' + this.id, this.action.getFormData()).subscribe((response: any) => {
