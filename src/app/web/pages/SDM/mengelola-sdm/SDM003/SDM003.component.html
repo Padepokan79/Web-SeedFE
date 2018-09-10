@@ -57,7 +57,7 @@
           <input matInput type="search">
         </mat-form-field> -->
       <!-- </mat-list-item> -->
-        
+
     </mat-list>
   </form>
 </io-form>
@@ -84,7 +84,7 @@
 <ng-template #notif let-row="row" let-value="value" ngx-datatable-cell-template>
     <i matTooltip="Non-Aktif" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:black; font-size: 30px" *ngIf="row.sdm_notification == 'black'"></i>
     <i matTooltip="Sisa 1 bulan" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:red; font-size: 30px" *ngIf="row.sdm_notification == 'red'"></i>
-    <i matTooltip="Sisa 2 bulan" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:#f5f515; font-size: 30px" *ngIf="row.sdm_notification == 'yellow'"></i>
+    <i matTooltip="Sisa 2 bulan" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:orange; font-size: 30px" *ngIf="row.sdm_notification == 'yellow'"></i>
     <i matTooltip="Sisa 4 bulan" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:#00da00; font-size: 30px" *ngIf="row.sdm_notification == 'green'"></i>
     <i matTooltip="Sisa lebih dari 4 bulan" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:#b3b3b3; font-size: 30px" *ngIf="row.sdm_notification == 'grey'"></i>
  </ng-template>

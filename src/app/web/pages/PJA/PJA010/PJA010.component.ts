@@ -26,6 +26,7 @@ export class PJA010Component implements OnInit {
   public notif: any;
   public notifications: any;
 
+  public time: Date = new Date();
   public action: ActionService;
   public inputForm: InputForm;
   public dataTable: DataTable;
@@ -42,8 +43,6 @@ export class PJA010Component implements OnInit {
     private route: ActivatedRoute,
     private router: Router
   ) { }
-
-
   public ngOnInit() {
 
     this.inputForm = this._factory.inputForm({
@@ -74,7 +73,7 @@ export class PJA010Component implements OnInit {
 
     // First Data Table Initialization
     this.dataTable = this._factory.dataTable({
-      serverSide : false,
+      serverSide : true,
       pagingParams : {
         limit : 10
       },

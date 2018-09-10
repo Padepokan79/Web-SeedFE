@@ -24,7 +24,7 @@
     background-color: royalblue;
     color: white;
     text-transform: capitalize;
-  
+
 }
 .cancelButton{
     background-color: lightgray;
@@ -96,13 +96,15 @@
 }
 
 .nx-reset-button{
-    background-color: #f44336;
+    background: linear-gradient(to bottom right, rgb(224, 48, 29), rgb(224, 48, 29));
     color: white;
     text-transform: capitalize;
+    width: 120px;
 }
 
 .nx-hiring-button{
-    background-color: #00abff;
+    background: linear-gradient(to bottom right, rgb(89, 89, 235), rgb(89, 89, 235));
     color: white;
     text-transform: capitalize;
+    width: 120px;
 }

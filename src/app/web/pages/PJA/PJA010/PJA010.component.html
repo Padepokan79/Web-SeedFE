@@ -12,13 +12,14 @@
     <table class="nx-table-margin" style="width: 100%">
 
       <tr>
-        <td class="nx-table-range"  style="width: 100px">
+        <!-- Client -->
+        <td style="width: 100px;">
           <mat-label>Client</mat-label>
         </td>
-        <td style="width: 5px">
+        <td style="width: 5px; padding-right:10px">
           <mat-label>:</mat-label>
         </td>
-        <td class="nx-table-range" style="width: 100px">
+        <td style="width: 100px">
           <mat-form-field>
             <mat-select placeholder="- Select -" (change)="setTrueClick()" formControlName="client_id" name="client_id" [(ngModel)]="selected" (change)="ambilData();onSearch()">
               <mat-option *ngFor="let lov of lovClient.data" [value]="lov.key">
@@ -27,45 +28,41 @@
             </mat-select>
           </mat-form-field>
         </td>
-        <td></td>
-      </tr>
-
-      <tr>
-        <td class="nx-table-range nx-table-height">
+        <!-- pic client -->
+        <td style="width: 150px; padding-left:50px">
             <mat-label>PIC Client</mat-label>
         </td>
-        <td>
+        <td style="width: 5px; padding-right:10px">
           <mat-label>:</mat-label>
         </td>
-        <td class="nx-table-range">
+        <td style="width: 200px">
           <mat-label>{{ clientPic }}</mat-label>
         </td>
-      </tr>
-
-      <tr>
-        <td class="nx-table-range nx-table-height">
+        <!-- client contact -->
+        <td style="width: 100px">
             <mat-label>Client Contact</mat-label>
         </td>
-        <td>
+        <td style="width: 5px; padding-right:10px">
           <mat-label>:</mat-label>
         </td>
-        <td class="nx-table-range">
+        <td style="width: 200px">
           <mat-label>{{ clientMobile }}</mat-label>
         </td>
         <td>
-          <!-- <button mat-flat-button (click)="onSearch()">
-              <span class="glyphicon glyphicon-search nx-save-button" aria-hidden="true"></span>Filter</button>&nbsp; -->
-          <button mat-raised-button class="action-btn nx-reset-button" (click)="action.onReset();clearData()">
-              Reset</button>&nbsp;
-          <div class="col-md-2" style="float:right">
-            <button mat-raised-button class="action-btn nx-assign-button" style="float:right" [disabled]="btnDisabled" (click)="navigatePushId(selected)">
-                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true">&nbsp;</span>Assign
-            </button>
-          </div>
-        </td>
       </tr>
-
     </table>
+      <div style="margin-left:795px; padding-bottom:20px;">
+        <td style="padding-right:20px">
+          <button mat-raised-button class="action-btn nx-reset-button" (click)="action.onReset();clearData()">
+              <span class="glyphicon glyphicon-remove-sign" aria-hidden="true">&nbsp;</span>Reset
+          </button>
+        </td>
+        <td>
+          <button mat-raised-button class="action-btn nx-assign-button" [disabled]="btnDisabled" (click)="navigatePushId(selected)">
+              <span class="glyphicon glyphicon-plus-sign" aria-hidden="true">&nbsp;</span>Assign
+          </button>
+        </td>
+      </div>
   </form>
 </io-form>
 
@@ -78,7 +75,7 @@
 <ng-template #notif let-row="row" let-value="value" ngx-datatable-cell-template>
   <i matTooltip="Non-Aktif" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:black; font-size: 30px" *ngIf="row.sdmassign_notification == 'black'"></i>
   <i matTooltip="Sisa 1 bulan" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:red; font-size: 30px" *ngIf="row.sdmassign_notification == 'red'"></i>
-  <i matTooltip="Sisa 2 bulan" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:#f5f515; font-size: 30px" *ngIf="row.sdmassign_notification == 'yellow'"></i>
+  <i matTooltip="Sisa 2 bulan" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:orange; font-size: 30px" *ngIf="row.sdmassign_notification == 'yellow'"></i>
   <i matTooltip="Sisa 4 bulan" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:#00da00; font-size: 30px" *ngIf="row.sdmassign_notification == 'green'"></i>
   <i matTooltip="Sisa lebih dari 4 bulan" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:#b3b3b3; font-size: 30px" *ngIf="row.sdmassign_notification == 'grey'"></i>
 </ng-template>
