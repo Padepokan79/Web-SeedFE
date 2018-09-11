@@ -53,6 +53,8 @@ export class TabDatapribadiComponent implements OnInit {
   public maxDate: Date = new Date(this.date.getFullYear(), this.date.getMonth(), this.date.getDate() - 1);
 
   // coba
+  public test: number = 1;
+
   public uploaderFoto: FileUploader;
   public uploader: FileUploader;
 
@@ -159,32 +161,13 @@ export class TabDatapribadiComponent implements OnInit {
         this._factory.http().get(readAllApi).subscribe((res: any) => {
           res.data.items[0].sdm_status = res.data.items[0].sdm_status === 'Active' ? 1 : 0;
           this.action.patchFormData(res.data.items[0]);
+          if (this.pathFoto != null && this.pathFoto !== '') {
+            // this.pathFoto = res.data.items[0].sdm_image;
+            this.pathFoto = this._factory.config().staticResourceFullPath(res.data.items[0].sdm_image);
+            console.log(this.pathFoto);
+          }
         });
       }
-  }
-
-  public handleFileInput(event) {
-    // console.log(event);
-    const files = event.target['files'];
-    if (event.target['files']) {
-      this.readFiles(event.target['files'], 0);
-    }
-  }
-
-  public readFiles(files: any[], index: number) {
-    this.pathFoto = null;
-    this.imageFiles = [];
-    const file = files[index];
-    this.fileReader.onload = () => {
-      this.imageFiles.push(this.fileReader.result);
-      if (files[index + 1]) {
-        this.readFiles(files, index + 1);
-      } else {
-        console.log('Succes Read Photo');
-      }
-    };
-    this.fileReader.readAsDataURL(file);
-    console.log('file: ' + file);
   }
 
   public onSave() {
@@ -201,6 +184,14 @@ export class TabDatapribadiComponent implements OnInit {
   }
 
   public masukanPhoto() {
+    // const updateAPI = this._factory.api({
+    //   api : 'sdm/mengelolaSdm/update',
+    // });
+    // this._factory.http().put(updateAPI + '?sdm_id=' + this.id, this.action.getFormData()).subscribe((response: any) => {
+    //   this._notif.success({
+    //     message: 'Successfully Update Data'
+    //   });
+    // });
     // tslint:disable-next-line:prefer-const
     let token = 'bearer ' + JSON.parse((localStorage.getItem('loggedInUser')))['access_token'];
     console.log(token);
@@ -227,13 +218,20 @@ export class TabDatapribadiComponent implements OnInit {
             message: 'File tidak boleh melebihi 500kb'
           });
           this.uploaderFoto.clearQueue();
-        } else {
-          this.uploaderFoto.uploadAll();
+          } else {
+            this.uploaderFoto.uploadAll();
+            this.uploaderFoto.onSuccessItem = (item, response, status, headers) => {
+              this.action.patchFormData({foto : item.file.name});
+              this.test++;
+              this.uploaderFoto.clearQueue();
+
+              this.action.onSave();
+          };
         }
+      }   else {
+        this.uploaderFoto.clearQueue();
+        this.action.onSave();
       }
-    } else {
-      this.uploaderFoto.clearQueue();
-      this.action.onSave();
     }
   }
 
@@ -253,6 +251,32 @@ export class TabDatapribadiComponent implements OnInit {
         message: 'Successfully Update Data'
       });
     });
+  }
+
+  public handleFileInput(event) {
+    // console.log(event);
+    const files = event.target['files'];
+    if (event.target['files']) {
+      this.readFiles(event.target['files'], 0);
+    }
+
+    this.action.form().data.markAsDirty();
+  }
+
+  public readFiles(files: any[], index: number) {
+    this.pathFoto = null;
+    this.imageFiles = [];
+    const file = files[index];
+    this.fileReader.onload = () => {
+      this.imageFiles.push(this.fileReader.result);
+      if (files[index + 1]) {
+        this.readFiles(files, index + 1);
+      } else {
+        console.log('Succes Read Photo');
+      }
+    };
+    this.fileReader.readAsDataURL(file);
+    console.log('file: ' + file);
   }
 
 }

@@ -31,7 +31,7 @@
                 <label>Browse Image</label>
                 <!-- <input id="singleFile" type="file"> -->
                 <!-- <input type="file" #Image accept="image/*" (change)="handleFileInput($event)" formControlName="sdm_image" name="sdm_image"> -->
-                <input #uploadFile type="file"
+                <input #uploadFile id="files" type="file"
                         ng2FileSelect [uploader]="uploaderFoto"
                         title="Ukuran File Maksimal 500kb"
                         (change)="handleFileInput($event)" accept=".jpg,.png,.jpeg,.img"/>
@@ -278,8 +278,8 @@
         <io-form-action [action]="action"></io-form-action>
     </div> -->
     <div class="col-md-6 pos" style="float:left; margin-bottom:10px">
-    <button mat-raised-button style="margin: 10px 0px" (click)="onSave()" *ngIf=" form == 1 " [disabled]="action?.formControls()?.invalid || action?.formControls()?.pristine" >Submit</button>
-    <button mat-raised-button style="margin: 10px 0px" (click)="onUpdate()" *ngIf=" form == 2 " [disabled]="action?.formControls()?.invalid || action?.formControls()?.pristine">Update</button>
+    <button mat-raised-button style="margin: 10px 0px" (click)="onSave();masukanPhoto()" *ngIf=" form == 1 " [disabled]="action?.formControls()?.invalid || action?.formControls()?.pristine" >Submit</button>
+    <button mat-raised-button style="margin: 10px 0px" (click)="onUpdate();masukanPhoto()" *ngIf=" form == 2 " [disabled]="action?.formControls()?.invalid || action?.formControls()?.pristine">Update</button>
     <!-- <button mat-raised-button style="margin: 10px 0px" (click)="action.onEdit()" *ngIf=" form == 2 ">Update</button> -->
     </div>
 </form>
