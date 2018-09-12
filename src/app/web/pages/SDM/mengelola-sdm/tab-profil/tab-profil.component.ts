@@ -51,7 +51,7 @@ export class TabProfilComponent implements OnInit {
       },
       validationMessages: {
         profiling_name: {
-          required: 'Silahkan masukkan Nama Lengkap'
+          required: 'Silahkan masukkan Kelebihan/Kemampuan'
         }
       }
     });
