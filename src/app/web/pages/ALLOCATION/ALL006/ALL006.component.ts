@@ -64,7 +64,11 @@ export class ALL006Component implements OnInit {
 
   @ViewChild('notif')
   public notif: any;
-
+  public validasiRolevalue: boolean;
+  public roletype: string = '1';
+  public skillType: string;
+  public a: string = '1';
+  public b: string = '1';
   public onKey(event: any) {
     console.log(event);
     this.keyId = event.target.value;
@@ -188,13 +192,20 @@ export class ALL006Component implements OnInit {
    };
    this.listSearchCriteria.forEach((skillSdm: SearchCriteria) => {
     console.log(' nilai skill ' + skillSdm.value);
+    this.skillType = skillSdm.skilltype_id;
     if (skillSdm.value == null) {
       this.cek = true;
     } else if ( skillSdm.value < 1 || skillSdm.value > 10) {
       this.cek = false;
     }
+    // tslint:disable-next-line:triple-equals
+    if (this.skillType == this.roletype && skillSdm.value != 1) {
+      this.validasiRolevalue = true;
+    } else {
+      this.validasiRolevalue = false;
+    }
    });
-   if (this.cek === true) {
+   if (this.cek === true && this.validasiRolevalue === false) {
     this.http.post(url, {
       listsdm: body
     }, httpOptions)
@@ -210,9 +221,15 @@ export class ALL006Component implements OnInit {
         this.action.table().rows = res.null;
         console.log(this.action.table().rows);
       });
-    this._notif .error({
-      message : 'Input Value Between 1 and 10'
-     });
+    if ( this.validasiRolevalue === true ) {
+        this._notif.error({
+          message : 'Role Value is only preferred 1'
+         });
+      } else {
+        this._notif.error({
+          message : 'Input Value Between 1 and 10'
+         });
+      }
    }
    this.cek = true;
   }
