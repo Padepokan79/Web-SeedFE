@@ -72,6 +72,7 @@ export class PJA012Component implements OnInit {
   public jumlahDataCheck: number = 0;
   public validasiCheck: boolean = true;
   public cek: boolean = true;
+  public rows: any [] = [];
 
   @ViewChild('notif')
   public notif: any;
@@ -163,10 +164,10 @@ export class PJA012Component implements OnInit {
       ]
     });
 
-    this.action = this._factory.actions({
-      api: 'allocation/MengelolaSdmSkill',
-      dataTable: this.dataTable
-    });
+    // this.action = this._factory.actions({
+    //   api: 'allocation/MengelolaSdmSkill',
+    //   dataTable: this.dataTable
+    // });
 
     this.actionClient = this._factory.actions({
       api: 'project/MengelolaClient',
@@ -235,16 +236,16 @@ export class PJA012Component implements OnInit {
        listsdm: body
      }, httpOptions)
        .subscribe((res: any) => {
-         this.action.table().rows = res.data;
-         console.log(this.action.table().rows);
+         this.rows = res.data;
+         console.log(this.rows);
        });
     } else {
      this.http.post(url, {
        listsdm: body
      }, httpOptions)
        .subscribe((res: any) => {
-         this.action.table().rows = res.null;
-         console.log(this.action.table().rows);
+         this.rows = res.null;
+         console.log(this.rows);
        });
      if ( this.validasiRolevalue === true ) {
         this._notif.error({
@@ -261,7 +262,7 @@ export class PJA012Component implements OnInit {
 
   public distRedundantCheckedSdm() {
     const tempData = [];
-    this.action.table().rows.forEach((item) => {
+    this.rows.forEach((item) => {
       if (item.Checked === true) {
         tempData.push({
           client_id: this.clientIds,
@@ -283,7 +284,7 @@ export class PJA012Component implements OnInit {
   }
 
   public activateButton() {
-    this.action.table().rows.forEach((item) => {
+    this.rows.forEach((item) => {
       if (item.Checked === true) {
         this.validasiCheck = true;
       } else if (item.Checked === false) {
@@ -328,7 +329,7 @@ export class PJA012Component implements OnInit {
     console.log(this.defaultDate2);
     this.isButtonClicked = true;
     const multiInsert = [];
-    this.action.table().rows.forEach((item) => {
+    this.rows.forEach((item) => {
       if (item.Checked === true) {
         multiInsert.push({
           client_id: this.clientIds,
@@ -357,26 +358,11 @@ export class PJA012Component implements OnInit {
       listassignment: multiInsert
     }, httpOptions)
       .subscribe(() => {
-        // this.action.table().rows.forEach((item) => {
-        // });
-        // if (this.clientIds != null && this.hirestatIds != null && item.sdm_id != null && this.assignStartdate != null && this.assignEnddate != null) {
-        // if (this.clientIds != null && this.hirestatIds != null && item.sdm_id != null && this.assignStartdate != null && this.assignEnddate != null) {
-                            // if (assignSubmit(this.item.Checked === true))  {
-                              this._notif.success({
-                                message: 'You have successfully Assigned'
-                              });
-                              setTimeout(() => this.router.navigate(['pages/pja/PJA010']), 1000);
-                            // } else {
-                            //   this._notif.error({
-                            //     message: 'no item checked, please check first to assgin'
-                            //   });
-                            // }
-        // } else {
-          // this._notif.error({
-          //   message: 'Failed to Assigned'
-          // });
-        // }
-      });
+          this._notif.success({
+          message: 'You have successfully Assigned'
+          });
+          setTimeout(() => this.router.navigate(['pages/pja/PJA010']), 1000);
+              });
   }
 
   public checkMethod(event: any) {

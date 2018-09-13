@@ -30,6 +30,8 @@ export class PJA008Component implements OnInit {
   public inputForm: InputForm;
   public dataTable: DataTable;
   public listSearchCriteria: SearchCriteria[] = [];
+  public valdasiCheck: boolean [] = [];
+  public index: number = 0;
   public IdSdm: any;
   public filteredSdm: any;
   public getClientid: number;
@@ -58,9 +60,10 @@ export class PJA008Component implements OnInit {
   public router: any;
   public operator: any = 1;
   public cek: boolean = true;
-  public btndisabled: boolean = true;
+  public btndisabled: boolean = false;
   public jumlahDataCheck: number = 0;
   public validasiCheck: boolean = true;
+  public rows: any[] = [];
   @ViewChild('notif')
   public notif: any;
   public roletype: string = '1';
@@ -146,10 +149,10 @@ export class PJA008Component implements OnInit {
       ]
     });
 
-    this.action = this._factory.actions({
-      api: 'allocation/MengelolaSdmSkill',
-      dataTable: this.dataTable
-    });
+    // this.action = this._factory.actions({
+    //   api: 'allocation/MengelolaSdmSkill',
+    //   dataTable: this.dataTable
+    // });
 
     setInterval(() => {
       this.time = new Date();
@@ -201,16 +204,16 @@ export class PJA008Component implements OnInit {
         listsdm: body
       }, httpOptions)
         .subscribe((res: any) => {
-          this.action.table().rows = res.data;
-          console.log(this.action.table().rows);
+          this.rows = res.data;
+          console.log(this.rows);
         });
      } else {
       this.http.post(url, {
         listsdm: body
       }, httpOptions)
         .subscribe((res: any) => {
-          this.action.table().rows = res.null;
-          console.log(this.action.table().rows);
+          this.rows = res.null;
+          console.log(this.rows);
         });
       if ( this.validasiRolevalue === true ) {
           this._notif.error({
@@ -227,7 +230,7 @@ export class PJA008Component implements OnInit {
 
   public distRedundantCheckedSdm() {
     const tempData = [];
-    this.action.table().rows.forEach((item) => {
+    this.rows.forEach((item) => {
       if (item.Checked === true) {
         tempData.push({
           client_id: this.clientIds,
@@ -242,25 +245,28 @@ export class PJA008Component implements OnInit {
   }
 
   public activateButton() {
-    this.action.table().rows.forEach((item) => {
+    this.rows.forEach((item) => {
       if (item.Checked === true) {
-        this.validasiCheck = true;
+        this.jumlahDataCheck++;
       } else if (item.Checked === false) {
-        this.validasiCheck = false;
+        this.jumlahDataCheck--;
       }
     });
-    if (this.validasiCheck === true || this.jumlahDataCheck === 0) {
-      this.jumlahDataCheck++;
-    } else if (this.validasiCheck === false && this.jumlahDataCheck !== 0) {
-     this.jumlahDataCheck--;
-    }
-    if (this.jumlahDataCheck >= 1) {
-      this.btndisabled = false;
-    } else {
-      this.btndisabled = true;
-    }
-    console.log(this.jumlahDataCheck);
-    console.log(this.btndisabled);
+    // if (this.jumlahDataCheck === 0) {
+    //   this.validasiCheck = true;
+    // }
+    // if (this.validasiCheck === true || this.jumlahDataCheck === 0) {
+    //   this.jumlahDataCheck++;
+    // } else if (this.validasiCheck === false && this.jumlahDataCheck !== 0) {
+    //  this.jumlahDataCheck--;
+    // }
+    // if (this.jumlahDataCheck >= 1) {
+    //   this.btndisabled = false;
+    // } else {
+    //   this.btndisabled = true;
+    // }
+    // console.log(this.jumlahDataCheck);
+    // console.log(this.btndisabled);
   }
   public resetSource() {
     this.isButtonClicked = false;
@@ -283,7 +289,7 @@ export class PJA008Component implements OnInit {
   public hiringSubmit() {
     this.isButtonClicked = true;
     const multiInsert = [];
-    this.action.table().rows.forEach((item) => {
+    this.rows.forEach((item) => {
       if (item.Checked === true) {
         multiInsert.push({
           sdmhiring_id: null,
@@ -293,8 +299,7 @@ export class PJA008Component implements OnInit {
         });
         // tslint:disable-next-line:no-unused-expression
         item.Checked === false;
-        console.log(multiInsert);
-      }
+        console.log(multiInsert.length);
     });
     const url = this._factory.api({
       api: `${this.apiRoot}/multiCreate`
@@ -312,7 +317,7 @@ export class PJA008Component implements OnInit {
             setTimeout(() => this.routers.navigate(['pages/pja/PJA007']), 1000);
       }, (error: any) => {
         this._notif.error({
-          message: 'Data SDM sudah pernah di hiring'
+          message: 'SDM already Hired'
         });
       }
 

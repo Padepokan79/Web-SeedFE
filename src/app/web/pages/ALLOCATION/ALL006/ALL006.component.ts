@@ -42,7 +42,7 @@ export class ALL006Component implements OnInit {
   public lovSkillType: LOVService;
   public lovSkill: LOVService;
   public lovSdmSkill: LOVService;
-  public isButtonClicked = true;
+  public isButtonClicked = false;
   public assignSubmit: any;
   public keyId: any;
   public doubleFilter: any;
@@ -61,6 +61,7 @@ export class ALL006Component implements OnInit {
   public cek: boolean = true;
   public unlockSkill: boolean = true;
   public unlockValue: boolean = true;
+  public rows: any[] = [];
 
   @ViewChild('notif')
   public notif: any;
@@ -102,6 +103,7 @@ export class ALL006Component implements OnInit {
   }
 
   public addSearchCriteria() {
+    console.log(this.increment);
     const searchCriteria = new SearchCriteria(this._factory);
     this.listSearchCriteria.push(searchCriteria);
     this.increment += 1;
@@ -158,10 +160,10 @@ export class ALL006Component implements OnInit {
         cellTemplate: this.notif, sortable: false },
       ]
     });
-    this.action = this._factory.actions({
-    api: 'allocation/MengelolaSdmSkill',
-    dataTable: this.dataTable,
-  });
+  //   this.action = this._factory.actions({
+  //   api: 'allocation/MengelolaSdmSkill',
+  //   dataTable: this.dataTable,
+  // });
 
     setInterval(() => {
       this.time = new Date();
@@ -209,16 +211,15 @@ export class ALL006Component implements OnInit {
       listsdm: body
     }, httpOptions)
       .subscribe((res: any) => {
-        this.action.table().rows = res.data;
-        console.log(this.action.table().rows);
+        this.rows = res.data;
+        console.log(this.rows);
       });
    } else {
     this.http.post(url, {
       listsdm: body
     }, httpOptions)
       .subscribe((res: any) => {
-        this.action.table().rows = res.null;
-        console.log(this.action.table().rows);
+        this.rows = res.null;
       });
     if ( this.validasiRolevalue === true ) {
         this._notif.error({
