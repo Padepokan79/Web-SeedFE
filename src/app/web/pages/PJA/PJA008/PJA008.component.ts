@@ -300,6 +300,7 @@ export class PJA008Component implements OnInit {
         // tslint:disable-next-line:no-unused-expression
         item.Checked === false;
         console.log(multiInsert.length);
+        }
     });
     const url = this._factory.api({
       api: `${this.apiRoot}/multiCreate`
