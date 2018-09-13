@@ -80,9 +80,9 @@
         <td style="width: 5px">:</td>
         <td style="width: 80%">
             <mat-form-field class="sdw-full-size">
-                <input matInput placeholder="" formControlName="edu_startdate" name="edu_startdate" pattern="^0$|^((?!(0))[0-9]{0,9})$">
+                <input matInput placeholder="" minlength="4" maxlength="4" formControlName="edu_startdate" name="edu_startdate" pattern="^0$|^((?!(0))[0-9]{0,9})$">
                 <mat-hint *ngIf="action.formErrors.edu_startdate" [ngStyle]="{'color': 'red'}">
-                    {{action.formErrors.edu_startdate}}
+                    {{action.formErrors.edu_startdate}} for input
                 </mat-hint>
                 </mat-form-field>
             </td>
@@ -93,9 +93,9 @@
         <td style="width: 5px">:</td>
         <td style="width: 80%">
             <mat-form-field class="sdw-full-size">
-                <input matInput placeholder="" formControlName="edu_enddate" name="edu_enddate" pattern="^0$|^((?!(0))[0-9]{0,9})$">
+                <input matInput placeholder="" minlength="4" maxlength="4" formControlName="edu_enddate" name="edu_enddate" pattern="^0$|^((?!(0))[0-9]{0,9})$">
                 <mat-hint *ngIf="action.formErrors.edu_enddate" [ngStyle]="{'color': 'red'}">
-                    {{action.formErrors.edu_enddate}}
+                    {{action.formErrors.edu_enddate}} for input
                 </mat-hint>
                 </mat-form-field>
             </td>
