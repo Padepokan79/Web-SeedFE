@@ -190,7 +190,7 @@ UPDATE   : MLK, Tuesday, August 21, ‎2018, ‏‎4:35:00 PM
 						</td>
 						<td>
 							<mat-form-field class="nx-class-data" id="nx-td-l">
-					          <input matInput [matDatepicker]="pickerStartDate" (click)="pickerStartDate.open()" formControlName="project_startdate" name="project_startdate" required readonly>
+					          <input matInput [matDatepicker]="pickerStartDate" [max]="this.action.getFormControlValue('project_enddate')" (click)="pickerStartDate.open()" formControlName="project_startdate" name="project_startdate" required readonly>
 					          <mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
 					          <mat-datepicker #pickerStartDate></mat-datepicker>
 					          <mat-hint *ngIf="action.formErrors.project_startdate" [ngStyle]="{'color': 'red'}">

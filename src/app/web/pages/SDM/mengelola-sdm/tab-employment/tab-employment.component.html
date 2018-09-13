@@ -26,7 +26,7 @@
         <td style="width: 5px">:</td>
         <td style="width: 80%">
           <mat-form-field class="sdw-full-size">
-              <input matInput [matDatepicker]="pickerStart" placeholder="" formControlName="employment_startdate">
+              <input matInput [matDatepicker]="pickerStart" [max]="this.action.getFormControlValue('employment_enddate')" placeholder="" formControlName="employment_startdate">
               <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
               <mat-datepicker #pickerStart></mat-datepicker>
             </mat-form-field>

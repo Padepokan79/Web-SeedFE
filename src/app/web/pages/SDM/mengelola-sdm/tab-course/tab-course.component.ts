@@ -67,7 +67,7 @@ export class TabCourseComponent implements OnInit {
       serverSide : true,
       pagingParams : {
         filter: Comparison.EQ('sdm_id', this.sdmid.toString()),
-        limit : 5
+        limit : 10
       },
       tableColumns : [
         { prop: 'norut', name: 'No', width: 10, sortable: false },
