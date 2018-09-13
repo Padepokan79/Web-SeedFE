@@ -164,8 +164,15 @@ export class TabDatapribadiComponent implements OnInit {
           if (this.pathFoto != null && this.pathFoto !== '') {
             // this.pathFoto = res.data.items[0].sdm_image;
             this.pathFoto = this._factory.config().staticResourceFullPath(res.data.items[0].sdm_image);
-            console.log(this.pathFoto);
           }
+          // let foto = res.data.items[0].path_foto;
+          // if (foto != null && foto != '') {
+          //   // this.pathFoto = res.data.items[0].sdm_image;
+          //   // this.pathFoto = this._factory.config().staticResourceFullPath(res.data.items[0].sdm_image);
+          //   this.pathFoto = this._factory.config().staticResourceFullPath(foto);
+          // }
+          this.pathFoto = res.data.items[0].sdm_image;
+          console.log(this.pathFoto + ' ini path foto');
         });
       }
   }
@@ -174,7 +181,7 @@ export class TabDatapribadiComponent implements OnInit {
     const postAPI = this._factory.api({
       api: 'sdm/mengelolaSdm/create',
     });
-
+    console.log(this.pathFoto);
     this._factory.http().post(postAPI, this.action.getFormData())
     .subscribe((response: any) => {
       // console.log(response.data.sdm_id);
@@ -183,7 +190,42 @@ export class TabDatapribadiComponent implements OnInit {
 
   }
 
-  public masukanPhoto() {
+  // tslint:disable-next-line:variable-name
+  public masukanPhoto(sdm_id) {
+    // tslint:disable-next-line:prefer-const
+    let nomorSdm = sdm_id;
+    // tslint:disable-next-line:prefer-const
+    let token = 'bearer ' + JSON.parse((localStorage.getItem('loggedInUser')))['access_token'];
+    console.log(token);
+    // tslint:disable-next-line:prefer-const
+    let URL = this._factory.api({
+      api: 'sdm/Upload/upload',
+      params: {
+        sdm_id: nomorSdm
+      }
+    });
+    if (this.uploaderFoto.queue.length > 0) {
+      this.uploaderFoto.setOptions({ url: URL,
+                                      authToken: token,
+                                    authTokenHeader: 'authorization'});
+      this.uploaderFoto.onBuildItemForm = (item, form) => {
+        // tslint:disable-next-line:prefer-const
+        let fileName = this.action.getFormControlValue('sdm_name') + '.'
+                      + item._file.type.replace('image/', '');
+        item.file.name = fileName.replace(' ', '_');
+      };
+      this.uploaderFoto.onSuccessItem = (item, response, status, headers) => {
+        this.action.patchFormData({foto : item.file.name});
+        this.test++;
+        this.uploaderFoto.clearQueue();
+      };
+      if (this.uploaderFoto.queue.length > 0) {
+        this.uploaderFoto.uploadAll();
+      }
+    }
+  }
+
+  public masukanPhotoEdit() {
     // const updateAPI = this._factory.api({
     //   api : 'sdm/mengelolaSdm/update',
     // });
@@ -244,7 +286,7 @@ export class TabDatapribadiComponent implements OnInit {
       sdm_image: this.uploaderFoto.queue[0].file.name
     });
     console.log(this.uploaderFoto.queue[0].file.name);
-
+    console.log(this.pathFoto);
     // tslint:disable-next-line:no-empty
     this._factory.http().put(updateAPI + '?sdm_id=' + this.id, this.action.getFormData()).subscribe((response: any) => {
       this._notif.success({
