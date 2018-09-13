@@ -38,6 +38,10 @@ export class TabDetailDataPribadiComponent implements OnInit {
   public lovDegree: LOVService;
   private selectedId: string;
 
+  // Gambar
+  // tslint:disable-next-line:member-ordering
+  public pathFoto: string;
+
   constructor(
     private _factory: CoreFactory,
     private route: ActivatedRoute
@@ -129,6 +133,15 @@ export class TabDetailDataPribadiComponent implements OnInit {
     this._factory.http().get(readAllApi).subscribe((res: any) => {
       console.log(res);
       this.action.patchFormData(res.data.items[0]);
+      // tslint:disable-next-line:triple-equals
+      if (this.pathFoto == null || this.pathFoto == '') {
+        this.pathFoto = this._factory.config().staticResourceFullPath(res.data.items[0].sdm_image);
+        console.log ('Berhasil', 'LOAD PHOTO');
+      } else {
+        console.log ('GAGAL', 'LOAD PHOTO');
+      }
+      // this.pathFoto = this._factory.config().staticResourceFullPath(res.data.items[0].sdm_image);
+      console.log(this.pathFoto + ' ini path foto');
     });
   }
 
