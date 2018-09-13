@@ -85,10 +85,10 @@ export class TabEducationComponent implements OnInit {
           required: 'Silahkan masukkan Nama Sekolah'
         },
         edu_startdate: {
-          pattern: 'Masukkan tahun'
+          pattern: 'minimum 4 characters of number required'
         },
         edu_enddate: {
-          pattern: 'Masukkan tahun'
+          pattern: 'minimum 4 characters of number required'
         }
       }
     });
@@ -131,7 +131,7 @@ export class TabEducationComponent implements OnInit {
   }
 
   public validasiTahun() {
-      if (this.action.getFormControlValue('edu_startdate') < this.action.getFormControlValue('edu_enddate') ) {
+      if (this.action.getFormControlValue('edu_startdate') <= this.action.getFormControlValue('edu_enddate') ) {
         // tslint:disable-next-line:no-unused-expression
         this.action.onSave();
         this._notif.success({
