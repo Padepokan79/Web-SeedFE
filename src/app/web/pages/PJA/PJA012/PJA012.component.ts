@@ -75,6 +75,9 @@ export class PJA012Component implements OnInit {
 
   @ViewChild('notif')
   public notif: any;
+  public validasiRolevalue: boolean;
+  public skillType: string;
+  public roletype: string = '1';
 
   constructor(private _factory: CoreFactory, public _notif: DefaultNotificationService, private route: ActivatedRoute, private http: HttpClient) {
     this.listSearchCriteria.push(new SearchCriteria(_factory));
@@ -220,6 +223,12 @@ export class PJA012Component implements OnInit {
       } else if ( skillSdm.value < 1 || skillSdm.value > 10) {
         this.cek = false;
       }
+      // tslint:disable-next-line:triple-equals
+      if (this.skillType == this.roletype && skillSdm.value != 1) {
+      this.validasiRolevalue = true;
+    } else {
+      this.validasiRolevalue = false;
+    }
     });
     if (this.cek === true) {
      this.http.post(url, {
@@ -237,9 +246,15 @@ export class PJA012Component implements OnInit {
          this.action.table().rows = res.null;
          console.log(this.action.table().rows);
        });
-     this._notif .error({
-       message : 'Input Value Between 1 and 10'
-      });
+     if ( this.validasiRolevalue === true ) {
+        this._notif.error({
+          message : 'Role Value is only preferred 1'
+         });
+      } else {
+        this._notif.error({
+          message : 'Input Value Between 1 and 10'
+         });
+      }
     }
     this.cek = true;
   }

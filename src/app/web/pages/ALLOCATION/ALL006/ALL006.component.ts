@@ -67,8 +67,7 @@ export class ALL006Component implements OnInit {
   public validasiRolevalue: boolean;
   public roletype: string = '1';
   public skillType: string;
-  public a: string = '1';
-  public b: string = '1';
+
   public onKey(event: any) {
     console.log(event);
     this.keyId = event.target.value;
