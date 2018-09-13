@@ -39,3 +39,12 @@ float: right;
 .breadcrumb-bar{
     background: white;
 }
+
+.button-submit{
+  background: linear-gradient(to bottom right, rgb(43, 93, 218), rgb(43, 93, 218));
+}
+
+.button-cancel{
+  background: linear-gradient(to bottom right, rgb(224, 48, 29), rgb(224, 48, 29));
+  color:lightgray;
+}
