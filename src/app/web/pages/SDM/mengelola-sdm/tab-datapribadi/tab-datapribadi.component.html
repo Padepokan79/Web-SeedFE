@@ -253,7 +253,7 @@
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size">
-                <input matInput [readonly]="true" [matDatepicker]="pickerStartDate" (click)="pickerStartDate.open()" placeholder="" formControlName="sdm_startcontract" required>
+                <input matInput [readonly]="true" [max]="this.action.getFormControlValue('sdm_endcontract')" [matDatepicker]="pickerStartDate" (click)="pickerStartDate.open()" placeholder="" formControlName="sdm_startcontract" required>
                 <mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
                 <mat-datepicker #pickerStartDate></mat-datepicker>
                 </mat-form-field>
@@ -279,7 +279,7 @@
     </div> -->
     <div class="col-md-6 pos" style="float:left; margin-bottom:10px">
     <button mat-raised-button style="margin: 10px 0px" (click)="onSave();masukanPhoto()" *ngIf=" form == 1 " [disabled]="action?.formControls()?.invalid || action?.formControls()?.pristine" >Submit</button>
-    <button mat-raised-button style="margin: 10px 0px" (click)="onUpdate();masukanPhoto()" *ngIf=" form == 2 " [disabled]="action?.formControls()?.invalid || action?.formControls()?.pristine">Update</button>
+    <button mat-raised-button style="margin: 10px 0px" (click)="onUpdate();masukanPhotoEdit()" *ngIf=" form == 2 " [disabled]="action?.formControls()?.invalid || action?.formControls()?.pristine">Update</button>
     <!-- <button mat-raised-button style="margin: 10px 0px" (click)="action.onEdit()" *ngIf=" form == 2 ">Update</button> -->
     </div>
 </form>
