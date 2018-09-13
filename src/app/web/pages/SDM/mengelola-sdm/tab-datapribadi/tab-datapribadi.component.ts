@@ -7,6 +7,7 @@ import { COMPARISON_OPERATOR } from '../../../../../core/constant/constant';
 import { DefaultNotificationService } from '../../../../../core/services/default-notification.service';
 import { Router } from '../../../../../../../node_modules/@angular/router';
 import { FileUploader } from '../../../../../../../node_modules/ng2-file-upload';
+import { IAfterActionResult } from '../../../../../core/interfaces/action/i-after-action-result';
 
 @Component({
   selector: 'app-tab-datapribadi',
@@ -161,17 +162,14 @@ export class TabDatapribadiComponent implements OnInit {
         this._factory.http().get(readAllApi).subscribe((res: any) => {
           res.data.items[0].sdm_status = res.data.items[0].sdm_status === 'Active' ? 1 : 0;
           this.action.patchFormData(res.data.items[0]);
-          if (this.pathFoto != null && this.pathFoto !== '') {
-            // this.pathFoto = res.data.items[0].sdm_image;
+          // tslint:disable-next-line:triple-equals
+          if (this.pathFoto == null || this.pathFoto == '') {
             this.pathFoto = this._factory.config().staticResourceFullPath(res.data.items[0].sdm_image);
+            console.log ('Berhasil', 'LOAD PHOTO');
+          } else {
+            console.log ('GAGAL', 'LOAD PHOTO');
           }
-          // let foto = res.data.items[0].path_foto;
-          // if (foto != null && foto != '') {
-          //   // this.pathFoto = res.data.items[0].sdm_image;
-          //   // this.pathFoto = this._factory.config().staticResourceFullPath(res.data.items[0].sdm_image);
-          //   this.pathFoto = this._factory.config().staticResourceFullPath(foto);
-          // }
-          this.pathFoto = res.data.items[0].sdm_image;
+          // this.pathFoto = this._factory.config().staticResourceFullPath(res.data.items[0].sdm_image);
           console.log(this.pathFoto + ' ini path foto');
         });
       }
@@ -226,14 +224,6 @@ export class TabDatapribadiComponent implements OnInit {
   }
 
   public masukanPhotoEdit() {
-    // const updateAPI = this._factory.api({
-    //   api : 'sdm/mengelolaSdm/update',
-    // });
-    // this._factory.http().put(updateAPI + '?sdm_id=' + this.id, this.action.getFormData()).subscribe((response: any) => {
-    //   this._notif.success({
-    //     message: 'Successfully Update Data'
-    //   });
-    // });
     // tslint:disable-next-line:prefer-const
     let token = 'bearer ' + JSON.parse((localStorage.getItem('loggedInUser')))['access_token'];
     console.log(token);
@@ -301,7 +291,6 @@ export class TabDatapribadiComponent implements OnInit {
     if (event.target['files']) {
       this.readFiles(event.target['files'], 0);
     }
-
     this.action.form().data.markAsDirty();
   }
 
