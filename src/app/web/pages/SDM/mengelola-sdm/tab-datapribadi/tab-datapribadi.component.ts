@@ -55,6 +55,7 @@ export class TabDatapribadiComponent implements OnInit {
 
   // coba
   public test: number = 1;
+  public arr: number = 1;
 
   public uploaderFoto: FileUploader;
   public uploader: FileUploader;
@@ -176,16 +177,26 @@ export class TabDatapribadiComponent implements OnInit {
   }
 
   public onSave() {
-    const postAPI = this._factory.api({
-      api: 'sdm/mengelolaSdm/create',
+    if (this.uploaderFoto.queue[ 0 + this.arr ].file.size < 5000) {
+      const postAPI = this._factory.api({
+        api: 'sdm/mengelolaSdm/create',
+      });
+      console.log(this.pathFoto);
+      this._factory.http().post(postAPI, this.action.getFormData())
+      .subscribe((response: any) => {
+        // console.log(response.data.sdm_id);
+        this.tabEvent.emit(response.data.sdm_id);
+        this.masukanPhoto(response.data.sdm_id);
+      });
+      this._notif.success({
+      message: 'Save Successfuly'
     });
-    console.log(this.pathFoto);
-    this._factory.http().post(postAPI, this.action.getFormData())
-    .subscribe((response: any) => {
-      // console.log(response.data.sdm_id);
-      this.tabEvent.emit(response.data.sdm_id);
-    });
-
+    } else {
+      this._notif.error({
+        message: 'Size lebih dari 500kb'
+      });
+    }
+    this.arr++;
   }
 
   // tslint:disable-next-line:variable-name
@@ -212,14 +223,23 @@ export class TabDatapribadiComponent implements OnInit {
                       + item._file.type.replace('image/', '');
         item.file.name = fileName.replace(' ', '_');
       };
-      this.uploaderFoto.onSuccessItem = (item, response, status, headers) => {
-        this.action.patchFormData({foto : item.file.name});
-        this.test++;
-        this.uploaderFoto.clearQueue();
-      };
-      if (this.uploaderFoto.queue.length > 0) {
-        this.uploaderFoto.uploadAll();
-      }
+      // if (this.uploaderFoto.queue.length > 0) {
+      //   if (this.uploaderFoto.queue[0].file.size > 500000) {
+      //     this._notif.error({
+      //       message: 'File tidak boleh melebihi 500kb'
+      //     });
+      //     this.uploaderFoto.clearQueue();
+      //     } else {
+      //       this.uploaderFoto.uploadAll();
+      //       this.uploaderFoto.onSuccessItem = (item, response, status, headers) => {
+      //         this.action.patchFormData({foto : item.file.name});
+      //         this.test++;
+      //         this.uploaderFoto.clearQueue();
+      //     };
+      //   }
+      // }   else {
+      //   this.uploaderFoto.clearQueue();
+      // }
     }
   }
 
@@ -256,13 +276,10 @@ export class TabDatapribadiComponent implements OnInit {
               this.action.patchFormData({foto : item.file.name});
               this.test++;
               this.uploaderFoto.clearQueue();
-
-              this.action.onSave();
           };
         }
       }   else {
         this.uploaderFoto.clearQueue();
-        this.action.onSave();
       }
     }
   }
@@ -271,12 +288,11 @@ export class TabDatapribadiComponent implements OnInit {
     const updateAPI = this._factory.api({
       api : 'sdm/mengelolaSdm/update',
     });
-
+    this.masukanPhotoEdit();
     this.action.patchFormData({
       sdm_image: this.uploaderFoto.queue[0].file.name
     });
     console.log(this.uploaderFoto.queue[0].file.name);
-    console.log(this.pathFoto);
     // tslint:disable-next-line:no-empty
     this._factory.http().put(updateAPI + '?sdm_id=' + this.id, this.action.getFormData()).subscribe((response: any) => {
       this._notif.success({
