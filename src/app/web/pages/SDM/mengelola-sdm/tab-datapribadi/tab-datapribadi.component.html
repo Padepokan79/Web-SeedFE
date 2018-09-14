@@ -25,7 +25,7 @@
                 <div *ngFor="let fileUrl of imageFiles">
                     <img style="width: 200px;height: 200px" [src]="fileUrl" (error)="this.imageUrl='http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png'" alt="Profil Photo"><br />
                 </div>
-                <div *ngIf="pathFoto && !imageFiles">
+                <div *ngIf="pathFotos">
                     <img src="{{pathFoto}}" style="width: 200px;height: 200px">
                 </div>
                 <label>Browse Image</label>
