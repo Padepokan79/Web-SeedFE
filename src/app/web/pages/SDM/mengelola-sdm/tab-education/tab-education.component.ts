@@ -131,15 +131,21 @@ export class TabEducationComponent implements OnInit {
   }
 
   public validasiTahun() {
+    if (this.action.getFormControlValue('edu_startdate') >= 1901 && this.action.getFormControlValue('edu_enddate') >= 1901 && this.action.getFormControlValue('edu_startdate') <= 2155 && this.action.getFormControlValue('edu_enddate') <= 2155) {
       if (this.action.getFormControlValue('edu_startdate') <= this.action.getFormControlValue('edu_enddate') ) {
-        // tslint:disable-next-line:no-unused-expression
-        this.action.onSave();
-        this._notif.success({
-          message: 'Berhasil'
-        });
+          // tslint:disable-next-line:no-unused-expression
+          this.action.onSave();
+          this._notif.success({
+            message: 'Berhasil'
+          });
+        } else {
+          this._notif.error({
+            message: 'Cek kembali tahun masuk dan keluar'
+          });
+        }
       } else {
         this._notif.error({
-          message: 'Cek kembali tahun masuk dan keluar'
+          message: 'MySql year range 1901 to 2155,'
         });
       }
   }
