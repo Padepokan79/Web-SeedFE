@@ -105,7 +105,7 @@ export class SDM003Component implements OnInit {
         //       }
         //   ]
         // },
-        limit : 5
+        limit : 10
       },
       // searchCriteria : [
       //   { viewValue: 'Nama', viewKey: 'sdm_name', type: TYPE.STRING }
