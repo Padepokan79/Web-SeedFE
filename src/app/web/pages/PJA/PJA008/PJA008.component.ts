@@ -39,7 +39,7 @@ export class PJA008Component implements OnInit {
   public lovSkillType: LOVService;
   public lovSkill: LOVService;
   public lovSdmSkill: LOVService;
-  public isButtonClicked = true;
+  public isButtonClicked = false;
   public keyId: any;
   public doubleFilter: any;
   public time: Date = new Date();
@@ -245,13 +245,13 @@ export class PJA008Component implements OnInit {
   }
 
   public activateButton() {
-    this.rows.forEach((item) => {
-      if (item.Checked === true) {
-        this.jumlahDataCheck++;
-      } else if (item.Checked === false) {
-        this.jumlahDataCheck--;
-      }
-    });
+    // this.rows.forEach((item) => {
+    //   if (item.Checked === true) {
+    //     this.jumlahDataCheck++;
+    //   } else if (item.Checked === false) {
+    //     this.jumlahDataCheck--;
+    //   }
+    // });
     // if (this.jumlahDataCheck === 0) {
     //   this.validasiCheck = true;
     // }
@@ -299,8 +299,8 @@ export class PJA008Component implements OnInit {
         });
         // tslint:disable-next-line:no-unused-expression
         item.Checked === false;
-        console.log(multiInsert.length);
-        }
+        this.jumlahDataCheck++;
+      }
     });
     const url = this._factory.api({
       api: `${this.apiRoot}/multiCreate`
@@ -317,9 +317,15 @@ export class PJA008Component implements OnInit {
             });
             setTimeout(() => this.routers.navigate(['pages/pja/PJA007']), 1000);
       }, (error: any) => {
-        this._notif.error({
-          message: 'SDM already Hired'
-        });
+        if (this.jumlahDataCheck === 0) {
+          this._notif.error({
+            message: 'Please check SDM Data'
+          });
+        } else {
+          this._notif.error({
+            message: 'SDM already Hired'
+          });
+        }
       }
 
     );
