@@ -1,6 +1,6 @@
 import { TYPE, COMPARISON_OPERATOR, CONJUNCTION_OPERATOR } from 'app/core/constant/constant';
 import { Session } from 'app/core/utils/session';
-
+import { Location } from '@angular/common';
 import { ActionService } from '../../../../core/services/uninjectable/action.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { LOVService } from '../../../../core/services/uninjectable/lov.service';
@@ -54,7 +54,7 @@ export class ALL004Component implements OnInit {
   public valid = false;
   public save = false;
 
-  constructor(public _notif: DefaultNotificationService , private route: ActivatedRoute , private _factory: CoreFactory, private http: HttpClient) {
+  constructor(public _notif: DefaultNotificationService , private route: ActivatedRoute , private _factory: CoreFactory, private http: HttpClient,private location: Location) {
     this.listSearchCriteria.push(new SearchCriteria(_factory));
     this.sdmCtrl = new FormControl();
     this.filteredSdm = this.sdmCtrl.valueChanges
@@ -75,7 +75,14 @@ export class ALL004Component implements OnInit {
   public ngOnInit() {
     this.lovSDM = this._factory.lov({
       api: 'lov/Sdm',
-      initializeData: true
+      initializeData: true,
+      pagingParams: {
+        filter: {
+          field: 'sdm_status',
+          operator: COMPARISON_OPERATOR.EQ,
+          value: 1
+        }
+      }
     });
   }
 
@@ -88,7 +95,14 @@ export class ALL004Component implements OnInit {
         params: {
           sdm_id: dataSdm.key
         },
-        initializeData: true
+        initializeData: true,
+        pagingParams: {
+          filter: {
+            field: 'sdm_status',
+            operator: COMPARISON_OPERATOR.EQ,
+            value: 1
+          }
+        }
       });
       
       const readAllApi = this._factory.api({
@@ -206,5 +220,6 @@ export class ALL004Component implements OnInit {
     } else {
       console.log('Ada yang kurang');
     }
+    this.location.back();
   }
 }

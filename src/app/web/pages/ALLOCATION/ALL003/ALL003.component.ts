@@ -96,7 +96,14 @@ export class ALL003Component implements OnInit {
     });
     this.lovSdm = this._factory.lov({
       api: 'lov/Sdm',
-      initializeData: true
+      initializeData: true,
+      pagingParams: {
+        filter: {
+          field: 'sdm_status',
+          operator: COMPARISON_OPERATOR.EQ,
+          value: 1
+        }
+      }
     });
   }
 

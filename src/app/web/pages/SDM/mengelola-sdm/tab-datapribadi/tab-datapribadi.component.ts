@@ -55,7 +55,7 @@ export class TabDatapribadiComponent implements OnInit {
 
   // coba
   public test: number = 1;
-  public arr: number = 1;
+  public arr: number = -1;
 
   public uploaderFoto: FileUploader;
   public uploader: FileUploader;
@@ -196,6 +196,10 @@ export class TabDatapribadiComponent implements OnInit {
         message: 'Size lebih dari 500kb'
       });
     }
+
+  }
+
+  public incrementArr(){
     this.arr++;
   }
 
