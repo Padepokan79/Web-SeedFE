@@ -17,6 +17,9 @@ import { Comparison } from '../../../../core/enums/comparison-operator.enum';
   styleUrls: ['./SDM004.component.scss']
 })
 export class SDM004Component implements OnInit {
+
+  public halRoute = 1;
+
   public time: Date = new Date();
   @ViewChild('viewAsDateTemplate')
   public viewAsDateTemplate: any;

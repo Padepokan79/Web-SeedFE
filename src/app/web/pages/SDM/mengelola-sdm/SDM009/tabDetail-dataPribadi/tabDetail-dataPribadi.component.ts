@@ -5,6 +5,7 @@ import { InputForm } from '../../../../../../core/models/input-form';
 import { LOVService } from '../../../../../../core/services/uninjectable/lov.service';
 import { COMPARISON_OPERATOR } from '../../../../../../core/constant/constant';
 import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-tabDetail-dataPribadi',
@@ -43,6 +44,7 @@ export class TabDetailDataPribadiComponent implements OnInit {
   public pathFoto: string;
 
   constructor(
+    private location: Location,
     private _factory: CoreFactory,
     private route: ActivatedRoute
   ) {
@@ -153,6 +155,9 @@ export class TabDetailDataPribadiComponent implements OnInit {
       this.imageUrl = event.target.result;
     };
     reader.readAsDataURL(this.fileToUpload);
+  }
+  public goBack(){
+    this.location.back();
   }
 
 }

@@ -34,7 +34,7 @@
                 <input #uploadFile id="files" type="file"
                         ng2FileSelect [uploader]="uploaderFoto"
                         title="Ukuran File Maksimal 500kb"
-                        (change)="handleFileInput($event)" accept=".jpg,.png,.jpeg,.img"/>
+                        (change)="handleFileInput($event)" (click)="incrementArr()" accept=".jpg,.png,.jpeg,.img"/>
             </div>
         </td>
     </tr>
