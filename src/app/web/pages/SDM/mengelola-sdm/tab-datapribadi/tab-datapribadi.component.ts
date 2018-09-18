@@ -177,7 +177,7 @@ export class TabDatapribadiComponent implements OnInit {
   }
 
   public onSave() {
-    if (this.uploaderFoto.queue[ 0 + this.arr ].file.size < 5000) {
+    if (this.uploaderFoto.queue[this.arr].file.size < 500000) {
       const postAPI = this._factory.api({
         api: 'sdm/mengelolaSdm/create',
       });
