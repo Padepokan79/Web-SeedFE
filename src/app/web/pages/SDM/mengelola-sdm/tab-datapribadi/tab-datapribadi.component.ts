@@ -227,23 +227,23 @@ export class TabDatapribadiComponent implements OnInit {
                       + item._file.type.replace('image/', '');
         item.file.name = fileName.replace(' ', '_');
       };
-      // if (this.uploaderFoto.queue.length > 0) {
-      //   if (this.uploaderFoto.queue[0].file.size > 500000) {
-      //     this._notif.error({
-      //       message: 'File tidak boleh melebihi 500kb'
-      //     });
-      //     this.uploaderFoto.clearQueue();
-      //     } else {
-      //       this.uploaderFoto.uploadAll();
-      //       this.uploaderFoto.onSuccessItem = (item, response, status, headers) => {
-      //         this.action.patchFormData({foto : item.file.name});
-      //         this.test++;
-      //         this.uploaderFoto.clearQueue();
-      //     };
-      //   }
-      // }   else {
-      //   this.uploaderFoto.clearQueue();
-      // }
+      if (this.uploaderFoto.queue.length > 0) {
+        if (this.uploaderFoto.queue[0].file.size > 500000) {
+          this._notif.error({
+            message: 'File tidak boleh melebihi 500kb'
+          });
+          this.uploaderFoto.clearQueue();
+          } else {
+            this.uploaderFoto.uploadAll();
+            this.uploaderFoto.onSuccessItem = (item, response, status, headers) => {
+              this.action.patchFormData({foto : item.file.name});
+              this.test++;
+              this.uploaderFoto.clearQueue();
+          };
+        }
+      }   else {
+        this.uploaderFoto.clearQueue();
+      }
     }
   }
 
