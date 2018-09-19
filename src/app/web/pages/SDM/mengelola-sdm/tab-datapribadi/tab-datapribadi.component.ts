@@ -55,7 +55,6 @@ export class TabDatapribadiComponent implements OnInit {
 
   // coba
   public test: number = 1;
-  public arr: number = -1;
 
   public uploaderFoto: FileUploader;
   public uploader: FileUploader;
@@ -177,30 +176,29 @@ export class TabDatapribadiComponent implements OnInit {
   }
 
   public onSave() {
-      if (this.uploaderFoto.queue[0].file.size < 500000) {
-        const postAPI = this._factory.api({
-          api: 'sdm/mengelolaSdm/create',
-        });
-        console.log(this.pathFoto);
-        this._factory.http().post(postAPI, this.action.getFormData())
-        .subscribe((response: any) => {
-          // console.log(response.data.sdm_id);
-          this.tabEvent.emit(response.data.sdm_id);
-          this.masukanPhoto(response.data.sdm_id);
-        });
-        this._notif.success({
-        message: 'Save Successfuly'
+    if (this.uploaderFoto.queue[0].file.size < 500000 ) {
+      const postAPI = this._factory.api({
+        api: 'sdm/mengelolaSdm/create',
       });
-      } else {
-        this._notif.error({
-          message: 'Size lebih dari 500kb'
-        });
-      }
+      console.log(this.pathFoto);
+      this._factory.http().post(postAPI, this.action.getFormData())
+      .subscribe((response: any) => {
+        // console.log(response.data.sdm_id);
+        this.tabEvent.emit(response.data.sdm_id);
+        this.masukanPhoto(response.data.sdm_id);
+      });
+      this._notif.success({
+      message: 'Save Successfuly'
+    });
+    } else {
+      this._notif.error({
+        message: 'Size lebih dari 500kb'
+      });
+    }
   }
 
-  public incrementArr() {
+  public clearUploaderFoto(){
     this.uploaderFoto.clearQueue();
-    this.arr++;
   }
 
   // tslint:disable-next-line:variable-name
@@ -258,7 +256,7 @@ export class TabDatapribadiComponent implements OnInit {
         sdm_id: this.id
       }
     });
-    if (this.uploaderFoto.queue.length > 0) {
+    if (this.uploaderFoto.queue.length >= 0) {
       this.uploaderFoto.setOptions({ url: URL,
                                       authToken: token,
                                     authTokenHeader: 'authorization'});
@@ -315,6 +313,7 @@ export class TabDatapribadiComponent implements OnInit {
   }
 
   public readFiles(files: any[], index: number) {
+    
     this.pathFoto = null;
     this.imageFiles = [];
     const file = files[index];

@@ -10,6 +10,7 @@
     <!-- NAMA LENGKKAP -->
     <tr>
         <td style="width: 20%">Nama Lengkap<span style="color: red">*</span></td>
+
         <td style="width: 5px">:</td>
         <td style="width: 80%">
             <mat-form-field class="sdw-full-size">
@@ -28,24 +29,24 @@
                 <div *ngIf="pathFoto">
                     <img src="{{pathFoto}}" style="width: 200px;height: 200px">
                 </div>
-                <label>Browse Image</label>
+                <label>Browse Image <span style="color:red">*</span> </label>
                 <!-- <input id="singleFile" type="file"> -->
                 <!-- <input type="file" #Image accept="image/*" (change)="handleFileInput($event)" formControlName="sdm_image" name="sdm_image"> -->
                 <input #uploadFile id="files" type="file"
                         ng2FileSelect [uploader]="uploaderFoto"
                         title="Ukuran File Maksimal 500kb"
-                        (change)="handleFileInput($event)" (click)="incrementArr()" accept=".jpg,.png,.jpeg,.img"/>
+                        (change)="handleFileInput($event)" (click)="clearUploaderFoto()" accept=".jpg,.png,.jpeg,.img" required/>
             </div>
         </td>
     </tr>
 
     <!-- NIK -->
     <tr>
-        <td >NIK</td>
+        <td >NIK <span style="color:red">*</span> </td>
         <td >:</td>
         <td >
             <mat-form-field class="sdw-full-size">
-                <input matInput placeholder="" [maxLength]="9" formControlName="sdm_nik" name="sdm_nik" pattern="^([0-9]{0,})$" >
+                <input matInput placeholder="" maxlength="9" formControlName="sdm_nik" name="sdm_nik" pattern="^([0-9]{0,})$" required>
                 <mat-hint *ngIf="action.formErrors.sdm_nik" [ngStyle]="{'color': 'red'}">
                     {{action.formErrors.sdm_nik}}
                 </mat-hint>
@@ -54,11 +55,11 @@
     </tr>
     <!-- NO KTP -->
     <tr>
-        <td>No. KTP<span style="color: red">*</span></td>
+        <td>No. KTP <span style="color:red">*</span> </td>
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size">
-                <input matInput placeholder="" [maxLength]="16" formControlName="sdm_ktp" name="sdm_ktp" pattern="^([0-9]{0,})$" >
+                <input matInput placeholder="" maxlength="16" formControlName="sdm_ktp" name="sdm_ktp" pattern="^([0-9]{0,})$" required>
                 <mat-hint *ngIf="action.formErrors.sdm_ktp" [ngStyle]="{'color': 'red'}">
                 {{action.formErrors.sdm_ktp}}
                 </mat-hint>
@@ -95,7 +96,7 @@
         <td class="td2">:</td>
         <td class="td3">
             <mat-form-field class="sdw-full-size">
-                <input matInput [readonly]="true" [max]="maxDate" [matDatepicker]="picker" (click)="pickerStartDate.open()" placeholder="" formControlName="sdm_datebirth">
+                <input matInput [readonly]="true" [max]="maxDate" [matDatepicker]="picker" placeholder="" (click)="picker.open()" formControlName="sdm_datebirth">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker startview="year" [startAt]="mulaiDari"></mat-datepicker>
             </mat-form-field>
@@ -104,11 +105,11 @@
 
     <!-- Alamat -->
     <tr>
-        <td>Alamat</td>
+        <td>Alamat <span style="color:red">*</span> </td>
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size"  >
-            <textarea matInput matTextareaAutosize placeholder="" formControlName="sdm_address"></textarea>
+            <textarea matInput matTextareaAutosize placeholder="" formControlName="sdm_address" required></textarea>
             </mat-form-field>
         </td>
     </tr>
@@ -119,7 +120,7 @@
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size">
-                <input matInput placeholder="" [maxLength]="5" formControlName="sdm_postcode" name="sdm_postcode" pattern="^0$|^((?!(0))[0-9]{0,9})$" >
+                <input matInput placeholder="" maxlength="5" formControlName="sdm_postcode" name="sdm_postcode" pattern="^0$|^((?!(0))[0-9]{0,9})$" >
                 <mat-hint *ngIf="action.formErrors.sdm_postcode" [ngStyle]="{'color': 'red'}">
                 {{action.formErrors.sdm_postcode}}
                 </mat-hint>
@@ -129,11 +130,11 @@
 
     <!-- NO TELEPON -->
     <tr>
-        <td>No. Telepon<span style="color: red">*</span></td>
+        <td>No. Telepon <span style="color:red">*</span> </td>
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size">
-                <input matInput placeholder="" [maxLength]="12" formControlName="sdm_phone" name="sdm_phone" >
+                <input matInput placeholder="" maxlength="13" formControlName="sdm_phone" name="sdm_phone" required>
             </mat-form-field>
         </td>
     </tr>
@@ -240,7 +241,7 @@
         <td>Penempatan</td>
         <td>:</td>
         <td>
-            <mat-radio-group class="margin-field" formControlName="sdm_contractloc" name="sdm_contractloc" >
+            <mat-radio-group class="margin-field" formControlName="sdm_contractloc" name="sdm_contractloc" required>
                 <mat-radio-button value="1">Bandung</mat-radio-button>
                 <mat-radio-button value="2">Luar Bandung</mat-radio-button>
             </mat-radio-group>

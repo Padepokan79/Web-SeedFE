@@ -55,12 +55,12 @@
       </tr>
       <tr>
         <td>
-          <mat-label><b>Description</b></mat-label>         
+          <mat-label ><b>Description</b></mat-label>         
         </td>
         <td><b>:</b></td>
         <td>
           <mat-form-field class="sdw-full-size">
-            <textarea rows="5" matInput formControlName="sdmpsycological_desc" name="sdmpsycological_desc" required> </textarea>
+            <textarea matTextareaAutosize matInput formControlName="sdmpsycological_desc" name="sdmpsycological_desc" required> </textarea>
             <mat-hint *ngIf="action.formErrors.sdmpsycological_desc" [ngStyle]="{'color': 'red'}">
               {{action.formErrors.sdmpsycological_desc}}
             </mat-hint>
