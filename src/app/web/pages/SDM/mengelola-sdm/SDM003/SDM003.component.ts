@@ -105,7 +105,10 @@ export class SDM003Component implements OnInit {
         //       }
         //   ]
         // },
-        limit : 10
+        limit : 10,
+        orderby : 'sdm_status DESC,sdm_endcontract ASC'
+        
+        
       },
       // searchCriteria : [
       //   { viewValue: 'Nama', viewKey: 'sdm_name', type: TYPE.STRING }
@@ -122,7 +125,7 @@ export class SDM003Component implements OnInit {
         { prop: 'sdm_id', name: 'Action', width: 150,
           cellTemplate: this.tableActionTemplate, sortable: false },
         { prop: 'notif', name: 'Notifikasi', width: 50,
-          cellTemplate: this.notif, sortable: false }
+          cellTemplate: this.notif, sortable: true }
       ]
     });
     this.action = this._factory.actions({
