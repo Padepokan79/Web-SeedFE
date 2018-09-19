@@ -9,7 +9,7 @@
 
     <!-- NAMA LENGKKAP -->
     <tr>
-        <td style="width: 20%">Nama Lengkap</td>
+        <td style="width: 20%">Nama Lengkap<span style="color: red">*</span></td>
         <td style="width: 5px">:</td>
         <td style="width: 80%">
             <mat-form-field class="sdw-full-size">
@@ -45,7 +45,7 @@
         <td >:</td>
         <td >
             <mat-form-field class="sdw-full-size">
-                <input matInput placeholder="" formControlName="sdm_nik" name="sdm_nik" pattern="^([0-9]{0,})$" >
+                <input matInput placeholder="" [maxLength]="9" formControlName="sdm_nik" name="sdm_nik" pattern="^([0-9]{0,})$" >
                 <mat-hint *ngIf="action.formErrors.sdm_nik" [ngStyle]="{'color': 'red'}">
                     {{action.formErrors.sdm_nik}}
                 </mat-hint>
@@ -54,11 +54,11 @@
     </tr>
     <!-- NO KTP -->
     <tr>
-        <td>No. KTP</td>
+        <td>No. KTP<span style="color: red">*</span></td>
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size">
-                <input matInput placeholder="" formControlName="sdm_ktp" name="sdm_ktp" pattern="^([0-9]{0,})$" >
+                <input matInput placeholder="" [maxLength]="16" formControlName="sdm_ktp" name="sdm_ktp" pattern="^([0-9]{0,})$" >
                 <mat-hint *ngIf="action.formErrors.sdm_ktp" [ngStyle]="{'color': 'red'}">
                 {{action.formErrors.sdm_ktp}}
                 </mat-hint>
@@ -91,7 +91,7 @@
 
     <!-- tanggal lahir -->
     <tr>
-        <td class="td1">Tanggal Lahir</td>
+        <td class="td1">Tanggal Lahir<span style="color: red">*</span></td>
         <td class="td2">:</td>
         <td class="td3">
             <mat-form-field class="sdw-full-size">
@@ -108,18 +108,18 @@
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size"  >
-            <textarea matInput placeholder="" formControlName="sdm_address"></textarea>
+            <textarea matInput matTextareaAutosize placeholder="" formControlName="sdm_address"></textarea>
             </mat-form-field>
         </td>
     </tr>
 
     <!-- KODE POS -->
     <tr>
-        <td>Kode POS</td>
+        <td>Kode POS<span style="color: red">*</span></td>
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size">
-                <input matInput placeholder="" formControlName="sdm_postcode" name="sdm_postcode" pattern="^0$|^((?!(0))[0-9]{0,9})$" >
+                <input matInput placeholder="" [maxLength]="5" formControlName="sdm_postcode" name="sdm_postcode" pattern="^0$|^((?!(0))[0-9]{0,9})$" >
                 <mat-hint *ngIf="action.formErrors.sdm_postcode" [ngStyle]="{'color': 'red'}">
                 {{action.formErrors.sdm_postcode}}
                 </mat-hint>
@@ -129,11 +129,11 @@
 
     <!-- NO TELEPON -->
     <tr>
-        <td>No. Telepon</td>
+        <td>No. Telepon<span style="color: red">*</span></td>
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size">
-                <input matInput placeholder="" formControlName="sdm_phone" name="sdm_phone" >
+                <input matInput placeholder="" [maxLength]="12" formControlName="sdm_phone" name="sdm_phone" >
             </mat-form-field>
         </td>
     </tr>
@@ -165,7 +165,7 @@
 
     <!-- AGAMA -->
     <tr>
-        <td>Agama</td>
+        <td>Agama<span style="color: red">*</span></td>
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size">
@@ -181,7 +181,7 @@
 
     <!-- KESEHATAN -->
     <tr>
-        <td>Kesehatan</td>
+        <td>Kesehatan<span style="color: red">*</span></td>
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size">
@@ -207,7 +207,7 @@
 
     <!-- LEVEL -->
     <tr>
-        <td>Level</td>
+        <td>Level<span style="color: red">*</span></td>
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size">
@@ -222,7 +222,7 @@
 
     <!-- STATUS -->
     <tr>
-        <td>Status</td>
+        <td>Status<span style="color: red">*</span></td>
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size">
@@ -248,12 +248,23 @@
     </tr>
 
     <!-- AWAL KONTRAK -->
-    <tr>
+    <tr *ngIf="form==1">
+        <td>Awal Kontrak<span style="color: red">*</span></td>
+        <td>:</td>
+        <td>
+            <mat-form-field class="sdw-full-size">
+                <input matInput [readonly]="true" [max]="this.action.getFormControlValue('sdm_endcontract')" [min]="date" [matDatepicker]="pickerStartDate" (click)="pickerStartDate.open()" placeholder="" formControlName="sdm_startcontract" required>
+                <mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
+                <mat-datepicker #pickerStartDate></mat-datepicker>
+                </mat-form-field>
+        </td>
+    </tr>
+    <tr *ngIf="form==2">
         <td>Awal Kontrak</td>
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size">
-                <input matInput [readonly]="true" [max]="this.action.getFormControlValue('sdm_endcontract')" [matDatepicker]="pickerStartDate" (click)="pickerStartDate.open()" placeholder="" formControlName="sdm_startcontract" required>
+                <input matInput [readonly]="true" [min]="date" [matDatepicker]="pickerStartDate" (click)="pickerStartDate.open()" placeholder="" formControlName="sdm_startcontract" required>
                 <mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
                 <mat-datepicker #pickerStartDate></mat-datepicker>
                 </mat-form-field>
@@ -261,7 +272,19 @@
     </tr>
 
     <!-- AKHIR KONTRAK -->
-    <tr>
+    <tr *ngIf="form==1">
+        <td>Akhir Kontrak<span style="color: red">*</span></td>
+        <td>:</td>
+        <td>
+            <mat-form-field class="sdw-full-size">
+                <input matInput [readonly]="true" [min]="this.action.getFormControlValue('sdm_startcontract')" [disabled]="this.action.getFormControlValue('sdm_startcontract') ? null : true" [matDatepicker]="pickerEndDate" (click)="pickerEndDate.open()" placeholder="" formControlName="sdm_endcontract" required>
+                <mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
+                <mat-datepicker #pickerEndDate></mat-datepicker>
+                </mat-form-field>
+        </td>
+    </tr>
+    <!-- AKHIR KONTRAK -->
+    <tr *ngIf="form==2">
         <td>Akhir Kontrak</td>
         <td>:</td>
         <td>
