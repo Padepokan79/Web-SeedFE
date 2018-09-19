@@ -1,6 +1,6 @@
 <p></p>
 
-<form class="io-form-body" [formGroup]="action?.formControls()"> 
+<form class="io-form-body" [formGroup]="action?.formControls()">
 
     <div style="width: 100%; padding-left: 20px; padding-right: 20px">
     <!-- KONTEN KURSUS-->
@@ -19,7 +19,7 @@
           </mat-form-field>
       </td>
     </tr>
-    
+
     <!-- PENYELENGGARA KURSUS-->
     <tr>
       <td>Penyelenggara</td>
@@ -47,14 +47,14 @@
             </mat-form-field>
         </td>
     </tr>
-    
+
     <!-- WAKTU TANGGAL KURSUS-->
     <tr>
       <td>Waktu</td>
       <td>:</td>
       <td>
           <mat-form-field class="sdw-full-size">
-              <input matInput [matDatepicker]="pickerCourse" placeholder="" formControlName="course_date">
+              <input matInput [matDatepicker]="pickerCourse" placeholder="" formControlName="course_date" [readonly]="true">
               <mat-datepicker-toggle matSuffix [for]="pickerCourse"></mat-datepicker-toggle>
               <mat-datepicker #pickerCourse></mat-datepicker>
             </mat-form-field>
