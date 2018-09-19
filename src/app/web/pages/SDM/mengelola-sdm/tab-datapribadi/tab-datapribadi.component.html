@@ -9,7 +9,8 @@
 
     <!-- NAMA LENGKKAP -->
     <tr>
-        <td style="width: 20%">Nama Lengkap <span style="color:red">*</span> </td>
+        <td style="width: 20%">Nama Lengkap<span style="color: red">*</span></td>
+
         <td style="width: 5px">:</td>
         <td style="width: 80%">
             <mat-form-field class="sdw-full-size">
@@ -91,7 +92,7 @@
 
     <!-- tanggal lahir -->
     <tr>
-        <td class="td1">Tanggal Lahir</td>
+        <td class="td1">Tanggal Lahir<span style="color: red">*</span></td>
         <td class="td2">:</td>
         <td class="td3">
             <mat-form-field class="sdw-full-size">
@@ -108,14 +109,14 @@
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size"  >
-            <textarea matInput placeholder="" formControlName="sdm_address" required></textarea>
+            <textarea matInput matTextareaAutosize placeholder="" formControlName="sdm_address" required></textarea>
             </mat-form-field>
         </td>
     </tr>
 
     <!-- KODE POS -->
     <tr>
-        <td>Kode POS</td>
+        <td>Kode POS<span style="color: red">*</span></td>
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size">
@@ -165,7 +166,7 @@
 
     <!-- AGAMA -->
     <tr>
-        <td>Agama <span style="color:red">*</span> </td>
+        <td>Agama<span style="color: red">*</span></td>
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size">
@@ -181,7 +182,7 @@
 
     <!-- KESEHATAN -->
     <tr>
-        <td>Kesehatan <span style="color:red">*</span> </td>
+        <td>Kesehatan<span style="color: red">*</span></td>
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size">
@@ -207,7 +208,7 @@
 
     <!-- LEVEL -->
     <tr>
-        <td>Level <span style="color:red">*</span> </td>
+        <td>Level<span style="color: red">*</span></td>
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size">
@@ -222,7 +223,7 @@
 
     <!-- STATUS -->
     <tr>
-        <td>Status <span style="color:red">*</span> </td>
+        <td>Status<span style="color: red">*</span></td>
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size">
@@ -237,7 +238,7 @@
 
     <!-- PENEMPATAN -->
     <tr>
-        <td>Penempatan <span style="color:red">*</span> </td>
+        <td>Penempatan</td>
         <td>:</td>
         <td>
             <mat-radio-group class="margin-field" formControlName="sdm_contractloc" name="sdm_contractloc" required>
@@ -248,12 +249,23 @@
     </tr>
 
     <!-- AWAL KONTRAK -->
-    <tr>
-        <td>Awal Kontrak <span style="color:red">*</span> </td>
+    <tr *ngIf="form==1">
+        <td>Awal Kontrak<span style="color: red">*</span></td>
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size">
-                <input matInput [readonly]="true" [max]="this.action.getFormControlValue('sdm_endcontract')" [matDatepicker]="pickerStartDate" (click)="pickerStartDate.open()" placeholder="" formControlName="sdm_startcontract" required>
+                <input matInput [readonly]="true" [max]="this.action.getFormControlValue('sdm_endcontract')" [min]="date" [matDatepicker]="pickerStartDate" (click)="pickerStartDate.open()" placeholder="" formControlName="sdm_startcontract" required>
+                <mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
+                <mat-datepicker #pickerStartDate></mat-datepicker>
+                </mat-form-field>
+        </td>
+    </tr>
+    <tr *ngIf="form==2">
+        <td>Awal Kontrak</td>
+        <td>:</td>
+        <td>
+            <mat-form-field class="sdw-full-size">
+                <input matInput [readonly]="true" [min]="date" [matDatepicker]="pickerStartDate" (click)="pickerStartDate.open()" placeholder="" formControlName="sdm_startcontract" required>
                 <mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
                 <mat-datepicker #pickerStartDate></mat-datepicker>
                 </mat-form-field>
@@ -261,8 +273,20 @@
     </tr>
 
     <!-- AKHIR KONTRAK -->
-    <tr>
-        <td>Akhir Kontrak <span style="color:red">*</span> </td>
+    <tr *ngIf="form==1">
+        <td>Akhir Kontrak<span style="color: red">*</span></td>
+        <td>:</td>
+        <td>
+            <mat-form-field class="sdw-full-size">
+                <input matInput [readonly]="true" [min]="this.action.getFormControlValue('sdm_startcontract')" [disabled]="this.action.getFormControlValue('sdm_startcontract') ? null : true" [matDatepicker]="pickerEndDate" (click)="pickerEndDate.open()" placeholder="" formControlName="sdm_endcontract" required>
+                <mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
+                <mat-datepicker #pickerEndDate></mat-datepicker>
+                </mat-form-field>
+        </td>
+    </tr>
+    <!-- AKHIR KONTRAK -->
+    <tr *ngIf="form==2">
+        <td>Akhir Kontrak</td>
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size">
