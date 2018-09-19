@@ -55,7 +55,6 @@ export class TabDatapribadiComponent implements OnInit {
 
   // coba
   public test: number = 1;
-  public arr: number = -1;
 
   public uploaderFoto: FileUploader;
   public uploader: FileUploader;
@@ -177,7 +176,7 @@ export class TabDatapribadiComponent implements OnInit {
   }
 
   public onSave() {
-    if (this.uploaderFoto.queue[this.arr].file.size < 500000) {
+    if (this.uploaderFoto.queue[0].file.size < 500000 ) {
       const postAPI = this._factory.api({
         api: 'sdm/mengelolaSdm/create',
       });
@@ -196,11 +195,10 @@ export class TabDatapribadiComponent implements OnInit {
         message: 'Size lebih dari 500kb'
       });
     }
-
   }
 
-  public incrementArr(){
-    this.arr++;
+  public clearUploaderFoto(){
+    this.uploaderFoto.clearQueue();
   }
 
   // tslint:disable-next-line:variable-name
@@ -258,7 +256,7 @@ export class TabDatapribadiComponent implements OnInit {
         sdm_id: this.id
       }
     });
-    if (this.uploaderFoto.queue.length > 0) {
+    if (this.uploaderFoto.queue.length >= 0) {
       this.uploaderFoto.setOptions({ url: URL,
                                       authToken: token,
                                     authTokenHeader: 'authorization'});
@@ -293,10 +291,10 @@ export class TabDatapribadiComponent implements OnInit {
       api : 'sdm/mengelolaSdm/update',
     });
     this.masukanPhotoEdit();
-    this.action.patchFormData({
-      sdm_image: this.uploaderFoto.queue[0].file.name
-    });
-    console.log(this.uploaderFoto.queue[0].file.name);
+    // this.action.patchFormData({
+    //   sdm_image: this.uploaderFoto.queue[0].file.name
+    // });
+    // console.log(this.uploaderFoto.queue[0].file.name);
     // tslint:disable-next-line:no-empty
     this._factory.http().put(updateAPI + '?sdm_id=' + this.id, this.action.getFormData()).subscribe((response: any) => {
       this._notif.success({
@@ -315,6 +313,7 @@ export class TabDatapribadiComponent implements OnInit {
   }
 
   public readFiles(files: any[], index: number) {
+    
     this.pathFoto = null;
     this.imageFiles = [];
     const file = files[index];
