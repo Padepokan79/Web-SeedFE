@@ -70,13 +70,13 @@ export class TabCourseComponent implements OnInit {
         limit : 10
       },
       tableColumns : [
-        { prop: 'norut', name: 'No', width: 10, sortable: false },
+        { prop: 'norut', name: 'No', width: 30, sortable: false },
         { prop: 'course_title', name: 'Kursus', width: 30, sortable: true},
         { prop: 'course_provider', name: 'Penyelenggara', width: 30, sortable: true },
         { prop: 'course_place', name: 'Tempat', width: 30, sortable: true },
         { prop: 'course_date', name: 'Waktu', width: 30, sortable: true },
         { prop: 'course_duration', name: 'Durasi', width: 30, sortable: true },
-        { prop: 'course_id', name: 'Action', width: 20,
+        { prop: 'course_id', name: 'Action', width: 30,
           cellTemplate: this.tableActionTemplate, sortable: false }
       ]
     });

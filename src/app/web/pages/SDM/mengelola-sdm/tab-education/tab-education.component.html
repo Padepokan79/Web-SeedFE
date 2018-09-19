@@ -123,7 +123,7 @@
 </form>
 
 <div>
-    <io-table *ngIf="action?.table()" [action]="action">
+    <io-table *ngIf="action?.table()" [action]="action" style="margin-top:20px;text-align: left;">
         <div class="io-table-header">
         <h3>List Educations</h3>
         </div>
@@ -131,10 +131,10 @@
 </div>
 
 <ng-template #tableActionTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
-    <button type="button" class="btn btn-primary btn-mm btn-icon" (click)="action.onEdit(row)">
-        <i class="glyphicon glyphicon-pencil"></i>
-    </button>
-    <button type="button" class="btn btn-primary btn-mm btn-icon" (click)="action.onDelete(row)">
-        <i class="glyphicon glyphicon-trash"></i>
-    </button>
+  <button type="button" class="btn btn-primary btn-mm btn-icon" (click)="action.onEdit(row)">
+      <i class="glyphicon glyphicon-pencil"></i>
+  </button>
+  <button type="button" class="btn btn-primary btn-mm btn-icon" (click)="action.onDelete(row)">
+      <i class="glyphicon glyphicon-trash"></i>
+  </button>
 </ng-template>

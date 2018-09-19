@@ -229,9 +229,10 @@
         <td>Penempatan</td>
         <td>:</td>
         <td>
-            <mat-form-field class="sdw-full-size">
-                <input matInput placeholder="" formControlName="sdm_contractloc" name="sdm_contractloc" readonly>
-                </mat-form-field>
+            <mat-radio-group class="margin-field" formControlName="sdm_contractloc" name="sdm_contractloc" disabled>
+                <mat-radio-button value="1">Bandung</mat-radio-button>
+                <mat-radio-button value="2">Luar Bandung</mat-radio-button>
+            </mat-radio-group>
         </td>
     </tr>
 

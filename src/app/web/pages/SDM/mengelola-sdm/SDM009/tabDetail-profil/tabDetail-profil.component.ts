@@ -79,7 +79,7 @@ export class TabDetailProfilComponent implements OnInit {
         //   { viewValue: 'Edu Name', viewKey: 'edu_name', type: TYPE.STRING}
         // ],
         tableColumns : [
-          { prop: 'profiling_id', name: 'No', width: 40, sortable: false },
+          { prop: 'norut', name: 'No', width: 10, sortable: false },
           { prop: 'profiling_name', name: 'Profil', width: 100, sortable: false },
         ]
       });
