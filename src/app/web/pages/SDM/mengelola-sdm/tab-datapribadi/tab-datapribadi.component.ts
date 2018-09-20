@@ -332,7 +332,8 @@ export class TabDatapribadiComponent implements OnInit {
         if (this.uploaderFoto.queue[0].file.size > 500000) {
           this._notif.error({
             message: 'File tidak boleh melebihi 500kb'
-          });
+            
+          });        
           this.uploaderFoto.clearQueue();
           } else {
             this.uploaderFoto.uploadAll();
@@ -349,51 +350,9 @@ export class TabDatapribadiComponent implements OnInit {
   }
 
   public masukanPhotoEdit() {
-    // tslint:disable-next-line:prefer-const
-    let token = 'bearer ' + JSON.parse((localStorage.getItem('loggedInUser')))['access_token'];
-    console.log(token);
-    // tslint:disable-next-line:prefer-const
-    let URL = this._factory.api ({
-      api: 'sdm/Upload/upload',
-      params: {
-        sdm_id: this.id
-      }
-    });
-    if (this.uploaderFoto.queue.length >= 0) {
-      this.uploaderFoto.setOptions({ url: URL,
-                                      authToken: token,
-                                    authTokenHeader: 'authorization'});
-      this.uploaderFoto.onBuildItemForm = (item, form) => {
-        // tslint:disable-next-line:prefer-const
-        let fileName = this.action.getFormControlValue('sdm_name') + '.'
-                      + item._file.type.replace('image/', '');
-        item.file.name = fileName.replace(' ', '_');
-      };
-      if (this.uploaderFoto.queue.length > 0) {
-        if (this.uploaderFoto.queue[0].file.size > 500000) {
-          this._notif.error({
-            message: 'File tidak boleh melebihi 500kb'
-          });
-          this.uploaderFoto.clearQueue();
-          } else {
-            this.uploaderFoto.uploadAll();
-            this.uploaderFoto.onSuccessItem = (item, response, status, headers) => {
-              this.action.patchFormData({foto : item.file.name});
-              this.test++;
-              this.uploaderFoto.clearQueue();
-          };
-        }
-      }   else {
-        this.uploaderFoto.clearQueue();
-      }
-    }
-  }
-
-  public onUpdate() {
     const updateAPI = this._factory.api({
       api : 'sdm/mengelolaSdm/update',
     });
-    this.masukanPhotoEdit();
     // this.action.patchFormData({
     //   sdm_image: this.uploaderFoto.queue[0].file.name
     // });
@@ -404,6 +363,62 @@ export class TabDatapribadiComponent implements OnInit {
         message: 'Successfully Update Data'
       });
     });
+  }
+
+  public onUpdate() {
+
+    if(this.action.getFormControlValue('sdm_name')=='' || this.action.getFormControlValue('sdm_nik')=='' || this.action.getFormControlValue('sdm_ktp')=='' ||
+       this.action.getFormControlValue('sdm_datebirth')=='' || this.action.getFormControlValue('sdm_address')=='' || this.action.getFormControlValue('sdm_phone')=='' ||
+       this.action.getFormControlValue('religion_id')=='' || this.action.getFormControlValue('health_id')=='' || this.action.getFormControlValue('sdmlvl_id')=='' ||
+       this.action.getFormControlValue('contracttype_id')=='' || this.action.getFormControlValue('sdm_contractloc')=='' || this.action.getFormControlValue('sdm_startcontract')=='' ||
+       this.action.getFormControlValue('sdm_endcontract')==''){
+        this._notif.error({
+          message:'Field required belum terpenuhi!'
+        })
+      }
+
+    else{
+        // tslint:disable-next-line:prefer-const
+        let token = 'bearer ' + JSON.parse((localStorage.getItem('loggedInUser')))['access_token'];
+        console.log(token);
+        // tslint:disable-next-line:prefer-const
+        let URL = this._factory.api ({
+          api: 'sdm/Upload/upload',
+          params: {
+            sdm_id: this.id
+          }
+        });
+        if (this.uploaderFoto.queue.length >= 0) {
+          this.uploaderFoto.setOptions({ url: URL,
+                                          authToken: token,
+                                        authTokenHeader: 'authorization'});
+          this.uploaderFoto.onBuildItemForm = (item, form) => {
+            // tslint:disable-next-line:prefer-const
+            let fileName = this.action.getFormControlValue('sdm_name') + '.'
+                          + item._file.type.replace('image/', '');
+            item.file.name = fileName.replace(' ', '_');
+          };
+          if (this.uploaderFoto.queue.length > 0) {
+            if (this.uploaderFoto.queue[0].file.size > 500000) {
+              this._notif.error({
+                message: 'File tidak boleh melebihi 500kb'
+              });
+              this.uploaderFoto.clearQueue();
+              } else {
+                this.uploaderFoto.uploadAll();
+                this.uploaderFoto.onSuccessItem = (item, response, status, headers) => {
+                  this.action.patchFormData({foto : item.file.name});
+                  this.test++;
+                  this.uploaderFoto.clearQueue();
+                  this.masukanPhotoEdit();
+              };
+            }
+          }   else {
+            this.uploaderFoto.clearQueue();
+            this.masukanPhotoEdit();
+          }
+        }
+    }
   }
 
   public handleFileInput(event) {
