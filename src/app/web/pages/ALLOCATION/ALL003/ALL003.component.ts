@@ -70,9 +70,9 @@ export class ALL003Component implements OnInit {
       tableColumns : [
         { prop: 'sdm_nik', name: 'NIK', width: 100, sortable: false },
         { prop: 'sdm_name', name: 'Sdm Name', width: 100, sortable: false },
-        { prop: 'skill_name', name: 'Skill name', width: 100, sortable: false },
-        { prop: 'skilltype_name', name: 'Skill Type Name', width: 100, sortable: false },
-        { prop: 'sdmskill_value', name: 'Skill Value', width: 100, sortable: true },
+        // { prop: 'skill_name', name: 'Skill name', width: 100, sortable: false },
+        // { prop: 'skilltype_name', name: 'Skill Type Name', width: 100, sortable: false },
+        // { prop: 'sdmskill_value', name: 'Skill Value', width: 100, sortable: true },
         { prop: 'end_contractproject', name: 'End date project', width: 100, sortable: false },
         { prop: 'sdm_notification', name: 'Notifikasi', width: 50,
         cellTemplate: this.notif, sortable: false },
@@ -109,6 +109,9 @@ export class ALL003Component implements OnInit {
 
   public navigateEditMenu(id) {
     this.router.navigate(['pages/all/ALL005' , {id}]);
+  }
+  public navigateDetailMenu(id) {
+    this.router.navigate(['pages/all/DetailSkillSdm' , {id}]);
   }
   public refreshData() {
     this.action.refreshTable();
