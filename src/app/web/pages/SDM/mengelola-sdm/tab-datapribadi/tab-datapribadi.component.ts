@@ -58,12 +58,11 @@ export class TabDatapribadiComponent implements OnInit {
   public lovDegree: LOVService;
 
   public date: Date = new Date();
-  public mulaiDari: Date = new Date(1990, 0 , 1);
+  public mulaiDari: Date = new Date(1992, 0 , 1);
   public maxDate: Date = new Date(this.date.getFullYear(), this.date.getMonth(), this.date.getDate() - 1);
 
   // coba
   public test: number = 1;
-
   public uploaderFoto: FileUploader;
   public uploader: FileUploader;
 
@@ -186,29 +185,39 @@ export class TabDatapribadiComponent implements OnInit {
           console.log(this.pathFoto + ' ini path foto');
         });
       }
+
+    
   }
 
   public onSave() {
-    if (this.uploaderFoto.queue[0].file.size < 500000 ) {
-      const postAPI = this._factory.api({
-        api: 'sdm/mengelolaSdm/create',
+    if (this.uploaderFoto.queue[0]) {
+      if(this.uploaderFoto.queue[0].file.size < 500000){
+        const postAPI = this._factory.api({
+          api: 'sdm/mengelolaSdm/create',
+        });
+        console.log(this.pathFoto);
+        this._factory.http().post(postAPI, this.action.getFormData())
+        .subscribe((response: any) => {
+          // console.log(response.data.sdm_id);
+          this.tabEvent.emit(response.data.sdm_id);
+          this.masukanPhoto(response.data.sdm_id);
+          console.log(response.data. contracttype_id);
+          console.log(response.data.sdm_id);
+          this.insertHiring(response.data.sdm_id, response.data. contracttype_id);
+        });
+        this._notif.success({
+        message: 'Save Successfuly'
       });
-      console.log(this.pathFoto);
-      this._factory.http().post(postAPI, this.action.getFormData())
-      .subscribe((response: any) => {
-        // console.log(response.data.sdm_id);
-        this.tabEvent.emit(response.data.sdm_id);
-        this.masukanPhoto(response.data.sdm_id);
-        console.log(response.data. contracttype_id);
-        console.log(response.data.sdm_id);
-        this.insertHiring(response.data.sdm_id, response.data. contracttype_id);
-      });
-      this._notif.success({
-      message: 'Save Successfuly'
-    });
+      }
+      else{
+        this._notif.error({
+          message:'file lebih dari 500kb!'
+        })
+      }
+
     } else {
       this._notif.error({
-        message: 'Size lebih dari 500kb'
+        message: 'Anda belum mengupload foto!'
       });
     }
   }
