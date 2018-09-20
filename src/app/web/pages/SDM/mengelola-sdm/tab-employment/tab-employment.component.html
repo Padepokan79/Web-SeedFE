@@ -1,7 +1,7 @@
 <p></p>
 
 
-<form class="io-form-body" [formGroup]="action?.formControls()"> 
+<form class="io-form-body" [formGroup]="action?.formControls()">
 <!-- EMPLOYMENT -->
 <div style="width: 100%; padding-left: 20px; padding-right: 20px">
 <table style="width: 100%">
@@ -19,14 +19,14 @@
             </mat-form-field>
         </td>
     </tr>
- 
+
     <!-- masuk kerja -->
     <tr>
         <td style="width: 20%">Dari</td>
         <td style="width: 5px">:</td>
         <td style="width: 80%">
           <mat-form-field class="sdw-full-size">
-              <input matInput [matDatepicker]="pickerStart" [max]="this.action.getFormControlValue('employment_enddate')" placeholder="" formControlName="employment_startdate">
+              <input matInput [matDatepicker]="pickerStart" [max]="this.action.getFormControlValue('employment_enddate')" placeholder="" formControlName="employment_startdate" [readonly]="true" require>
               <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
               <mat-datepicker #pickerStart></mat-datepicker>
             </mat-form-field>
@@ -39,7 +39,7 @@
         <td>:</td>
         <td>
           <mat-form-field class="sdw-full-size">
-              <input matInput [matDatepicker]="pickerEnd" [min]="this.action.getFormControlValue('employment_startdate')" placeholder="" formControlName="employment_enddate">
+              <input matInput [matDatepicker]="pickerEnd" [min]="this.action.getFormControlValue('employment_startdate')" placeholder="" formControlName="employment_enddate" [readonly]="true" require>
               <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
               <mat-datepicker #pickerEnd></mat-datepicker>
             </mat-form-field>
@@ -58,7 +58,7 @@
             </mat-hint>
           </mat-form-field>
       </td>
-    </tr>    
+    </tr>
   </table>
   </div>
     <div class="col-md-6 pos" style="float:right">
