@@ -8,6 +8,10 @@ import { DefaultNotificationService } from '../../../../../core/services/default
 import { Router } from '../../../../../../../node_modules/@angular/router';
 import { FileUploader } from '../../../../../../../node_modules/ng2-file-upload';
 import { IAfterActionResult } from '../../../../../core/interfaces/action/i-after-action-result';
+import { FormControl } from '../../../../../../../node_modules/@angular/forms';
+import { HttpClient, HttpParams } from '../../../../../../../node_modules/@angular/common/http';
+import { url } from 'inspector';
+import { SubjectSubscriber } from '../../../../../../../node_modules/rxjs/Subject';
 
 @Component({
   selector: 'app-tab-datapribadi',
@@ -24,6 +28,10 @@ export class TabDatapribadiComponent implements OnInit {
   public imageFiles: any;
   public files: any[] = [];
   public fileReader = new FileReader();
+  public sdmId: any;
+  public contractType: any;
+  public sdmhiringId: any;
+  public clientId: any;
 
   public gender = '1';
 
@@ -61,7 +69,9 @@ export class TabDatapribadiComponent implements OnInit {
 
   constructor(private _factory: CoreFactory,
               public _notif: DefaultNotificationService,
-              private router: Router) {
+              private router: Router,
+              private http: HttpClient
+            ) {
                 const URL = this._factory.api({
                   api: 'sdm\Upload',
                   params: {
@@ -105,6 +115,9 @@ export class TabDatapribadiComponent implements OnInit {
           sdm_startcontract: '',
           sdm_status: '1',
           sdmlvl_id: '',
+
+          client_id: '1',
+          hirestat_id: '4'
         },
         validationMessages: {
           sdm_name: {
@@ -186,6 +199,9 @@ export class TabDatapribadiComponent implements OnInit {
         // console.log(response.data.sdm_id);
         this.tabEvent.emit(response.data.sdm_id);
         this.masukanPhoto(response.data.sdm_id);
+        console.log(response.data. contracttype_id);
+        console.log(response.data.sdm_id);
+        this.insertHiring(response.data.sdm_id, response.data. contracttype_id);
       });
       this._notif.success({
       message: 'Save Successfuly'
@@ -197,7 +213,85 @@ export class TabDatapribadiComponent implements OnInit {
     }
   }
 
-  public clearUploaderFoto(){
+  // tslint:disable-next-line:variable-name
+  public insertHiring(sdm_id, contracttype_id) {
+    // tslint:disable-next-line:prefer-const
+    let sdmId = sdm_id;
+    // tslint:disable-next-line:prefer-const
+    let contractType = contracttype_id;
+    const multiInsert = [];
+    multiInsert.push({
+      sdmhiring_id : null,
+      client_id: 1,
+      hirestat_id: 4,
+      sdm_id: sdmId
+    });
+    const hiringAPI = this._factory.api({
+      api: 'project/MultiHiring/multiCreate',
+    });
+    const httpOtions = {
+      params: new HttpParams()
+    };
+    if (contractType === 3 ) {
+      this.http.post(hiringAPI, {
+        listhiring: multiInsert
+      }, httpOtions).subscribe((res: any) => {
+        this._notif.success({
+          message: 'You have successfully Hired'
+        });
+        console.log(res.data.sdmhiring_id);
+        console.log(res.data.client_id);
+        // this.insertassign(
+        //   res.data.sdmhiringId,
+        //   res.data.clientId
+        // );
+
+      }, (error: any) => {
+        this._notif.error({
+          message: 'Please check SDM Data'
+        });
+      }
+    );
+    }
+  }
+
+  // tslint:disable-next-line:variable-name
+  public insertassign(sdmhiring_id, client_id ) {
+  // tslint:disable-next-line:prefer-const
+  let sdmhiringId = sdmhiring_id;
+  // tslint:disable-next-line:prefer-const
+  let clientId = client_id;
+  // tslint:disable-next-line:prefer-const
+
+  const multiInsertAssign = [];
+  multiInsertAssign.push({
+    client_id: clientId,
+    sdmhiring_id: sdmhiringId,
+    method_id: 1,
+    hirestat_id: 4,
+    // sdmassign_startdate: sdmStartcontract,
+    // sdmassign_enddate: sdmEndcontract,
+    // sdmassign_loc: 'Bandung'
+    });
+  console.log(client_id);
+  console.log(sdmhiringId);
+
+  const AssignApi = this._factory.api({
+      api: 'project/InsertAssignment/multiCreate'
+    });
+  const httpOptions = {
+      params: new HttpParams()
+    };
+  this.http.post(AssignApi, {
+      listassignment: multiInsertAssign
+    }, httpOptions).subscribe(() => {
+      this._notif.success({
+        message: 'You have successfully Assigned'
+    });
+    });
+  }
+
+  public clearUploaderFoto() {
     this.uploaderFoto.clearQueue();
   }
 
@@ -313,7 +407,6 @@ export class TabDatapribadiComponent implements OnInit {
   }
 
   public readFiles(files: any[], index: number) {
-    
     this.pathFoto = null;
     this.imageFiles = [];
     const file = files[index];
