@@ -249,29 +249,18 @@
     </tr>
 
     <!-- AWAL KONTRAK -->
-    <tr *ngIf="form==1">
+    <tr>
         <td>Awal Kontrak<span style="color: red">*</span></td>
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size">
-                <input matInput [readonly]="true" [max]="date" [matDatepicker]="pickerStartDate" (click)="pickerStartDate.open()" placeholder="" formControlName="sdm_startcontract" required>
+                <input matInput [readonly]="true" [matDatepicker]="pickerStartDate" (click)="pickerStartDate.open()" placeholder="" formControlName="sdm_startcontract" required>
                 <mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
                 <mat-datepicker #pickerStartDate></mat-datepicker>
                 </mat-form-field>
         </td>
     </tr>
-    <tr *ngIf="form==2">
-        <td>Awal Kontrak <span style="color: red">*</span> </td>
-        <td>:</td>
-        <td>
-            <mat-form-field class="sdw-full-size">
-                <input matInput [readonly]="true" [min]="date" [matDatepicker]="pickerStartDate" (click)="pickerStartDate.open()" placeholder="" formControlName="sdm_startcontract" required>
-                <mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
-                <mat-datepicker #pickerStartDate></mat-datepicker>
-                </mat-form-field>
-        </td>
-    </tr>
-
+   
     <!-- AKHIR KONTRAK -->
     <tr *ngIf="form==1">
         <td>Akhir Kontrak<span style="color: red">*</span></td>
