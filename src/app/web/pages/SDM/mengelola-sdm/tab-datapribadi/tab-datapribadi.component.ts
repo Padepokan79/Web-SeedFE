@@ -185,8 +185,6 @@ export class TabDatapribadiComponent implements OnInit {
           console.log(this.pathFoto + ' ini path foto');
         });
       }
-
-    
   }
 
   public onSave() {
@@ -201,18 +199,17 @@ export class TabDatapribadiComponent implements OnInit {
           // console.log(response.data.sdm_id);
           this.tabEvent.emit(response.data.sdm_id);
           this.masukanPhoto(response.data.sdm_id);
-          console.log(response.data. contracttype_id);
-          console.log(response.data.sdm_id);
+          // console.log(response.data. contracttype_id);
+          // console.log(response.data.sdm_id);
           this.insertHiring(response.data.sdm_id, response.data. contracttype_id);
         });
         this._notif.success({
         message: 'Save Successfuly'
       });
-      }
-      else{
+      } else {
         this._notif.error({
-          message:'file lebih dari 500kb!'
-        })
+          message: 'file lebih dari 500kb!'
+        });
       }
 
     } else {
@@ -238,23 +235,23 @@ export class TabDatapribadiComponent implements OnInit {
     const hiringAPI = this._factory.api({
       api: 'project/MultiHiring/multiCreate',
     });
-    const httpOtions = {
+    const httpOptions = {
       params: new HttpParams()
     };
     if (contractType === 3 ) {
       this.http.post(hiringAPI, {
         listhiring: multiInsert
-      }, httpOtions).subscribe((res: any) => {
+      }, httpOptions).subscribe((response: any) => {
+        console.log(response.data[0].sdmhiring_id);
+        console.log(response.data[0].client_id);
+        this.insertassign(
+          response.data[0].sdmhiring_id,
+          response.data[0].client_id,
+          response.data[0].sdm_id
+        );
         this._notif.success({
           message: 'You have successfully Hired'
         });
-        console.log(res.data.sdmhiring_id);
-        console.log(res.data.client_id);
-        // this.insertassign(
-        //   res.data.sdmhiringId,
-        //   res.data.clientId
-        // );
-
       }, (error: any) => {
         this._notif.error({
           message: 'Please check SDM Data'
@@ -265,17 +262,19 @@ export class TabDatapribadiComponent implements OnInit {
   }
 
   // tslint:disable-next-line:variable-name
-  public insertassign(sdmhiring_id, client_id ) {
+  public insertassign(sdmhiring_id, client_id, sdm_id) {
   // tslint:disable-next-line:prefer-const
   let sdmhiringId = sdmhiring_id;
   // tslint:disable-next-line:prefer-const
   let clientId = client_id;
   // tslint:disable-next-line:prefer-const
+  let sdmId = sdm_id;
 
   const multiInsertAssign = [];
   multiInsertAssign.push({
     client_id: clientId,
     sdmhiring_id: sdmhiringId,
+    sdm_id: sdmId,
     method_id: 1,
     hirestat_id: 4,
     // sdmassign_startdate: sdmStartcontract,
@@ -284,6 +283,7 @@ export class TabDatapribadiComponent implements OnInit {
     });
   console.log(client_id);
   console.log(sdmhiringId);
+  console.log(sdmId);
 
   const AssignApi = this._factory.api({
       api: 'project/InsertAssignment/multiCreate'
@@ -292,7 +292,7 @@ export class TabDatapribadiComponent implements OnInit {
       params: new HttpParams()
     };
   this.http.post(AssignApi, {
-      listassignment: multiInsertAssign
+    listassignment: multiInsertAssign
     }, httpOptions).subscribe(() => {
       this._notif.success({
         message: 'You have successfully Assigned'
@@ -332,8 +332,7 @@ export class TabDatapribadiComponent implements OnInit {
         if (this.uploaderFoto.queue[0].file.size > 500000) {
           this._notif.error({
             message: 'File tidak boleh melebihi 500kb'
-            
-          });        
+          });
           this.uploaderFoto.clearQueue();
           } else {
             this.uploaderFoto.uploadAll();
@@ -377,7 +376,7 @@ export class TabDatapribadiComponent implements OnInit {
         })
       }
 
-    else{
+    else {
         // tslint:disable-next-line:prefer-const
         let token = 'bearer ' + JSON.parse((localStorage.getItem('loggedInUser')))['access_token'];
         console.log(token);
