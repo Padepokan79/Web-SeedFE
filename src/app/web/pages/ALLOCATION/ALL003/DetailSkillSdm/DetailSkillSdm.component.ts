@@ -6,6 +6,7 @@ import { ActionService } from '../../../../../core/services/uninjectable/action.
 import { Location } from '@angular/common';
 import { COMPARISON_OPERATOR } from '../../../../../core/constant/constant';
 import { Comparison } from '../../../../../core/enums/comparison-operator.enum';
+import { InputForm } from '../../../../../core/models/input-form';
 
 @Component({
   selector: 'app-DetailSkillSdm',
@@ -16,6 +17,7 @@ export class DetailSkillSdmComponent implements OnInit {
   public time: Date = new Date();
   public dataTable: DataTable;
   public action: ActionService;
+  public inputForm: InputForm;
   private selectedId: number;
 
   constructor(private location: Location, private _factory: CoreFactory, private route: ActivatedRoute) {
@@ -30,22 +32,45 @@ export class DetailSkillSdmComponent implements OnInit {
       this.time = new Date();
     }, 1);
 
+    this.inputForm = this._factory.inputForm({
+      formControls: {
+        sdm_name: '',
+      }
+    });
+
     this.dataTable = this._factory.dataTable({
       serverSide: true,
       pagingParams : {
-        filter: Comparison.EQ('sdm_id', this.selectedId.toString())
+        filter: Comparison.EQ('sdm_id', this.selectedId.toString()),
+        limit: 10
       },
       tableColumns: [
-        { prop: 'sdm_name', name: 'Sdm Name', width: 100, sortable: false },
-        { prop: 'skilltype_name', name: 'Skill Type Name', width: 100, sortable: false },
-        { prop: 'skill_name', name: 'Skill name', width: 100, sortable: false },
-        { prop: 'sdmskill_value', name: 'Skill Value', width: 100, sortable: true },
+        { prop: 'skilltype_name', name: 'Skill Type Name', width: -20, sortable: false },
+        { prop: 'sdm_skill_value', name: 'Skill name', width: 100, sortable: false },
+        // { prop: 'sdmskill_value', name: 'Skill Value', width: 100, sortable: true },
       ]
     });
 
+    const readAllApi = this._factory.api({
+      api : 'allocation/DetailSdmSkill/readAll',
+      pagingParams : {
+        filter : {
+          field : 'sdm_id',
+          operator : COMPARISON_OPERATOR.EQ,
+          value : this.selectedId
+        }
+      }
+
+    });
+    this._factory.http().get(readAllApi).subscribe((res: any) => {
+      console.log(res);
+      this.action.patchFormData(res.data.items[0]);
+    });
+
     this.action = this._factory.actions({
-      api: 'allocation/MengelolaSdmSkill',
-      dataTable: this.dataTable
+      api: 'allocation/DetailSdmSkill',
+      dataTable: this.dataTable,
+      inputForm: this.inputForm
     });
 
   }
