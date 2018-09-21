@@ -54,7 +54,7 @@
       <td>:</td>
       <td>
           <mat-form-field class="sdw-full-size">
-              <input matInput [matDatepicker]="pickerCourse" placeholder="" formControlName="course_date" [readonly]="true">
+              <input matInput [matDatepicker]="pickerCourse" [max]="maxDate" (click)="pickerCourse.open()" placeholder="" formControlName="course_date" readonly>
               <mat-datepicker-toggle matSuffix [for]="pickerCourse"></mat-datepicker-toggle>
               <mat-datepicker #pickerCourse></mat-datepicker>
             </mat-form-field>
