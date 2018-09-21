@@ -11,6 +11,7 @@ import { IAfterActionResult } from '../../../../../core/interfaces/action/i-afte
 import { FormControl } from '../../../../../../../node_modules/@angular/forms';
 import { HttpClient, HttpParams } from '../../../../../../../node_modules/@angular/common/http';
 import { url } from 'inspector';
+import { Location } from '@angular/common';
 import { SubjectSubscriber } from '../../../../../../../node_modules/rxjs/Subject';
 
 @Component({
@@ -67,6 +68,7 @@ export class TabDatapribadiComponent implements OnInit {
   public uploader: FileUploader;
 
   constructor(private _factory: CoreFactory,
+              private location: Location,
               public _notif: DefaultNotificationService,
               private router: Router,
               private http: HttpClient
@@ -190,22 +192,31 @@ export class TabDatapribadiComponent implements OnInit {
   public onSave() {
     if (this.uploaderFoto.queue[0]) {
       if(this.uploaderFoto.queue[0].file.size < 500000){
-        const postAPI = this._factory.api({
-          api: 'sdm/mengelolaSdm/create',
-        });
-        console.log(this.pathFoto);
-        this._factory.http().post(postAPI, this.action.getFormData())
-        .subscribe((response: any) => {
-          // console.log(response.data.sdm_id);
-          this.tabEvent.emit(response.data.sdm_id);
-          this.masukanPhoto(response.data.sdm_id);
-          // console.log(response.data. contracttype_id);
-          // console.log(response.data.sdm_id);
-          this.insertHiring(response.data.sdm_id, response.data. contracttype_id);
-        });
-        this._notif.success({
-        message: 'Save Successfuly'
-      });
+        let startDate = new Date(this.action.getFormControlValue('sdm_startcontract'));
+        let endDate = new Date(this.action.getFormControlValue('sdm_endcontract'));
+          if(startDate > endDate){
+          this._notif.error({
+            message:'start contract > dari akhir contract!'
+            })
+          }
+          else{
+            const postAPI = this._factory.api({
+              api: 'sdm/mengelolaSdm/create',
+            });
+            console.log(this.pathFoto);
+            this._factory.http().post(postAPI, this.action.getFormData())
+            .subscribe((response: any) => {
+              // console.log(response.data.sdm_id);
+              this.tabEvent.emit(response.data.sdm_id);
+              this.masukanPhoto(response.data.sdm_id);
+              // console.log(response.data. contracttype_id);
+              // console.log(response.data.sdm_id);
+              this.insertHiring(response.data.sdm_id, response.data. contracttype_id);
+            });
+            this._notif.success({
+            message: 'Save Successfuly'
+          });
+          }
       } else {
         this._notif.error({
           message: 'file lebih dari 500kb!'
@@ -362,6 +373,7 @@ export class TabDatapribadiComponent implements OnInit {
         message: 'Successfully Update Data'
       });
     });
+    this.goBack();
   }
 
   public onUpdate() {
@@ -375,9 +387,17 @@ export class TabDatapribadiComponent implements OnInit {
           message:'Field required belum terpenuhi!'
         })
       }
-
+    
     else {
-        // tslint:disable-next-line:prefer-const
+      let startDate = new Date(this.action.getFormControlValue('sdm_startcontract'));
+      let endDate = new Date(this.action.getFormControlValue('sdm_endcontract'));
+        if(startDate > endDate){
+        this._notif.error({
+          message:'start contract > dari akhir contract!'
+          })
+        }
+        else{
+                  // tslint:disable-next-line:prefer-const
         let token = 'bearer ' + JSON.parse((localStorage.getItem('loggedInUser')))['access_token'];
         console.log(token);
         // tslint:disable-next-line:prefer-const
@@ -387,7 +407,6 @@ export class TabDatapribadiComponent implements OnInit {
             sdm_id: this.id
           }
         });
-        if (this.uploaderFoto.queue.length >= 0) {
           this.uploaderFoto.setOptions({ url: URL,
                                           authToken: token,
                                         authTokenHeader: 'authorization'});
@@ -397,23 +416,21 @@ export class TabDatapribadiComponent implements OnInit {
                           + item._file.type.replace('image/', '');
             item.file.name = fileName.replace(' ', '_');
           };
-          if (this.uploaderFoto.queue.length > 0) {
-            if (this.uploaderFoto.queue[0].file.size > 500000) {
-              this._notif.error({
-                message: 'File tidak boleh melebihi 500kb'
-              });
-              this.uploaderFoto.clearQueue();
-              } else {
-                this.uploaderFoto.uploadAll();
+          if(this.uploaderFoto.queue[0]){
+            if (this.uploaderFoto.queue[0].file.size < 500000) {
+              
+              this.uploaderFoto.uploadAll();
                 this.uploaderFoto.onSuccessItem = (item, response, status, headers) => {
                   this.action.patchFormData({foto : item.file.name});
                   this.test++;
-                  this.uploaderFoto.clearQueue();
                   this.masukanPhotoEdit();
               };
+              } else {
+                this._notif.error({
+                  message: 'File tidak boleh melebihi 500kb'
+                });
             }
-          }   else {
-            this.uploaderFoto.clearQueue();
+          }else{
             this.masukanPhotoEdit();
           }
         }
@@ -445,4 +462,7 @@ export class TabDatapribadiComponent implements OnInit {
     console.log('file: ' + file);
   }
 
+  public goBack() {
+    this.location.back();
+  }
 }

@@ -28,8 +28,10 @@ export class PJA011Component implements OnInit {
   
   public sdmPhone: string;
   public sdmName: string;
-
+  public maxContract: string;
+  public minContract: string;
   private selectedId: number;
+  public selectedSdm: number;
 
   constructor(
     public _notif: DefaultNotificationService,
@@ -93,14 +95,34 @@ export class PJA011Component implements OnInit {
       this.action.patchFormData(res.data.items[0]);
       this.sdmPhone = res.data.items[0].sdm_phone;
       this.sdmName = res.data.items[0].sdm_name;
+      this.selectedSdm= res.data.items[0].sdm_id;
+          const readAllSDM = this._factory.api({
+            api : 'sdm/MengelolaSdm/readAll',
+            pagingParams : {
+              filter : {
+                field : 'sdm_id',
+                operator : COMPARISON_OPERATOR.EQ,
+                value : this.selectedSdm
+              }
+            }
+          });
+      
+        this._factory.http().get(readAllSDM).subscribe((res: any) => {
+          this.action.patchFormData(res.data.items[0]);
+          this.maxContract = res.data.items[0].sdm_endcontract;
+          this.minContract = res.data.items[0].sdm_startcontract;
+        });
+
     });
 
     setInterval(() => {
       this.time = new Date();
     }, 1);
+
   }
 
-  public onUpdate() {    const updateAPI = this._factory.api({
+  public onUpdate() { 
+    const updateAPI = this._factory.api({
     api: 'project/SdmAssignment/update',
     // params: {
     // client_id: this.selectedId }

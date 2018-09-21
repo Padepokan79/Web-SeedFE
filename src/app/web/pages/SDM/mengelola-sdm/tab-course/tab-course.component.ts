@@ -31,7 +31,9 @@ export class TabCourseComponent implements OnInit {
   public action: ActionService;
   public inputForm: InputForm;
   public dataTable: DataTable;
-
+  public date: Date = new Date();
+  public maxDate: Date = new Date(this.date.getFullYear(), this.date.getMonth(), this.date.getDate());
+  
   constructor(private _factory: CoreFactory) { }
 
   public ngOnInit() {
