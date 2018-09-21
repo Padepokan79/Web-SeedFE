@@ -81,7 +81,7 @@ export class ALL003Component implements OnInit {
       ]
     });
     this.action = this._factory.actions({
-      api: 'allocation/MengelolaSdmSkill/',
+      api: 'allocation/DetailSdmSkill',
       inputForm: this.inputForm,
       dataTable: this.dataTable
     });
