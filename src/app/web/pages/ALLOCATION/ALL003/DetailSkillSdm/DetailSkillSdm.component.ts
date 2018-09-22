@@ -7,6 +7,7 @@ import { Location } from '@angular/common';
 import { COMPARISON_OPERATOR } from '../../../../../core/constant/constant';
 import { Comparison } from '../../../../../core/enums/comparison-operator.enum';
 import { InputForm } from '../../../../../core/models/input-form';
+import { HttpParams, HttpClient } from '../../../../../../../node_modules/@angular/common/http';
 
 @Component({
   selector: 'app-DetailSkillSdm',
@@ -18,9 +19,14 @@ export class DetailSkillSdmComponent implements OnInit {
   public dataTable: DataTable;
   public action: ActionService;
   public inputForm: InputForm;
+  public rows: any[] = [];
   private selectedId: number;
 
-  constructor(private location: Location, private _factory: CoreFactory, private route: ActivatedRoute) {
+  constructor(private location: Location,
+              private _factory: CoreFactory,
+              private route: ActivatedRoute,
+              private http: HttpClient
+  ) {
     this.route.params.subscribe((param) => {
       this.selectedId = param.id;
     });
@@ -39,9 +45,8 @@ export class DetailSkillSdmComponent implements OnInit {
     });
 
     this.dataTable = this._factory.dataTable({
-      serverSide: true,
+      serverSide: false,
       pagingParams : {
-        filter: Comparison.EQ('sdm_id', this.selectedId.toString()),
         limit: 10
       },
       tableColumns: [
@@ -50,30 +55,22 @@ export class DetailSkillSdmComponent implements OnInit {
         // { prop: 'sdmskill_value', name: 'Skill Value', width: 100, sortable: true },
       ]
     });
-
-    const readAllApi = this._factory.api({
-      api : 'allocation/DetailSdmSkill/readAll',
-      pagingParams : {
-        filter : {
-          field : 'sdm_id',
-          operator : COMPARISON_OPERATOR.EQ,
-          value : this.selectedId
-        }
-      }
-
+    const apiRician = this._factory.api({
+      api: `allocation/RicianSdmSkill/filter`
+      });
+    const filter = [];
+    filter.push({
+      sdm_id: this.selectedId
     });
-    this._factory.http().get(readAllApi).subscribe((res: any) => {
-      console.log(res);
-      this.action.patchFormData(res.data.items[0]);
+    const HttpOptions = {
+      params: new HttpParams()
+    };
+    this.http.post(apiRician, {listsdmskill: filter}, HttpOptions)
+    .subscribe((res: any) => {
+      this.rows = res.data;
     });
-
-    this.action = this._factory.actions({
-      api: 'allocation/DetailSdmSkill',
-      dataTable: this.dataTable,
-      inputForm: this.inputForm
-    });
-
   }
+  // tslint:disable-next-line:member-ordering
 
   public goBack() {
     this.location.back();

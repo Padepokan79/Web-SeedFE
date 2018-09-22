@@ -11,7 +11,9 @@ Modified   :  -->
       <span class="time">{{ time | date: 'medium'}}</span>
     </div>
   </div>
-
+<div>
+  
+</div>
   <form class="io-form-body" [formGroup]="action?.formControls()">
     <mat-label>SDM Name : </mat-label>
     <mat-form-field>
@@ -19,9 +21,22 @@ Modified   :  -->
     </mat-form-field>
   </form>
 </io-form>
-<io-table *ngIf="action?.table()" [action]="action" class="sdw-table" style="text-align: left;">
-</io-table>
+<form class="io-form-body">
+  <ngx-datatable 
+  #ngxTable
+  class="dark"
+  [rows]="rows"
+  [limit]="10"
+  [columns]="dataTable.columns"
+  [rowHeight]="'auto'"
+  [columnMode]="'force'"
+  [headerHeight]="50"
+  [footerHeight]="50"
+  [externalPaging]="false"  
+  >      
+</ngx-datatable>
 <div>
-    <button mat-flat-button class="btn-clear btn-mm" (click)="goBack()">
-        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back</button>
+  <button mat-flat-button class="btn-clear btn-mm" (click)="goBack()">
+      <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back</button>
 </div>
+</form>
