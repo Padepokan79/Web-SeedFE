@@ -7,6 +7,7 @@ import { ALL004Component } from './ALL004/ALL004.component';
 import { InputSkill } from './ALL004/InputSkill';
 import { ALL006Component } from './ALL006/ALL006.component';
 import { DetailSkillSdmComponent } from './ALL003/DetailSkillSdm/DetailSkillSdm.component';
+import { EditNilaiSdmComponent } from './ALL003/EditNilaiSdm/EditNilaiSdm.component';
 
 export const ALL_ROUTES = [
     {
@@ -20,6 +21,7 @@ export const ALL_ROUTES = [
         { path: 'ALL006', component: ALL006Component, canActivate: [AuthGuard] },
         // { path: 'inputskill', component: InputSkill, canActivate: [AuthGuard] },
         { path: 'DetailSkillSdm', component: DetailSkillSdmComponent, canActivate: [AuthGuard] },
+        { path: 'EditNilaiSdm', component: EditNilaiSdmComponent, canActivate: [AuthGuard] },
       ]
     }
   ];
