@@ -1,0 +1,58 @@
+<!--
+  Author        : Muhamad Rifan Andrian
+  Date Created  : 21/09/2018
+  Status        : Done
+ -->
+
+ <io-form *ngIf="action?.form()">
+    <div class="io-form-header">
+        <div class="title-header">
+          <span><i class="fa fa-home"></i></span>
+          <a href=""><span>Dashboard</span></a><b> > </b>
+          <a href=""><span>SDM Allocation</span></a><b> > </b>
+          <a href=""><span>List Category</span></a>
+          <span class="time">{{ time | date: 'medium'}}</span>
+        </div>
+    </div>
+  
+    <form class="io-form-body" [formGroup]="action?.formControls()">
+      <div class="form-input">
+        <mat-label>SDM Name : </mat-label>
+        <mat-form-field>
+          <input matInput formControlName="sdm_name" name="sdm_name" readonly>
+        </mat-form-field>
+      </div>
+      <div class="form-input">
+        <div class="row">
+          <div class="col-md-3">
+            <mat-form-field class="sdw-full-size">
+              <mat-label>Update Value : </mat-label>
+              <input matInput placeholder="Category Name" formControlName="sdmskill_value" name="sdmskill_value" required>
+              <mat-hint *ngIf="action.formErrors.skilltype_name" [ngStyle]="{'color': 'red'}">
+                {{action.formErrors.skilltype_name}}
+              </mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3" style="margin-left:272px">
+              <io-form-action [action]="action"></io-form-action>
+          </div>
+        </div>
+      </div>
+    </form>
+  </io-form>
+  
+  <io-table *ngIf="action?.table()" [action]="action" style="text-align: center;">
+  </io-table>
+  <div>
+      <button mat-flat-button class="btn-clear btn-mm" (click)="goBack()">
+          <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back</button>
+  </div>
+  <ng-template #tableActionTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
+    <button type="button" matTooltip="Edit Category" class="btn btn-primary btn-mm btn-icon" (click)="action.onEdit(row)">
+      <i class="glyphicon glyphicon-pencil"></i>
+    </button>
+    <button type="button" matTooltip="Hapus Category" class="btn btn-danger btn-mm btn-icon" (click)="action.onDelete(row);refreshTabel()">
+      <i class="glyphicon glyphicon-trash"></i>
+    </button>
+  </ng-template>
+  

@@ -106,6 +106,9 @@ export class PJA010Component implements OnInit {
 
     this.lovClient = this._factory.lov({
         api: 'lov/Clients',
+        pagingParams: {
+          orderby: 'client_name ASC',
+        },
         initializeData: true
     });
 

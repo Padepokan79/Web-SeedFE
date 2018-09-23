@@ -86,6 +86,9 @@ export class PJA007Component implements OnInit {
 
     this.lovClients = this._factory.lov({
       api: 'lov/clients',
+      pagingParams: {
+        orderby: 'client_name ASC',
+      },
       initializeData: true
     });
     setInterval(() => {

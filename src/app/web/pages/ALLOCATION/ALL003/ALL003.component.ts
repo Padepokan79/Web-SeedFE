@@ -108,7 +108,7 @@ export class ALL003Component implements OnInit {
   }
 
   public navigateEditMenu(id) {
-    this.router.navigate(['pages/all/ALL005' , {id}]);
+    this.router.navigate(['pages/all/EditNilaiSdm' , {id}]);
   }
   public navigateDetailMenu(id) {
     this.router.navigate(['pages/all/DetailSkillSdm' , {id}]);
