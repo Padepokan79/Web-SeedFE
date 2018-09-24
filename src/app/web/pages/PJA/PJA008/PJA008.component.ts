@@ -69,6 +69,7 @@ export class PJA008Component implements OnInit {
   public roletype: string = '1';
   public skillType: string;
   public validasiRolevalue: boolean;
+  public jumlahChecked = 0;
 
   constructor(private _factory: CoreFactory, public _notif: DefaultNotificationService, private route: ActivatedRoute, private routers: Router , private http: HttpClient) {
     this.listSearchCriteria.push(new SearchCriteria(_factory));
@@ -166,6 +167,7 @@ export class PJA008Component implements OnInit {
   });
 
   public btnFilter() {
+    this.jumlahChecked = 0;
     this.isButtonClicked = true;
     const body = [];
     this.listSearchCriteria.forEach((skillSdm: SearchCriteria) => {
@@ -242,6 +244,7 @@ export class PJA008Component implements OnInit {
         console.log(tempData);
       }
     });
+    this.jumlahChecked = tempData.length;
   }
 
   public activateButton() {
@@ -269,6 +272,7 @@ export class PJA008Component implements OnInit {
     // console.log(this.btndisabled);
   }
   public resetSource() {
+    this.jumlahChecked = 0;
     this.isButtonClicked = false;
     this.IdSdm = null;
     this.listSearchCriteria.splice(null, this.increment);
