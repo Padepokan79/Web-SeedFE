@@ -26,7 +26,7 @@
         <td style="width: 5px">:</td>
         <td style="width: 80%">
           <mat-form-field class="sdw-full-size">
-              <input matInput  [matDatepicker]="pickerStart" (click)="pickerStart.open()" [max]="this.action.getFormControlValue('employment_enddate')" placeholder="" formControlName="employment_startdate" readonly>
+              <input matInput  [matDatepicker]="pickerStart" (click)="pickerStart.open()" [max]="this.action.getFormControlValue('employment_enddate')" placeholder="" formControlName="employment_startdate" readonly required>
               <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
               <mat-datepicker #pickerStart></mat-datepicker>
             </mat-form-field>
@@ -39,7 +39,7 @@
         <td>:</td>
         <td>
           <mat-form-field class="sdw-full-size">
-              <input matInput [matDatepicker]="pickerEnd" (click)="pickerEnd.open()" [min]="this.action.getFormControlValue('employment_startdate')" placeholder="" formControlName="employment_enddate" readonly>
+              <input matInput [matDatepicker]="pickerEnd" (click)="pickerEnd.open()" [min]="this.action.getFormControlValue('employment_startdate')" placeholder="" formControlName="employment_enddate" readonly required>
               <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
               <mat-datepicker #pickerEnd></mat-datepicker>
             </mat-form-field>

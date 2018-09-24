@@ -76,7 +76,7 @@ export class TabDetailLanguageComponent implements OnInit {
       //   { viewValue: 'Edu Name', viewKey: 'edu_name', type: TYPE.STRING}
       // ],
       tableColumns : [
-        { prop: 'sdmlanguage_id', name: 'No', width: 40, sortable: false },
+        { prop: 'norut', name: 'No', width: 40, sortable: false },
         { prop: 'language_name', name: 'Bahasa', width: 100, sortable: false },
       ]
     });
