@@ -237,17 +237,20 @@ export class ALL006Component implements OnInit {
   public resetSource() {
     this.isButtonClicked = false;
     this.IdSdm = null;
-    this.unlockSkill = true;
-    this.unlockValue = true;
-    this.listSearchCriteria.splice(null, this.increment);
+    // this.unlockSkill = true;
+    // this.unlockValue = true;
+    
+    this.listSearchCriteria[0].skill_id = null;
+    this.listSearchCriteria[0].skilltype_id = null;
+    this.listSearchCriteria[0].value = null;
+
+    console.log(this.listSearchCriteria);
+
     this.sdmCtrl.setValue('');
-    console.log(this.IdSdm);
-    this.listSearchCriteria.forEach((searchCriteria: SearchCriteria) => {
-      searchCriteria.skilltype_id = null;
-      searchCriteria.skill_id = null;
-      searchCriteria.value = null;
-    });
+    this.increment = 1;
+    this.listSearchCriteria.splice(this.increment);
     this.increment = 0;
+    console.log(this.increment);
   }
 
   public setOperatorAnd() {
