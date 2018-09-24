@@ -271,15 +271,25 @@ export class PJA008Component implements OnInit {
   public resetSource() {
     this.isButtonClicked = false;
     this.IdSdm = null;
-    this.listSearchCriteria.splice(null, this.increment);
+    // this.listSearchCriteria.splice(null, this.increment);
+    // this.sdmCtrl.setValue('');
+    // this.listSearchCriteria.forEach((searchCriteria: SearchCriteria) => {
+    //   searchCriteria.skilltype_id = null;
+    //   searchCriteria.skill_id = null;
+    //   searchCriteria.value = null;
+    // });
+    // this.increment = 0;
+    // this.isLocked = true;
+    this.listSearchCriteria[0].skill_id = null;
+    this.listSearchCriteria[0].skilltype_id = null;
+    this.listSearchCriteria[0].value = null;
+
+    console.log(this.listSearchCriteria);
+
     this.sdmCtrl.setValue('');
-    this.listSearchCriteria.forEach((searchCriteria: SearchCriteria) => {
-      searchCriteria.skilltype_id = null;
-      searchCriteria.skill_id = null;
-      searchCriteria.value = null;
-    });
+    this.increment = 1;
+    this.listSearchCriteria.splice(this.increment);
     this.increment = 0;
-    this.isLocked = true;
   }
 
   public deactivateButton() {
