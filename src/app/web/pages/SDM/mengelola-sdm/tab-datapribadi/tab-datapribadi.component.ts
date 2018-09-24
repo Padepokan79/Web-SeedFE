@@ -61,7 +61,7 @@ export class TabDatapribadiComponent implements OnInit {
   public date: Date = new Date();
   public mulaiDari: Date = new Date(1992, 0 , 1);
   public maxDate: Date = new Date(this.date.getFullYear(), this.date.getMonth(), this.date.getDate() - 1);
-
+  public currentDate: Date = new Date(this.date.getFullYear(), this.date.getMonth(), this.date.getDate());
   // coba
   public test: number = 1;
   public uploaderFoto: FileUploader;
@@ -190,10 +190,10 @@ export class TabDatapribadiComponent implements OnInit {
   }
 
   public onSave() {
+    let startDate = new Date(this.action.getFormControlValue('sdm_startcontract'));
+    let endDate = new Date(this.action.getFormControlValue('sdm_endcontract'));
     if (this.uploaderFoto.queue[0]) {
       if(this.uploaderFoto.queue[0].file.size < 500000){
-        let startDate = new Date(this.action.getFormControlValue('sdm_startcontract'));
-        let endDate = new Date(this.action.getFormControlValue('sdm_endcontract'));
         if(startDate > endDate) {
           this._notif.error({
             message: 'start contract > dari akhir contract!'
@@ -203,6 +203,12 @@ export class TabDatapribadiComponent implements OnInit {
               api: 'sdm/mengelolaSdm/create',
             });
             console.log(this.pathFoto);
+            if(endDate<this.currentDate){
+              this.action.patchFormData({sdm_status : 0});
+            }
+            else{
+              this.action.patchFormData({sdm_status : 1});
+            }
             this._factory.http().post(postAPI, this.action.getFormData())
             .subscribe((response: any) => {
               // console.log(response.data.sdm_id);
@@ -401,27 +407,27 @@ export class TabDatapribadiComponent implements OnInit {
           message: 'start contract > dari akhir contract!'
           });
         } else {
-                  // tslint:disable-next-line:prefer-const
-        let token = 'bearer ' + JSON.parse((localStorage.getItem('loggedInUser')))['access_token'];
-        console.log(token);
-        // tslint:disable-next-line:prefer-const
-        let URL = this._factory.api ({
-          api: 'sdm/Upload/upload',
-          params: {
-            sdm_id: this.id
-          }
-        });
-        this.uploaderFoto.setOptions({ url: URL,
-                                          authToken: token,
-                                        authTokenHeader: 'authorization'});
-        this.uploaderFoto.onBuildItemForm = (item, form) => {
-            // tslint:disable-next-line:prefer-const
-            let fileName = this.action.getFormControlValue('sdm_name') + '.'
-                          + item._file.type.replace('image/', '');
-            item.file.name = fileName.replace(' ', '_');
-          };
         if(this.uploaderFoto.queue[0]){
             if (this.uploaderFoto.queue[0].file.size < 500000) {
+            // tslint:disable-next-line:prefer-const
+            let token = 'bearer ' + JSON.parse((localStorage.getItem('loggedInUser')))['access_token'];
+            console.log(token);
+            // tslint:disable-next-line:prefer-const
+            let URL = this._factory.api ({
+              api: 'sdm/Upload/upload',
+              params: {
+                sdm_id: this.id
+              }
+            });
+            this.uploaderFoto.setOptions({ url: URL,
+                                              authToken: token,
+                                            authTokenHeader: 'authorization'});
+            this.uploaderFoto.onBuildItemForm = (item, form) => {
+                // tslint:disable-next-line:prefer-const
+                let fileName = this.action.getFormControlValue('sdm_name') + '.'
+                              + item._file.type.replace('image/', '');
+                item.file.name = fileName.replace(' ', '_');
+              };
               this.uploaderFoto.uploadAll();
               this.uploaderFoto.onSuccessItem = (item, response, status, headers) => {
                   this.action.patchFormData({foto : item.file.name});
