@@ -52,11 +52,12 @@ UPDATED   : Friday, August 31st 2018 08:45:00 AM
           <li *ngFor="let searchCriteria of listSearchCriteria; let inc = index" class="col-md-12 position-li">
             <div class="col-md-3 go-tight">
               <mat-form-field class="sdw-full-size">
-                <mat-select placeholder="Choose Category" (change)="setUnbutton()" [(ngModel)]="searchCriteria.skilltype_id" name="skilltype_id{{inc}}" required>
+                <mat-select placeholder="Choose Category" (change)="setUnbutton()" [(ngModel)]="searchCriteria.skilltype_id" name="skilltype_id{{ inc }}" required>
                   <mat-option *ngFor="let lov of searchCriteria.lovSkillType.data" [value]="lov.key" (onSelectionChange)="searchCriteria.selectedSkill($event, lov);setSkill()">
                     {{lov.value}}
                   </mat-option>
                 </mat-select>
+                <!-- <p style="color: black;">{{ listSearchCriteria.indexOf(searchCriteria) }}</p> -->
               </mat-form-field>
             </div>
             <div class="col-md-3 go-tight">

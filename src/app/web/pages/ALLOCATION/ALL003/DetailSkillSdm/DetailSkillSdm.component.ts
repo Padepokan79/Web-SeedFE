@@ -69,6 +69,24 @@ export class DetailSkillSdmComponent implements OnInit {
     .subscribe((res: any) => {
       this.rows = res.data;
     });
+    const readAllApi = this._factory.api({
+      api : 'allocation/MengelolaSkillSdm/readAll',
+      pagingParams : {
+        filter : {
+          field : 'sdm_id',
+          operator : COMPARISON_OPERATOR.EQ,
+          value : this.selectedId
+        }
+      }
+    });
+    this._factory.http().get(readAllApi).subscribe((res: any) => {
+      console.log(res);
+      this.action.patchFormData(res.data.items[0]);
+    });
+    this.action = this._factory.actions({
+      api: 'allocation/MengelolaSkillSdm',
+      inputForm: this.inputForm,
+    });
   }
   // tslint:disable-next-line:member-ordering
 

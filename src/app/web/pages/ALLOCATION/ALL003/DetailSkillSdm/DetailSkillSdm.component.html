@@ -1,7 +1,7 @@
 <!-- Created by : Muhamad Rifan Andrian
 Date       : 20-09-2018
 Modified   :  -->
-<io-form  *ngIf="action?.form()">
+<!-- <io-form  *ngIf="action?.form()">
   <div class="io-form-header">
     <div class="title-header">
         <span><i class="fa fa-home"></i></span>
@@ -20,23 +20,48 @@ Modified   :  -->
       <input matInput formControlName="sdm_name" name="sdm_name" readonly>
     </mat-form-field>
   </form>
-</io-form>
-<form class="io-form-body">
-  <ngx-datatable 
-  #ngxTable
-  class="dark"
-  [rows]="rows"
-  [limit]="10"
-  [columns]="dataTable.columns"
-  [rowHeight]="'auto'"
-  [columnMode]="'force'"
-  [headerHeight]="50"
-  [footerHeight]="50"
-  [externalPaging]="false"  
-  >      
-</ngx-datatable>
-<div>
+</io-form> -->
+<!-- <form class="io-form-body"> -->
+  <div class="breadcrumb">
+    <div class="title-header">
+      <span style="color: #181818"><i class="fa fa-home"></i></span>
+      <a [routerLink]="['/pages/dashboard']">dashboard</a><b style="color: #181818"> > </b>
+      <a [routerLink]="['/pages/all/ALL003']"><span>List Sdm Skill</span></a><b style="color: #181818"> > </b>
+      <a style="color: #181818">Detail skill SDM</a>
+      <span class="time" style="color: #181818">{{ time | date: 'medium'}}</span>
+    </div>
+  </div>
+
+<div class="io-form-body">
+  <div *ngIf="action?.form()">
+    <form class="io-form-body" [formGroup]="action?.formControls()">
+      <div class="sdw-form">
+        <mat-label>SDM Name : </mat-label>
+        <mat-form-field>
+          <input matInput formControlName="sdm_name" name="sdm_name" readonly>
+        </mat-form-field>
+      </div>
+    </form>
+  </div>
+  
+  <form>
+    <ngx-datatable 
+    #ngxTable
+    class="dark"
+    [rows]="rows"
+    [limit]="10"
+    [columns]="dataTable.columns"
+    [rowHeight]="'auto'"
+    [columnMode]="'force'"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    [externalPaging]="false"  
+    ></ngx-datatable>
+  </form>
+
+  <div>
   <button mat-flat-button class="btn-clear btn-mm" (click)="goBack()">
       <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back</button>
+  </div>
 </div>
-</form>
+
