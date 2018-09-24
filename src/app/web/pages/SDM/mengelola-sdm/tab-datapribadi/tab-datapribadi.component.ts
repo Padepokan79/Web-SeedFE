@@ -194,12 +194,11 @@ export class TabDatapribadiComponent implements OnInit {
       if(this.uploaderFoto.queue[0].file.size < 500000){
         let startDate = new Date(this.action.getFormControlValue('sdm_startcontract'));
         let endDate = new Date(this.action.getFormControlValue('sdm_endcontract'));
-          if(startDate > endDate){
+        if(startDate > endDate) {
           this._notif.error({
-            message:'start contract > dari akhir contract!'
-            })
-          }
-          else{
+            message: 'start contract > dari akhir contract!'
+            });
+          } else {
             const postAPI = this._factory.api({
               api: 'sdm/mengelolaSdm/create',
             });
@@ -211,7 +210,9 @@ export class TabDatapribadiComponent implements OnInit {
               this.masukanPhoto(response.data.sdm_id);
               // console.log(response.data. contracttype_id);
               // console.log(response.data.sdm_id);
-              this.insertHiring(response.data.sdm_id, response.data. contracttype_id);
+              if(response.data.sdm_status == 1 ){
+                 this.insertHiring(response.data.sdm_id, response.data.contracttype_id);
+              }
             });
             this._notif.success({
             message: 'Save Successfuly'
@@ -367,11 +368,17 @@ export class TabDatapribadiComponent implements OnInit {
     //   sdm_image: this.uploaderFoto.queue[0].file.name
     // });
     // console.log(this.uploaderFoto.queue[0].file.name);
+    console.log(this.action.getFormControlValue('sdm_status'));
+    console.log(this.action.getFormControlValue('sdm_name'));
     // tslint:disable-next-line:no-empty
-    this._factory.http().put(updateAPI + '?sdm_id=' + this.id, this.action.getFormData()).subscribe((response: any) => {
+    this._factory.http().put(updateAPI + '?sdm_id=' + this.id, this.action.getFormData())
+    .subscribe((response: any) => {
       this._notif.success({
         message: 'Successfully Update Data'
       });
+      if(response.data.sdm_status == 1) {
+
+      }
     });
     this.goBack();
   }
@@ -384,19 +391,16 @@ export class TabDatapribadiComponent implements OnInit {
        this.action.getFormControlValue('contracttype_id')=='' || this.action.getFormControlValue('sdm_contractloc')=='' || this.action.getFormControlValue('sdm_startcontract')=='' ||
        this.action.getFormControlValue('sdm_endcontract')==''){
         this._notif.error({
-          message:'Field required belum terpenuhi!'
-        })
-      }
-    
-    else {
+          message: 'Field required belum terpenuhi!'
+        });
+      } else {
       let startDate = new Date(this.action.getFormControlValue('sdm_startcontract'));
       let endDate = new Date(this.action.getFormControlValue('sdm_endcontract'));
-        if(startDate > endDate){
+      if (startDate > endDate) {
         this._notif.error({
-          message:'start contract > dari akhir contract!'
-          })
-        }
-        else{
+          message: 'start contract > dari akhir contract!'
+          });
+        } else {
                   // tslint:disable-next-line:prefer-const
         let token = 'bearer ' + JSON.parse((localStorage.getItem('loggedInUser')))['access_token'];
         console.log(token);
@@ -407,20 +411,19 @@ export class TabDatapribadiComponent implements OnInit {
             sdm_id: this.id
           }
         });
-          this.uploaderFoto.setOptions({ url: URL,
+        this.uploaderFoto.setOptions({ url: URL,
                                           authToken: token,
                                         authTokenHeader: 'authorization'});
-          this.uploaderFoto.onBuildItemForm = (item, form) => {
+        this.uploaderFoto.onBuildItemForm = (item, form) => {
             // tslint:disable-next-line:prefer-const
             let fileName = this.action.getFormControlValue('sdm_name') + '.'
                           + item._file.type.replace('image/', '');
             item.file.name = fileName.replace(' ', '_');
           };
-          if(this.uploaderFoto.queue[0]){
+        if(this.uploaderFoto.queue[0]){
             if (this.uploaderFoto.queue[0].file.size < 500000) {
-              
               this.uploaderFoto.uploadAll();
-                this.uploaderFoto.onSuccessItem = (item, response, status, headers) => {
+              this.uploaderFoto.onSuccessItem = (item, response, status, headers) => {
                   this.action.patchFormData({foto : item.file.name});
                   this.test++;
                   this.masukanPhotoEdit();
@@ -430,7 +433,7 @@ export class TabDatapribadiComponent implements OnInit {
                   message: 'File tidak boleh melebihi 500kb'
                 });
             }
-          }else{
+          } else {
             this.masukanPhotoEdit();
           }
         }
