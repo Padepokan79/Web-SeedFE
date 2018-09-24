@@ -63,7 +63,7 @@ export class EditNilaiSdmComponent implements OnInit {
     });
 
     const readAllApi = this._factory.api({
-      api : 'allocation/MengelolaSdmSkill/readAll',
+      api : 'allocation/MengelolaSkillSdm/readAll',
       pagingParams : {
         filter : {
           field : 'sdm_id',
@@ -79,7 +79,7 @@ export class EditNilaiSdmComponent implements OnInit {
     });
 
     this.action = this._factory.actions({
-      api: 'allocation/MengelolaSdmSkill',
+      api: 'allocation/MengelolaSkillSdm',
       dataTable: this.dataTable,
       inputForm: this.inputForm
     });
