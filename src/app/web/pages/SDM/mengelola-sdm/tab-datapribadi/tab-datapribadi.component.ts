@@ -234,7 +234,7 @@ export class TabDatapribadiComponent implements OnInit {
               this.masukanPhoto(response.data.sdm_id);
               // console.log(response.data. contracttype_id);
               // console.log(response.data.sdm_id);
-              if(response.data.sdm_status == 1 ){
+              if(response.data.sdm_status == 1 && response.data.contracttype_id == 3){
                  this.insertHiring(response.data.sdm_id, response.data.contracttype_id);
               }
             });
@@ -274,8 +274,7 @@ export class TabDatapribadiComponent implements OnInit {
     const httpOptions = {
       params: new HttpParams()
     };
-    if (contractType === 3 ) {
-      this.http.post(hiringAPI, {
+    this.http.post(hiringAPI, {
         listhiring: multiInsert
       }, httpOptions).subscribe((response: any) => {
         console.log(response.data[0].sdmhiring_id);
@@ -294,7 +293,6 @@ export class TabDatapribadiComponent implements OnInit {
         });
       }
     );
-    }
   }
 
   // tslint:disable-next-line:variable-name
