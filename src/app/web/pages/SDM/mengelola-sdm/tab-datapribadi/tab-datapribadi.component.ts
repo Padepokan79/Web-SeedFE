@@ -67,6 +67,9 @@ export class TabDatapribadiComponent implements OnInit {
   public uploaderFoto: FileUploader;
   public uploader: FileUploader;
 
+  public statusContract:any = [];
+  public edit = false;
+
   constructor(private _factory: CoreFactory,
               private location: Location,
               public _notif: DefaultNotificationService,
@@ -162,6 +165,7 @@ export class TabDatapribadiComponent implements OnInit {
       });
 
       if (this.form === 2) {
+        this.edit = true;
         const readAllApi = this._factory.api({
           api : 'sdm/mengelolaSdm/readAll',
           pagingParams : {
@@ -176,7 +180,23 @@ export class TabDatapribadiComponent implements OnInit {
         this._factory.http().get(readAllApi).subscribe((res: any) => {
           res.data.items[0].sdm_status = res.data.items[0].sdm_status === 'Active' ? 1 : 0;
           this.action.patchFormData(res.data.items[0]);
-          // tslint:disable-next-line:triple-equals
+          
+          this.statusContract = [];
+          const api = this._factory.api({api : 'lov/contractType'});
+          this.http.get(api).subscribe((respon: any) => {
+            if (res.data.items[0].contracttype == 'Contract') {
+              this.statusContract.push(respon.data[2]);
+              console.log(respon.data[2]);
+            } else if (res.data.items[0].contracttype == 'OJT') {
+              this.statusContract.push(respon.data[2]);
+              this.statusContract.push(respon.data[1]);
+            } else if (res.data.items[0].contracttype == 'Bootcamp') {
+              this.statusContract.push(respon.data[2]);
+              this.statusContract.push(respon.data[1]);
+              this.statusContract.push(respon.data[0]);
+            } 
+          });
+          
           if (this.pathFoto == null || this.pathFoto == '') {
             this.pathFoto = this._factory.config().staticResourceFullPath(res.data.items[0].sdm_image);
             console.log ('Berhasil', 'LOAD PHOTO');

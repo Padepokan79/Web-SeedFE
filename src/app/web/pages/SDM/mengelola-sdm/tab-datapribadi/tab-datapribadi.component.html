@@ -227,14 +227,23 @@
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size">
-                <mat-select placeholder="" formControlName="contracttype_id" name="contracttype_id" required>
-                <mat-option *ngFor="let lov of lovStatus.data" [value]="lov.key">
-                    {{lov.value}}
-                </mat-option>
+                <mat-select placeholder="" formControlName="contracttype_id" *ngIf="edit == false" name="contracttype_id" required>
+                    <mat-option *ngFor="let lov of lovStatus.data" [value]="lov.key">
+                        {{lov.value}}
+                    </mat-option>
+                </mat-select>
+
+                <mat-select placeholder="" formControlName="contracttype_id" *ngIf="edit == true" name="contracttype_id" required>
+                    <mat-option *ngFor="let lov of statusContract" [value]="lov.key">
+                        {{lov.values.contracttypes_contracttype_name}}
+                    </mat-option>
                 </mat-select>
             </mat-form-field>
         </td>
     </tr>
+<!--                 <mat-option *ngFor="let lov of statusContract" [value]="lov.key" *ngIf="edit == true">
+                    {{lov.value}}
+                </mat-option> -->
 
     <!-- PENEMPATAN -->
     <tr>
