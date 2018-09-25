@@ -30,7 +30,8 @@ export class TabEmploymentComponent implements OnInit {
   public action: ActionService;
   public inputForm: InputForm;
   public dataTable: DataTable;
-
+  public date: Date = new Date();
+  public currentDate: Date = new Date(this.date.getFullYear(), this.date.getMonth(), this.date.getDate()-1);
   constructor(private _factory: CoreFactory) { }
 
   public ngOnInit() {
