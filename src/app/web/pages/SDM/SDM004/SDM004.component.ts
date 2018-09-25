@@ -99,7 +99,7 @@ export class SDM004Component implements OnInit {
           cellTemplate: this.viewAsDateTemplate, sortable: true },
         { prop: 'sdm_endcontract', name: 'End Date', width: 100,
           cellTemplate: this.viewAsDateTemplate, sortable: true },
-        { prop: 'sdm_status', name: 'Status', width: 100, sortable: false },
+        // { prop: 'sdm_status', name: 'Status', width: 100, sortable: false },
         { prop: 'sdm_id', name: 'Action', width: 100,
           cellTemplate: this.tableActionTemplate, sortable: false }
       ]

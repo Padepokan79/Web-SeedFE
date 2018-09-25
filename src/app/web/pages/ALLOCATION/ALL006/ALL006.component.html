@@ -120,3 +120,9 @@ UPDATED   : Friday, August 31st 2018 08:45:00 AM
   <i matTooltip="Sisa 4 bulan" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:#00da00; font-size: 30px" *ngIf="row.sdm_notification == 'green'"></i>
   <i matTooltip="Sisa lebih dari 4 bulan" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:#b3b3b3; font-size: 30px" *ngIf="row.sdm_notification == 'grey'"></i>
 </ng-template>
+<ng-template #tableActionTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
+  <button type="button" class="btn btn-primary btn-mm btn-icon" (click)="navigateDetailMenu(row.sdm_id)">
+   <i class="glyphicon glyphicon-eye-open"></i>
+ </button>
+ </ng-template>
+ 

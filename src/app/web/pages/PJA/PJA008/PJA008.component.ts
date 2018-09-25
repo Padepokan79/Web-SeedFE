@@ -71,7 +71,11 @@ export class PJA008Component implements OnInit {
   public validasiRolevalue: boolean;
   public jumlahChecked = 0;
 
-  constructor(private _factory: CoreFactory, public _notif: DefaultNotificationService, private route: ActivatedRoute, private routers: Router , private http: HttpClient) {
+  constructor(private _factory: CoreFactory,
+              public _notif: DefaultNotificationService,
+              private route: ActivatedRoute,
+              private routers: Router ,
+              private http: HttpClient) {
     this.listSearchCriteria.push(new SearchCriteria(_factory));
     this.sdmCtrl = new FormControl();
     this.valueCtrl = new FormControl({ value: '', disabled: true });
@@ -141,13 +145,14 @@ export class PJA008Component implements OnInit {
       tableColumns: [
         { prop: 'sdm_nik', name: 'NIK', width: 10, sortable: false },
         { prop: 'sdm_name', name: 'Name', width: 150, sortable: false },
-        { prop: 'skilltype_name', name: 'Category', width: 20, sortable: false },
-        { prop: 'skill_name', name: 'Skills', width: 20, sortable: false },
-        { prop: 'sdmskill_value', name: 'Value', width: 50, sortable: false },
+        // { prop: 'skilltype_name', name: 'Category', width: 20, sortable: false },
+        // { prop: 'skill_name', name: 'Skills', width: 20, sortable: false },
+        // { prop: 'sdmskill_value', name: 'Value', width: 50, sortable: false },
         { prop: 'end_contractproject', name: 'End date project', width: 50, sortable: false },
         { prop: 'sdm_notification', name: 'Notifikasi Kontrak', width: 50, cellTemplate: this.notif, sortable: false },
-        { prop: 'sdm_id', name: 'Select', width: 10, cellTemplate: this.tableActionTemplate, sortable: false }
-      ]
+        { prop: 'sdmskill_id', name: 'Action', width: 20,
+        cellTemplate: this.tableActionTemplate, sortable: false },
+     ]
     });
 
     // this.action = this._factory.actions({
@@ -372,4 +377,7 @@ export class PJA008Component implements OnInit {
 
   // tslint:disable-next-line:no-empty
   public ActivateCheckbox() {}
+  public navigateDetailMenu(id) {
+    this.routers.navigate(['pages/all/DetailSkillSdm' , {id}]);
+  }
 }

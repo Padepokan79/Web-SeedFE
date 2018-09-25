@@ -11,7 +11,7 @@ import { Conjunction } from '../../../../core/enums/conjunction-operator.enum';
 import { DefaultNotificationService } from '../../../../core/services/default-notification.service';
 import { ListOfValue } from '../../../../core/models/list-of-value';
 import { FormControl } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpParams, HttpClient } from '../../../../../../node_modules/@angular/common/http';
 import { Message } from '../../../../../../node_modules/@angular/compiler/src/i18n/i18n_ast';
 import { COMPARISON_OPERATOR } from '../../../../core/constant/constant';
@@ -79,7 +79,11 @@ export class ALL006Component implements OnInit {
   }
 
   // tslint:disable-next-line:member-ordering
-  constructor(private _factory: CoreFactory, public _notif: DefaultNotificationService, private route: ActivatedRoute, private http: HttpClient) {
+  constructor(private _factory: CoreFactory,
+              public _notif: DefaultNotificationService,
+              private route: ActivatedRoute,
+              private http: HttpClient,
+              private router: Router) {
     this.listSearchCriteria.push(new SearchCriteria(_factory));
     this.sdmCtrl = new FormControl();
     this.valueCtrl = new FormControl({ value: '', disabled: true });
@@ -152,12 +156,14 @@ export class ALL006Component implements OnInit {
       tableColumns: [
         { prop: 'sdm_nik', name: 'NIK', width: 10, sortable: false },
         { prop: 'sdm_name', name: 'Name', width: 150, sortable: false },
-        { prop: 'skilltype_name', name: 'Category', width: 20, sortable: false },
-        { prop: 'skill_name', name: 'Skills', width: 20, sortable: false },
-        { prop: 'sdmskill_value', name: 'Value', width: 50, sortable: false },
+        // { prop: 'skilltype_name', name: 'Category', width: 20, sortable: false },
+        // { prop: 'skill_name', name: 'Skills', width: 20, sortable: false },
+        // { prop: 'sdmskill_value', name: 'Value', width: 50, sortable: false },
         { prop: 'end_contractproject', name: 'End date project', width: 50, sortable: false },
         { prop: 'sdm_notification', name: 'Notifikasi Kontrak', width: 50,
         cellTemplate: this.notif, sortable: false },
+        { prop: 'sdmskill_id', name: 'Action', width: 20,
+        cellTemplate: this.tableActionTemplate, sortable: false },
       ]
     });
   //   this.action = this._factory.actions({
@@ -239,7 +245,6 @@ export class ALL006Component implements OnInit {
     this.IdSdm = null;
     // this.unlockSkill = true;
     // this.unlockValue = true;
-    
     this.listSearchCriteria[0].skill_id = null;
     this.listSearchCriteria[0].skilltype_id = null;
     this.listSearchCriteria[0].value = null;
@@ -280,5 +285,8 @@ export class ALL006Component implements OnInit {
 
   public setValue() {
     this.unlockValue = false;
+  }
+  public navigateDetailMenu(id) {
+    this.router.navigate(['pages/all/DetailSkillSdm' , {id}]);
   }
 }

@@ -202,13 +202,11 @@ export class TabDatapribadiComponent implements OnInit {
             const postAPI = this._factory.api({
               api: 'sdm/mengelolaSdm/create',
             });
-            console.log(this.pathFoto);
-            if(endDate<this.currentDate){
-              this.action.patchFormData({sdm_status : 0});
-            }
-            else{
-              this.action.patchFormData({sdm_status : 1});
-            }
+            if (endDate < this.currentDate) {
+                this.action.patchFormData({sdm_status : 0});
+              } else {
+                this.action.patchFormData({sdm_status : 1});
+              }
             this._factory.http().post(postAPI, this.action.getFormData())
             .subscribe((response: any) => {
               // console.log(response.data.sdm_id);
@@ -382,9 +380,9 @@ export class TabDatapribadiComponent implements OnInit {
       this._notif.success({
         message: 'Successfully Update Data'
       });
-      if(response.data.sdm_status == 1) {
+      // if(response.data.sdm_status == 1) {
 
-      }
+      // }
     });
     this.goBack();
   }
@@ -407,7 +405,7 @@ export class TabDatapribadiComponent implements OnInit {
           message: 'start contract > dari akhir contract!'
           });
         } else {
-        if(this.uploaderFoto.queue[0]){
+        if (this.uploaderFoto.queue[0]) {
             if (this.uploaderFoto.queue[0].file.size < 500000) {
             // tslint:disable-next-line:prefer-const
             let token = 'bearer ' + JSON.parse((localStorage.getItem('loggedInUser')))['access_token'];
@@ -428,8 +426,8 @@ export class TabDatapribadiComponent implements OnInit {
                               + item._file.type.replace('image/', '');
                 item.file.name = fileName.replace(' ', '_');
               };
-              this.uploaderFoto.uploadAll();
-              this.uploaderFoto.onSuccessItem = (item, response, status, headers) => {
+            this.uploaderFoto.uploadAll();
+            this.uploaderFoto.onSuccessItem = (item, response, status, headers) => {
                   this.action.patchFormData({foto : item.file.name});
                   this.test++;
                   this.masukanPhotoEdit();
