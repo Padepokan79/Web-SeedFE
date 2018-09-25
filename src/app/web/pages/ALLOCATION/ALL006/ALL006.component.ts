@@ -15,6 +15,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpParams, HttpClient } from '../../../../../../node_modules/@angular/common/http';
 import { Message } from '../../../../../../node_modules/@angular/compiler/src/i18n/i18n_ast';
 import { COMPARISON_OPERATOR } from '../../../../core/constant/constant';
+import { ModalComponent } from '../../../../core/components/modal/modal.component';
+import { DetailSkillSdmComponent } from '../ALL003/DetailSkillSdm/DetailSkillSdm.component';
 
 @Component({
   selector: 'app-ALL006',
@@ -28,6 +30,12 @@ export class ALL006Component implements OnInit {
   public viewAsDateTemplate: any;
   @ViewChild('tableActionTemplate')
   public tableActionTemplate: any;
+  @ViewChild('popUp')
+  public popUp: ModalComponent;
+  @ViewChild('modalDataPopUp')
+  public modalDataPopUp: DetailSkillSdmComponent;
+
+  public selectedId: any;
 
   public sdmCtrl: FormControl;
   public valueCtrl: FormControl;
@@ -287,6 +295,7 @@ export class ALL006Component implements OnInit {
     this.unlockValue = false;
   }
   public navigateDetailMenu(id) {
-    this.router.navigate(['pages/all/DetailSkillSdm' , {id}]);
+    // this.router.navigate(['pages/all/DetailSkillSdm' , {id}]);
+    this.selectedId = id;
   }
 }

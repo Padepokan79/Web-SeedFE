@@ -64,6 +64,7 @@ export class PJA008Component implements OnInit {
   public jumlahDataCheck: number = 0;
   public validasiCheck: boolean = true;
   public rows: any[] = [];
+  public selectedId: any;
   @ViewChild('notif')
   public notif: any;
   public roletype: string = '1';
@@ -378,6 +379,7 @@ export class PJA008Component implements OnInit {
   // tslint:disable-next-line:no-empty
   public ActivateCheckbox() {}
   public navigateDetailMenu(id) {
-    this.routers.navigate(['pages/all/DetailSkillSdm' , {id}]);
+    // this.routers.navigate(['pages/all/DetailSkillSdm' , {id}]);
+    this.selectedId = id;
   }
 }
