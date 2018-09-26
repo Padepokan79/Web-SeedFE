@@ -99,6 +99,7 @@
     "@auth0/angular-jwt": "^1.2.0",
     "@swimlane/ngx-charts": "^7.4.0",
     "@swimlane/ngx-datatable": "^11.3.2",
+    "angular-ts-math": "^1.0.7",
     "angular2-notifications": "^1.0.2",
     "animate.css": "^3.6.1",
     "autoprefixer": "^8.6.4",
