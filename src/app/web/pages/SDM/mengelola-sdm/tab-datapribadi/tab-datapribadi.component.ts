@@ -14,6 +14,7 @@ import { url } from 'inspector';
 import { Location } from '@angular/common';
 import { SubjectSubscriber } from '../../../../../../../node_modules/rxjs/Subject';
 import { DatePipe } from '@angular/common';
+import { angularMath } from 'angular-ts-math';
 
 @Component({
   selector: 'app-tab-datapribadi',
@@ -64,6 +65,7 @@ export class TabDatapribadiComponent implements OnInit {
   public maxDate: Date = new Date(this.date.getFullYear(), this.date.getMonth(), this.date.getDate() - 1);
   public currentDate: Date = new Date(this.date.getFullYear(), this.date.getMonth(), this.date.getDate());
   // coba
+  public incFoto = angularMath.getIntegerRandomRange(1, 100000);
   public test: number = 1;
   public uploaderFoto: FileUploader;
   public uploader: FileUploader;
@@ -199,17 +201,36 @@ export class TabDatapribadiComponent implements OnInit {
               this.statusContract.push(respon.data[0]);
             } 
           });
-          
-          if (this.pathFoto == null || this.pathFoto == '') {
-            this.pathFoto = this._factory.config().staticResourceFullPath(res.data.items[0].sdm_image);
-            console.log ('Berhasil', 'LOAD PHOTO');
-          } else {
-            console.log ('GAGAL', 'LOAD PHOTO');
-          }
-          // this.pathFoto = this._factory.config().staticResourceFullPath(res.data.items[0].sdm_image);
-          console.log(this.pathFoto + ' ini path foto');
         });
+        this.patchFoto();
       }
+  }
+
+  public patchFoto(){
+        const readAllApi = this._factory.api({
+        api : 'sdm/mengelolaSdm/readAll',
+        pagingParams : {
+          filter : {
+            field : 'sdm_id',
+            operator : COMPARISON_OPERATOR.EQ,
+            value : this.id
+          }
+        }
+      });
+      this._factory.http().get(readAllApi).subscribe((res: any) => {
+
+          let foto = res.data.items[0].sdm_image;
+          if (foto != null && foto != '') {
+              this.pathFoto = this._factory.config().staticResourceFullPath(foto + "?rnd=" + this.incFoto);
+              console.log ('Berhasil', 'LOAD PHOTO');
+          }
+         else {
+          console.log ('GAGAL', 'LOAD PHOTO');
+        }
+        // this.pathFoto = this._factory.config().staticResourceFullPath(res.data.items[0].sdm_image);
+        console.log(this.pathFoto + ' ini path foto');
+      });
+    
   }
 
   public onSave() {
@@ -237,7 +258,7 @@ export class TabDatapribadiComponent implements OnInit {
               this.masukanPhoto(response.data.sdm_id);
               // console.log(response.data. contracttype_id);
               // console.log(response.data.sdm_id);
-              if(response.data.sdm_status == 1 ){
+              if(response.data.sdm_status == 1 && response.data.contracttype_id == 3){
                  this.insertHiring(response.data.sdm_id, response.data.contracttype_id);
               }
             });
@@ -245,6 +266,7 @@ export class TabDatapribadiComponent implements OnInit {
             message: 'Save Successfuly'
           });
           }
+          this.patchFoto();
       } else {
         this._notif.error({
           message: 'file lebih dari 500kb!'
@@ -277,8 +299,7 @@ export class TabDatapribadiComponent implements OnInit {
     const httpOptions = {
       params: new HttpParams()
     };
-    if (contractType === 3 ) {
-      this.http.post(hiringAPI, {
+    this.http.post(hiringAPI, {
         listhiring: multiInsert
       }, httpOptions).subscribe((response: any) => {
         console.log(response.data[0].sdmhiring_id);
@@ -297,7 +318,6 @@ export class TabDatapribadiComponent implements OnInit {
         });
       }
     );
-    }
   }
 
   // tslint:disable-next-line:variable-name
@@ -455,6 +475,7 @@ export class TabDatapribadiComponent implements OnInit {
                   this.test++;
                   this.masukanPhotoEdit();
               };
+              this.patchFoto();
               } else {
                 this._notif.error({
                   message: 'File tidak boleh melebihi 500kb'
@@ -462,6 +483,7 @@ export class TabDatapribadiComponent implements OnInit {
             }
           } else {
             this.masukanPhotoEdit();
+            this.patchFoto();
           }
         }
     }

@@ -26,7 +26,7 @@
                 <div *ngFor="let fileUrl of imageFiles">
                     <img style="width: 200px;height: 200px" [src]="fileUrl" (error)="this.imageUrl='http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png'" alt="Profil Photo"><br />
                 </div>
-                <div *ngIf="pathFoto">
+                <div *ngIf="pathFoto && !imageFiles">
                     <img src="{{pathFoto}}" style="width: 200px;height: 200px">
                 </div>
                 <label>Browse Image <span style="color:red">*</span> </label>
@@ -145,7 +145,7 @@
         <td>
             <div class="example-container">
             <mat-form-field class="sdw-full-size">
-                <input matInput placeholder="" formControlName="sdm_email" name="sdm_email" required>
+                <input matInput placeholder="" formControlName="sdm_email" name="sdm_email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
                 <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
             </mat-form-field>
             </div>
@@ -313,8 +313,10 @@
     <div style="margin-bottom:16px; margin-left:700px;">
       <button mat-flat-button class="btn-new btn-ww" (click)="onSave()" *ngIf=" form == 1 " [disabled]="action?.formControls()?.invalid || action?.formControls()?.pristine">
         <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Save</button>
-      <button mat-flat-button class="btn-new btn-ww" (click)="onUpdate()" *ngIf=" form == 2 " [disabled]="action?.formControls()?.pristine || action?.getFormControlValue('sdm_name')=='' || action?.getFormControlValue('sdm_nik')=='' || action?.getFormControlValue('sdm_ktp')=='' || action?.getFormControlValue('sdm_datebirth')=='' || action?.getFormControlValue('sdm_address')=='' || action?.getFormControlValue('sdm_phone')=='' || action?.getFormControlValue('religion_id')=='' || action?.getFormControlValue('health_id')=='' || action?.getFormControlValue('sdmlvl_id')=='' || action?.getFormControlValue('contracttype_id')=='' || action?.getFormControlValue('sdm_contractloc')=='' || action?.getFormControlValue('sdm_startcontract')=='' || action?.getFormControlValue('sdm_endcontract')=='' || action?.getFormControlValue('sdm_email')==''">
-        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Update</button>
+      <!-- <button mat-flat-button class="btn-new btn-ww" (click)="onUpdate()" *ngIf=" form == 2 " [disabled]="action?.formControls()?.pristine || action?.getFormControlValue('sdm_name')=='' || action?.getFormControlValue('sdm_nik')=='' || action?.getFormControlValue('sdm_ktp')=='' || action?.getFormControlValue('sdm_datebirth')=='' || action?.getFormControlValue('sdm_address')=='' || action?.getFormControlValue('sdm_phone')=='' || action?.getFormControlValue('religion_id')=='' || action?.getFormControlValue('health_id')=='' || action?.getFormControlValue('sdmlvl_id')=='' || action?.getFormControlValue('contracttype_id')=='' || action?.getFormControlValue('sdm_contractloc')=='' || action?.getFormControlValue('sdm_startcontract')=='' || action?.getFormControlValue('sdm_endcontract')=='' || action?.getFormControlValue('sdm_email')==''">
+        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Update</button> -->
+        <button mat-flat-button class="btn-new btn-ww" (click)="onUpdate()" *ngIf=" form == 2 " [disabled]="action?.formControls()?.pristine || action?.formControls()?.invalid">
+            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Update</button>
       <button mat-flat-button class="btn-clear btn-ww" [routerLink]="['/pages/sdm/SDM003']">
           <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel</button>
     </div>
