@@ -46,11 +46,11 @@
         <td >:</td>
         <td >
             <mat-form-field class="sdw-full-size">
-                <input matInput placeholder="" maxlength="9" formControlName="sdm_nik" name="sdm_nik" pattern="^([0-9]{0,})$" required>
-                <mat-hint *ngIf="action.formErrors.sdm_nik" [ngStyle]="{'color': 'red'}">
+                <input matInput placeholder="" maxlength="9" formControlName="sdm_nik" name="sdm_nik" pattern="^([0-9]{0,})$" disabled>
+                <!-- <mat-hint *ngIf="action.formErrors.sdm_nik" [ngStyle]="{'color': 'red'}">
                     {{action.formErrors.sdm_nik}}
-                </mat-hint>
-                </mat-form-field>
+                </mat-hint> -->
+            </mat-form-field>
         </td>
     </tr>
     <!-- NO KTP -->
@@ -69,16 +69,15 @@
 
     <!-- Jenis Kelamin -->
     <tr>
-        <td>Jenis Kelamin</td>
-        <td>:</td>
-        <td>
+        <td style="padding: 10px; padding-left: 0px">Jenis Kelamin</td>
+        <td style="padding: 10px;"> </td>
+        <td style="padding: 10px;">
             <mat-radio-group class="margin-field" formControlName="gender_id" name="gender_id" >
-            <mat-radio-button value="1">Laki-laki</mat-radio-button>
-            <mat-radio-button value="2">Perempuan</mat-radio-button>
+                <mat-radio-button value="1">Laki-laki</mat-radio-button>
+                <mat-radio-button value="2" style="margin-left: 15px;">Perempuan</mat-radio-button>
             </mat-radio-group>
-        </td>
+        <td></td>
     </tr>
-
     <!-- Tempat Lahir -->
     <tr>
         <td>Tempat Lahir</td>
@@ -294,6 +293,18 @@
                 </mat-form-field>
         </td>
     </tr>
+
+    <tr *ngIf="edit == false">
+        <td style="padding: 10px; padding-left: 0px;">Posisi</td>
+        <td style="padding: 10px;"> </td>
+        <td style="padding: 10px;">
+            <mat-radio-group class="margin-field" [(ngModel)]="posisi" name="posisi" >
+                <mat-radio-button value="01" (click)="generateNik('01')">Non - Teknis</mat-radio-button>
+                <mat-radio-button value="02" (click)="generateNik('02')" style="margin-left: 15px;">Teknis (Sofware Developer)</mat-radio-button>
+            </mat-radio-group>
+        </td>
+    </tr>
+
     </table>
     </div>
     <!-- <div class="col-md-3" *ngIf=" form == 2 ">
