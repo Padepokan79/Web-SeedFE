@@ -545,7 +545,7 @@ export class TabDatapribadiComponent implements OnInit {
         nilaiTerbesar+=1;
         if (nilaiTerbesar < 10) {
           nik3 = num.concat(month, month2, '00', nilaiTerbesar.toString());
-        } else if (nilaiTerbesar < 100) {
+        } else if (nilaiTerbesar < 100 && nilaiTerbesar >= 10) {
           nik3 = num.concat(month, month2, '0', nilaiTerbesar.toString());
         } else {
           nik3 = num.concat(month, month2, nilaiTerbesar.toString());
