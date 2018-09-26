@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ALL006Component } from './ALL006/ALL006.component';
 import { DetailSkillSdmComponent } from './ALL003/DetailSkillSdm/DetailSkillSdm.component';
 import { EditNilaiSdmComponent } from './ALL003/EditNilaiSdm/EditNilaiSdm.component';
+import { PopUpDetailSkillSdmComponent } from './ALL006/PopUpDetailSkillSdm/PopUpDetailSkillSdm.component';
 
 const ALL_COMPONENTS = [
     ALL001Component,
@@ -20,7 +21,8 @@ const ALL_COMPONENTS = [
     ALL005Component,
     ALL006Component,
     DetailSkillSdmComponent,
-    EditNilaiSdmComponent
+    EditNilaiSdmComponent,
+    PopUpDetailSkillSdmComponent
     // InputSkill
 ];
 

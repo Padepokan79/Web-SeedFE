@@ -20,6 +20,7 @@ import { PJA009Component } from './PJA009/PJA009.component';
 import { PJA008Component } from './PJA008/PJA008.component';
 import { PJA003RComponent } from './PJA003R/PJA003R.component';
 import { PopUpDetailComponent } from './PJA003R/PopUpDetail/PopUpDetail.component';
+import { PopUpDetailSkillSdmComponent } from './PJA008/PopUpDetailSkillSdm/PopUpDetailSkillSdm.component';
 // import { SearchCriteria } from './PJA012/SearchCriteria';
 
 const PJA_COMPONENTS = [
@@ -37,7 +38,8 @@ const PJA_COMPONENTS = [
     PJA011Component,
     PJA012Component,
     PJA003RComponent,
-    PopUpDetailComponent
+    PopUpDetailComponent,
+    PopUpDetailSkillSdmComponent
     // SearchCriteria
 ];
 

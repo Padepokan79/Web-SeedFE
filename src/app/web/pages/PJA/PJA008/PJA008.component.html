@@ -111,8 +111,20 @@ UPDATED   : Friday, August 31st 2018 08:45:00 AM
   <i matTooltip="Sisa lebih dari 4 bulan" class="fa fa-exclamation-triangle" aria-hidden="true" style="color:#b3b3b3; font-size: 30px" *ngIf="row.sdm_notification == 'grey'"></i>
 </ng-template>
 <ng-template #tableActionTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
-    <button type="button" class="btn btn-primary btn-mm btn-icon" (click)="navigateDetailMenu(row.sdm_id)">
+    <button type="button" class="btn btn-primary btn-mm btn-icon" (click)="popUp.show(navigateDetailMenu(row.sdm_id))">
         <i class="glyphicon glyphicon-eye-open"></i>
       </button>
       <mat-checkbox (change)="distRedundantCheckedSdm();activateButton()" value="{{row.sdm_id}}" [(ngModel)]="row.Checked" [name]="row.sdm_id" [disabled]=""></mat-checkbox>
 </ng-template>
+
+<sdw-modal-lg #popUp>
+  <div class="sdw-modal-body sdw-modal-scroll sdw-input">
+    <app-PopUpDetailSkillSdm [value]="selectedId" *ngIf="popUp.visible" #modalDataPopUp>
+    </app-PopUpDetailSkillSdm>
+  </div>
+  <div class="sdw-modal-footer">
+    <button type="button" class="btn btn-danger btn-mm btn-icon" (click)="popUp.hide()">
+      <b>Kembali</b>
+    </button>
+  </div>
+</sdw-modal-lg>

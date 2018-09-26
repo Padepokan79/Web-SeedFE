@@ -10,11 +10,11 @@ import { InputForm } from '../../../../../core/models/input-form';
 import { HttpParams, HttpClient } from '../../../../../../../node_modules/@angular/common/http';
 
 @Component({
-  selector: 'app-DetailSkillSdm',
-  templateUrl: './DetailSkillSdm.component.html',
-  styleUrls: ['./DetailSkillSdm.component.css']
+  selector: 'app-PopUpDetailSkillSdm',
+  templateUrl: './PopUpDetailSkillSdm.component.html',
+  styleUrls: ['./PopUpDetailSkillSdm.component.css']
 })
-export class DetailSkillSdmComponent implements OnInit {
+export class PopUpDetailSkillSdmComponent implements OnInit {
   public time: Date = new Date();
   public dataTable: DataTable;
   public action: ActionService;
@@ -32,11 +32,12 @@ export class DetailSkillSdmComponent implements OnInit {
               private http: HttpClient
   ) {
     this.route.params.subscribe((param) => {
-      this.selectedId = param.id;
+      this.value = param.id;
     });
   }
 
   public ngOnInit() {
+    console.log('Value:' + this.value );
     // this.sdmid = this.id;
     setInterval(() => {
       this.time = new Date();
@@ -64,7 +65,7 @@ export class DetailSkillSdmComponent implements OnInit {
       });
     const filter = [];
     filter.push({
-      sdm_id: this.selectedId
+      sdm_id: this.value
     });
     const HttpOptions = {
       params: new HttpParams()
@@ -79,7 +80,7 @@ export class DetailSkillSdmComponent implements OnInit {
         filter : {
           field : 'sdm_id',
           operator : COMPARISON_OPERATOR.EQ,
-          value : this.selectedId || this.value
+          value : this.value
         }
       }
     });
@@ -94,8 +95,8 @@ export class DetailSkillSdmComponent implements OnInit {
   }
   // tslint:disable-next-line:member-ordering
 
-  public goBack() {
-    this.location.back();
-  }
+  // public goBack() {
+  //   this.location.back();
+  // }
 
 }
