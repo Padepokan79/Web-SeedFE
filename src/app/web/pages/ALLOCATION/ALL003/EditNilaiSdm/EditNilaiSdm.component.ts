@@ -27,6 +27,7 @@ export class EditNilaiSdmComponent implements OnInit {
   public dataTable: DataTable;
   public action: ActionService;
   public inputForm: InputForm;
+  public editId: number;
   private selectedId: number;
 
   constructor(private location: Location,
@@ -39,7 +40,6 @@ export class EditNilaiSdmComponent implements OnInit {
   }
 
   public ngOnInit() {
-    this.inputForm = null;
     // this.sdmid = this.id;
     setInterval(() => {
       this.time = new Date();
@@ -102,9 +102,14 @@ export class EditNilaiSdmComponent implements OnInit {
   }
 
   public onSave() {
-    const createAPI = this._factory.api({
-      api : 'project/MengelolaSkillSdm/update',
+    const updateApi = this._factory.api({
+      api : 'allocation/MengelolaSkillSdm/update',
     });
+    this._factory.http().put(updateApi + '?sdmskill_id=' + this.action.getFormControlValue('sdmskill_id'), this.action.getFormData()).subscribe((response: any) => {
+      this._notif.success({
+        message: 'Data Berhasil Disimpan'
+        });
+      });
   }
 
   public validasiNilai() {
@@ -114,9 +119,7 @@ export class EditNilaiSdmComponent implements OnInit {
         this.action.patchFormData({skilltype_name : ''});
         this.action.patchFormData({skill_name : ''});
         this.action.patchFormData({sdmskill_value : ''});
-        this._notif.success({
-          message: 'Berhasil'
-        });
+        this.refreshTabel();
       } else {
         this._notif.error({
           message: 'Nilai melebihi 10'
