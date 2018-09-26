@@ -13,6 +13,7 @@ import { HttpClient, HttpParams } from '../../../../../../../node_modules/@angul
 import { url } from 'inspector';
 import { Location } from '@angular/common';
 import { SubjectSubscriber } from '../../../../../../../node_modules/rxjs/Subject';
+import { DatePipe } from '@angular/common';
 import { angularMath } from 'angular-ts-math';
 
 @Component({
@@ -71,12 +72,14 @@ export class TabDatapribadiComponent implements OnInit {
 
   public statusContract:any = [];
   public edit = false;
+  public posisi: string;
 
   constructor(private _factory: CoreFactory,
               private location: Location,
               public _notif: DefaultNotificationService,
               private router: Router,
-              private http: HttpClient
+              private http: HttpClient,
+              private datePipe: DatePipe
             ) {
                 const URL = this._factory.api({
                   api: 'sdm\Upload',
@@ -113,7 +116,7 @@ export class TabDatapribadiComponent implements OnInit {
           sdm_ktp: '',
           sdm_linkedin: '',
           sdm_name: '',
-          sdm_nik: '',
+          sdm_nik: '000000000',
           sdm_objective: '',
           sdm_phone: '',
           sdm_placebirth: '',
@@ -513,5 +516,45 @@ export class TabDatapribadiComponent implements OnInit {
 
   public goBack() {
     this.location.back();
+  }
+
+  public generateNik(num){
+    var nik = this.action.getFormControlValue('sdm_nik');
+    var nik3: string;
+
+    var datum = this.action.getFormControlValue('sdm_startcontract');
+    var month = this.datePipe.transform(datum, 'MM');
+
+    var datum2 = this.action.getFormControlValue('sdm_endcontract');
+    var month2 = this.datePipe.transform(datum2, 'MM');    
+
+    if (month == null) {
+      nik3 = num.concat(nik.substr(2,9));
+    } else if (month2 == null) {
+      nik3 = num.concat(month, nik.substr(4,9));
+    } else {
+      let nilaiTerbesar = 0;
+      this.http.get(this._factory.api({api : 'lov/Sdm'}))
+      .subscribe((res: any) => {
+        console.log(res);
+        for (var i = 0; i < res.data.length; ++i) {
+          if (nilaiTerbesar < res.data[i].key) {
+            nilaiTerbesar = res.data[i].key;
+          }
+        }
+        nilaiTerbesar+=1;
+        if (nilaiTerbesar < 10) {
+          nik3 = num.concat(month, month2, '00', nilaiTerbesar.toString());
+        } else if (nilaiTerbesar < 100) {
+          nik3 = num.concat(month, month2, '0', nilaiTerbesar.toString());
+        } else {
+          nik3 = num.concat(month, month2, nilaiTerbesar.toString());
+        }
+        console.log(nilaiTerbesar.toString());
+        this.action.patchFormData({sdm_nik : nik3});
+        console.log(nik3);
+      });
+    }
+    
   }
 }
