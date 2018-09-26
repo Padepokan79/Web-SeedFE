@@ -11,6 +11,7 @@ import { Location } from '@angular/common';
 import { COMPARISON_OPERATOR } from '../../../../../core/constant/constant';
 import { Comparison } from '../../../../../core/enums/comparison-operator.enum';
 import { InputForm } from '../../../../../core/models/input-form';
+import { DefaultNotificationService } from '../../../../../core/services/default-notification.service';
 
 @Component({
   selector: 'app-EditNilaiSdm',
@@ -28,13 +29,17 @@ export class EditNilaiSdmComponent implements OnInit {
   public inputForm: InputForm;
   private selectedId: number;
 
-  constructor(private location: Location, private _factory: CoreFactory, private route: ActivatedRoute) {
+  constructor(private location: Location,
+              private _factory: CoreFactory,
+              private route: ActivatedRoute,
+              public _notif: DefaultNotificationService) {
     this.route.params.subscribe((param) => {
       this.selectedId = param.id;
     });
   }
 
   public ngOnInit() {
+    this.inputForm = null;
     // this.sdmid = this.id;
     setInterval(() => {
       this.time = new Date();
@@ -44,6 +49,8 @@ export class EditNilaiSdmComponent implements OnInit {
       formControls: {
         sdmskill_id: '',
         sdm_name: '',
+        skilltype_name: '',
+        skill_name: '',
         sdmskill_value: ''
       }
     });
@@ -55,8 +62,8 @@ export class EditNilaiSdmComponent implements OnInit {
         limit: 10
       },
       tableColumns: [
-        { prop: 'skill_name', name: 'Skill name', width: 100, sortable: false },
         { prop: 'skilltype_name', name: 'Skill Type Name', width: 100, sortable: false },
+        { prop: 'skill_name', name: 'Skill name', width: 100, sortable: false },
         { prop: 'sdmskill_value', name: 'Skill Value', width: 100, sortable: true },
         { prop: 'skilltype_id', name: 'Action', width: 50, cellTemplate: this.tableActionTemplate, sortable: false }
       ]
@@ -94,4 +101,26 @@ export class EditNilaiSdmComponent implements OnInit {
     this.action.refreshTable();
   }
 
+  public onSave() {
+    const createAPI = this._factory.api({
+      api : 'project/MengelolaSkillSdm/update',
+    });
+  }
+
+  public validasiNilai() {
+    if (this.action.getFormControlValue('sdmskill_value') <= 10 ) {
+        // tslint:disable-next-line:no-unused-expression
+        this.onSave();
+        this.action.patchFormData({skilltype_name : ''});
+        this.action.patchFormData({skill_name : ''});
+        this.action.patchFormData({sdmskill_value : ''});
+        this._notif.success({
+          message: 'Berhasil'
+        });
+      } else {
+        this._notif.error({
+          message: 'Nilai melebihi 10'
+        });
+      }
+  }
 }

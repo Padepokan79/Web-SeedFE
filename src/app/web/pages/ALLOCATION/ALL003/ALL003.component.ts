@@ -62,8 +62,6 @@ export class ALL003Component implements OnInit {
         limit : 10
       },
       searchCriteria : [
-        { viewValue: 'Skill Type Name', viewKey: 'skilltype_name', type: TYPE.STRING },
-        { viewValue: 'Skill Name', viewKey: 'skill_name', type: TYPE.STRING },
         { viewValue: 'Sdm Name', viewKey: 'sdm_name', type: TYPE.STRING },
         { viewValue: 'NIK', viewKey: 'sdm_nik', type: TYPE.NUMBER }
       ],
