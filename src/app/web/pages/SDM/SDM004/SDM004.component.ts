@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActionService } from '../../../../core/services/uninjectable/action.service';
 import { DataTable } from '../../../../core/models/data-table';
 import { CoreFactory } from '../../../../core/factory/core.factory';
-import { TYPE } from '../../../../core/constant/constant';
+import { TYPE, COMPARISON_OPERATOR } from '../../../../core/constant/constant';
 import { Router } from '../../../../../../node_modules/@angular/router';
 import { FormGroup, FormControl } from '../../../../../../node_modules/@angular/forms';
 import { ListOfValue } from '../../../../core/models/list-of-value';
@@ -113,6 +113,13 @@ export class SDM004Component implements OnInit {
 
     this.lovSdm = this._factory.lov({
       api: 'lov/sdm',
+      pagingParams: {
+        filter: {
+          field: 'sdm_status',
+          operator: COMPARISON_OPERATOR.EQ,
+          value: 0
+        }
+      },
       initializeData: true
     });
   }

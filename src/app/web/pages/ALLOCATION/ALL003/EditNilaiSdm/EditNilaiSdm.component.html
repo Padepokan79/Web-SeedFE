@@ -17,16 +17,53 @@
   
     <form class="io-form-body" [formGroup]="action?.formControls()">
       <div class="form-input">
-        <mat-label>SDM Name : </mat-label>
-        <mat-form-field>
+        <mat-label><b>SDM Name : </b></mat-label>
+        <mat-label><b>{{action?.getFormControlValue("sdm_name")}}</b></mat-label>
+        <!-- <mat-form-field>
           <input matInput formControlName="sdm_name" name="sdm_name" readonly>
-        </mat-form-field>
+        </mat-form-field> -->
       </div>
       <div class="form-input">
+        <div  class="row">
+        <div class="col-md-3">
+          <table>
+            <tr>
+              <td style="padding : 10px">
+                <label><b>{{action?.getFormControlValue("skilltype_name")}}</b>  </label>
+              </td>
+              <td style="padding : 10px">
+                <label><b>{{action?.getFormControlValue("skill_name")}}</b>  </label>
+              </td>
+              <td style="padding : 10px">
+                <!-- <mat-label>Value : </mat-label> -->
+                <mat-form-field>
+                    <input matInput placeholder="Value" style="width: auto" maxlength="2" formControlName="sdmskill_value" name="sdmskill_value" 
+                      pattern="^0$|^((?!(0))[0-9]{0,9})$" 
+                      required
+                      >
+                </mat-form-field>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <!-- <div class="col-md-3" style="margin-left:272px">
+            <io-form-action [action]="action">
+              <button [disabled]="this.action.getFormControlValue('sdmskill_value') > 10 ? false : true"></button>
+            </io-form-action>
+        </div> -->
+          <div style="margin-bottom:16px; margin-left:1050px; align-content: center">
+            <button mat-flat-button class="btn-new btn-mm" (click)="validasiNilai()" [disabled]="action?.formControls()?.invalid || action?.formControls()?.pristine || this.action.getFormControlValue('sdmskill_value') > 10 ? true : false">
+                <span aria-hidden="true"></span> {{action.buttonTitle}}</button>
+            <!-- <button mat-flat-button class="btn-clear btn-mm" (click)="action.onReset()">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Reset</button> -->
+          </div>
+        </div>
+      </div>
+      <!-- <div class="form-input">
         <div class="row">
           <div class="col-md-3">
-            <mat-form-field class="sdw-full-size">
-              <mat-label>Update Value : </mat-label>
+            <mat-label>Update Value : </mat-label>
+            <mat-form-field>
               <input matInput placeholder="Category Name" formControlName="sdmskill_value" name="sdmskill_value" required>
               <mat-hint *ngIf="action.formErrors.skilltype_name" [ngStyle]="{'color': 'red'}">
                 {{action.formErrors.skilltype_name}}
@@ -37,7 +74,7 @@
               <io-form-action [action]="action"></io-form-action>
           </div>
         </div>
-      </div>
+      </div> -->
     </form>
   </io-form>
   
