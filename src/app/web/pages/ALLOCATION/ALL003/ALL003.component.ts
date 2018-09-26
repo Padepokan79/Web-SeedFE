@@ -74,7 +74,7 @@ export class ALL003Component implements OnInit {
         // { prop: 'skilltype_name', name: 'Skill Type Name', width: 100, sortable: false },
         // { prop: 'sdmskill_value', name: 'Skill Value', width: 100, sortable: true },
         { prop: 'end_contractproject', name: 'End date project', width: 100, sortable: false },
-        { prop: 'sdm_notification', name: 'Notifikasi', width: 50,
+        { prop: 'sdm_notification', name: 'Notifikasi Kontrak', width: 50,
         cellTemplate: this.notif, sortable: false },
         { prop: 'sdmskill_id', name: 'Action', width: 100,
         cellTemplate: this.tableActionTemplate, sortable: false },

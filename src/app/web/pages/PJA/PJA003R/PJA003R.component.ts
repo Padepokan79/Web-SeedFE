@@ -146,7 +146,7 @@ export class PJA003RComponent implements OnInit {
         // { prop: 'project_devtool', name: 'Dev Tools', width: 100, sortable: false },
         // { prop: 'project_technicalinfo', name: 'Technical Info', width: 100, sortable: false },
         // { prop: 'project_othertinfo', name: 'Other Info', width: 100, sortable: false },
-        { prop: 'notif', name: 'Notifikasi kontrak', width: 150,
+        { prop: 'notif', name: 'Notifikasi Project', width: 150,
           cellTemplate: this.notif, sortable: false },
         { prop: 'project_id', name: 'Action', width: 100,
           cellTemplate: this.tableActionTemplate, sortable: false }
