@@ -135,8 +135,11 @@ export class ALL004Component implements OnInit {
   })
   // 'http://localhost:7979/allocation/MultiInsertSdm';
   public btnSave() {
+
+
     let save2 = true;
     const body = [];
+    var dataDouble = false;
     this.listSearchCriteria.forEach((skillSdm: SearchCriteria) => {
       if (this.sdmId == 0 || this.sdmId == null) {
         this._notif.error({
@@ -195,31 +198,46 @@ export class ALL004Component implements OnInit {
       this.nik = res.data.items[this.sdmId-1].sdm_nik;
     });
 
-    if (this.save == true && save2 == true) {
-      let valid = false;
-      console.log('POST');
-      const url = `${this.apiRoot}/MultiCreate`;
-      const httpOptions = {
-        params: new HttpParams()
-      };
-      this.http
-        .post(url, {
-          listsdm: body
-        }, httpOptions)
-        .subscribe(
-          (res: any) => {
-          this._notif.success({
-            message: 'Input data berhasil'
-          });
-          console.clear();
-          console.log(res)
-       },(error: any) => {
-          this._notif.error(error);
-          console.clear();
-       });
-    } else {
-      console.log('Ada yang kurang');
+    for (var i = 0; i < body.length; i++) { 
+      for (var j = i + 1 ; j < body.length; j++) {
+        if (body[i].skill_id == body[j].skill_id) { 
+          dataDouble = true;
+        } 
+      }
     }
-    this.location.back();
+
+    if (dataDouble == true) {
+      this._notif.error({
+        message: 'Ada Data yang sama'
+      });
+      console.clear();
+    } else {
+      if (this.save == true && save2 == true) {
+        let valid = false;
+        console.log('POST');
+        const url = `${this.apiRoot}/MultiCreate`;
+        const httpOptions = {
+          params: new HttpParams()
+        };
+        this.http
+          .post(url, {
+            listsdm: body
+          }, httpOptions)
+          .subscribe(
+            (res: any) => {
+            this._notif.success({
+              message: 'Input data berhasil'
+            });
+            console.clear();
+            console.log(res)
+            this.location.back();
+         },(error: any) => {
+            this._notif.error(error);
+            console.clear();
+         });
+      } else {
+        console.log('Ada yang kurang');
+      } 
+    }
   }
 }
