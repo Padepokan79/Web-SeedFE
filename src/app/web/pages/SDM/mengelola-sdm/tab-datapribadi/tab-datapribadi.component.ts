@@ -124,7 +124,7 @@ export class TabDatapribadiComponent implements OnInit {
           sdm_ktp: '',
           sdm_linkedin: '',
           sdm_name: '',
-          sdm_nik: '000000000',
+          sdm_nik: '',
           sdm_objective: '',
           sdm_phone: '',
           sdm_placebirth: '',
@@ -537,9 +537,9 @@ export class TabDatapribadiComponent implements OnInit {
     var month2 = this.datePipe.transform(datum2, 'MM');    
 
     if (month == null) {
-      nik3 = num.concat(nik.substr(2,9));
+      nik3 = num.concat('0000000');
     } else if (month2 == null) {
-      nik3 = num.concat(month, nik.substr(4,9));
+      nik3 = num.concat(month, '00000');
     } else {
       let nilaiTerbesar = 0;
       this.http.get(this._factory.api({api : 'lov/Sdm'}))
