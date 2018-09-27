@@ -116,10 +116,6 @@ export class EditNilaiSdmComponent implements OnInit {
     if (this.action.getFormControlValue('sdmskill_value') <= 10 ) {
         // tslint:disable-next-line:no-unused-expression
         this.onSave();
-        this.action.patchFormData({skilltype_name : ''});
-        this.action.patchFormData({skill_name : ''});
-        this.action.patchFormData({sdmskill_value : ''});
-        this.refreshTabel();
       } else {
         this._notif.error({
           message: 'Nilai melebihi 10'

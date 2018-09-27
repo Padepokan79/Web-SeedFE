@@ -53,7 +53,7 @@
             </io-form-action>
         </div> -->
           <div style="margin-bottom:16px; margin-left:1050px; align-content: center">
-            <button mat-flat-button class="btn-new btn-mm" (click)="validasiNilai()" [disabled]="action?.formControls()?.invalid || action?.formControls()?.pristine || this.action.getFormControlValue('sdmskill_value') > 10 ? true : false">
+            <button mat-flat-button class="btn-new btn-mm" (click)="validasiNilai();refreshTabel()" [disabled]="action?.formControls()?.invalid || action?.formControls()?.pristine || this.action.getFormControlValue('sdmskill_value') > 10 ? true : false">
                 <span aria-hidden="true"></span> {{action.buttonTitle}}</button>
             <!-- <button mat-flat-button class="btn-clear btn-mm" (click)="action.onReset()">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Reset</button> -->
