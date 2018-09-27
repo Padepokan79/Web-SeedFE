@@ -404,7 +404,7 @@ export class TabDatapribadiComponent implements OnInit {
           } else {
             this.uploaderFoto.uploadAll();
             this.uploaderFoto.onSuccessItem = (item, response, status, headers) => {
-              this.action.patchFormData({foto : item.file.name});
+              this.action.patchFormData({sdm_image : item.file.name});
               this.test++;
               this.uploaderFoto.clearQueue();
           };
@@ -479,7 +479,7 @@ export class TabDatapribadiComponent implements OnInit {
               };
             this.uploaderFoto.uploadAll();
             this.uploaderFoto.onSuccessItem = (item, response, status, headers) => {
-                  this.action.patchFormData({foto : item.file.name});
+                  this.action.patchFormData({sdm_image : item.file.name});
                   this.test++;
                   this.masukanPhotoEdit();
               };
