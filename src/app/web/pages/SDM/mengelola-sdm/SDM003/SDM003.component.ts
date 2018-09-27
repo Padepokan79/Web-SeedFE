@@ -13,6 +13,7 @@ import { ListOfValue } from '../../../../../core/models/list-of-value';
 import { InputForm } from '../../../../../core/models/input-form';
 import { Comparison } from '../../../../../core/enums/comparison-operator.enum';
 import { Conjunction } from '../../../../../core/enums/conjunction-operator.enum';
+import { HttpClient, HttpParams } from '../../../../../../../node_modules/@angular/common/http';
 
 @Component({
   selector: 'app-SDM003',
@@ -62,7 +63,7 @@ export class SDM003Component implements OnInit {
   }
 
   // tslint:disable-next-line:member-ordering
-  constructor(private _factory: CoreFactory, private router: Router, private route: ActivatedRoute) {
+  constructor(private http: HttpClient,private _factory: CoreFactory, private router: Router, private route: ActivatedRoute) {
 
     this.sdmCtrl = new FormControl();
     this.filteredSdm = this.sdmCtrl.valueChanges
@@ -75,6 +76,49 @@ export class SDM003Component implements OnInit {
     // });
   }
   public ngOnInit() {
+
+    this.http.get(this._factory.api({api: 'sdm/MengelolaHistoriSdm/ReadAll/readAll'}))
+    .subscribe((res: any) => {
+      this.http.get(this._factory.api({api: 'sdm/MengelolaSdm/ReadAll'}))
+      .subscribe((response: any) => {
+        let sdmNonactive = [];
+        let sdmNonActive2 = [];
+        for (var i = 0; i < response.data.items.length; ++i) {
+          if (response.data.items[i].sdm_status == 'Non-Active') {
+            sdmNonactive.push(response.data.items[i]);
+          }
+        }
+
+        for (var i = 0; i < sdmNonactive.length; ++i) {
+          for (var ii = 0; ii < res.data.items.length; ++ii) {
+            if (sdmNonactive[i].sdm_id == res.data.items[ii].sdm_id) {
+              sdmNonActive2.push(sdmNonactive[i].sdm_id);
+            }
+          }
+        }
+
+        for (var i = 0; i < sdmNonActive2.length; ++i) {
+          for (var a = 0; a < sdmNonactive.length; ++a) {
+            if (sdmNonActive2[i] == sdmNonactive[a].sdm_id) {
+              sdmNonactive.splice(a, 1)
+            }
+          } 
+        }
+
+        console.log(sdmNonactive);
+
+        for (var i = 0; i < sdmNonactive.length; ++i) {
+          this.http.post(this._factory.api({api: 'sdm/MengelolaHistoriSdm/Create'}), {
+            sdm_id: sdmNonactive[i].sdm_id,
+            sdmhistory_startdate: sdmNonactive[i].sdm_startcontract,
+            sdmhistory_enddate: sdmNonactive[i].sdm_endcontract
+          }).subscribe((eaa: any) => {
+            console.log(eaa);
+          });
+        }
+      });
+    });
+
     // console.log('gh' + this.sdmid);
     setInterval(() => {
       this.time = new Date();
