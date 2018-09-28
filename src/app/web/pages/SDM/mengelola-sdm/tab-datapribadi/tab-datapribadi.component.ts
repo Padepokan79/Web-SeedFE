@@ -554,8 +554,8 @@ export class TabDatapribadiComponent implements OnInit {
     var datum = this.action.getFormControlValue('sdm_startcontract');
     var month = this.datePipe.transform(datum, 'MM');
 
-    var datum2 = this.action.getFormControlValue('sdm_endcontract');
-    var month2 = this.datePipe.transform(datum2, 'MM');    
+    var datum2 = this.action.getFormControlValue('sdm_startcontract');
+    var month2 = this.datePipe.transform(datum2, 'yy');    
 
     if (month == null) {
       nik3 = num.concat('0000000');
