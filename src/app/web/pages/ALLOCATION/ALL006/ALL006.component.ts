@@ -77,6 +77,15 @@ export class ALL006Component implements OnInit {
   public roletype: string = '1';
   public skillType: string;
 
+  numberOnly(event): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
+
+  }
+
   public onKey(event: any) {
     console.log(event);
     this.keyId = event.target.value;
