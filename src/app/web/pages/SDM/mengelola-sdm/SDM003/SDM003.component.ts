@@ -93,22 +93,21 @@ export class SDM003Component implements OnInit {
 
         for (var i = 0; i < sdmNonactive.length; ++i) {
           for (var ii = 0; ii < res.data.items.length; ++ii) {
-            if (sdmNonactive[i].sdm_id == res.data.items[ii].sdm_id) {
-              sdmNonActive2.push(sdmNonactive[i].sdm_id);
+            if (sdmNonactive[i].sdm_id == res.data.items[ii].sdm_id && sdmNonactive[i].sdm_endcontract == res.data.items[ii].sdm_endcontract) {
+              sdmNonActive2.push(sdmNonactive[i]);
             }
           }
         }
 
         for (var i = 0; i < sdmNonActive2.length; ++i) {
           for (var a = 0; a < sdmNonactive.length; ++a) {
-            if (sdmNonActive2[i] == sdmNonactive[a].sdm_id) {
+            if (sdmNonActive2[i].sdm_id == sdmNonactive[a].sdm_id && sdmNonActive2[i].sdm_endcontract == sdmNonactive[a].sdm_endcontract) {
               sdmNonactive.splice(a, 1)
             }
           } 
         }
 
         console.log(sdmNonactive);
-
         for (var i = 0; i < sdmNonactive.length; ++i) {
           this.http.post(this._factory.api({api: 'sdm/MengelolaHistoriSdm/Create'}), {
             sdm_id: sdmNonactive[i].sdm_id,
