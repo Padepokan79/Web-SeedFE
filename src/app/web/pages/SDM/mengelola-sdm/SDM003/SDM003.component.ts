@@ -14,6 +14,8 @@ import { InputForm } from '../../../../../core/models/input-form';
 import { Comparison } from '../../../../../core/enums/comparison-operator.enum';
 import { Conjunction } from '../../../../../core/enums/conjunction-operator.enum';
 import { HttpClient, HttpParams } from '../../../../../../../node_modules/@angular/common/http';
+import { DefaultNotificationService } from '../../../../../core/services/default-notification.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-SDM003',
@@ -63,7 +65,7 @@ export class SDM003Component implements OnInit {
   }
 
   // tslint:disable-next-line:member-ordering
-  constructor(private http: HttpClient,private _factory: CoreFactory, private router: Router, private route: ActivatedRoute) {
+  constructor(public _notif : DefaultNotificationService,private http: HttpClient,private _factory: CoreFactory, private router: Router, private route: ActivatedRoute) {
 
     this.sdmCtrl = new FormControl();
     this.filteredSdm = this.sdmCtrl.valueChanges
@@ -251,7 +253,9 @@ export class SDM003Component implements OnInit {
     // .map((res) => res())
     .subscribe(
         (data)  => {
-            FileSaver.saveAs(data, 'CV ' + sdmName + '.pdf');
+            // FileSaver.saveAs(data, 'CV ' + sdmName + '.pdf');
+            var fileURL = window.URL.createObjectURL(data);
+            window.open(fileURL, "_blank");
             this.progress = false;
         },
         (error) => {
