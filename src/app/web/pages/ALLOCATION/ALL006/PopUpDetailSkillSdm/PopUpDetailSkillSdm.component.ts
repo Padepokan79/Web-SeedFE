@@ -75,7 +75,8 @@ export class PopUpDetailSkillSdmComponent implements OnInit {
       this.rows = res.data;
     });
     const readAllApi = this._factory.api({
-      api : 'allocation/MengelolaSkillSdm/readAll',
+      // api : 'allocation/MengelolaSkillSdm/readAll',
+      api: 'sdm/MengelolaSdm/readAll',
       pagingParams : {
         filter : {
           field : 'sdm_id',
@@ -110,10 +111,4 @@ export class PopUpDetailSkillSdmComponent implements OnInit {
       this.action.patchFormData({sdm_name : res.data.items[0].sdm_name});
     });
   }
-  // tslint:disable-next-line:member-ordering
-
-  // public goBack() {
-  //   this.location.back();
-  // }
-
 }

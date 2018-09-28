@@ -69,21 +69,6 @@ export class SDM004Component implements OnInit {
     this.dataTable = this._factory.dataTable({
       serverSide : false,
       pagingParams : {
-        // filter: {
-        //   operator: CONJUNCTION_OPERATOR.AND,
-        //   component: [
-        //       {
-        //           field: 'kddati1',
-        //           operator: COMPARISON_OPERATOR.EQ,
-        //           value: Session.getUserData('kddati1')
-        //       },
-        //       {
-        //           field: 'kddati2',
-        //           operator: COMPARISON_OPERATOR.EQ,
-        //           value: Session.getUserData('kddati2')
-        //       }
-        //   ]
-        // },
         limit : 5
       },
       // searchCriteria : [
