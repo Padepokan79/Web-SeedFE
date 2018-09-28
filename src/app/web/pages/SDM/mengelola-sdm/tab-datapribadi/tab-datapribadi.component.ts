@@ -268,6 +268,8 @@ export class TabDatapribadiComponent implements OnInit {
               // console.log(response.data.sdm_id);
               if(response.data.sdm_status == 1 && response.data.contracttype_id == 3){
                  this.insertHiring(response.data.sdm_id, response.data.contracttype_id);
+              }else if(response.data.sdm_status == 0 && response.data.contracttype_id == 3){
+                this.insertHistori(response.data.sdm_id);
               }
             });
             this._notif.success({
@@ -286,6 +288,25 @@ export class TabDatapribadiComponent implements OnInit {
         message: 'Anda belum mengupload foto!'
       });
     }
+  }
+
+  // tslint:disable-next-line:variable-name
+  public insertHistori(sdm_id){
+    // tslint:disable-next-line:prefer-const
+    const formatDateStart = this.action.getFormControlValue('sdm_startcontract');
+    const formatDateEnd = this.action.getFormControlValue('sdm_endcontract');
+
+    const startContract = this.datePipe.transform(formatDateStart, 'yyyy-MM-dd');
+    const startEnd = this.datePipe.transform(formatDateEnd, 'yyyy-MM-dd');
+
+    const insertApi = this._factory.api({
+      api : 'sdm/MengelolaHistoriSdm/insertHistori',
+    });
+    this._factory.http().get(insertApi + '?$sdm_id=' + sdm_id + '&$start_date=' + startContract + '&$end_date=' + startEnd, this.action.getFormData()).subscribe((response: any) => {
+      this._notif.success({
+        message: 'Data Berhasil Disimpan'
+        });
+      });
   }
 
   // tslint:disable-next-line:variable-name
