@@ -92,6 +92,23 @@ export class PopUpDetailSkillSdmComponent implements OnInit {
       api: 'allocation/MengelolaSkillSdm',
       inputForm: this.inputForm,
     });
+
+    const test = this._factory.api({
+      api: 'sdm/MengelolaSdm/readAll',
+      pagingParams : {
+        filter : {
+          field : 'sdm_id',
+          operator : COMPARISON_OPERATOR.EQ,
+          value : this.value
+        }
+      }
+    });
+    this.http.get(test)
+    .subscribe((res: any) => {
+      console.clear();
+      console.log(res.data.items[0].sdm_name);
+      this.action.patchFormData({sdm_name : res.data.items[0].sdm_name});
+    });
   }
   // tslint:disable-next-line:member-ordering
 
