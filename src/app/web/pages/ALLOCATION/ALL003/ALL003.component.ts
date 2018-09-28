@@ -11,6 +11,9 @@ import { FormControl, FormGroup } from '../../../../../../node_modules/@angular/
 import { ListOfValue } from '../../../../core/models/list-of-value';
 import { Comparison } from '../../../../core/enums/comparison-operator.enum';
 import { startWith, map } from '../../../../../../node_modules/rxjs/operators';
+import { DefaultNotificationService } from '../../../../core/services/default-notification.service';
+import { MatDialog } from '@angular/material';
+import { HttpParams, HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-ALL003',
   templateUrl: './ALL003.component.html',
@@ -33,7 +36,11 @@ export class ALL003Component implements OnInit {
   public lovSkillType: LOVService;
   public lovSdm: LOVService;
 
-  constructor(private _factory: CoreFactory, private router: Router) { }
+  constructor(private _factory: CoreFactory,
+              private router: Router,
+              public _notif: DefaultNotificationService,
+              private http: HttpClient,
+              private _dialog: MatDialog) { }
 
   // tslint:disable-next-line:no-empty
   public ngOnInit() {
@@ -42,6 +49,7 @@ export class ALL003Component implements OnInit {
     }, 1);
     this.inputForm = this._factory.inputForm({
       formControls: {
+        sdmskill_id: '',
         skilltype_id: '',
         skill_id: '',
         sdm_id: '',
@@ -116,5 +124,30 @@ export class ALL003Component implements OnInit {
   }
   public refresh(): void {
     window.location.reload();
+  }
+
+  public onDelete(id) {
+    const deleteSkillSmd = [];
+    deleteSkillSmd.push({
+      sdm_id: id
+    });
+    const deleteAPI = this._factory.api({
+      api: 'allocation/MultiDeleteSdmSkill/multiDelete'
+    });
+    const httpOption = {
+      params : new HttpParams()
+    };
+    this.http.post(deleteAPI, {
+      listsdm: deleteSkillSmd
+    }, httpOption).subscribe((response: any) => {
+      this._notif.success({
+        message: 'You have successfully deleted all skill SDM'
+      });
+    }, (error: any) => {
+      this._notif.error({
+        message: 'Please check SDM Data'
+      });
+    }
+  );
   }
 }

@@ -39,6 +39,10 @@ export class EditNilaiSdmComponent implements OnInit {
     });
   }
 
+  public refreshTabel() {
+    this.action.refreshTable();
+  }
+
   public ngOnInit() {
     // this.sdmid = this.id;
     setInterval(() => {
@@ -95,10 +99,6 @@ export class EditNilaiSdmComponent implements OnInit {
 
   public goBack() {
     this.location.back();
-  }
-
-  public refreshTabel() {
-    this.action.refreshTable();
   }
 
   public onSave() {

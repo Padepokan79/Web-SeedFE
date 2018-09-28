@@ -43,7 +43,7 @@ Modified   : 10-08-2018 by Vikri Ramdhani -->
  <button type="button" class="btn btn-primary btn-mm btn-icon" (click)="navigateDetailMenu(row.sdm_id)">
   <i class="glyphicon glyphicon-eye-open"></i>
 </button>
- <button type="button" class="btn btn-danger btn-mm btn-icon" (click)="action.onDelete(row); refreshData();">
+ <button type="button" class="btn btn-danger btn-mm btn-icon" (click)="onDelete(row.sdm_id); refreshData();">
    <i class="glyphicon glyphicon-trash"></i>
  </button>
 </ng-template>
