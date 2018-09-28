@@ -129,7 +129,7 @@ export class TabDatapribadiComponent implements OnInit {
           sdm_phone: '',
           sdm_placebirth: '',
           sdm_postcode: '',
-          sdm_startcontract: '',
+          sdm_startcontract: null,
           sdm_status: '1',
           sdmlvl_id: '',
 
@@ -151,6 +151,7 @@ export class TabDatapribadiComponent implements OnInit {
           }
         },
       });
+
 
       this.action = this._factory.actions({
         api: 'sdm/MengelolaSdm',
@@ -555,12 +556,13 @@ export class TabDatapribadiComponent implements OnInit {
     var month = this.datePipe.transform(datum, 'MM');
 
     var datum2 = this.action.getFormControlValue('sdm_startcontract');
-    var month2 = this.datePipe.transform(datum2, 'yy');    
+    var month2 = this.datePipe.transform(datum2, 'yy');
 
-    if (month == null) {
+    console.log(datum);
+
+    if (datum == null) {
       nik3 = num.concat('0000000');
-    } else if (month2 == null) {
-      nik3 = num.concat(month, '00000');
+      this.action.patchFormData({sdm_nik : nik3});
     } else {
       let nilaiTerbesar = 0;
       this.http.get(this._factory.api({api : 'lov/Sdm'}))
@@ -584,6 +586,5 @@ export class TabDatapribadiComponent implements OnInit {
         console.log(nik3);
       });
     }
-    
   }
 }
