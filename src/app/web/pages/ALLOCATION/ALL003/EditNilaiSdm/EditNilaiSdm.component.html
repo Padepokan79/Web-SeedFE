@@ -29,18 +29,18 @@
           <table>
             <tr>
               <td style="padding : 10px">
-                <label><b>{{action?.getFormControlValue("skilltype_name") || null}}</b>  </label>
+                <label *ngIf="isButtonClicked"><b>{{action?.getFormControlValue("skilltype_name") || null}}</b>  </label>
               </td>
               <td style="padding : 10px">
-                <label><b>{{action?.getFormControlValue("skill_name") || null}}</b>  </label>
+                <label *ngIf="isButtonClicked"><b>{{action?.getFormControlValue("skill_name") || null}}</b>  </label>
               </td>
               <td style="padding : 10px">
                 <!-- <mat-label>Value : </mat-label> -->
-                <mat-form-field style="width: 50px">
+                <mat-form-field style="width: 50px" *ngIf="isButtonClicked">
                     <input matInput placeholder="Value" maxlength="2" 
                       formControlName="sdmskill_value" name="sdmskill_value" 
                       pattern="^0$|^((?!(0))[0-9]{0,9})$" 
-                      required
+                      required 
                       >
                 </mat-form-field>
               </td>
@@ -70,7 +70,7 @@
           <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back</button>
   </div>
   <ng-template #tableActionTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
-    <button type="button" matTooltip="Edit Category" class="btn btn-primary btn-mm btn-icon" (click)="action.onEdit(row)">
+    <button type="button" matTooltip="Edit Category" class="btn btn-primary btn-mm btn-icon" (click)="action.onEdit(row); btnOn()">
       <i class="glyphicon glyphicon-pencil"></i>
     </button>
     <button type="button" matTooltip="Hapus Category" class="btn btn-danger btn-mm btn-icon" (click)="action.onDelete(row);refreshTabel()">

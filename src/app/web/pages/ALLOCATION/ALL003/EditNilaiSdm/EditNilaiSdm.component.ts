@@ -28,6 +28,7 @@ export class EditNilaiSdmComponent implements OnInit {
   public action: ActionService;
   public inputForm: InputForm;
   public editId: number;
+  public isButtonClicked = false;
   private selectedId: number;
 
   constructor(private location: Location,
@@ -121,5 +122,9 @@ export class EditNilaiSdmComponent implements OnInit {
           message: 'Nilai melebihi 10'
         });
       }
+  }
+
+  public btnOn() {
+    this.isButtonClicked = true;
   }
 }
