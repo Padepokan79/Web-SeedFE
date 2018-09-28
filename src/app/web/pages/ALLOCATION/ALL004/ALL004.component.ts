@@ -112,12 +112,13 @@ export class ALL004Component implements OnInit {
         }
       });
 
+      console.log(this.sdmId);
       this.http.get(readAllApi).subscribe((res: any) => {
-        console.log(res);
-        console.log(this.sdmId);
-        // this.action.patchFormData(res.data.items[this.selected]);
-        this.nik = res.data[this.sdmId-1].values.sdm_sdm_nik;
-      
+        for (var i = 0; i < res.data.length; ++i) {
+          if (res.data[i].key == this.sdmId) {
+            this.nik = res.data[i].values.sdm_sdm_nik;
+          }
+        }
       });
 
     }
