@@ -29,6 +29,7 @@ export class EditNilaiSdmComponent implements OnInit {
   public inputForm: InputForm;
   public editId: number;
   public isButtonClicked = false;
+  public sdmName: string;
   private selectedId: number;
 
   constructor(private location: Location,
@@ -75,7 +76,7 @@ export class EditNilaiSdmComponent implements OnInit {
     });
 
     const readAllApi = this._factory.api({
-      api : 'allocation/MengelolaSkillSdm/readAll',
+      api : 'sdm/MengelolaSdm/readAll',
       pagingParams : {
         filter : {
           field : 'sdm_id',
@@ -87,6 +88,7 @@ export class EditNilaiSdmComponent implements OnInit {
     });
     this._factory.http().get(readAllApi).subscribe((res: any) => {
       console.log(res);
+      this.sdmName = res.data.items[0].sdm_name;
       this.action.patchFormData(res.data.items[0]);
     });
 
@@ -126,5 +128,9 @@ export class EditNilaiSdmComponent implements OnInit {
 
   public btnOn() {
     this.isButtonClicked = true;
+  }
+
+  public btnOff() {
+    this.isButtonClicked = false;
   }
 }

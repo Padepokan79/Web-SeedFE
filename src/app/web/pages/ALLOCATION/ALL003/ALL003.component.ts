@@ -6,14 +6,10 @@ import { DataTable } from '../../../../core/models/data-table';
 import { LOVService } from '../../../../core/services/uninjectable/lov.service';
 import { CoreFactory } from '../../../../core/factory/core.factory';
 import { Router } from '../../../../../../node_modules/@angular/router';
-import { Location } from '@angular/common';
-import { FormControl, FormGroup } from '../../../../../../node_modules/@angular/forms';
-import { ListOfValue } from '../../../../core/models/list-of-value';
-import { Comparison } from '../../../../core/enums/comparison-operator.enum';
-import { startWith, map } from '../../../../../../node_modules/rxjs/operators';
 import { DefaultNotificationService } from '../../../../core/services/default-notification.service';
 import { MatDialog } from '@angular/material';
 import { HttpParams, HttpClient } from '@angular/common/http';
+import { ConfirmDialogsComponent } from '../../../../core/components/confirm-dialogs/confirm-dialogs.component';
 @Component({
   selector: 'app-ALL003',
   templateUrl: './ALL003.component.html',
@@ -57,12 +53,6 @@ export class ALL003Component implements OnInit {
         project_enddate: '',
         sdm_name: ''
       },
-    //   // validationMessages: {
-    //   //   skilltype_name: {
-    //   //     required: 'Silahkan masukkan Task ID',
-    //   //     pattern: 'Hanya boleh angka'
-    //   //   },
-    //   // }
     });
     this.dataTable = this._factory.dataTable({
       serverSide : false,
@@ -76,9 +66,6 @@ export class ALL003Component implements OnInit {
       tableColumns : [
         { prop: 'sdm_nik', name: 'NIK', width: 100, sortable: false },
         { prop: 'sdm_name', name: 'Sdm Name', width: 100, sortable: false },
-        // { prop: 'skill_name', name: 'Skill name', width: 100, sortable: false },
-        // { prop: 'skilltype_name', name: 'Skill Type Name', width: 100, sortable: false },
-        // { prop: 'sdmskill_value', name: 'Skill Value', width: 100, sortable: true },
         { prop: 'end_contractproject', name: 'End date project', width: 100, sortable: false },
         { prop: 'sdm_notification', name: 'Notifikasi Kontrak', width: 50,
         cellTemplate: this.notif, sortable: false },
@@ -126,7 +113,7 @@ export class ALL003Component implements OnInit {
     window.location.reload();
   }
 
-  public onDelete(id) {
+  public onEksekusi(id) {
     const deleteSkillSmd = [];
     deleteSkillSmd.push({
       sdm_id: id
@@ -145,9 +132,25 @@ export class ALL003Component implements OnInit {
       });
     }, (error: any) => {
       this._notif.error({
-        message: 'Please check SDM Data'
-      });
-    }
-  );
+        message: 'Please check SDM Data'});
+      }
+      );
   }
+
+  public onDelete(id, deleteMessage: string = 'Are you sure to delete?') {
+    this._dialog
+        .open(ConfirmDialogsComponent, {
+            data: {
+                selectedData: id,
+                message: deleteMessage
+            }
+        })
+        .afterClosed()
+        .subscribe((data: any) => {
+            if (data) {
+                this.onEksekusi(id);
+                this.refreshData();
+            }
+        });
+}
 }
