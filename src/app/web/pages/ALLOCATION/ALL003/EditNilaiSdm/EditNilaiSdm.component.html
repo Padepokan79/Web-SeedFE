@@ -18,7 +18,7 @@
     <form class="io-form-body" [formGroup]="action?.formControls()">
       <div class="form-input">
         <mat-label><b>SDM Name : </b></mat-label>
-        <mat-label><b>{{action?.getFormControlValue("sdm_name")}}</b></mat-label>
+        <mat-label><b>{{sdmName}}</b></mat-label>
         <!-- <mat-form-field>
           <input matInput formControlName="sdm_name" name="sdm_name" readonly>
         </mat-form-field> -->
@@ -52,8 +52,8 @@
               <button [disabled]="this.action.getFormControlValue('sdmskill_value') > 10 ? false : true"></button>
             </io-form-action>
         </div> -->
-          <div style="margin-bottom:16px; margin-left:1050px; align-content: center">
-            <button mat-flat-button class="btn-new btn-mm" (click)="validasiNilai();refreshTabel()" [disabled]="action?.formControls()?.invalid || action?.formControls()?.pristine || this.action.getFormControlValue('sdmskill_value') > 10 ? true : false">
+          <div class="col-md-2" style="margin-bottom:16px; float: right; align-content: center">
+            <button mat-flat-button class="btn-new btn-mm" style="float: right" (click)="validasiNilai();refreshTabel()" [disabled]="action?.formControls()?.invalid || action?.formControls()?.pristine || this.action.getFormControlValue('sdmskill_value') > 10 ? true : false">
                 <span aria-hidden="true"></span> {{action.buttonTitle}}</button>
             <!-- <button mat-flat-button class="btn-clear btn-mm" (click)="action.onReset()">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Reset</button> -->
@@ -73,7 +73,7 @@
     <button type="button" matTooltip="Edit Category" class="btn btn-primary btn-mm btn-icon" (click)="action.onEdit(row); btnOn()">
       <i class="glyphicon glyphicon-pencil"></i>
     </button>
-    <button type="button" matTooltip="Hapus Category" class="btn btn-danger btn-mm btn-icon" (click)="action.onDelete(row);refreshTabel()">
+    <button type="button" matTooltip="Hapus Category" class="btn btn-danger btn-mm btn-icon" (click)="action.onDelete(row);refreshTabel();btnOff()">
       <i class="glyphicon glyphicon-trash"></i>
     </button>
   </ng-template>
