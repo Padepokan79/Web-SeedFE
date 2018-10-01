@@ -1,0 +1,22 @@
+<form class="io-form-body" style="padding:10px">
+  <table width="100%" style="margin-top: 10px">
+    <tr align="right">
+      <td>
+        <button mat-flat-button class="btn-clear btn-mm" (click)="onDownloadPDF()">
+        <span class="glyphicon glyphicon-download" aria-hidden="true"></span> Download</button>
+      </td>
+    </tr>
+    <tr>
+      <td>
+          <br><br>
+          <pdf-viewer src="{{fileURL}}"></pdf-viewer>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <button mat-flat-button class="btn-clear btn-mm" (click)="goBack()">
+        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back</button>
+      </td>
+    </tr>
+  </table>
+</form>

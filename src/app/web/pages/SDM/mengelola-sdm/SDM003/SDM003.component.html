@@ -68,10 +68,13 @@
 </io-table>
 
 <ng-template #tableActionTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
-  <button matTooltip="Preview CV" type="button" class="btn btn-primary btn-mm btn-icon" (click)="action.onEdit(row)">
+  <button matTooltip="Preview CV" type="button" class="btn btn-primary btn-mm btn-icon" (click)="onPrintReportPDF(row.sdm_id, row.sdm_name)">
     <i class="glyphicon glyphicon-file"></i>
   </button>
-  <button matTooltip="Print CV" type="button" class="btn btn-primary btn-mm btn-icon" (click)="onPrintReportPDF(row.sdm_id, row.sdm_name)">
+  <!-- <button matTooltip="Print CV" type="button" class="btn btn-primary btn-mm btn-icon" (click)="onDownloadPDF(row.sdm_id, row.sdm_name)">
+    <i class="glyphicon glyphicon-print"></i>
+  </button> -->
+  <button matTooltip="Print CV" type="button" class="btn btn-primary btn-mm btn-icon" (click)="onPreviewCV(row.sdm_id,row.sdm_name)">
     <i class="glyphicon glyphicon-print"></i>
   </button>
   <button matTooltip="Edit data SDM" type="button" class="btn btn-primary btn-mm btn-icon" (click)="navigateEditMenu(row.sdm_id)">
