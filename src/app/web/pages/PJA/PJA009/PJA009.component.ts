@@ -35,7 +35,9 @@ export class PJA009Component implements OnInit {
   public methodId: number;
   public hirestatId: number;
   public sdmhiringId: number;
+  public disabled: boolean= false;
   private selectedId: number;
+  private selectedHiringId: number;
 
   constructor(
     public _notif: DefaultNotificationService,
@@ -46,6 +48,8 @@ export class PJA009Component implements OnInit {
   ) {
     this.route.params.subscribe((param) => {
       this.selectedId = param.id;
+      this.selectedHiringId = param.sdmhiringId;
+
     });
   }
 
@@ -88,32 +92,49 @@ export class PJA009Component implements OnInit {
       api : 'project/mengelolaHiring/readAll',
       pagingParams : {
         filter : {
-          field : 'sdmhiring_id',
+          field : 'sdm_id',
           operator : COMPARISON_OPERATOR.EQ,
           value : this.selectedId
         }
       }
     });
-
+    
+    
     this._factory.http().get(readAllApi).subscribe((res: any) => {
-      this.action.patchFormData(res.data.items[0]);
-      this.clientIds = res.data.items[0].client_id;
-      this.clientName = res.data.items[0].client_name;
-      this.sdmName = res.data.items[0].sdm_name;
-      this.sdmId = res.data.items[0].sdm_id;
-      this.methodId = res.data.items[0].method_id;
-      this.sdmhiringId = res.data.items[0].sdmhiring_id;
+      
+      console.log(res.data.items.length);
+
+      for ( var index = 0; index < res.data.items.length; index++){
+        if(res.data.items[index].hirestat_id == 4 && res.data.items[index].client_id != 1){
+          this.disabled = true;
+        } 
+        if(this.selectedHiringId == res.data.items[index].sdmhiring_id && res.data.items[index].hirestat_id == 4){
+          this.disabled = false;
+        }
+        console.log(this.selectedHiringId);
+        if (this.selectedHiringId == res.data.items[index].sdmhiring_id){
+          this.action.patchFormData(res.data.items[index]);
+          this.clientIds = res.data.items[index].client_id;
+          this.clientName = res.data.items[index].client_name;
+          this.sdmName = res.data.items[index].sdm_name;
+          this.sdmId = res.data.items[index].sdm_id;
+          this.methodId = res.data.items[index].method_id;
+          this.sdmhiringId = res.data.items[index].sdmhiring_id;
+          this.hirestatId = res.data.items[index].hirestat_id;  
+        }
+
+      }
+      
+
     });
   }
 
   public onUpdate() {
     const updateAPI = this._factory.api({
     api: 'project/mengelolaHiring/update',
-    // params: {
-    // client_id: this.selectedId }
   });
     console.log(this.hirestatId);
-    this._factory.http().put(updateAPI + '?sdmhiring_id=' + this.selectedId, this.action.getFormData()).subscribe((response: any) => {
+    this._factory.http().put(updateAPI + '?sdmhiring_id=' + this.selectedHiringId, this.action.getFormData()).subscribe((response: any) => {
     this._notif.success({
       message: 'Update Data Berhasil'
     });
