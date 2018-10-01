@@ -3,19 +3,21 @@ AUTHOR  	: Khairil Anwar
 CREATED 	: Wednesday, ‎August 1, ‎2018 14:00:12 PM
 UPDATE		:
 -->
-<io-form *ngIf="action?.form()">
+<div class="head">
+  <span style="color: #181818; margin-left: 20px;"><i class="fa fa-home"></i></span>
+  <a [routerLink]="['/pages/dashboard']">Dashboard</a><b style="color: #181818;"> > </b>
+  <a [routerLink]="['/pages/sdm']"><span>SDM</span></a><b style="color: #181818;"> > </b>
+  <a style="color: #181818;"><span>List Psychological SDM</span></a>
+  <span class="time" style="color: #181818;">{{ time | date: 'medium'}}</span>
+</div>
+
+
+<!-- <io-form *ngIf="action?.form()">
   <div class="io-form-header">
     <div class="nx-brc-header blacky">
-      <div class="title-header">
-        <span><i class="fa fa-home"></i></span>
-        <a [routerLink]="['/pages/dashboard']">dashboard</a><b> > </b>
-        <a [routerLink]="['/pages/sdm']"><span>SDM</span></a><b> > </b>
-        <a><span>List Psychological SDM</span></a>
-        <span class="time">{{ time | date: 'medium'}}</span>
-      </div>
     </div>
   </div>
-  <form class="io-form-body" [formGroup]="action?.formControls()">
+      <form class="io-form-body" [formGroup]="action?.formControls()">
     <mat-list-item>
       <div style="margin-bottom:8px">
       <mat-label class="panjang">Name : </mat-label>
@@ -27,20 +29,16 @@ UPDATE		:
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
-      <!-- <div style=""> -->
         <button mat-raised-button class="btn btn-search btn-mm" (click)="onSearch()" style="margin-left:260px">
               <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Cari</button>
-            <!-- <button mat-flat-button (click)="action.onReset()">
-                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Clear</button> -->
         <button style="margin-top: 10px;background: linear-gradient(to bottom right, rgb(49, 144, 221), rgb(49, 144, 221));" mat-flat-button [routerLink]="['/pages/sdm/SDM006']">
           <span class="glyphicon glyphicon-plus"></span> Add SDM Psychological
         </button>
 
         </div>
-      <!-- </div> -->
     </mat-list-item>
     </form>
-</io-form>
+</io-form> -->
 
   <io-table *ngIf="action?.table()" [action]="action">
     <div class="io-table-header">

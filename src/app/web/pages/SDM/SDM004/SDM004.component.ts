@@ -71,9 +71,9 @@ export class SDM004Component implements OnInit {
       pagingParams : {
         limit : 5
       },
-      // searchCriteria : [
-      //   { viewValue: 'Nama', viewKey: 'sdm_name', type: TYPE.STRING }
-      // ],
+      searchCriteria : [
+        { viewValue: 'Sdm Name', viewKey: 'sdm_name', type: TYPE.STRING }
+      ],
       tableColumns : [
         { prop: 'norut', name: 'No', width: 20, sortable: true },
         { prop: 'sdm_name', name: 'Nama', width: 100, sortable: true },
