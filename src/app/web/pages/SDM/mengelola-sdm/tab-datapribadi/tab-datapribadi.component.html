@@ -294,7 +294,7 @@
         </td>
     </tr>
 
-    <tr *ngIf="edit == false">
+    <tr *ngIf="action?.getFormControlValue('sdm_nik') == '-' || action?.getFormControlValue('sdm_nik') == null || action?.getFormControlValue('sdm_nik') == ''">
         <td style="padding: 10px; padding-left: 0px;">Posisi <span style="color: red">*</span></td>
         <td style="padding: 10px;"> </td>
         <td style="padding: 10px;">
