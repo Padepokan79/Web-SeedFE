@@ -26,7 +26,7 @@ export class PreviewCvComponent implements OnInit {
 
   public selectedId : number;
   public sdmName : String;
-  public progress : boolean;
+  public progress : boolean=true;
   public fileURL : String;
   constructor(public location : Location,private route : ActivatedRoute,private _factory: CoreFactory,private _notif : DefaultNotificationService) { 
     this.route.params.subscribe((param) => {
@@ -50,7 +50,6 @@ export class PreviewCvComponent implements OnInit {
     .subscribe(
         (data)  => {
             this.fileURL = window.URL.createObjectURL(data);
-            
             // window.open(this.fileURL, "_blank");
             this.progress = false;
         }
