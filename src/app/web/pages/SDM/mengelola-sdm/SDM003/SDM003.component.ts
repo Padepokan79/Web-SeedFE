@@ -267,6 +267,39 @@ export class SDM003Component implements OnInit {
       );
   }
 
+  public onDownloadPDF(id, sdmName) {
+    // this.router.navigate(['/pages/listSdm', { id }]);
+    // this.nama = this.action.getFormControlValue('sdm_name');
+    this.progress = true;
+    const cv = this._factory.api({
+            api: 'sdm/ReportCvSdm/GenerateAsPDF',
+            params: {
+                sdmId : id
+            }
+        });
+    this._factory.http()
+    .post(cv, null,
+    { responseType: 'blob' })
+    // .map((res) => res())
+    .subscribe(
+        (data)  => {
+            FileSaver.saveAs(data, 'CV ' + sdmName + '.pdf');
+            
+            this.progress = false;
+        },
+        (error) => {
+            this.notifications.warn(
+                'Warning', 'Data Tidak Ada'
+            );
+            this.progress = false;
+        },
+        ()    => console.log('Completed file download.')
+      );
+  }
+  onPreviewCV(id,name){
+    this.router.navigate(['/pages/sdm/previewCV', { id,name }]);
+  }
+
   public onSearch() {
     const filterCriteria = [];
     this.SdmLvl = this.action.getFormControlValue('sdmlvl_id');

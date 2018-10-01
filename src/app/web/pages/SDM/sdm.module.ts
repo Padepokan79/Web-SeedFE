@@ -22,6 +22,8 @@ import { SDM006Component } from './SDM006/SDM006.component';
 import { SDM007Component } from './SDM007/SDM007.component';
 import { SDM008Component } from './SDM008/SDM008.component';
 import { SDM004Component } from './SDM004/SDM004.component';
+import { PreviewCvComponent } from './mengelola-sdm/SDM003/preview-cv/preview-cv.component';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 const SDM_COMPONENTS = [
     SDM001Component,
@@ -44,13 +46,15 @@ const SDM_COMPONENTS = [
     SDM006Component,
     SDM007Component,
     SDM008Component,
-    SDM009Component
+    SDM009Component,
+    PreviewCvComponent
 ];
 
 @NgModule({
   imports: [
     ...PAGES_MODULE_PROVIDERS,
-    routing
+    routing,
+    PdfViewerModule
   ],
   exports: [
     ...SDM_COMPONENTS

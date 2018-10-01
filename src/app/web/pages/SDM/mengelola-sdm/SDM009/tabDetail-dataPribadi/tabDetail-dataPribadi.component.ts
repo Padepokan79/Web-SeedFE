@@ -6,6 +6,7 @@ import { LOVService } from '../../../../../../core/services/uninjectable/lov.ser
 import { COMPARISON_OPERATOR } from '../../../../../../core/constant/constant';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { angularMath } from 'angular-ts-math';
 
 @Component({
   selector: 'app-tabDetail-dataPribadi',
@@ -42,6 +43,7 @@ export class TabDetailDataPribadiComponent implements OnInit {
   // Gambar
   // tslint:disable-next-line:member-ordering
   public pathFoto: string;
+  public incFoto = angularMath.getIntegerRandomRange(1, 100000);
 
   constructor(
     private location: Location,
@@ -137,7 +139,7 @@ export class TabDetailDataPribadiComponent implements OnInit {
       this.action.patchFormData(res.data.items[0]);
       // tslint:disable-next-line:triple-equals
       if (this.pathFoto == null || this.pathFoto == '') {
-        this.pathFoto = this._factory.config().staticResourceFullPath(res.data.items[0].sdm_image);
+        this.pathFoto = this._factory.config().staticResourceFullPath(res.data.items[0].sdm_image + "?rnd=" + this.incFoto);
         console.log ('Berhasil', 'LOAD PHOTO');
       } else {
         console.log ('GAGAL', 'LOAD PHOTO');
