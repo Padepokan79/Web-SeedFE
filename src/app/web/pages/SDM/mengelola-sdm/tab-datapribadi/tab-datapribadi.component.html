@@ -294,11 +294,11 @@
         </td>
     </tr>
 
-    <tr *ngIf="action?.getFormControlValue('sdm_nik') == '-' || action?.getFormControlValue('sdm_nik') == null || action?.getFormControlValue('sdm_nik') == ''">
+    <tr *ngIf="editDev < 8">
         <td style="padding: 10px; padding-left: 0px;">Posisi <span style="color: red">*</span></td>
         <td style="padding: 10px;"> </td>
         <td style="padding: 10px;">
-            <mat-radio-group [disabled]="this.action.getFormControlValue('sdm_startcontract') ? null : true" class="margin-field" [(ngModel)]="posisi" name="posisi">
+            <mat-radio-group [disabled]="this.action.getFormControlValue('sdm_startcontract') ? null : true" class="margin-field" name="posisi">
                 <mat-radio-button value="01" required (click)="generateNik('01')">Non - Teknis</mat-radio-button>
                 <mat-radio-button value="02" required (click)="generateNik('02')" style="margin-left: 15px;">Teknis (Sofware Developer)</mat-radio-button>
             </mat-radio-group>
