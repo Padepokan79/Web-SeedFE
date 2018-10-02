@@ -73,6 +73,8 @@ export class TabDatapribadiComponent implements OnInit {
   public statusContract:any = [];
   public edit = false;
   public posisi: string;
+  public opsiGenerate = false;
+  public getNik: string;
 
   numberOnly(event): boolean {
     const charCode = (event.which) ? event.which : event.keyCode;
@@ -134,7 +136,8 @@ export class TabDatapribadiComponent implements OnInit {
           sdmlvl_id: '',
 
           client_id: '1',
-          hirestat_id: '4'
+          hirestat_id: '4',
+          sdm_opsi: ''
         },
         validationMessages: {
           sdm_name: {
@@ -194,7 +197,7 @@ export class TabDatapribadiComponent implements OnInit {
         this._factory.http().get(readAllApi).subscribe((res: any) => {
           res.data.items[0].sdm_status = res.data.items[0].sdm_status === 'Active' ? 1 : 0;
           this.action.patchFormData(res.data.items[0]);
-          
+          this.getNik = res.data.items[0].sdm_nik;
           this.statusContract = [];
           const api = this._factory.api({api : 'lov/contractType'});
           this.http.get(api).subscribe((respon: any) => {
@@ -546,9 +549,17 @@ export class TabDatapribadiComponent implements OnInit {
 
   public goBack() {
     this.location.back();
+  } 
+
+  public generateNikChange(nom){
+    if(this.opsiGenerate == true){
+      this.generateNik(nom);
+    }
   }
 
   public generateNik(num){
+    this.action.patchFormData({sdm_opsi: num});
+    this.opsiGenerate = true;
     var nik = this.action.getFormControlValue('sdm_nik');
     var nik3: string;
 
