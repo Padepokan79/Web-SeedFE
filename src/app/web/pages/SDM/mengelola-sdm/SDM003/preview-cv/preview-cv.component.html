@@ -6,9 +6,12 @@
         <span class="glyphicon glyphicon-download" aria-hidden="true"></span> Download</button>
       </td>
     </tr>
-    <tr>
+    <tr style="height: 600px;" align="center">
       <td>
           <br><br>
+          <div *ngIf="progress">
+            <mat-spinner></mat-spinner>
+          </div>
           <pdf-viewer src="{{fileURL}}"></pdf-viewer>
       </td>
     </tr>

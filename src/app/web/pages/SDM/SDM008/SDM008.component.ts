@@ -77,7 +77,7 @@ export class SDM008Component implements OnInit {
 
     // First Data Table Initialization
     this.dataTable = this._factory.dataTable({
-      serverSide : true,
+      serverSide : false,
       pagingParams : {
         // filter: {
         //   operator: CONJUNCTION_OPERATOR.AND,
@@ -96,9 +96,9 @@ export class SDM008Component implements OnInit {
         // },
         limit : 10
       },
-      // searchCriteria : [
-      //   { viewValue: 'Name', viewKey: 'sdm_id', type: TYPE.STRING },
-      // ],
+      searchCriteria : [
+        { viewValue: 'Sdm Name', viewKey: 'sdm_name', type: TYPE.STRING },
+      ],
       tableColumns : [
         { prop: 'norut', name: 'No', width: 5, sortable: false },
         { prop: 'sdm_name', name: 'Name', width: 135, sortable: false },
