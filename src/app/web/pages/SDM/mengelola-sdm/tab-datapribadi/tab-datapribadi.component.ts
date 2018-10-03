@@ -72,9 +72,7 @@ export class TabDatapribadiComponent implements OnInit {
 
   public statusContract:any = [];
   public edit = false;
-  public posisi: string;
-  public opsiGenerate = false;
-  public getNik: string;
+  public editDev: number = 0;
 
   numberOnly(event): boolean {
     const charCode = (event.which) ? event.which : event.keyCode;
@@ -91,14 +89,15 @@ export class TabDatapribadiComponent implements OnInit {
               private http: HttpClient,
               private datePipe: DatePipe
             ) {
+
                 const URL = this._factory.api({
                   api: 'sdm\Upload',
                   params: {
                     sdm_id: this.id
                   }
                 });
-
                 // tslint:disable-next-line:prefer-const
+
                 let token = 'bearer' + JSON.parse((localStorage.getItem('loggedInUser')))['access_token'];
                 this.uploader = new FileUploader({url: URL, authToken: token, authTokenHeader: 'authorization'});
                 this.uploaderFoto = new FileUploader({});
@@ -136,8 +135,7 @@ export class TabDatapribadiComponent implements OnInit {
           sdmlvl_id: '',
 
           client_id: '1',
-          hirestat_id: '4',
-          sdm_opsi: ''
+          hirestat_id: '4'
         },
         validationMessages: {
           sdm_name: {
@@ -197,13 +195,16 @@ export class TabDatapribadiComponent implements OnInit {
         this._factory.http().get(readAllApi).subscribe((res: any) => {
           res.data.items[0].sdm_status = res.data.items[0].sdm_status === 'Active' ? 1 : 0;
           this.action.patchFormData(res.data.items[0]);
-          this.getNik = res.data.items[0].sdm_nik;
+           
+          if (res.data.items[0].sdm_nik.length > 7) {
+            this.editDev = res.data.items[0].sdm_nik.length;
+          }
+
           this.statusContract = [];
           const api = this._factory.api({api : 'lov/contractType'});
           this.http.get(api).subscribe((respon: any) => {
             if (res.data.items[0].contracttype == 'Contract') {
               this.statusContract.push(respon.data[2]);
-              console.log(respon.data[2]);
             } else if (res.data.items[0].contracttype == 'OJT') {
               this.statusContract.push(respon.data[2]);
               this.statusContract.push(respon.data[1]);
@@ -211,11 +212,12 @@ export class TabDatapribadiComponent implements OnInit {
               this.statusContract.push(respon.data[2]);
               this.statusContract.push(respon.data[1]);
               this.statusContract.push(respon.data[0]);
-            } 
+            }
           });
         });
         this.patchFoto();
       }
+
   }
 
   public patchFoto(){
@@ -549,17 +551,9 @@ export class TabDatapribadiComponent implements OnInit {
 
   public goBack() {
     this.location.back();
-  } 
-
-  public generateNikChange(nom){
-    if(this.opsiGenerate == true){
-      this.generateNik(nom);
-    }
   }
 
   public generateNik(num){
-    this.action.patchFormData({sdm_opsi: num});
-    this.opsiGenerate = true;
     var nik = this.action.getFormControlValue('sdm_nik');
     var nik3: string;
 
@@ -576,23 +570,30 @@ export class TabDatapribadiComponent implements OnInit {
       this.action.patchFormData({sdm_nik : nik3});
     } else {
       let nilaiTerbesar = 0;
-      this.http.get(this._factory.api({api : 'lov/Sdm'}))
+      this.http.get(this._factory.api({api : 'lov/SdmNik'}))
       .subscribe((res: any) => {
-        console.log(res);
+        var nilai:any = [];
         for (var i = 0; i < res.data.length; ++i) {
-          if (nilaiTerbesar < res.data[i].key) {
-            nilaiTerbesar = res.data[i].key;
+          nilai.push(res.data[i].values.sdm_sdm_nik.substring(6, 9));
+        }
+
+        console.log(nilai);
+        for (var i = 0; i < nilai.length; ++i) {
+          if (nilaiTerbesar < +nilai[i]) {
+            nilaiTerbesar = nilai[i];
           }
         }
-        nilaiTerbesar+=1;
-        if (nilaiTerbesar < 10) {
-          nik3 = num.concat(month, month2, '00', nilaiTerbesar.toString());
-        } else if (nilaiTerbesar < 100 && nilaiTerbesar >= 10) {
-          nik3 = num.concat(month, month2, '0', nilaiTerbesar.toString());
+
+        console.log(nilaiTerbesar);
+        let nilainya =  +nilaiTerbesar + 1
+        if (nilainya < 10) {
+          nik3 = num.concat(month, month2, '00', nilainya.toString());
+        } else if (nilaiTerbesar < 100 && nilainya >= 10) {
+          nik3 = num.concat(month, month2, '0', nilainya.toString());
         } else {
-          nik3 = num.concat(month, month2, nilaiTerbesar.toString());
+          nik3 = num.concat(month, month2, nilainya.toString());
         }
-        console.log(nilaiTerbesar.toString());
+        console.log(nilainya.toString());
         this.action.patchFormData({sdm_nik : nik3});
         console.log(nik3);
       });
