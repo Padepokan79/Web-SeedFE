@@ -72,7 +72,26 @@ export class PreviewCvComponent implements OnInit {
     .subscribe(
         (data)  => {
             FileSaver.saveAs(data, 'CV ' + this.sdmName + '.pdf');
-            
+            this.progress = false;
+        }
+      );
+  }
+  public onPrintPDF() {
+    this.progress = true;
+    const cv = this._factory.api({
+            api: 'sdm/ReportCvSdm/GenerateAsPDF',
+            params: {
+                sdmId : this.selectedId
+            }
+        });
+    this._factory.http()
+    .post(cv, null,
+    { responseType: 'blob' })
+    // .map((res) => res())
+    .subscribe(
+        (data)  => {
+            var URL = window.URL.createObjectURL(data);
+            window.open(URL).print();
             this.progress = false;
         }
       );
