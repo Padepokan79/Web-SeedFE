@@ -66,13 +66,14 @@ export class PJA007Component implements OnInit {
         limit : 10
       },
       searchCriteria : [
-        { viewValue: 'Name', viewKey: 'sdm_name', type: TYPE.STRING}
+        { viewValue: 'Name', viewKey: 'sdm_name', type: TYPE.STRING},
+        { viewValue: 'Status', viewKey: 'hirestat_name', type: TYPE.STRING}
       ],
       tableColumns : [
         { prop: 'norut', name: 'No', width: 20, sortable: false },
         { prop: 'sdm_name', name: 'Name', width: 100, sortable: false },
         { prop: 'sdm_phone', name: 'Contact', width: 100, sortable: false },
-        { prop: 'hirestat_name', name: 'Status', width: 100, sortable: false },
+        { prop: 'hirestat_name', name: 'Status', width: 100, sortable: true },
         { prop: 'id', name: 'Action', width: 100,
           cellTemplate: this.tableActionTemplate, sortable: false }
       ]

@@ -144,6 +144,9 @@ export class PJA012Component implements OnInit {
 
     this.lovSDM = this._factory.lov({
       api: 'lov/Sdm',
+      pagingParams: {
+        orderby: 'sdm_name ASC',
+      },
       initializeData: true
     });
 

@@ -99,6 +99,7 @@ export class SDM004Component implements OnInit {
     this.lovSdm = this._factory.lov({
       api: 'lov/sdm',
       pagingParams: {
+        orderby: 'sdm_name ASC',
         filter: {
           field: 'sdm_status',
           operator: COMPARISON_OPERATOR.EQ,
