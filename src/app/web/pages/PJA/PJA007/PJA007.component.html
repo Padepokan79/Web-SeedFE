@@ -81,7 +81,7 @@
 </div> -->
 
 <ng-template #tableActionTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
-  <button type="button" matTooltip="Edit"class="btn btn-primary btn-mm btn-icon" (click)="navigateEditMenu(row.sdmhiring_id)">
+  <button type="button" matTooltip="Edit"class="btn btn-primary btn-mm btn-icon" (click)="navigateEditMenu(row.sdm_id, row.sdmhiring_id)">
     <i class="glyphicon glyphicon-pencil"></i>
   </button>
   <button type="button" matTooltip="Hapus Sdm" class="btn btn-danger btn-mm btn-icon" (click)="action.onDelete(row);refreshTabel()">
