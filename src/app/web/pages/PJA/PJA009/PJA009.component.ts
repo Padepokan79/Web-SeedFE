@@ -131,10 +131,10 @@ export class PJA009Component implements OnInit {
 
   public onUpdate() {
     const updateAPI = this._factory.api({
-    api: 'project/mengelolaHiring/update',
+    api: 'project/mengelolaHiring/updateSdm',
   });
     console.log(this.hirestatId);
-    this._factory.http().put(updateAPI + '?sdmhiring_id=' + this.selectedHiringId, this.action.getFormData()).subscribe((response: any) => {
+    this._factory.http().put(updateAPI + '?sdmhiring_id=' + this.selectedHiringId + '&hirestat_id=' + this.hirestatId + '&client_id=' + this.clientIds, this.action.getFormData()).subscribe((response: any) => {
     this._notif.success({
       message: 'Update Data Berhasil'
     });
