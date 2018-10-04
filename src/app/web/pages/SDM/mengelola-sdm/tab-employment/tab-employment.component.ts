@@ -68,11 +68,11 @@ export class TabEmploymentComponent implements OnInit {
         limit : 5
       },
       tableColumns : [
-        { prop: 'norut', name: 'No', width: 10, sortable: false },
-        { prop: 'employment_corpname', name: 'Nama Perusahaan', width: 30, sortable: true },
-        { prop: 'employment_startdate', name: 'Dari', width: 30, sortable: true },
-        { prop: 'employment_enddate', name: 'Sampai', width: 30, sortable: true },
-        { prop: 'employment_id', name: 'Action', width: 20,
+        { prop: 'norut', name: 'No', flexGrow: 1, sortable: false },
+        { prop: 'employment_corpname', name: 'Nama Perusahaan', flexGrow: 10, sortable: true },
+        { prop: 'employment_startdate', name: 'Dari', flexGrow: 2, sortable: true },
+        { prop: 'employment_enddate', name: 'Sampai', flexGrow: 2, sortable: true },
+        { prop: 'employment_id', name: 'Action', flexGrow: 2,
           cellTemplate: this.tableActionTemplate, sortable: false }
       ]
     });
