@@ -96,6 +96,9 @@ export class SDM006Component implements OnInit {
 
     this.lovSdm = this._factory.lov({
         api: 'lov/sdm',
+        pagingParams: {
+          orderby: 'sdm_name ASC',
+        },
         initializeData: true
     });
 

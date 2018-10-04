@@ -91,6 +91,7 @@ export class ALL003Component implements OnInit {
       api: 'lov/Sdm',
       initializeData: true,
       pagingParams: {
+        orderby: 'sdm_name ASC',
         filter: {
           field: 'sdm_status',
           operator: COMPARISON_OPERATOR.EQ,
