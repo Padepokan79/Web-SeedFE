@@ -193,6 +193,9 @@ export class SDM003Component implements OnInit {
     });
     this.lovSdm = this._factory.lov({
       api: 'lov/sdm',
+      pagingParams: {
+        orderby: 'sdm_name ASC',
+      },
       initializeData: true
     });
   }
@@ -215,7 +218,7 @@ export class SDM003Component implements OnInit {
         },
         initializeData: true
       });
-      this.SdmName = dataSdm.values.sdm_sdm_name;
+      this.SdmName = dataSdm.key;
       this.action.patchFormData({sdm_id: dataSdm.key, sdm_name: dataSdm.values.sdm_sdm_name});
       console.log(this.SdmName);
     }
@@ -320,7 +323,7 @@ export class SDM003Component implements OnInit {
         // filterCriteria
         this.SdmEndDate ? Comparison.LE('sdm_endcontract', this.SdmEndDate) : Comparison.NE('sdm_endcontract', 'sdm_endcontract'),
         this.SdmLvl ? Comparison.EQ('sdmlvl_id', this.SdmLvl) : Comparison.NE('sdmlvl_id', 'sdmlvl_id'),
-        this.SdmName ? Comparison.EQ('sdm_name', this.SdmName) : Comparison.NE('sdm_name', 'sdm_name'),
+        this.SdmName ? Comparison.EQ('sdm_id', this.SdmName) : Comparison.NE('sdm_id', 'sdm_id'),
       )
     );
 

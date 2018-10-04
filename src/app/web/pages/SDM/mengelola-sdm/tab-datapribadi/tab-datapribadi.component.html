@@ -46,7 +46,7 @@
         <td >:</td>
         <td >
             <mat-form-field class="sdw-full-size">
-                <input matInput placeholder="" minlength="8" maxlength="9" formControlName="sdm_nik" name="sdm_nik" [readonly]="true" required="">
+                <input matInput placeholder="" formControlName="sdm_nik" name="sdm_nik" [readonly]="true" pattern="^([0-9]{0,})$" required>
                 <!-- <mat-hint *ngIf="action.formErrors.sdm_nik" [ngStyle]="{'color': 'red'}">
                     {{action.formErrors.sdm_nik}}
                 </mat-hint> -->
@@ -59,7 +59,7 @@
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size">
-                <input matInput (keypress)="numberOnly($event)" placeholder="" maxlength="16" formControlName="sdm_ktp" name="sdm_ktp" pattern="^([0-9]{0,})$" required>
+                <input matInput (keypress)="numberOnly($event)" placeholder="" maxlength="16" formControlName="sdm_ktp" name="sdm_ktp" required>
                 <mat-hint *ngIf="action.formErrors.sdm_ktp" [ngStyle]="{'color': 'red'}">
                 {{action.formErrors.sdm_ktp}}
                 </mat-hint>
@@ -119,7 +119,7 @@
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size">
-                <input matInput placeholder="" maxlength="5" formControlName="sdm_postcode" name="sdm_postcode" pattern="^0$|^((?!(0))[0-9]{0,9})$" >
+                <input matInput placeholder="" (keypress)="numberOnly($event)" maxlength="5" formControlName="sdm_postcode" name="sdm_postcode">
                 <mat-hint *ngIf="action.formErrors.sdm_postcode" [ngStyle]="{'color': 'red'}">
                 {{action.formErrors.sdm_postcode}}
                 </mat-hint>

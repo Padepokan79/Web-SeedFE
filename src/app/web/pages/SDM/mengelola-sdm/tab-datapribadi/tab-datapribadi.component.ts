@@ -579,7 +579,7 @@ export class TabDatapribadiComponent implements OnInit {
 
         console.log(nilai);
         for (var i = 0; i < nilai.length; ++i) {
-          if (nilaiTerbesar < +nilai[i]) {
+          if (nilaiTerbesar < -nilai[i]) {
             nilaiTerbesar = nilai[i];
           }
         }
