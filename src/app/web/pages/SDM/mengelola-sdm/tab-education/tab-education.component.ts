@@ -145,7 +145,7 @@ export class TabEducationComponent implements OnInit {
         }
       } else {
         this._notif.error({
-          message: 'MySql year range 1901 to 2155,'
+          message: 'Cek kembali tahun masuk dan keluar'
         });
       }
   }
