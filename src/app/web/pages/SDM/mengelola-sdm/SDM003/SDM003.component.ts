@@ -16,6 +16,7 @@ import { Conjunction } from '../../../../../core/enums/conjunction-operator.enum
 import { HttpClient, HttpParams } from '../../../../../../../node_modules/@angular/common/http';
 import { DefaultNotificationService } from '../../../../../core/services/default-notification.service';
 import { Title } from '@angular/platform-browser';
+import { COMPARISON_OPERATOR } from '../../../../../core/constant/constant';
 
 @Component({
   selector: 'app-SDM003',
@@ -38,6 +39,8 @@ export class SDM003Component implements OnInit {
   public notif: any;
   public notifications: any;
   public progress: boolean;
+  @ViewChild('name')
+  public name: any;
   // sdm
   public filteredSdm: any;
   public sdmCtrl: FormControl;
@@ -136,6 +139,11 @@ export class SDM003Component implements OnInit {
       serverSide : true,
       pagingParams : {
         // filter: {
+        //   field: 'sdm_status',
+        //   operator: COMPARISON_OPERATOR.EQ,
+        //   value: 1
+        // },
+        // filter: {
         //   operator: CONJUNCTION_OPERATOR.AND,
         //   component: [
         //       {
@@ -159,17 +167,18 @@ export class SDM003Component implements OnInit {
       //   { viewValue: 'Nama', viewKey: 'sdm_name', type: TYPE.STRING }
       // ],
       tableColumns : [
-        { prop: 'norut', name: 'No', width: 5, sortable: false },
-        { prop: 'sdm_name', name: 'Nama', width: 100, sortable: true },
-        { prop: 'sdm_nik', name: 'NIK', width: 50, sortable: true },
-        { prop: 'sdm_startcontract', name: 'Start Date', width: 50,
+        { prop: 'norut', name: 'No', flexGrow: 1, sortable: false },
+        { prop: 'sdm_name', name: 'Nama', flexGrow: 6,
+        cellTemplate: this.name, sortable: true },
+        { prop: 'sdm_nik', name: 'NIK', flexGrow: 2, sortable: true },
+        { prop: 'sdm_startcontract', name: 'Start Date', flexGrow: 2,
           cellTemplate: this.viewAsDateTemplate, sortable: true },
-        { prop: 'sdm_endcontract', name: 'End Date', width: 50,
+        { prop: 'sdm_endcontract', name: 'End Date', flexGrow: 2,
           cellTemplate: this.viewAsDateTemplate, sortable: true },
-        { prop: 'sdm_status', name: 'Status', width: 50, sortable: false },
-        { prop: 'sdm_id', name: 'Action', width: 150,
+        { prop: 'sdm_status', name: 'Status', flexGrow: 2, sortable: false },
+        { prop: 'sdm_id', name: 'Action', flexGrow: 3,
           cellTemplate: this.tableActionTemplate, sortable: false },
-        { prop: 'notif', name: 'Notifikasi', width: 50,
+        { prop: 'notif', name: 'Notifikasi', flexGrow: 2,
           cellTemplate: this.notif, sortable: true }
       ]
     });
