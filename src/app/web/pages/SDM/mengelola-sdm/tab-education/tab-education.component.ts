@@ -104,14 +104,14 @@ export class TabEducationComponent implements OnInit {
       //   { viewValue: 'ID SDM', viewKey: 'sdm_id', type: TYPE.NUMBER }
       // ],
       tableColumns: [
-        { prop: 'norut', name: 'No', width: 3, sortable: false },
-        { prop: 'edu_name', name: 'Nama Sekolah', width: 30, sortable: true },
-        { prop: 'degree_name', name: 'Tingkat', width: 20, sortable: true },
-        { prop: 'edu_subject', name: 'Jurusan', width: 20, sortable: true },
-        { prop: 'edu_startdate', name: 'Tahun Masuk', width: 20, sortable: true },
-        { prop: 'edu_enddate', name: 'Tahun Keluar', width: 20, sortable: true },
+        { prop: 'norut', name: 'No', flexGrow: 1, sortable: false },
+        { prop: 'edu_name', name: 'Nama Sekolah', flexGrow: 5, sortable: true },
+        { prop: 'degree_name', name: 'Tingkat', flexGrow: 3, sortable: true },
+        { prop: 'edu_subject', name: 'Jurusan', flexGrow: 5, sortable: true },
+        { prop: 'edu_startdate', name: 'Tahun Masuk', flexGrow: 2, sortable: true },
+        { prop: 'edu_enddate', name: 'Tahun Keluar', flexGrow: 2, sortable: true },
         {
-          prop: 'edu_id', name: 'Action', width: 20,
+          prop: 'edu_id', name: 'Action', flexGrow: 2,
           cellTemplate: this.tableActionTemplate, sortable: false
         }
       ]
@@ -145,7 +145,7 @@ export class TabEducationComponent implements OnInit {
         }
       } else {
         this._notif.error({
-          message: 'MySql year range 1901 to 2155,'
+          message: 'Cek kembali tahun masuk dan keluar'
         });
       }
   }

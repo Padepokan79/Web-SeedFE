@@ -60,9 +60,9 @@ export class TabLanguageComponent implements OnInit {
         limit : 5
       },
       tableColumns : [
-        { prop: 'norut', name: 'No', width: 5, sortable: true },
-        { prop: 'language_name', name: 'Bahasa', width: 30, sortable: true },
-        { prop: 'sdmlanguage_id', name: 'Action', width: 20,
+        { prop: 'norut', name: 'No', flexGrow: 1, sortable: true },
+        { prop: 'language_name', name: 'Bahasa', flexGrow: 12, sortable: true },
+        { prop: 'sdmlanguage_id', name: 'Action', flexGrow: 2,
           cellTemplate: this.tableActionTemplate, sortable: false }
 
       ]
