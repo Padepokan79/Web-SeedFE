@@ -1,0 +1,54 @@
+<!-- <jaspero-confirmations></jaspero-confirmations> -->
+<!-- <simple-notifications></simple-notifications> -->
+
+<div class="col-sm-12" *ngIf="action?.table()">
+  <div class="sdw-form sdw-input" >
+    <!--<div class="sdw-header">
+      <ng-content select=".io-table-header"></ng-content>
+      <hr>
+    </div>-->
+    <div class="row" style="padding-top:1.25em">
+      <div class="col-md-3" *ngIf="action.tablePagination().searchKeys.length != 0">
+        <mat-form-field class="sdw-full-size">
+          <mat-select class="search-dropdown btn-block" [(ngModel)]="action.tablePagination().selectedSearchKey" placeholder="Search By" name="search">
+            <mat-option *ngFor="let key of action.tablePagination().searchKeys" [value]="key">
+              {{key.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-5" *ngIf="action.tablePagination().selectedSearchKey">
+        <mat-form-field class="sdw-full-size">
+          <input matInput placeholder="Keyword.." [(ngModel)]="action.tablePagination().searchValue" (keydown)="action.onSearch($event)">
+          <span matSuffix class="glyphicon glyphicon-search" (click)="action.onSearch()"></span>
+        </mat-form-field>
+      </div>
+      <div class="col-md-4" >
+        <button [routerLink]="['/pages/sdm/SDM006']" mat-raised-button color="primary" matBadge="8" matBadgePosition="before" matBadgeColor="accent" *ngIf="showBtn" style="float: right; margin-right: 1%;" class="btn-new">
+            <span class="glyphicon glyphicon-plus" style="color: white; margin-top: -5px;"></span> Add Sdm Psychologocal
+        </button>
+      </div>
+    </div>
+
+    <ngx-datatable
+      #ngxTable
+      class="dark"
+      [rows]="action.table().rows"
+      [count]="action.table().count"
+      [limit]="action.table().pagination().limit()"
+      [offset]="action.table().pagination().offset()"
+      [columns]="action.table().columns"
+      [rowHeight]="'auto'"
+      [columnMode]="'force'"
+      [headerHeight]="50"
+      [footerHeight]="50"
+      [externalPaging]="action.table().externalPaging"
+      [externalSorting]="action.table().externalPaging"
+      [loadingIndicator]="action.table().loading"
+      (page)='action.onLoad($event)'
+      (sort)='action.onSort($event)'>
+    </ngx-datatable>
+  </div>
+</div>
+
+<io-table-action #tableActionTemplate [action]="action"></io-table-action>

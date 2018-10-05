@@ -126,14 +126,14 @@ export class PJA003RComponent implements OnInit {
       //    { viewValue: 'Project Date', viewKey: 'project_enddate', type: TYPE.STRING },
       // ],
       tableColumns : [
-        { prop: 'norut', name: 'No.', width: 100, sortable: true },
-        { prop: 'sdm_name', name: 'Nama Sdm', width: 100, sortable: true },
-        { prop: 'project_name', name: 'Project Name', width: 100, sortable: true },
+        { prop: 'norut', name: 'No.', flexGrow: 1, sortable: true },
+        { prop: 'sdm_name', name: 'Nama Sdm', flexGrow: 3, sortable: true },
+        { prop: 'project_name', name: 'Project Name', flexGrow: 5, sortable: true },
         // { prop: 'project_desc', name: 'Project Desc.', width: 100, sortable: true },
         // { prop: 'project_role', name: 'Role', width: 100, sortable: true },
-        { prop: 'project_startdate', name: 'Start Date', width: 100,
+        { prop: 'project_startdate', name: 'Start Date', flexGrow: 2,
         cellTemplate: this.viewAsDateTemplate, sortable: true },
-        { prop: 'project_enddate', name: 'End Date', width: 100,
+        { prop: 'project_enddate', name: 'End Date', flexGrow: 2,
         cellTemplate: this.viewAsDateTemplate, sortable: true },
         // { prop: 'project_site', name: 'Project Site', width: 100, sortable: true },
         // { prop: 'project_customer', name: 'Customer', width: 100, sortable: false },
@@ -146,9 +146,9 @@ export class PJA003RComponent implements OnInit {
         // { prop: 'project_devtool', name: 'Dev Tools', width: 100, sortable: false },
         // { prop: 'project_technicalinfo', name: 'Technical Info', width: 100, sortable: false },
         // { prop: 'project_othertinfo', name: 'Other Info', width: 100, sortable: false },
-        { prop: 'notif', name: 'Notifikasi Project', width: 150,
+        { prop: 'notif', name: 'Notifikasi Project', flexGrow: 2,
           cellTemplate: this.notif, sortable: false },
-        { prop: 'project_id', name: 'Action', width: 100,
+        { prop: 'project_id', name: 'Action', flexGrow: 3,
           cellTemplate: this.tableActionTemplate, sortable: false }
       ]
     });

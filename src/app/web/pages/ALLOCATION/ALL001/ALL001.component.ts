@@ -58,10 +58,10 @@ export class ALL001Component implements OnInit {
         limit : 10
       },
       tableColumns : [
-        { prop: 'skill_id', name: 'Skill ID', width: 100, sortable: true },
-        { prop: 'skilltype_name', name: 'Category Name', width: 100, sortable: true },
-        { prop: 'skill_name', name: 'Skill Name', width: 100, sortable: true },
-        { prop: 'skill_id', name: 'Action', width: 100, cellTemplate: this.tableActionTemplate, sortable: true }
+        { prop: 'skill_id', name: 'Skill ID', flexGrow: 1, sortable: true },
+        { prop: 'skilltype_name', name: 'Category Name', flexGrow: 3, sortable: true },
+        { prop: 'skill_name', name: 'Skill Name', flexGrow: 2, sortable: true },
+        { prop: 'skill_id', name: 'Action', flexGrow: 2, cellTemplate: this.tableActionTemplate, sortable: true }
       ]
     });
 

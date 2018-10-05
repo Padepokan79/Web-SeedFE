@@ -82,18 +82,18 @@ export class PJA010Component implements OnInit {
         { viewValue: 'PIC Handler', viewKey: 'sdmassign_picclient', type: TYPE.STRING }
       ],
       tableColumns : [
-        { prop: 'norut', name: 'No', width: 15, sortable: false },
-        { prop: 'sdm_name', name: 'Name', width: 15, sortable: false },
-        { prop: 'sdm_phone', name: 'Contact', width: 15, sortable: false },
-        { prop: 'sdmassign_startdate', name: 'Start', width: 15, sortable: false },
-        { prop: 'sdmassign_enddate', name: 'End', width: 15, sortable: false },
-        { prop: 'sdmassign_loc', name: 'Location', width: 20, sortable: false },
-        { prop: 'sdmassign_picclient', name: 'PIC Handler', width: 50, sortable: false },
-        { prop: 'sdmassign_picclientphone', name: 'PIC Contact', width: 50, sortable: false },
-        { prop: 'method_name', name: 'Method', width: 15, sortable: false },
-        { prop: 'sdmassign_notification', name: 'Notification Assignment', width: 15,
+        { prop: 'norut', name: 'No', flexGrow: 1, sortable: false },
+        { prop: 'sdm_name', name: 'Name', flexGrow: 3, sortable: false },
+        { prop: 'sdm_phone', name: 'Contact', flexGrow: 2, sortable: false },
+        { prop: 'sdmassign_startdate', name: 'Start', flexGrow: 2, sortable: false },
+        { prop: 'sdmassign_enddate', name: 'End', flexGrow: 2, sortable: false },
+        { prop: 'sdmassign_loc', name: 'Location', flexGrow: 2, sortable: false },
+        { prop: 'sdmassign_picclient', name: 'PIC Handler', flexGrow: 2, sortable: false },
+        { prop: 'sdmassign_picclientphone', name: 'PIC Contact', flexGrow: 3, sortable: false },
+        { prop: 'method_name', name: 'Method', flexGrow: 2, sortable: false },
+        { prop: 'sdmassign_notification', name: 'Notification Assignment', flexGrow: 3,
           cellTemplate: this.notif, sortable: false },
-        { prop: 'sdmassign_id', name: 'Action', width: 15,
+        { prop: 'sdmassign_id', name: 'Action', flexGrow: 2,
           cellTemplate: this.tableActionTemplate, sortable: false }
       ]
     });

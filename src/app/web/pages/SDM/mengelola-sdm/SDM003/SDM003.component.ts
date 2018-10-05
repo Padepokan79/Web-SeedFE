@@ -159,9 +159,7 @@ export class SDM003Component implements OnInit {
         //   ]
         // },
         limit : 10,
-        orderby : 'sdm_status DESC,sdm_endcontract ASC'
-        
-        
+        orderby : 'sdm_status DESC,sdm_endcontract ASC',
       },
       // searchCriteria : [
       //   { viewValue: 'Nama', viewKey: 'sdm_name', type: TYPE.STRING }
@@ -195,6 +193,11 @@ export class SDM003Component implements OnInit {
       api: 'lov/sdm',
       pagingParams: {
         orderby: 'sdm_name ASC',
+        filter: {
+          field: 'sdm_status',
+          operator: COMPARISON_OPERATOR.EQ,
+          value: 1
+        }
       },
       initializeData: true
     });
