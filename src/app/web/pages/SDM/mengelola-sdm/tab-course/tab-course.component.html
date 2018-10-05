@@ -9,8 +9,8 @@
     <!-- NAMA Kursus/Pelatihan -->
     <tr>
       <td style="width: 20%">Kursus/Pelatihan</td>
-      <td style="width: 5px">:</td>
-      <td style="width: 80%">
+      <td style="width: 1%">:</td>
+      <td style="width: 79%">
         <mat-form-field class="sdw-full-size">
             <input matInput placeholder="" formControlName="course_title" name="course_title" required>
             <mat-hint *ngIf="action.formErrors.course_title" [ngStyle]="{'color': 'red'}">
@@ -87,9 +87,9 @@
         </td>
     </tr>
     </table>
-    </div>
-    <div class="col-md-6 pos" style="float:right">
+    <div class="float-right">
         <io-form-action [action]="action" (click)="action.onReset()" ></io-form-action>
+    </div>
     </div>
     <!-- <div style="margin-bottom:16px; margin-left:825px">
         <button mat-flat-button class="btn-new btn-mm" (click)="validasiTahun()" *ngIf=" form == 1 ">

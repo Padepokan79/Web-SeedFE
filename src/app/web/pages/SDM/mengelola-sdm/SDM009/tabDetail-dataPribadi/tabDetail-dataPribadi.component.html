@@ -5,13 +5,15 @@
     <div style="width: 100%; padding-left: 20px; padding-right: 20px">
     <!-- KONTEN DATA PRIBADI-->
     <!-- <input type="file" (change)="onFileSelected($event)> -->
+
+    <label>{{ action?.formControls().controls['sdm_name'].value }}</label>
     <table style="width: 100%">
 
     <!-- NAMA LENGKKAP -->
     <tr>
         <td style="width: 20%">Nama Lengkap</td>
-        <td style="width: 5px">: </td>
-        <td style="width: 80%">
+        <td style="width: 1%">: </td>
+        <td style="width: 79%">
             <mat-form-field class="sdw-full-size">
                 <input matInput placeholder="" formControlName="sdm_name" name="sdm_name" readonly>
                 <mat-hint *ngIf="action.formErrors.sdm_name" [ngStyle]="{'color': 'red'}">
@@ -21,7 +23,7 @@
 
         </td>
         <td rowspan="7">
-            <div *ngIf="pathFoto">
+            <div style="margin-left: 50px" *ngIf="pathFoto">
                 <img src="{{pathFoto}}" style="width: 200px;height: 200px">
             </div>
         </td>
