@@ -72,13 +72,13 @@ export class TabCourseComponent implements OnInit {
         limit : 10
       },
       tableColumns : [
-        { prop: 'norut', name: 'No', width: 30, sortable: false },
-        { prop: 'course_title', name: 'Kursus', width: 30, sortable: true},
-        { prop: 'course_provider', name: 'Penyelenggara', width: 30, sortable: true },
-        { prop: 'course_place', name: 'Tempat', width: 30, sortable: true },
-        { prop: 'course_date', name: 'Waktu', width: 30, sortable: true },
-        { prop: 'course_duration', name: 'Durasi', width: 30, sortable: true },
-        { prop: 'course_id', name: 'Action', width: 30,
+        { prop: 'norut', name: 'No', flexGrow: 1, sortable: false },
+        { prop: 'course_title', name: 'Kursus', flexGrow: 5, sortable: true},
+        { prop: 'course_provider', name: 'Penyelenggara', flexGrow: 5, sortable: true },
+        { prop: 'course_place', name: 'Tempat', flexGrow: 3, sortable: true },
+        { prop: 'course_date', name: 'Waktu', flexGrow: 2, sortable: true },
+        { prop: 'course_duration', name: 'Durasi', flexGrow: 2, sortable: true },
+        { prop: 'course_id', name: 'Action', flexGrow: 2,
           cellTemplate: this.tableActionTemplate, sortable: false }
       ]
     });

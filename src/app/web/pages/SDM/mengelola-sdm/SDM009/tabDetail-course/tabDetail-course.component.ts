@@ -71,12 +71,12 @@ export class TabDetailCourseComponent implements OnInit {
       //   { viewValue: 'Course Name', viewKey: 'course_name', type: TYPE.STRING }
       // ],
       tableColumns : [
-        { prop: 'course_title', name: 'Title', width: 10, sortable: false },
-        { prop: 'course_provider', name: 'Penyelenggara', width: 30, sortable: true },
-        { prop: 'course_place', name: 'Tempat', width: 20, sortable: true },
-        { prop: 'course_duration', name: 'Durasi', width: 20, sortable: true },
-        { prop: 'course_date', name: 'Tanggal', width: 20, sortable: true },
-        { prop: 'course_certificates', name: 'Sertifikat', width: 20, sortable: true }
+        { prop: 'course_title', name: 'Title', flexGrow: 4, sortable: false },
+        { prop: 'course_provider', name: 'Penyelenggara', flexGrow: 4, sortable: true },
+        { prop: 'course_place', name: 'Tempat', flexGrow: 3, sortable: true },
+        { prop: 'course_duration', name: 'Durasi', flexGrow: 2, sortable: true },
+        { prop: 'course_date', name: 'Tanggal', flexGrow: 2, sortable: true },
+        { prop: 'course_certificates', name: 'Sertifikat', flexGrow: 2, sortable: true }
       ]
     });
 

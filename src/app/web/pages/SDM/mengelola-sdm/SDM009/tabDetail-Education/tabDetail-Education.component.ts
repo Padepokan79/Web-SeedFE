@@ -83,11 +83,11 @@ export class TabDetailEducationComponent implements OnInit {
       //   { viewValue: 'Edu Name', viewKey: 'edu_name', type: TYPE.STRING}
       // ],
       tableColumns : [
-        { prop: 'edu_name', name: 'Nama Sekolah', width: 40, sortable: false },
-        { prop: 'edu_subject', name: 'Jurusan', width: 100, sortable: false },
-        { prop: 'degree_name', name: 'Tingkat', width: 100, sortable: false },
-        { prop: 'edu_startdate', name: 'Tahun Masuk', width: 100, sortable: false },
-        { prop: 'edu_enddate', name: 'Tahun Keluar', width: 100, sortable: false }
+        { prop: 'edu_name', name: 'Nama Sekolah', flexGrow: 5, sortable: false },
+        { prop: 'edu_subject', name: 'Jurusan', flexGrow: 4, sortable: false },
+        { prop: 'degree_name', name: 'Tingkat', flexGrow: 3, sortable: false },
+        { prop: 'edu_startdate', name: 'Tahun Masuk', flexGrow: 2, sortable: false },
+        { prop: 'edu_enddate', name: 'Tahun Keluar', flexGrow: 2, sortable: false }
       ]
     });
 

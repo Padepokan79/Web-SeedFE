@@ -75,17 +75,17 @@ export class SDM004Component implements OnInit {
         { viewValue: 'Sdm Name', viewKey: 'sdm_name', type: TYPE.STRING }
       ],
       tableColumns : [
-        { prop: 'norut', name: 'No', width: 20, sortable: true },
-        { prop: 'sdm_name', name: 'Nama', width: 100, sortable: true },
-        { prop: 'sdm_nik', name: 'NIK', width: 100, sortable: true },
-        { prop: 'sdm_address', name: 'Alamat', width: 100, sortable: true },
-        { prop: 'sdm_phone', name: 'Nomor Telepon', width: 100, sortable: true },
-        { prop: 'sdm_startcontract', name: 'Start Date', width: 100,
+        { prop: 'norut', name: 'No', flexGrow: 1, sortable: true },
+        { prop: 'sdm_name', name: 'Nama', flexGrow: 3, sortable: true },
+        { prop: 'sdm_nik', name: 'NIK', flexGrow: 2, sortable: true },
+        { prop: 'sdm_address', name: 'Alamat', flexGrow: 5, sortable: true },
+        { prop: 'sdm_phone', name: 'Nomor Telepon', flexGrow: 3, sortable: true },
+        { prop: 'sdm_startcontract', name: 'Start Date', flexGrow: 2,
           cellTemplate: this.viewAsDateTemplate, sortable: true },
-        { prop: 'sdm_endcontract', name: 'End Date', width: 100,
+        { prop: 'sdm_endcontract', name: 'End Date', flexGrow: 2,
           cellTemplate: this.viewAsDateTemplate, sortable: true },
         // { prop: 'sdm_status', name: 'Status', width: 100, sortable: false },
-        { prop: 'sdm_id', name: 'Action', width: 100,
+        { prop: 'sdm_id', name: 'Action', flexGrow: 1,
           cellTemplate: this.tableActionTemplate, sortable: false }
       ]
     });
