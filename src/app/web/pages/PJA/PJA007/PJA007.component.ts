@@ -70,11 +70,11 @@ export class PJA007Component implements OnInit {
         { viewValue: 'Status', viewKey: 'hirestat_name', type: TYPE.STRING}
       ],
       tableColumns : [
-        { prop: 'norut', name: 'No', width: 20, sortable: false },
-        { prop: 'sdm_name', name: 'Name', width: 100, sortable: false },
-        { prop: 'sdm_phone', name: 'Contact', width: 100, sortable: false },
-        { prop: 'hirestat_name', name: 'Status', width: 100, sortable: true },
-        { prop: 'id', name: 'Action', width: 100,
+        { prop: 'norut', name: 'No', flexGrow: 1, sortable: false },
+        { prop: 'sdm_name', name: 'Name', flexGrow: 3, sortable: false },
+        { prop: 'sdm_phone', name: 'Contact', flexGrow: 3, sortable: false },
+        { prop: 'hirestat_name', name: 'Status', flexGrow: 3, sortable: true },
+        { prop: 'id', name: 'Action', flexGrow: 2,
           cellTemplate: this.tableActionTemplate, sortable: false }
       ]
     });

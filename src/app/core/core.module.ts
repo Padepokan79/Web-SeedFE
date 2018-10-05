@@ -108,6 +108,7 @@ import { FileUploadModule } from 'ng2-file-upload/file-upload/file-upload.module
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { CoreConfigModule } from 'app/core/core.config.module';
 import { IOProfilePicturePipe } from './pipes/admin/io-profile-picture.pipe';
+import { TableWithAddPsychologicalComponent } from './components/table-with-add-psychological/table-with-add-psychological.component';
 
 const CORE_COMPONENTS = [
     ActionComponent,
@@ -119,6 +120,7 @@ const CORE_COMPONENTS = [
     TableComponent,
     TableWithAddComponent,
     TableWithAddClientComponent,
+    TableWithAddPsychologicalComponent,
     TableActionComponent,
     InputValidationComponent,
     BaMenuUserInformationComponent,

@@ -51,9 +51,9 @@ export class ALL002Component implements OnInit {
         limit : 10
       },
       tableColumns : [
-        { prop: 'skilltype_id', name: 'Category ID', width: 50,  sortable: false },
-        { prop: 'skilltype_name', name: 'Category Name', width: 100, sortable: false },
-        { prop: 'skilltype_id', name: 'Action', width: 50, cellTemplate: this.tableActionTemplate, sortable: false }
+        { prop: 'skilltype_id', name: 'Category ID', flexGrow: 1,  sortable: false },
+        { prop: 'skilltype_name', name: 'Category Name', flexGrow: 3, sortable: false },
+        { prop: 'skilltype_id', name: 'Action', flexGrow: 2, cellTemplate: this.tableActionTemplate, sortable: false }
       ]
     });
 

@@ -77,6 +77,7 @@ export class ALL006Component implements OnInit {
   public roletype: string = '1';
   public skillType: string;
 
+  // tslint:disable-next-line:member-access
   numberOnly(event): boolean {
     const charCode = (event.which) ? event.which : event.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
@@ -172,15 +173,15 @@ export class ALL006Component implements OnInit {
         limit: 10
       },
       tableColumns: [
-        { prop: 'sdm_nik', name: 'NIK', width: 10, sortable: false },
-        { prop: 'sdm_name', name: 'Name', width: 150, sortable: false },
+        { prop: 'sdm_nik', name: 'NIK', flexGrow: 1, sortable: false },
+        { prop: 'sdm_name', name: 'Name', flexGrow: 3, sortable: false },
         // { prop: 'skilltype_name', name: 'Category', width: 20, sortable: false },
         // { prop: 'skill_name', name: 'Skills', width: 20, sortable: false },
         // { prop: 'sdmskill_value', name: 'Value', width: 50, sortable: false },
-        { prop: 'end_contractproject', name: 'End date project', width: 50, sortable: false },
-        { prop: 'sdm_notification', name: 'Notifikasi Kontrak', width: 50,
+        { prop: 'end_contractproject', name: 'End date project', flexGrow: 2, sortable: false },
+        { prop: 'sdm_notification', name: 'Notifikasi Kontrak', flexGrow: 3,
         cellTemplate: this.notif, sortable: false },
-        { prop: 'sdmskill_id', name: 'Action', width: 20,
+        { prop: 'sdmskill_id', name: 'Action', flexGrow: 2,
         cellTemplate: this.tableActionTemplate, sortable: false },
       ]
     });

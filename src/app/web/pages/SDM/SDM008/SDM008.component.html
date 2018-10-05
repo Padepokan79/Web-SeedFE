@@ -40,11 +40,11 @@ UPDATE		:
     </form>
 </io-form> -->
 
-  <io-table *ngIf="action?.table()" [action]="action">
+  <io-table-with-add-psychological *ngIf="action?.table()" [action]="action">
     <div class="io-table-header">
       <h3>List Psychological</h3>
     </div>
-  </io-table>
+  </io-table-with-add-psychological>
   <div align="center">
   <ng-template #tableActionTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
     <button type="button" class="btn btn-primary btn-mm btn-icon" (click)="navigateEditMenu(row.sdmpsycological_id)" style="background: linear-gradient(to bottom right, rgb(49, 144, 221), rgb(49, 144, 221));">
