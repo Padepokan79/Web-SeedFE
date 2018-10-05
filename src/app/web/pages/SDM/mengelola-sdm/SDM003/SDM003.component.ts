@@ -16,6 +16,7 @@ import { Conjunction } from '../../../../../core/enums/conjunction-operator.enum
 import { HttpClient, HttpParams } from '../../../../../../../node_modules/@angular/common/http';
 import { DefaultNotificationService } from '../../../../../core/services/default-notification.service';
 import { Title } from '@angular/platform-browser';
+import { COMPARISON_OPERATOR, CONJUNCTION_OPERATOR } from '../../../../../core/constant/constant';
 
 @Component({
   selector: 'app-SDM003',
@@ -135,25 +136,13 @@ export class SDM003Component implements OnInit {
     this.dataTable = this._factory.dataTable({
       serverSide : true,
       pagingParams : {
-        // filter: {
-        //   operator: CONJUNCTION_OPERATOR.AND,
-        //   component: [
-        //       {
-        //           field: 'kddati1',
-        //           operator: COMPARISON_OPERATOR.EQ,
-        //           value: Session.getUserData('kddati1')
-        //       },
-        //       {
-        //           field: 'kddati2',
-        //           operator: COMPARISON_OPERATOR.EQ,
-        //           value: Session.getUserData('kddati2')
-        //       }
-        //   ]
-        // },
+        filter: {
+          field : 'sdm_status',
+          operator: CONJUNCTION_OPERATOR.AND,
+          value : 1
+        },
         limit : 10,
-        orderby : 'sdm_status DESC,sdm_endcontract ASC'
-        
-        
+        orderby : 'sdm_status DESC,sdm_endcontract ASC',
       },
       // searchCriteria : [
       //   { viewValue: 'Nama', viewKey: 'sdm_name', type: TYPE.STRING }
@@ -186,6 +175,11 @@ export class SDM003Component implements OnInit {
       api: 'lov/sdm',
       pagingParams: {
         orderby: 'sdm_name ASC',
+        filter: {
+          field: 'sdm_status',
+          operator: COMPARISON_OPERATOR.EQ,
+          value: 1
+        }
       },
       initializeData: true
     });

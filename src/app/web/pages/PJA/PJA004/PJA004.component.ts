@@ -27,7 +27,7 @@ export class PJA004Component implements OnInit {
   public dataTable: DataTable;
 
   constructor(private _factory: CoreFactory, private router: Router) { }
-  
+
   public refreshTabel() {
     this.action.refreshTable();
   }
@@ -48,11 +48,11 @@ export class PJA004Component implements OnInit {
         { viewValue: 'Client Name', viewKey: 'client_name', type: TYPE.STRING }
       ],
       tableColumns : [
-        { prop: 'norut', name: 'No', width: 100, sortable: false },
-        { prop: 'client_name', name: 'Client Name', width: 30, sortable: true },
-        { prop: 'client_picclient', name: 'PIC Handler', width: 20, sortable: true },
-        { prop: 'client_mobileclient', name: 'Contact Person', width: 20, sortable: true },
-        { prop: 'client_name', name: 'Action', width: 20,
+        { prop: 'norut', name: 'No', flexGrow: 1, sortable: false },
+        { prop: 'client_name', name: 'Client Name', flexGrow: 2, sortable: true },
+        { prop: 'client_picclient', name: 'PIC Handler', flexGrow: 3, sortable: true },
+        { prop: 'client_mobileclient', name: 'Contact Person', flexGrow: 3, sortable: true },
+        { prop: 'client_name', name: 'Action', flexGrow: 2,
           cellTemplate: this.tableActionTemplate, sortable: false }
 
       ]
