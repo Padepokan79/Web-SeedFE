@@ -131,6 +131,7 @@ export class ALL003Component implements OnInit {
       this._notif.success({
         message: 'You have successfully deleted all skill SDM'
       });
+      this.refreshData();
     }, (error: any) => {
       this._notif.error({
         message: 'Please check SDM Data'});
@@ -153,5 +154,5 @@ export class ALL003Component implements OnInit {
                 this.refreshData();
             }
         });
-}
+  }
 }

@@ -5,6 +5,9 @@ import { DataTable } from '../../../../core/models/data-table';
 import { CoreFactory } from '../../../../core/factory/core.factory';
 import { TYPE } from '../../../../core/constant/constant';
 import { Router } from '../../../../../../node_modules/@angular/router';
+import { DefaultNotificationService } from '../../../../core/services/default-notification.service';
+import { MatDialog } from '@angular/material';
+import { ConfirmDialogsComponent } from '../../../../core/components/confirm-dialogs/confirm-dialogs.component';
 
 @Component({
   selector: 'app-PJA004',
@@ -26,7 +29,10 @@ export class PJA004Component implements OnInit {
   public inputForm: InputForm;
   public dataTable: DataTable;
 
-  constructor(private _factory: CoreFactory, private router: Router) { }
+  constructor(private _factory: CoreFactory,
+              private router: Router,
+              public _notif: DefaultNotificationService,
+              private _dialog: MatDialog) { }
 
   public refreshTabel() {
     this.action.refreshTable();
@@ -67,5 +73,32 @@ export class PJA004Component implements OnInit {
 
   public navigateEditMenu(id) {
     this.router.navigate(['/pages/pja/PJA006', { id }]);
+  }
+
+  public onEksekusi(id) {
+    const deleteAPI = this._factory.api ({
+      api : 'project/MengelolaClient/delete'
+    });
+    this._factory.http().delete(deleteAPI + '?client_id=' + id).subscribe((response: any) => {
+      this._notif.success({
+        message: 'Delete Data Berhasil'
+      });
+    });
+    this.action.refreshTable();
+  }
+
+  public onDelete(id, deleteMessage: string = 'Are you sure to delete?') {
+    this._dialog
+        .open(ConfirmDialogsComponent, {
+          data: {
+            selecetedData : id,
+            message : deleteMessage
+          }
+        })
+        .afterClosed()
+        .subscribe((data: any) => {
+          this.onEksekusi(id);
+          this.action.refreshTable();
+        });
   }
 }
