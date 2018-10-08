@@ -25,7 +25,7 @@
   <button type="button" matTooltip="Edit Client" class="btn btn-primary btn-mm btn-icon" (click)="navigateEditMenu(row.client_id)" >
     <i class="glyphicon glyphicon-edit"></i>
   </button>
-  <button type="button" matTooltip="Hapus Client" class="btn btn-danger btn-mm btn-icon" (click)="onDelete(row.client_id)">
+  <button type="button" matTooltip="Hapus Client" class="btn btn-danger btn-mm btn-icon" (click)="action.onDelete(row)">
     <i class="glyphicon glyphicon-trash"></i>
   </button>
 </ng-template>
