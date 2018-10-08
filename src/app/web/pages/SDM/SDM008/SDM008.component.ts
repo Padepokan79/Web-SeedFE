@@ -10,6 +10,9 @@ import { FormControl, FormGroup } from '../../../../../../node_modules/@angular/
 import { ListOfValue } from '../../../../core/models/list-of-value';
 import { Comparison } from '../../../../core/enums/comparison-operator.enum';
 import { startWith, map } from '../../../../../../node_modules/rxjs/operators';
+import { ConfirmDialogsComponent } from '../../../../core/components/confirm-dialogs/confirm-dialogs.component';
+import { DefaultNotificationService } from '../../../../core/services/default-notification.service';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-SDM008',
@@ -47,7 +50,10 @@ export class SDM008Component implements OnInit {
     }
   }
   // tslint:disable-next-line:member-ordering
-  constructor(private _factory: CoreFactory, private router: Router) {
+  constructor(private _factory: CoreFactory,
+              private router: Router,
+              public _notif: DefaultNotificationService,
+              private _dialog: MatDialog) {
     this.sdmCtrl = new FormControl();
     this.filteredSdm = this.sdmCtrl.valueChanges
     .pipe(
@@ -65,35 +71,12 @@ export class SDM008Component implements OnInit {
         sdm_id: '',
         sdm_name: '',
       },
-      // validationMessages: {
-      //   sdm_id: {
-      //     required: '',
-      //   },
-      //   user_id: {
-      //     required: 'Silahkan masukkan User ID'
-      //   }
-      // }
     });
 
     // First Data Table Initialization
     this.dataTable = this._factory.dataTable({
       serverSide : false,
       pagingParams : {
-        // filter: {
-        //   operator: CONJUNCTION_OPERATOR.AND,
-        //   component: [
-        //       {
-        //           field: 'kddati1',
-        //           operator: COMPARISON_OPERATOR.EQ,
-        //           value: Session.getUserData('kddati1')
-        //       },
-        //       {
-        //           field: 'kddati2',
-        //           operator: COMPARISON_OPERATOR.EQ,
-        //           value: Session.getUserData('kddati2')
-        //       }
-        //   ]
-        // },
         limit : 10
       },
       searchCriteria : [
@@ -160,4 +143,32 @@ export class SDM008Component implements OnInit {
 
     this.action.refreshTable();
   }
+
+  public onEksekusi(id) {
+    const deleteAPI = this._factory.api ({
+      api : 'sdm/SdmPsycological/delete'
+    });
+    this._factory.http().delete(deleteAPI + '?sdmpsycological_id=' + id).subscribe((response: any) => {
+      this._notif.success({
+        message: 'Delete Data Berhasil'
+      });
+      this.action.refreshTable();
+    });
+  }
+
+  public onDelete(id, deleteMessage: string = 'Are you sure to delete?') {
+    this._dialog
+        .open(ConfirmDialogsComponent, {
+          data: {
+            selecetedData : id,
+            message : deleteMessage
+          }
+        })
+        .afterClosed()
+        .subscribe((data: any) => {
+          this.onEksekusi(id);
+          this.action.refreshTable();
+        });
+  }
+
 }

@@ -25,6 +25,14 @@ export class PJA005Component implements OnInit {
   public clientName: string = null;
   public clientPicclient: string = null;
   public clientMobileclient: number = null;
+  numberOnly(event): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
+
+  }
 
   constructor(
     public _notif: DefaultNotificationService,
@@ -101,22 +109,14 @@ export class PJA005Component implements OnInit {
       //   client_id : this.selectedId
       // }
     });
+    console.log(this.clientName);
+    console.log(this.clientPicclient);
+    console.log(this.clientMobileclient);
+    
     if (this.clientName === null || this.clientName === '') {
       this._notif.error({
         message: 'Client Name Harus Diisi'
       });
-      } else if (this.clientPicclient === null || this.clientPicclient === '') {
-        this._notif.error({
-          message: 'PIC Handler Harus Diisi'
-        });
-      } else if (this.clientMobileclient === undefined || this.clientMobileclient === null) {
-        this._notif.error({
-          message: 'Contact Person Harus Diisi'
-        });
-      } else if (this.clientMobileclient > 9999999999999) {
-        this._notif.error({
-          message: 'Contact Person Max 13 Digit'
-        });
       } else {
         this._factory.http().post(createAPI, this.action.getFormData()).subscribe((response: any) => {
           this._notif.success({

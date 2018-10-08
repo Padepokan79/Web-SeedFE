@@ -8,6 +8,9 @@ import { TYPE, COMPARISON_OPERATOR } from '../../../../core/constant/constant';
 import { Router } from '@angular/router';
 import { Comparison } from '../../../../core/enums/comparison-operator.enum';
 import { Conjunction } from '../../../../core/enums/conjunction-operator.enum';
+import { DefaultNotificationService } from '../../../../core/services/default-notification.service';
+import { MatDialog } from '@angular/material';
+import { ConfirmDialogsComponent } from '../../../../core/components/confirm-dialogs/confirm-dialogs.component';
 
 @Component({
   selector: 'app-PJA007',
@@ -33,7 +36,10 @@ export class PJA007Component implements OnInit {
   public btnDisabled: boolean = true;
   public selected: number;
 
-  constructor(private _factory: CoreFactory, private router: Router) { }
+  constructor(private _factory: CoreFactory,
+              private router: Router,
+              public _notif: DefaultNotificationService,
+              private _dialog: MatDialog) {}
   public refreshTabel() {
     this.action.refreshTable();
   }
@@ -133,7 +139,6 @@ export class PJA007Component implements OnInit {
   }
 
   public onSearch() {
-    const filterCriteria = [];
     const ClientId = this.action.getFormControlValue('client_id');
 
     this.action.setPaginationFilter(
@@ -145,6 +150,33 @@ export class PJA007Component implements OnInit {
 
   public setTrueClick() {
      this.btnDisabled = false;
+  }
+
+  public onEksekusi(id) {
+    const deleteAPI = this._factory.api({
+      api : 'project/mengelolaHiring/delete'
+    });
+    this._factory.http().delete(deleteAPI + '?sdmhiring_id=' + id).subscribe((response: any) => {
+      this._notif.success({
+        message : 'Delete berhasil'
+      });
+    });
+    this.action.refreshTable();
+  }
+
+  public onDelete(id, deleteMassage: string = 'Are you sure to delete?') {
+    this._dialog
+        .open(ConfirmDialogsComponent, {
+          data : {
+            selectedData : id,
+            message : deleteMassage
+          }
+        })
+        .afterClosed()
+        .subscribe((data: any) => {
+          this.onEksekusi(id);
+          this.action.refreshTable();
+        });
   }
 
 }
