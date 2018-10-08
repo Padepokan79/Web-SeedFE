@@ -36,7 +36,7 @@ Modified   : 15-08-2018 by APN -->
 
             <tr>
               <td class="nx-table-range">
-                <mat-label>PIC Handler <span style="color: red"> * </span> </mat-label>
+                <mat-label>PIC Handler  </mat-label>
               </td>
               <td>
                 <mat-label>:</mat-label>
@@ -53,14 +53,14 @@ Modified   : 15-08-2018 by APN -->
 
             <tr>
               <td class="nx-table-range">
-                <mat-label>Contact Person<span style="color: red"> * </span></mat-label>
+                <mat-label>Contact Person</mat-label>
               </td>
               <td>
                 <mat-label>:</mat-label>
               </td>
               <td class="nx-table-range">
                 <mat-form-field class="nx-class-data">
-                  <input matInput placeholder="" maxlength="13"  type="number" [(ngModel)]="clientMobileclient" formControlName="client_mobileclient" name="client_mobileclient">
+                  <input matInput (keypress)="numberOnly($event)" placeholder="" maxlength="13" [(ngModel)]="clientMobileclient" formControlName="client_mobileclient" name="client_mobileclient">
                   <mat-hint *ngIf="action.formErrors.client_mobileclient" [ngStyle]="{'color': 'red'}">
                     {{action.formErrors.client_mobileclient}}
                   </mat-hint>

@@ -203,7 +203,7 @@ export class PJA008Component implements OnInit {
         this.cek = false;
       }
       // tslint:disable-next-line:triple-equals
-      if (this.skillType == this.roletype && skillSdm.value != 1) {
+      if (this.skillType == this.roletype && (skillSdm.value < 1 || skillSdm.value > 10 ) ) {
       this.validasiRolevalue = true;
     } else {
       this.validasiRolevalue = false;
@@ -228,7 +228,7 @@ export class PJA008Component implements OnInit {
         });
       if ( this.validasiRolevalue === true ) {
           this._notif.error({
-            message : 'Role Value is only preferred 1'
+            message : 'Role Value Between 1 and 10'
            });
         } else {
           this._notif.error({

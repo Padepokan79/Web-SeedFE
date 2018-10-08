@@ -24,7 +24,14 @@ public clientMobileclient: number = null;
 public clientPicclient: string = null;
 public clientName: string = null;
 private selectedId: string;
+numberOnly(event): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
 
+  }
   constructor(
     public _notif: DefaultNotificationService,
     private _factory: CoreFactory,
@@ -94,7 +101,9 @@ private selectedId: string;
       // }
     });
     console.log(this.clientName);
+    console.log(this.clientPicclient);
     console.log(this.clientMobileclient);
+ 
     if (this.clientName === null || this.clientName === '') {
       this._notif.error({
         message: 'Client Name Harus Diisi'
@@ -106,10 +115,6 @@ private selectedId: string;
       } else if (this.clientMobileclient === undefined || this.clientMobileclient === null) {
         this._notif.error({
           message: 'Contact Person Harus Diisi'
-        });
-      } else if (this.clientMobileclient > 9999999999999) {
-        this._notif.error({
-          message: 'Contact Person Max 13 Digit'
         });
       } else {
     this._factory.http().put(updateAPI + '?client_id=' + this.selectedId, this.action.getFormData()).subscribe((response: any) => {
