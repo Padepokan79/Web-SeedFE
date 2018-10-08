@@ -70,7 +70,7 @@ Modified   : 14-08-2018 by APN -->
               </td>
               <td class="nx-table-range">
                 <mat-form-field class="nx-class-data">
-                <input matInput type="number" placeholder="" [(ngModel)]="clientMobileclient" formControlName="client_mobileclient" name="client_mobileclient" required>
+                <input matInput (keypress)="numberOnly($event)" placeholder="" maxlength="13" [(ngModel)]="clientMobileclient" formControlName="client_mobileclient" name="client_mobileclient" required>
                 <mat-hint *ngIf="action.formErrors.client_mobileclient" [ngStyle]="{'color': 'red'}">
                   {{action.formErrors.client_mobileclient}}
                 </mat-hint>
