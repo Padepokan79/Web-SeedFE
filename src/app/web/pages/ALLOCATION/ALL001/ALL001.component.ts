@@ -8,6 +8,9 @@ import { InputForm } from '../../../../core/models/input-form';
 import { DataTable } from '../../../../core/models/data-table';
 import { LOVService } from '../../../../core/services/uninjectable/lov.service';
 import { CoreFactory } from '../../../../core/factory/core.factory';
+import { ConfirmDialogsComponent } from '../../../../core/components/confirm-dialogs/confirm-dialogs.component';
+import { DefaultNotificationService } from '../../../../core/services/default-notification.service';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-ALL001',
@@ -26,7 +29,9 @@ export class ALL001Component implements OnInit {
 
   public lovSkillType: LOVService;
 
-  constructor(private _factory: CoreFactory) { }
+  constructor(private _factory: CoreFactory,
+              public _notif: DefaultNotificationService,
+              private _dialog: MatDialog) { }
 
   public refreshTabel() {
     this.action.refreshTable();
@@ -58,7 +63,7 @@ export class ALL001Component implements OnInit {
         limit : 10
       },
       tableColumns : [
-        { prop: 'skill_id', name: 'Skill ID', flexGrow: 1, sortable: true },
+        { prop: 'norut', name: 'Skill ID', flexGrow: 1, sortable: true },
         { prop: 'skilltype_name', name: 'Category Name', flexGrow: 3, sortable: true },
         { prop: 'skill_name', name: 'Skill Name', flexGrow: 2, sortable: true },
         { prop: 'skill_id', name: 'Action', flexGrow: 2, cellTemplate: this.tableActionTemplate, sortable: true }
@@ -75,6 +80,33 @@ export class ALL001Component implements OnInit {
         api: 'lov/SkillType',
         initializeData: true
     });
+  }
+
+  public onEksekusi(id) {
+    const deleteAPI = this._factory.api ({
+      api : 'project/MengelolaClient/delete'
+    });
+    this._factory.http().delete(deleteAPI + '?skill_id=' + id).subscribe((response: any) => {
+      this._notif.success({
+        message: 'Delete Data Berhasil'
+      });
+    });
+    this.action.refreshTable();
+  }
+
+  public onDelete(id, deleteMessage: string = 'Are you sure to delete?') {
+    this._dialog
+        .open(ConfirmDialogsComponent, {
+          data: {
+            selecetedData : id,
+            message : deleteMessage
+          }
+        })
+        .afterClosed()
+        .subscribe((data: any) => {
+          this.onEksekusi(id);
+          this.action.refreshTable();
+        });
   }
 
 }

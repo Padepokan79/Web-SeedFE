@@ -9,6 +9,9 @@ import { Session } from '../../../../core/utils/session';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Conjunction } from '../../../../core/enums/conjunction-operator.enum';
 import { Comparison } from '../../../../core/enums/comparison-operator.enum';
+import { ConfirmDialogsComponent } from '../../../../core/components/confirm-dialogs/confirm-dialogs.component';
+import { DefaultNotificationService } from '../../../../core/services/default-notification.service';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-PJA010',
@@ -39,9 +42,11 @@ export class PJA010Component implements OnInit {
   // public lovUser: LOVService;
 
   constructor(
+    public _notif: DefaultNotificationService,
     private _factory: CoreFactory,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private _dialog: MatDialog
   ) { }
   public ngOnInit() {
 
@@ -148,7 +153,6 @@ export class PJA010Component implements OnInit {
   }
 
   public onSearch() {
-    const filterCriteria = [];
     const ClientId = this.action.getFormControlValue('client_id');
 
     this.action.setPaginationFilter(
@@ -171,5 +175,32 @@ export class PJA010Component implements OnInit {
   public setTrueClick() {
     this.btnDisabled = false;
  }
+
+ public onEksekusi(id) {
+  const deleteAPI = this._factory.api({
+    api : 'project/SdmAssignment/delete'
+  });
+  this._factory.http().delete(deleteAPI + '?sdmassign_id=' + id).subscribe((response: any) => {
+    this._notif.success({
+      message : 'Delete berhasil'
+    });
+  });
+  this.action.refreshTable();
+}
+
+public onDelete(id, deleteMassage: string = 'Are you sure to delete?') {
+  this._dialog
+      .open(ConfirmDialogsComponent, {
+        data : {
+          selectedData : id,
+          message : deleteMassage
+        }
+      })
+      .afterClosed()
+      .subscribe((data: any) => {
+        this.onEksekusi(id);
+        this.action.refreshTable();
+      });
+}
 
 }

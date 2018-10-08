@@ -13,6 +13,9 @@ import { map, startWith } from '../../../../../../node_modules/rxjs/operators';
 import { ComparisonOperator, Comparison } from '../../../../core/enums/comparison-operator.enum';
 import { Conjunction } from '../../../../core/enums/conjunction-operator.enum';
 import { PopUpDetailComponent } from './PopUpDetail/PopUpDetail.component';
+import { DefaultNotificationService } from '../../../../core/services/default-notification.service';
+import { ConfirmDialogsComponent } from '../../../../core/components/confirm-dialogs/confirm-dialogs.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-PJA003R',
@@ -82,7 +85,10 @@ export class PJA003RComponent implements OnInit {
   }
 
   // tslint:disable-next-line:member-ordering
-  constructor(private _factory: CoreFactory, private router: Router) {
+  constructor(private _factory: CoreFactory,
+              private router: Router,
+              public _notif: DefaultNotificationService,
+              private _dialog: MatDialog) {
 
     this.sdmCtrl = new FormControl();
     this.filteredSdm = this.sdmCtrl.valueChanges
@@ -248,6 +254,41 @@ export class PJA003RComponent implements OnInit {
     console.log('Nama: ', this.SdmName, 'Nama Project: ', this.ProjectName, 'Tanggal berakhir: ', this.ProjectEndDate);
     this.action.resetFilter() ;
     this.action.refreshTable();
+  }
+
+  public refreshData() {
+    this.action.refreshTable();
+  }
+
+  public onEksekusi(id) {
+    console.log(id);
+    const deleteAPI = this._factory.api({
+      api : 'project/MengelolaProject/delete'
+    });
+    this._factory.http().delete(deleteAPI + '?project_id=' + id).subscribe((response: any) => {
+    this._notif.success({
+        message: 'Delete Data Berhasil'
+      });
+    this.refreshData();
+    });
+  }
+
+  public onDelete(id, deleteMessage: string = 'Are you sure to delete?') {
+    this._dialog
+        .open(ConfirmDialogsComponent, {
+            data: {
+                selectedData: id,
+                message: deleteMessage
+            }
+        })
+        .afterClosed()
+        .subscribe((data: any) => {
+            if (data) {
+                this.onEksekusi(id);
+                this.refreshData();
+            }
+        });
+    // setTimeout(() => this.refreshData(), 1000);
   }
 
 }
