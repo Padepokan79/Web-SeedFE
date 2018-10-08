@@ -42,3 +42,15 @@ io-table{
 .btn{
   background: linear-gradient(to bottom right, rgb(49, 144, 221), rgb(49, 144, 221));
 }
+
+.tr-height {
+    height: min($numbers: 40px);
+}
+
+table tr td p {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    line-height: 2;
+    // font-weight: bold;
+    color: black;
+}
