@@ -1,5 +1,5 @@
 <io-form *ngIf="action?.form()">
-  <div class="io-form-header">
+  <div class="io-form-header" style="padding-top: 10px">
     <span><i class="fa fa-home"></i></span>
     <a [routerLink]="['/pages/dashboard']"><span>Dashboard</span></a><b> > </b>
     <a><span>SDM</span></a><b> > </b>
@@ -85,10 +85,10 @@
         <td></td>
         <td></td>
         <td align="right">
-          <button [routerLink]="['/pages/sdm/SDM008']" type="button" class="btn btn-primary btn-mm btn-icon">
+          <button mat-flat-button [routerLink]="['/pages/sdm/SDM008']" type="button" class="btn-new btn-ww">
             Back
           </button>
-          <button type="button" class="btn btn-primary btn-mm btn-icon" (click)="action.onSave(timeOut())" [disabled]="action?.formControls()?.invalid || action?.formControls()?.pristine">
+          <button mat-flat-button type="button" class="sdw-btn-primary" (click)="action.onSave(timeOut())" [disabled]="action?.formControls()?.invalid || action?.formControls()?.pristine">
             Input
           </button>
         </td>

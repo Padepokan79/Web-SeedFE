@@ -5,7 +5,7 @@
 .box {
 	border: 1px solid black;
 	margin-bottom: 20px;
-	padding-top: 20px;
+	padding-top: 40px;
 }
 
 .title-form {
@@ -18,3 +18,8 @@
 	font-size: 20px;
 	margin-top: 20px; 
 }
+
+.btn-new {
+	background: linear-gradient(to bottom right, rgb(49, 144, 221), rgb(49, 144, 221));
+	color: #FEFEFE;
+  }
