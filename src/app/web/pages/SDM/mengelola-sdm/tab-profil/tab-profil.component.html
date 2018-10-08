@@ -1,15 +1,15 @@
 <p></p>
 
 <form class="io-form-body" [formGroup]="action?.formControls()"> 
-  <div>
+  <div style="width: 100%; padding-left: 20px; padding-right: 20px">
 <!-- KONTEN PROFILING -->
 <table style="width: 100%">
 
     <!-- Profiling -->
     <tr>
       <td style="width: 20%">Kelebihan/Kemampuan</td>
-      <td style="width: 5px">:</td>
-      <td style="width: 80%">
+      <td style="width: 1%">:</td>
+      <td style="width: 79%">
         <mat-form-field class="sdw-full-size">
             <input matInput placeholder="" formControlName="profiling_name" name="profiling_name" required>
             <mat-hint *ngIf="action.formErrors.profiling_name" [ngStyle]="{'color': 'red'}">
@@ -19,9 +19,9 @@
       </td>
     </tr>
     </table>
-    </div>
-    <div class="col-md-6 pos" style="float:right">
+    <div class="float-right">
         <io-form-action [action]="action" (click)="action.onReset()" ></io-form-action>
+    </div>
     </div>
     <!-- <div class="col-md-6 pos" style="float:right">
         <button mat-raised-button style="margin: 10px 0px" (click)="action.onSave()" *ngIf=" form == 1 ">Submit</button>
