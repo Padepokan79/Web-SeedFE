@@ -64,12 +64,12 @@ export class ALL003Component implements OnInit {
         { viewValue: 'NIK', viewKey: 'sdm_nik', type: TYPE.NUMBER }
       ],
       tableColumns : [
-        { prop: 'sdm_nik', name: 'NIK', width: 100, sortable: false },
-        { prop: 'sdm_name', name: 'Sdm Name', width: 100, sortable: false },
-        { prop: 'end_contractproject', name: 'End date project', width: 100, sortable: false },
-        { prop: 'sdm_notification', name: 'Notifikasi Kontrak', width: 50,
+        { prop: 'sdm_nik', name: 'NIK', flexGrow: 2, sortable: false },
+        { prop: 'sdm_name', name: 'Sdm Name', flexGrow: 3, sortable: false },
+        { prop: 'end_contractproject', name: 'End date project', flexGrow: 2, sortable: false },
+        { prop: 'sdm_notification', name: 'Notifikasi Kontrak', flexGrow: 3,
         cellTemplate: this.notif, sortable: false },
-        { prop: 'sdmskill_id', name: 'Action', width: 100,
+        { prop: 'sdmskill_id', name: 'Action', flexGrow: 2,
         cellTemplate: this.tableActionTemplate, sortable: false },
       ]
     });
