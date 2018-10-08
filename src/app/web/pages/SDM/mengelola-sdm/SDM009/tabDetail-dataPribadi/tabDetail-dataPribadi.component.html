@@ -2,265 +2,192 @@
 
 <form class="io-form-body" [formGroup]="action?.formControls()">
 
-    <div style="width: 100%; padding-left: 20px; padding-right: 20px">
+    <div style="width: 100%; padding-left: 20px; padding-right: 20px; padding-top: 10px">
     <!-- KONTEN DATA PRIBADI-->
     <!-- <input type="file" (change)="onFileSelected($event)> -->
 
-    <!-- <label>{{ action?.formControls().controls['sdm_name'].value }}</label> -->
     <table style="width: 100%">
 
     <!-- NAMA LENGKKAP -->
-    <tr>
-        <td style="width: 20%">Nama Lengkap</td>
-        <td style="width: 1%">: </td>
+    <tr class="tr-height">
+        <td style="width: 20%"><p class="style">Nama Lengkap</p></td>
+        <td style="width: 1%"><p class="style">:</p></td>
         <td style="width: 79%">
-            <mat-form-field class="sdw-full-size">
-                <input matInput placeholder="" formControlName="sdm_name" name="sdm_name" readonly>
-                <mat-hint *ngIf="action.formErrors.sdm_name" [ngStyle]="{'color': 'red'}">
-                {{action.formErrors.sdm_name}}
-                </mat-hint>
-            </mat-form-field>
-
+            <p class="style">{{ action?.formControls().controls['sdm_name'].value }}</p>
         </td>
         <td rowspan="7">
             <div style="margin-left: 50px" *ngIf="pathFoto">
-                <img src="{{pathFoto}}" style="width: 200px;height: 200px">
+                <img src="{{pathFoto}}" style="width: 200px">
             </div>
         </td>
     </tr>
 
     <!-- NIK -->
-    <tr>
-        <td >NIK</td>
-        <td >:</td>
-        <td >
-            <mat-form-field class="sdw-full-size">
-                <input matInput placeholder="" formControlName="sdm_nik" name="sdm_nik" pattern="^0$|^((?!(0))[0-9]{0,9})$" readonly>
-                <mat-hint *ngIf="action.formErrors.sdm_nik" [ngStyle]="{'color': 'red'}">
-                    {{action.formErrors.sdm_nik}}
-                </mat-hint>
-                </mat-form-field>
+    <tr class="tr-height">
+        <td><p>NIK</p></td>
+        <td><p>:</p></td>
+        <td>
+            <p>{{ action?.formControls().controls['sdm_nik'].value }}</p>
         </td>
     </tr>
     <!-- NO KTP -->
-    <tr>
-        <td>No. KTP</td>
-        <td>:</td>
+    <tr class="tr-height">
+        <td><p>No. KTP</p></td>
+        <td><p>:</p></td>
         <td>
-            <mat-form-field class="sdw-full-size">
-                <input matInput placeholder="" formControlName="sdm_ktp" name="sdm_ktp" pattern="^0$|^((?!(0))[0-9]{0,9})$" readonly>
-                <mat-hint *ngIf="action.formErrors.sdm_ktp" [ngStyle]="{'color': 'red'}">
-                {{action.formErrors.sdm_ktp}}
-                </mat-hint>
-            </mat-form-field>
+            <p>{{ action?.formControls().controls['sdm_ktp'].value }}</p>
         </td>
     </tr>
 
     <!-- Jenis Kelamin -->
-    <tr>
-        <td>Jenis Kelamin</td>
-        <td>:</td>
+    <tr class="tr-height">
+        <td><p>Jenis Kelamin</p></td>
+        <td><p>:</p></td>
         <td>
-            <mat-radio-group class="margin-field" formControlName="gender_id" name="gender_id" disabled>
-            <mat-radio-button value="1">Laki-laki</mat-radio-button>
-            <mat-radio-button value="2">Perempuan</mat-radio-button>
-            </mat-radio-group>
+            <p>{{ action?.formControls().controls['gender_id'].value == 1 ? 'Laki-laki' : 'Perempuan'}}</p>
         </td>
     </tr>
 
     <!-- Tempat Lahir -->
-    <tr>
-        <td>Tempat Lahir</td>
-        <td>:</td>
+    <tr class="tr-height">
+        <td><p>Tempat Lahir</p></td>
+        <td><p>:</p></td>
         <td>
-            <mat-form-field class="sdw-full-size">
-                <input matInput placeholder="" formControlName="sdm_placebirth" name="sdm_placebirth" readonly>
-            </mat-form-field>
+            <p>{{ action?.formControls().controls['sdm_placebirth'].value }}</p>
         </td>
     </tr>
 
     <!-- tanggal lahir -->
-    <tr>
-        <td>Tanggal Lahir</td>
-        <td>:</td>
+    <tr class="tr-height">
+        <td><p>Tanggal Lahir</p></td>
+        <td><p>:</p></td>
         <td>
-            <div class="example-container">
-            <mat-form-field class="sdw-full-size">
-                <input matInput placeholder="" formControlName="sdm_datebirth" name="sdm_datebirth" readonly>
-                <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
-            </mat-form-field>
-            </div>
+            <p>{{ action?.formControls().controls['sdm_datebirth'].value }}</p>
         </td>
     </tr>
 
     <!-- Alamat -->
-    <tr>
-        <td>Alamat</td>
-        <td>:</td>
-        <td>
-            <mat-form-field class="sdw-full-size"  >
-            <textarea matInput placeholder="" formControlName="sdm_address" readonly></textarea>
-            </mat-form-field>
+    <tr class="tr-height">
+        <td style="vertical-align: top"><p>Alamat</p></td>
+        <td style="vertical-align: top"><p>:</p></td>
+        <td style="vertical-align: top">
+            <p>{{ action?.formControls().controls['sdm_address'].value }}</p>
         </td>
     </tr>
 
     <!-- KODE POS -->
-    <tr>
-        <td>Kode POS</td>
-        <td>:</td>
+    <tr class="tr-height">
+        <td><p>Kode POS</p></td>
+        <td><p>:</p></td>
         <td>
-            <mat-form-field class="sdw-full-size">
-                <input matInput placeholder="" formControlName="sdm_postcode" name="sdm_postcode" pattern="^0$|^((?!(0))[0-9]{0,9})$" readonly>
-                <mat-hint *ngIf="action.formErrors.sdm_postcode" [ngStyle]="{'color': 'red'}">
-                {{action.formErrors.sdm_postcode}}
-                </mat-hint>
-            </mat-form-field>
+            <p>{{ action?.formControls().controls['sdm_postcode'].value }}</p>
         </td>
     </tr>
 
     <!-- NO TELEPON -->
-    <tr>
-        <td>No. Telepon</td>
-        <td>:</td>
+    <tr class="tr-height">
+        <td><p>No. Telepon</p></td>
+        <td><p>:</p></td>
         <td>
-            <mat-form-field class="sdw-full-size">
-                <input matInput placeholder="" formControlName="sdm_phone" name="sdm_phone" readonly>
-            </mat-form-field>
+            <p>{{ action?.formControls().controls['sdm_phone'].value }}</p>
         </td>
     </tr>
 
     <!-- EMAIL -->
-    <tr>
-        <td>Email</td>
-        <td>:</td>
+    <tr class="tr-height">
+        <td><p>Email</p></td>
+        <td><p>:</p></td>
         <td>
-            <div class="example-container">
-            <mat-form-field class="sdw-full-size">
-                <input matInput placeholder="" formControlName="sdm_email" name="sdm_email" readonly>
-                <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
-            </mat-form-field>
-            </div>
+            <p>{{ action?.formControls().controls['sdm_email'].value }}</p>
         </td>
     </tr>
 
     <!-- LINKED IN -->
-    <tr>
-        <td>LinkedIn</td>
-        <td>:</td>
+    <tr class="tr-height">
+        <td><p>LinkedIn</p></td>
+        <td><p>:</p></td>
         <td>
-            <mat-form-field class="sdw-full-size">
-                <input matInput placeholder="" formControlName="sdm_linkedin" name="sdm_linkedin" readonly>
-                </mat-form-field>
+            <p>{{ action?.formControls().controls['sdm_linkedin'].value }}</p>
         </td>
     </tr>
 
     <!-- AGAMA -->
-    <tr>
-        <td>Agama</td>
-        <td>:</td>
+    <tr class="tr-height">
+        <td><p>Agama</p></td>
+        <td><p>:</p></td>
         <td>
-            <mat-form-field class="sdw-full-size">
-                <mat-select placeholder="" formControlName="religion_id" name="religion_id" disabled>
-                <!-- <mat-option></mat-option> -->
-                <mat-option *ngFor="let lov of lovReligion.data" [value]="lov.key">
-                    {{lov.value}}
-                </mat-option>
-                </mat-select>
-            </mat-form-field>
+            <span *ngFor="let lov of lovReligion.data">
+                <p *ngIf="action?.formControls().controls['religion_id'].value == lov.key">{{ action?.formControls().controls['religion_id'].value == lov.key ? lov.value : '' }}</p>
+            </span>
         </td>
     </tr>
 
     <!-- KESEHATAN -->
     <tr>
-        <td>Kesehatan</td>
-        <td>:</td>
+        <td><p>Kesehatan</p></td>
+        <td><p>:</p></td>
         <td>
-            <mat-form-field class="sdw-full-size">
-                <mat-select placeholder="" formControlName="health_id" name="health_id" required disabled>
-                <mat-option *ngFor="let lov of lovHealth.data" [value]="lov.key">
-                    {{lov.value}}
-                </mat-option>
-                </mat-select>
-            </mat-form-field>
+            <span *ngFor="let lov of lovHealth.data">
+                <p *ngIf="action?.formControls().controls['health_id'].value == lov.key">{{ action?.formControls().controls['health_id'].value == lov.key ? lov.value : '' }}</p>
+            </span>
         </td>
     </tr>
 
     <!-- OBJECTIF -->
-    <tr>
-        <td>Objektif</td>
-        <td>:</td>
+    <tr class="tr-height">
+        <td><p>Objektif</p></td>
+        <td><p>:</p></td>
         <td>
-            <mat-form-field class="sdw-full-size">
-                <input matInput placeholder="" formControlName="sdm_objective" name="sdm_objective" readonly>
-                </mat-form-field>
+            <p>{{ action?.formControls().controls['sdm_objective'].value }}</p>
         </td>
     </tr>
 
     <!-- LEVEL -->
-    <tr>
-        <td>Level</td>
-        <td>:</td>
+    <tr class="tr-height">
+        <td><p>Level</p></td>
+        <td><p>:</p></td>
         <td>
-            <mat-form-field class="sdw-full-size">
-                <mat-select placeholder="" formControlName="sdmlvl_id" name="sdmlvl_id" required disabled>
-                <mat-option *ngFor="let lov of lovLevel.data" [value]="lov.key">
-                    {{lov.value}}
-                </mat-option>
-                </mat-select>
-            </mat-form-field>
+            <span *ngFor="let lov of lovLevel.data">
+                <p *ngIf="action?.formControls().controls['sdmlvl_id'].value == lov.key">{{lov.value}}</p>
+            </span>
         </td>
     </tr>
 
     <!-- STATUS -->
-    <tr>
-        <td>Status</td>
-        <td>:</td>
+    <tr class="tr-height">
+        <td><p>Status</p></td>
+        <td><p>:</p></td>
         <td>
-            <mat-form-field class="sdw-full-size">
-                <mat-select placeholder="" formControlName="contracttype_id" name="contracttype_id" required disabled>
-                <mat-option *ngFor="let lov of lovStatus.data" [value]="lov.key">
-                    {{lov.value}}
-                </mat-option>
-                </mat-select>
-            </mat-form-field>
+            <span *ngFor="let lov of lovStatus.data">
+                <p *ngIf="action?.formControls().controls['contracttype_id'].value == lov.key">{{lov.value}}</p>
+            </span>
         </td>
     </tr>
 
     <!-- PENEMPATAN -->
-    <tr>
-        <td>Penempatan</td>
-        <td>:</td>
+    <tr class="tr-height">
+        <td><p>Penempatan</p></td>
+        <td><p>:</p></td>
         <td>
-            <mat-radio-group class="margin-field" formControlName="sdm_contractloc" name="sdm_contractloc" disabled>
-                <mat-radio-button value="1">Bandung</mat-radio-button>
-                <mat-radio-button value="2">Luar Bandung</mat-radio-button>
-            </mat-radio-group>
+            <p>{{ action?.formControls().controls['sdm_contractloc'].value == '1' ? 'Bandung' : 'Luar Bandung' }}</p>
         </td>
     </tr>
 
     <!-- AWAL KONTRAK -->
-    <tr>
-        <td>Awal Kontrak</td>
-        <td>:</td>
+    <tr class="tr-height">
+        <td><p>Awal Kontrak</p></td>
+        <td><p>:</p></td>
         <td>
-            <mat-form-field class="sdw-full-size">
-                <input matInput [matDatepicker]="pickerStartDate" (click)="pickerStartDate.open()" placeholder="" formControlName="sdm_startcontract" disabled readonly>
-                <mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
-                <mat-datepicker #pickerStartDate></mat-datepicker>
-                </mat-form-field>
+            <p>{{ action?.formControls().controls['sdm_startcontract'].value }}</p>
         </td>
     </tr>
 
     <!-- AKHIR KONTRAK -->
-    <tr>
-        <td>Akhir Kontrak</td>
-        <td>:</td>
+    <tr class="tr-height">
+        <td><p>Akhir Kontrak</p></td>
+        <td><p>:</p></td>
         <td>
-            <mat-form-field class="sdw-full-size">
-                <input matInput [matDatepicker]="pickerEndDate" (click)="pickerEndDate.open()" placeholder="" formControlName="sdm_endcontract" disabled readonly>
-                <mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
-                <mat-datepicker #pickerEndDate></mat-datepicker>
-                </mat-form-field>
+            <p>{{ action?.formControls().controls['sdm_endcontract'].value }}</p>
         </td>
     </tr>
     </table>
