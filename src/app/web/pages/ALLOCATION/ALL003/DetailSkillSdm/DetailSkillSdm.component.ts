@@ -54,8 +54,8 @@ export class DetailSkillSdmComponent implements OnInit {
         limit: 10
       },
       tableColumns: [
-        { prop: 'skilltype_name', name: 'Skill Type Name', width: -20, sortable: false },
-        { prop: 'sdm_skill_value', name: 'Skill name', width: 100, sortable: false },
+        { prop: 'skilltype_name', name: 'Skill Type Name', flexGrow: 1, sortable: false },
+        { prop: 'sdm_skill_value', name: 'Skill name', flexGrow: 3, sortable: false },
         // { prop: 'sdmskill_value', name: 'Skill Value', width: 100, sortable: true },
       ]
     });

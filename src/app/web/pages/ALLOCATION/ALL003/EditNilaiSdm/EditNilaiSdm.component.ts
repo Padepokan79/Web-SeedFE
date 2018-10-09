@@ -68,10 +68,10 @@ export class EditNilaiSdmComponent implements OnInit {
         limit: 10
       },
       tableColumns: [
-        { prop: 'skilltype_name', name: 'Skill Type Name', width: 100, sortable: false },
-        { prop: 'skill_name', name: 'Skill name', width: 100, sortable: false },
-        { prop: 'sdmskill_value', name: 'Skill Value', width: 100, sortable: true },
-        { prop: 'skilltype_id', name: 'Action', width: 50, cellTemplate: this.tableActionTemplate, sortable: false }
+        { prop: 'skilltype_name', name: 'Skill Type Name', flexGrow: 4, sortable: false },
+        { prop: 'skill_name', name: 'Skill name', flexGrow: 4, sortable: false },
+        { prop: 'sdmskill_value', name: 'Skill Value', flexGrow: 1, sortable: true },
+        { prop: 'skilltype_id', name: 'Action', flexGrow: 2, cellTemplate: this.tableActionTemplate, sortable: false }
       ]
     });
 
