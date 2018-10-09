@@ -8,9 +8,9 @@
     <div class="io-form-header">
         <div class="title-header">
           <span><i class="fa fa-home"></i></span>
-          <a href=""><span>Dashboard</span></a><b> > </b>
-          <a href=""><span>SDM Allocation</span></a><b> > </b>
-          <a href=""><span>List Category</span></a>
+          <a [routerLink]="['/pages/dashboard']"><span>Dashboard</span></a><b> > </b>
+          <a [routerLink]="['/pages/all/ALL003']"><span>SDM Allocation</span></a><b> > </b>
+          <a><span>List Category</span></a>
           <span class="time">{{ time | date: 'medium'}}</span>
         </div>
     </div>

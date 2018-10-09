@@ -77,10 +77,10 @@
         <td></td>
         <td></td>
         <td align="right">
-          <button [routerLink]="['/pages/sdm/SDM008']" type="button" class="btn btn-primary btn-mm btn-icon">
+          <button mat-flat-button [routerLink]="['/pages/sdm/SDM008']" type="button" class="btn-new btn-ww">
             Back
           </button>
-          <button type="button" class="btn btn-primary btn-mm btn-icon" (click)="onUpdate()" [disabled]="action?.formControls()?.invalid || action?.formControls()?.pristine">
+          <button mat-flat-button type="button" class="sdw-btn-primary" (click)="onUpdate()" [disabled]="action?.formControls()?.invalid || action?.formControls()?.pristine">
             Update
           </button>
         </td>
