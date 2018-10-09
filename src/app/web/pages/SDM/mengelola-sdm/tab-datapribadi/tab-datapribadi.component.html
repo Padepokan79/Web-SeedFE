@@ -287,7 +287,7 @@
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size">
-                <input matInput [readonly]="true" [min]="this.action.getFormControlValue('sdm_startcontract')" [matDatepicker]="pickerEndDate" (click)="pickerEndDate.open()" placeholder="" formControlName="sdm_endcontract" required>
+                <input matInput [readonly]="true" [min]="currentDate" [matDatepicker]="pickerEndDate" (click)="pickerEndDate.open()" placeholder="" formControlName="sdm_endcontract" required>
                 <mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
                 <mat-datepicker #pickerEndDate></mat-datepicker>
                 </mat-form-field>
