@@ -84,7 +84,7 @@ export class ALL001Component implements OnInit {
 
   public onEksekusi(id) {
     const deleteAPI = this._factory.api ({
-      api : 'project/MengelolaClient/delete'
+      api : 'project/MengelolaSkill/delete'
     });
     this._factory.http().delete(deleteAPI + '?skill_id=' + id).subscribe((response: any) => {
       this._notif.success({
