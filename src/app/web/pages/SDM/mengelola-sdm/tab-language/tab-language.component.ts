@@ -6,6 +6,7 @@ import { DataTable } from '../../../../../core/models/data-table';
 import { InputForm } from '../../../../../core/models/input-form';
 import { COMPARISON_OPERATOR } from '../../../../../core/constant/constant';
 import { Comparison } from 'app/core/enums/comparison-operator.enum';
+import { Console } from '../../../../../../../node_modules/@angular/core/src/console';
 @Component({
   selector: 'app-tab-language',
   templateUrl: './tab-language.component.html',
@@ -20,6 +21,7 @@ export class TabLanguageComponent implements OnInit {
   public inputForm: InputForm;
   public dataTable: DataTable;
   public lovLanguage: LOVService;
+  public lovSDMLang: LOVService;
 
   @Input()
   public form: number;
@@ -31,6 +33,7 @@ export class TabLanguageComponent implements OnInit {
   public sdmid: number;
 
   public listLanguage = ['', '', '', ''];
+  public listLangs = [];
 
   constructor(private _factory: CoreFactory) {
   }
@@ -77,13 +80,60 @@ export class TabLanguageComponent implements OnInit {
 
     this.lovLanguage = this._factory.lov({
       api: 'lov/languages',
-      initializeData: true
+      initializeData: false
+    });
+
+    this.lovLanguage.getAll().subscribe((lov) => {
+      this.removeUnionLanguage(lov);
     });
   }
 
   public onChangeLanguage(checkedData, index) {
     this.listLanguage.splice(index, 1);
     this.listLanguage.splice(index, 0, checkedData);
+  }
+
+  public getList() {
+    // this.listLangs = {2, 4};
+  }
+
+  public removeUnionLanguage(lov) {
+    // console.log(lov.data);
+    // console.log(this.dataTable);
+    // console.log(this.dataTable.rows);
+
+    this.lovLanguage.data = lov.data;
+    // lov.data.forEach(function(langs) {
+    //   if (langs.id !== this.dataTable.rows.id) {
+    //     this.listLangs.push(langs.id);
+    //   }
+    // });
+    // console.log(this.listLangs);
+    // for (let index = 0; index < lov.data.length; index++) {
+    //   if (lov.data.id[index] !== this.dataTable.rows[index]) {
+    //     this.listLangs.push();
+    //   }
+    // }
+
+    const a = [];
+    const b = [];
+    lov.data.forEach(function(langs) {
+        a.push(langs.id);
+    });
+    this.dataTable.rows.forEach(function(langs) {
+      b.push(langs.id);
+    });
+    const list1 = lov.data.filter(this.comparer(a));
+    const list2 = this.dataTable.rows.filter(this.comparer(b));
+    console.log(list1.concat(list2));
+  }
+
+  public comparer(otherArray) {
+    return function(current){
+      return otherArray.filter(function(other){
+        return other.value === current.value && other.display === current.display;
+      }).length === 0;
+    }
   }
 
 }
