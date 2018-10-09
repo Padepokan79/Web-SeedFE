@@ -14,9 +14,11 @@
         <td>
             <mat-form-field class="sdw-full-size">
                 <mat-select placeholder="" formControlName="language_id" name="language_id" required>
+                <!-- <span *ngFor="let sdmlang of "> -->
                 <mat-option *ngFor="let language of lovLanguage.data" [value]="language.key">
                     {{language.value}}
                 </mat-option>
+                <!-- </span> -->
                 </mat-select>
             </mat-form-field>
         </td>
