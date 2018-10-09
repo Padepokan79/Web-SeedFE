@@ -49,7 +49,7 @@
             </td>
             <td class="nx-table-range">
               <mat-form-field class="classData">
-                <input matInput [matDatepicker]="pickStartDate" [max]="this.action.getFormControlValue('sdmassign_enddate')" placeholder="Choose a date" formControlName="sdmassign_startdate" name="sdmassign_startdate" readonly>
+                <input matInput [matDatepicker]="pickStartDate" [min]="minContract" [max]="this.action.getFormControlValue('sdmassign_enddate')" placeholder="Choose a date" formControlName="sdmassign_startdate" name="sdmassign_startdate" readonly>
                 <mat-datepicker-toggle matSuffix [for]="pickStartDate"></mat-datepicker-toggle>
                 <mat-datepicker #pickStartDate></mat-datepicker>
               </mat-form-field>
@@ -65,7 +65,7 @@
             </td>
             <td class="nx-table-range">
               <mat-form-field class="classData">
-                <input matInput [matDatepicker]="pickEndDate" [max]="maxContract" [min]="this.action.getFormControlValue('sdmassign_startdate')"placeholder="Choose a date" formControlName="sdmassign_enddate" name="sdmassign_startdate" readonly>
+                <input matInput [matDatepicker]="pickEndDate" [max]="maxContract" [min]="this.action.getFormControlValue('sdmassign_startdate')" placeholder="Choose a date" formControlName="sdmassign_enddate" name="sdmassign_startdate" readonly>
                 <mat-datepicker-toggle matSuffix [for]="pickEndDate"></mat-datepicker-toggle>
                 <mat-datepicker #pickEndDate></mat-datepicker>
               </mat-form-field>
