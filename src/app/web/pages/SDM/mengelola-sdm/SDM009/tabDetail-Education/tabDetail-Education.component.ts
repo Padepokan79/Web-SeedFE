@@ -7,7 +7,7 @@ import { CoreFactory } from '../../../../../../core/factory/core.factory';
 import { COMPARISON_OPERATOR, TYPE } from '../../../../../../core/constant/constant';
 import { ActivatedRoute } from '@angular/router';
 import { Comparison } from '../../../../../../core/enums/comparison-operator.enum';
-
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-tabDetail-Education',
   templateUrl: './tabDetail-Education.component.html',
@@ -40,7 +40,8 @@ export class TabDetailEducationComponent implements OnInit {
   private selectedId: any;
 
   constructor( private _factory: CoreFactory,
-               private route: ActivatedRoute
+               private route: ActivatedRoute,
+               private location: Location
   ) {
     this.route.params.subscribe((param) => {
       this.selectedId = param.id;
@@ -147,5 +148,7 @@ export class TabDetailEducationComponent implements OnInit {
       // this.dataTable = res.data.items[0];
     });
   }
-
+  public goBack() {
+      this.location.back();
+    }
 }

@@ -104,6 +104,25 @@ export class EditNilaiSdmComponent implements OnInit {
     this.location.back();
   }
 
+  public btnOn() {
+    this.isButtonClicked = true;
+  }
+
+  public btnOff() {
+    this.isButtonClicked = false;
+  }
+
+  public validasiNilai() {
+    if (this.action.getFormControlValue('sdmskill_value') <= 10 ) {
+      // tslint:disable-next-line:no-unused-expression
+      this.onSave();
+      } else {
+        this._notif.error({
+          message: 'Nilai melebihi 10'
+        });
+      }
+    }
+
   public onSave() {
     const updateApi = this._factory.api({
       api : 'allocation/MengelolaSkillSdm/update',
@@ -112,25 +131,8 @@ export class EditNilaiSdmComponent implements OnInit {
       this._notif.success({
         message: 'Data Berhasil Disimpan'
         });
+      this.refreshTabel();
       });
   }
 
-  public validasiNilai() {
-    if (this.action.getFormControlValue('sdmskill_value') <= 10 ) {
-        // tslint:disable-next-line:no-unused-expression
-        this.onSave();
-      } else {
-        this._notif.error({
-          message: 'Nilai melebihi 10'
-        });
-      }
-  }
-
-  public btnOn() {
-    this.isButtonClicked = true;
-  }
-
-  public btnOff() {
-    this.isButtonClicked = false;
-  }
 }
