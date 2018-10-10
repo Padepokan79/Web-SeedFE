@@ -34,7 +34,7 @@ export class PJA007Component implements OnInit {
   public clientPic: string;
   public clientMobile: string;
   public btnDisabled: boolean = true;
-  public selected: number;
+  public selected: number = 1;
 
   constructor(private _factory: CoreFactory,
               private router: Router,
@@ -101,6 +101,24 @@ export class PJA007Component implements OnInit {
     setInterval(() => {
     this.time = new Date();
     }, 1);
+
+    this._factory.http().get(
+      this._factory.api({
+        api : 'project/MengelolaClient/readAll',
+        pagingParams : {
+          filter: Comparison.EQ('client_id', '1')
+        }
+      })
+    ).subscribe((res: any) => {
+      // this.action.patchFormData(res.data.items[this.selected]);
+      this.clientPic = res.data.items[0].client_picclient;
+      this.clientMobile = res.data.items[0].client_mobileclient;
+    });
+    this.action.setPaginationFilter(
+      Comparison.EQ('client_id', '1')
+    );
+    this.action.refreshTable();
+
   }
 
   public ambilData() {
@@ -119,7 +137,11 @@ export class PJA007Component implements OnInit {
       this.clientPic = res.data.items[0].client_picclient;
       this.clientMobile = res.data.items[0].client_mobileclient;
     });
-
+    if(this.selected == 1){
+      this.btnDisabled = true;
+    }else{
+      this.btnDisabled = false;
+    }
   }
 
   public clearData() {
@@ -149,7 +171,7 @@ export class PJA007Component implements OnInit {
   }
 
   public setTrueClick() {
-     this.btnDisabled = false;
+    //  this.btnDisabled = false;
   }
 
   public onEksekusi(id) {
