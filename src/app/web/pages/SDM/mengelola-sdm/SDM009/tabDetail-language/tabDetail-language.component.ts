@@ -7,7 +7,7 @@ import { CoreFactory } from '../../../../../../core/factory/core.factory';
 import { COMPARISON_OPERATOR, TYPE } from '../../../../../../core/constant/constant';
 import { ActivatedRoute } from '@angular/router';
 import { Comparison } from '../../../../../../core/enums/comparison-operator.enum';
-
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-tabDetail-language',
   templateUrl: './tabDetail-language.component.html',
@@ -42,7 +42,8 @@ export class TabDetailLanguageComponent implements OnInit {
 
   private selectedId: any;
   constructor(private _factory: CoreFactory,
-              private route: ActivatedRoute
+              private route: ActivatedRoute,
+              private location: Location
   ) {
     this.route.params.subscribe((param) => {
       this.selectedId = param.id;
@@ -123,5 +124,7 @@ export class TabDetailLanguageComponent implements OnInit {
   public save() {
 
   }
-
+  public goBack() {
+      this.location.back();
+    }
 }

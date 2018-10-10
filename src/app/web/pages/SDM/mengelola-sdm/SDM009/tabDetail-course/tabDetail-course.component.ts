@@ -7,6 +7,7 @@ import { InputForm } from '../../../../../../core/models/input-form';
 import { LOVService } from '../../../../../../core/services/uninjectable/lov.service';
 import { Comparison } from '../../../../../../core/enums/comparison-operator.enum';
 import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-tabDetail-course',
@@ -35,7 +36,8 @@ export class TabDetailCourseComponent implements OnInit {
   private selectedId: any;
 
   constructor(private _factory: CoreFactory,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private location: Location) {
     this.route.params.subscribe((param) => {
       this.selectedId = param.id;
       console.log(this.selectedId);
@@ -89,6 +91,9 @@ export class TabDetailCourseComponent implements OnInit {
       api: 'lov/degree',
       initializeData: true
     });
+  }
+  public goBack() {
+    this.location.back();
   }
 
 }

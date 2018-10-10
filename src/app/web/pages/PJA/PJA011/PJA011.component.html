@@ -12,43 +12,43 @@
 
   <form class="io-form-body" [formGroup]="action?.formControls()">
     <span class="nx-form-title">Form Update SDM Assignment</span>
-    <div class="nx-form-body">
-      <div class="nx-pos-pad">
-        <table class="nx-class-table">
+    <div class="nx-form-body full">
+      <div class="full">
+        <table class="full">
 
-          <tr>
-            <td class="nx-table-range">
+          <tr class="full">
+            <td id="nx-td-r" style="width: 15%; padding-left: 2%; padding-top: 30px; padding-bottom: 25px">
               <mat-label>SDM Name</mat-label>
             </td>
-            <td>
+            <td style="width: 1%; padding-bottom: 25px; padding-top: 30px">
               <mat-label>:</mat-label>
             </td>
-            <td class="nx-table-range" id="nx-table-range">
-                <mat-label>{{ sdmName }}</mat-label>
+            <td style="width: 44%; margin-right: 10%; margin-bottom: 20%; padding-bottom: 25px; padding-top: 30px">
+                <mat-label class="inputan" id="nx-td-l">{{ sdmName }}</mat-label>
             </td>
           </tr>
 
-          <tr>
-            <td class="nx-table-range">
+          <tr class="full">
+            <td id="nx-td-r" style="width: 15%; padding-left: 2%; padding-bottom: 5px">
               <mat-label>Contact</mat-label>
             </td>
-            <td>
+            <td style="width: 1%; padding-bottom: 5px">
               <mat-label>:</mat-label>
             </td>
-            <td class="nx-table-range" id="nx-table-range">
-                <mat-label>{{ sdmPhone }}</mat-label>
+            <td style="width: 44%; margin-right: 10%; margin-bottom: 20%; padding-bottom: 5px">
+                <mat-label class="inputan" id="nx-td-l">{{ sdmPhone }}</mat-label>
             </td>
           </tr>
 
-          <tr>
-            <td class="nx-table-range">
+          <tr class="full">
+            <td id="nx-td-r" style="width: 15%; padding-left: 2%">
               <mat-label>Start Date</mat-label>
             </td>
-            <td>
+            <td style="width: 1%">
               <mat-label>:</mat-label>
             </td>
-            <td class="nx-table-range">
-              <mat-form-field class="classData">
+            <td style="width: 44%; margin-right: 10%; margin-bottom: 20%">
+              <mat-form-field  class="inputan" id="nx-td-l">
                 <input matInput [matDatepicker]="pickStartDate" [min]="minContract" [max]="this.action.getFormControlValue('sdmassign_enddate')" placeholder="Choose a date" formControlName="sdmassign_startdate" name="sdmassign_startdate" readonly>
                 <mat-datepicker-toggle matSuffix [for]="pickStartDate"></mat-datepicker-toggle>
                 <mat-datepicker #pickStartDate></mat-datepicker>
@@ -56,15 +56,15 @@
             </td>
           </tr>
 
-          <tr>
-            <td class="nx-table-range">
+          <tr class="full">
+            <td id="nx-td-r" style="width: 15%; padding-left: 2%">
               <mat-label>End Date</mat-label>
             </td>
-            <td>
+            <td style="width: 1%">
               <mat-label>:</mat-label>
             </td>
-            <td class="nx-table-range">
-              <mat-form-field class="classData">
+            <td style="width: 44%; margin-right: 10%; margin-bottom: 20%">
+              <mat-form-field  class="inputan" id="nx-td-l">
                 <input matInput [matDatepicker]="pickEndDate" [max]="maxContract" [min]="this.action.getFormControlValue('sdmassign_startdate')" placeholder="Choose a date" formControlName="sdmassign_enddate" name="sdmassign_startdate" readonly>
                 <mat-datepicker-toggle matSuffix [for]="pickEndDate"></mat-datepicker-toggle>
                 <mat-datepicker #pickEndDate></mat-datepicker>
@@ -72,15 +72,15 @@
             </td>
           </tr>
 
-          <tr>
-            <td class="nx-table-range">
+          <tr class="full">
+            <td id="nx-td-r" style="width: 15%; padding-left: 2%">
               <mat-label>Location</mat-label>
             </td>
-            <td>
+            <td style="width: 1%">
               <mat-label>:</mat-label>
             </td>
-            <td class="nx-table-range">
-              <mat-form-field class="nx-class-data">
+            <td style="width: 44%; margin-right: 10%; margin-bottom: 20%">
+              <mat-form-field  class="inputan" id="nx-td-l">
                 <input matInput placeholder="" formControlName="sdmassign_loc" name="sdmassign_loc">
               </mat-form-field>
             </td>
@@ -100,43 +100,43 @@
             </td>
           </tr> -->
 
-          <tr>
-            <td class="nx-table-range">
+          <tr class="full">
+            <td id="nx-td-r" style="width: 15%; padding-left: 2%">
               <mat-label>PIC Handler</mat-label>
             </td>
-            <td>
+            <td style="width: 1%">
               <mat-label>:</mat-label>
             </td>
-            <td class="nx-table-range">
-              <mat-form-field class="nx-class-data">
+            <td style="width: 44%; margin-right: 10%; margin-bottom: 20%">
+              <mat-form-field  class="inputan" id="nx-td-l">
                 <input matInput placeholder="" formControlName="sdmassign_picclient" name="sdmassign_picclient">
               </mat-form-field>
             </td>
           </tr>
 
-          <tr>
-            <td class="nx-table-range">
+          <tr class="full">
+            <td id="nx-td-r" style="width: 15%; padding-left: 2%">
               <mat-label>PIC Contact</mat-label>
             </td>
-            <td>
+            <td style="width: 1%">
               <mat-label>:</mat-label>
             </td>
-            <td class="nx-table-range">
-              <mat-form-field class="nx-class-data">
+            <td style="width: 44%; margin-right: 10%; margin-bottom: 20%">
+              <mat-form-field  class="inputan" id="nx-td-l">
                 <input matInput placeholder="" formControlName="sdmassign_picclientphone" name="sdmassign_picclientphone">
               </mat-form-field>
             </td>
           </tr>
 
-          <tr>
-            <td class="nx-table-range">
+          <tr class="full">
+            <td id="nx-td-r" style="width: 15%; padding-left: 2%">
               <mat-label>Method</mat-label>
             </td>
-            <td>
+            <td style="width: 1%">
               <mat-label>:</mat-label>
             </td>
-            <td class="nx-table-range">
-              <mat-form-field class="nx-class-data">
+            <td style="width: 44%; margin-right: 10%; margin-bottom: 20%">
+              <mat-form-field  class="inputan" id="nx-td-l">
                 <mat-select placeholder="" formControlName="method_id" name="method_id">
                   <mat-option *ngFor="let lov of lovMethod.data" [value]="lov.key">
                     {{lov.value}}

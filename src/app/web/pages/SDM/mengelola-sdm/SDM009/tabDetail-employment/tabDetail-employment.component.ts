@@ -7,7 +7,7 @@ import { COMPARISON_OPERATOR, TYPE } from '../../../../../../core/constant/const
 import { LOVService } from '../../../../../../core/services/uninjectable/lov.service';
 import { Comparison } from '../../../../../../core/enums/comparison-operator.enum';
 import { ActivatedRoute } from '@angular/router';
-
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-tabDetail-employment',
   templateUrl: './tabDetail-employment.component.html',
@@ -40,7 +40,8 @@ export class TabDetailEmploymentComponent implements OnInit {
   private selectedId: any;
 
   constructor(private _factory: CoreFactory,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private location: Location) {
       this.route.params.subscribe((param) => {
         this.selectedId = param.id;
         console.log(this.selectedId);
@@ -97,5 +98,7 @@ export class TabDetailEmploymentComponent implements OnInit {
       initializeData: true
     });
   }
-
+  public goBack() {
+      this.location.back();
+    }
 }

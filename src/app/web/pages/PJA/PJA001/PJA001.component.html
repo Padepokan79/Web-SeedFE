@@ -12,7 +12,7 @@ UPDATE   : MLK, Tuesday, August 21, ‎2018, ‏‎4:35:00 PM
 			<a [routerLink]="['/pages/dashboard']">dashboard</a><b> > </b>
 			<a [routerLink]="['/pages/project']"><span>Project Assignment</span></a><b> > </b>
 			<a><span>Add Project SDM</span></a>
-        	<span class="nx-time">{{ time | date:'medium' }}</span>
+        	<!-- <span class="nx-time">{{ time | date:'medium' }}</span> -->
    		</div>
  	</div>
 
@@ -67,6 +67,7 @@ UPDATE   : MLK, Tuesday, August 21, ‎2018, ‏‎4:35:00 PM
 							<mat-label>:</mat-label>
 						</td>
 						<td>
+							<!-- <label>{{this.action?.getFormControlValue("sdm_nik")}}</label> -->
 							<mat-form-field class="inputan" id="nx-td-l">
 							    <input matInput formControlName="sdm_nik" name="sdm_nik" value="{{ sdm_nik }}" readonly>
 							</mat-form-field>
