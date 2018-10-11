@@ -9,45 +9,45 @@
       <span class="time">{{ time | date:'medium'}}</span>
     </div>
   </div>
-  <form class="io-form-body" [formGroup]="action?.formControls()">
+  <form class="io-form-body full" [formGroup]="action?.formControls()">
     <span class="nx-form-title">Form Update SDM Hiring</span>
-    <div class="nx-form-body">
-      <div class="nx-pos-pad">
-        <table class="nx-class-table">
+    <div class="nx-form-body full">
+      <div class="full">
+        <table class="full">
 
-          <tr>
-            <td class="nx-table-range">
+          <tr class="full">
+            <td id="nx-td-r" style="width: 15%; padding-left: 2%; padding-top: 30px; padding-bottom: 25px">
               <mat-label>Client Name</mat-label>
             </td>
-            <td>
+            <td style="width: 1%; padding-bottom: 25px; padding-top: 30px">
               <mat-label>:</mat-label>
-            </td>
-            <td class="nx-table-range" id="nx-table-range">
-              <mat-label>{{ clientName }}</mat-label>
+            </td >
+            <td style="width: 44%; margin-right: 10%; margin-bottom: 20%; padding-bottom: 25px; padding-top: 30px">
+              <mat-label class="inputan" id="nx-td-l">{{ clientName }}</mat-label>
             </td>
           </tr>
 
-          <tr>
-            <td class="nx-table-range">
+          <tr class="full">
+            <td id="nx-td-r" style="width: 15%; padding-left: 2%; padding-bottom: 5px">
               <mat-label>SDM Name</mat-label>
             </td>
-            <td>
+            <td style="width: 1%; padding-bottom: 5px">
               <mat-label>:</mat-label>
             </td>
-            <td class="nx-table-range" id="nx-table-range">
-              <mat-label>{{ sdmName }}</mat-label>
+            <td style="width: 44%; margin-right: 10%; margin-bottom: 20%; padding-bottom: 5px">
+              <mat-label class="inputan" id="nx-td-l">{{ sdmName }}</mat-label>
             </td>
           </tr>
 
-          <tr>
-            <td class="nx-table-range">
+          <tr class="full">
+            <td id="nx-td-r" style="width: 15%; padding-left: 2%">
               <mat-label>Status</mat-label>
             </td>
-            <td>
+            <td style="width: 1%">
               <mat-label>:</mat-label>
             </td>
-            <td class="nx-table-range">
-              <mat-form-field class="nx-class-data">
+            <td style="width: 44%; margin-right: 10%; margin-bottom: 20%">
+              <mat-form-field class="inputan" id="nx-td-l">
                 <mat-select placeholder="" formControlName="hirestat_id" name="hirestat_id" [(ngModel)]="hirestatId">
                   <mat-option *ngFor="let lov of lovHiring.data" [value]="lov.key">
                     {{lov.value}}

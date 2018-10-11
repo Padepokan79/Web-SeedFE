@@ -44,8 +44,9 @@
           </table>
         </div>
           <div class="col-md-2" style="margin-bottom:16px; float: right; align-content: center">
-            <button mat-flat-button class="btn-new btn-mm" style="float: right" 
-                (click)="validasiNilai();refreshTabel()" 
+            <button mat-flat-button class="btn-new btn-mm" style="float: right"
+                *ngIf="isButtonClicked"
+                (click)="validasiNilai();btnOff()" 
                 [disabled]="action?.formControls()?.invalid || action?.formControls()?.pristine || this.action.getFormControlValue('sdmskill_value') > 10 ? true : false">
                 <span aria-hidden="true"></span> {{action.buttonTitle}}</button>
           </div>
