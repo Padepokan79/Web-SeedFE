@@ -11,6 +11,9 @@ import { Conjunction } from '../../../../core/enums/conjunction-operator.enum';
 import { DefaultNotificationService } from '../../../../core/services/default-notification.service';
 import { MatDialog } from '@angular/material';
 import { ConfirmDialogsComponent } from '../../../../core/components/confirm-dialogs/confirm-dialogs.component';
+import { FormGroup, FormControl } from '../../../../../../node_modules/@angular/forms';
+import { ListOfValue } from '../../../../core/models/list-of-value';
+import { startWith, map } from '../../../../../../node_modules/rxjs/operators';
 
 @Component({
   selector: 'app-PJA007',
@@ -35,11 +38,23 @@ export class PJA007Component implements OnInit {
   public clientMobile: string;
   public btnDisabled: boolean = true;
   public selected: number = 1;
+  public filteredSdm: any;
+  public sdmCtrl: FormControl;
 
+  public lovSdm: LOVService;
+  public SdmName: any;
+  public KeyId: any;
   constructor(private _factory: CoreFactory,
               private router: Router,
               public _notif: DefaultNotificationService,
-              private _dialog: MatDialog) {}
+              private _dialog: MatDialog) {
+                this.sdmCtrl = new FormControl();
+                this.filteredSdm = this.sdmCtrl.valueChanges
+    .pipe(
+      startWith(''),
+      map((value) => this.filterSdm(value))
+    );
+              }
   public refreshTabel() {
     this.action.refreshTable();
   }
@@ -98,6 +113,14 @@ export class PJA007Component implements OnInit {
       },
       initializeData: true
     });
+
+    this.lovSdm = this._factory.lov({
+      api: 'lov/Sdm',
+      pagingParams: {
+        orderby: 'sdm_name ASC',
+      },
+      initializeData: true
+  });
     setInterval(() => {
     this.time = new Date();
     }, 1);
@@ -120,7 +143,9 @@ export class PJA007Component implements OnInit {
     this.action.refreshTable();
 
   }
-
+  public filterSdm(val: string) {
+    return val ? this.lovSdm.data.filter((s) => s.values.sdm_sdm_name.toLowerCase().indexOf(val.toLocaleLowerCase()) === 0) : [];
+  }
   public ambilData() {
     const readAllApi = this._factory.api({
       api : 'project/MengelolaClient/readAll',
@@ -137,9 +162,9 @@ export class PJA007Component implements OnInit {
       this.clientPic = res.data.items[0].client_picclient;
       this.clientMobile = res.data.items[0].client_mobileclient;
     });
-    if(this.selected == 1){
+    if (this.selected == 1) {
       this.btnDisabled = true;
-    }else{
+    } else {
       this.btnDisabled = false;
     }
   }
@@ -199,6 +224,29 @@ export class PJA007Component implements OnInit {
           this.onEksekusi(id);
           this.action.refreshTable();
         });
+  }
+
+  public setSdmValue(inputForm: FormGroup, dataSdm: ListOfValue) {
+    if (dataSdm) {
+      this.lovSdm = this._factory.lov({
+        api: 'lov/sdm',
+        params: {
+          sdm_id: dataSdm.key
+        },
+        initializeData: true
+      });
+      this.SdmName = dataSdm.key;
+      this.action.patchFormData({sdm_id: dataSdm.key, sdm_name: dataSdm.values.sdm_sdm_name});
+      console.log(this.SdmName);
+    }
+  }
+
+  public onKeySdmName(event: any) {
+    this.KeyId = event.target.value;
+    if (this.KeyId === '') {
+      this.SdmName = null;
+      console.log('Nama: ', this.SdmName);
+    }
   }
 
 }
