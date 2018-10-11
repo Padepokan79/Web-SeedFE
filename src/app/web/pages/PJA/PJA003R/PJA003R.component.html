@@ -72,7 +72,7 @@
     <button matTooltip="Edit project SDM" type="button" class="btn btn-primary btn-mm btn-icon" (click)="navigateEditMenu(row.project_id)">
       <i class="glyphicon glyphicon-edit"></i>
     </button>
-    <button matTooltip="Hapus project SDM"type="button" class="btn btn-danger btn-mm btn-icon" (click)="action.onDelete(row)">
+    <button matTooltip="Hapus project SDM"type="button" class="btn btn-danger btn-mm btn-icon" (click)="onDelete(row.project_id)">
       <i class="glyphicon glyphicon-trash"></i>
     </button>
 </ng-template>

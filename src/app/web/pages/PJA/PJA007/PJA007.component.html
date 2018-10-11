@@ -29,6 +29,7 @@
                   </mat-select>
                 </mat-form-field>
               </td>
+
           <!-- pic client -->
             <td style="width: 150px; padding-left:50px">
               <mat-label>PIC Client</mat-label>
@@ -52,6 +53,30 @@
 
           <td></td>
         </tr>
+         <td style="width: 100px;">
+                <mat-label>Name</mat-label>
+              </td>
+              <td style="width: 5px; padding-right:10px">
+                <mat-label>:</mat-label>
+              </td>
+              <td style="width: 100px">
+                <mat-form-field class="example-full-width" style="width : 100%">
+                <input matInput placeholder="" (keyup)="onKeySdmName($event)" [matAutocomplete]="sdmName" formControlName="sdm_name" name="sdm_name" [formControl]="sdmCtrl">
+                  <mat-autocomplete #sdmName="matAutocomplete" >
+                    <mat-option *ngFor="let dataSdm of filteredSdm | async" [value]="dataSdm.values.sdm_sdm_name" (onSelectionChange)="setSdmValue(action?.formControls(), dataSdm);">
+                      {{dataSdm.values.sdm_sdm_name}}
+                    </mat-option>
+                  </mat-autocomplete>
+              </mat-form-field>
+              </td>
+              
+                <tr>
+
+                <button mat-raised-button class="action-btn nx-hiring-button" (click)="onSearchAnd()">
+                  <span class="glyphicon glyphicon-plus-sign" aria-hidden="true">&nbsp;</span>Cari SDM
+              </button>
+            </tr>
+              
     </table>
 
     <div style="margin-left:795px; padding-bottom:20px;">

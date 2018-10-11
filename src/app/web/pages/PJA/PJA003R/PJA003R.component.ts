@@ -285,10 +285,9 @@ export class PJA003RComponent implements OnInit {
         .subscribe((data: any) => {
             if (data) {
                 this.onEksekusi(id);
-                this.refreshData();
             }
         });
-    // setTimeout(() => this.refreshData(), 1000);
+    //setTimeout(() => this.refreshData(), 1000);
   }
 
 }
