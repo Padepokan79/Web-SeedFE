@@ -9,17 +9,10 @@
     </div>
   </div>
   <form class="io-form-body" [formGroup]="action?.formControls()">
-    <table class="nx-table-margin" style="width: 100%">
-
-      <tr>
-        <!-- Client -->
-        <td style="width: 100px;">
+    <div class="row">
+      <div class="col-md-4">
           <mat-label>Client</mat-label>
-        </td>
-        <td style="width: 5px; padding-right:10px">
           <mat-label>:</mat-label>
-        </td>
-        <td style="width: 100px">
           <mat-form-field>
             <mat-select placeholder="- Select -" (change)="setTrueClick()" formControlName="client_id" name="client_id" [(ngModel)]="selected" (change)="ambilData();onSearch()">
               <mat-option *ngFor="let lov of lovClient.data" [value]="lov.key">
@@ -27,30 +20,21 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-        </td>
+      </div>
         <!-- pic client -->
-        <td style="width: 150px; padding-left:50px">
-            <mat-label>PIC Client</mat-label>
-        </td>
-        <td style="width: 5px; padding-right:10px">
-          <mat-label>:</mat-label>
-        </td>
-        <td style="width: 200px">
-          <mat-label>{{ clientPic }}</mat-label>
-        </td>
+      <div class="col-md-4" style="padding-top:2%">
+        <mat-label>PIC Client</mat-label>
+        <mat-label>:</mat-label>
+        <mat-label>{{ clientPic }}</mat-label>
+      </div>
         <!-- client contact -->
-        <td style="width: 100px">
-            <mat-label>Client Contact</mat-label>
-        </td>
-        <td style="width: 5px; padding-right:10px">
-          <mat-label>:</mat-label>
-        </td>
-        <td style="width: 200px">
-          <mat-label>{{ clientMobile }}</mat-label>
-        </td>
-        <td>
-      </tr>
-    </table>
+      <div class="col-md-4" style="padding-top:2%">
+        <mat-label>Client Contact</mat-label>
+        <mat-label>:</mat-label>
+        <mat-label>{{ clientMobile }}</mat-label>
+      </div>
+    </div>
+
       <div class="row">
         <div style="float: right;padding-right: 2%">
           <!-- Tombol Assign dan Reset -->
