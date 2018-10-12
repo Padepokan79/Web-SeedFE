@@ -13,7 +13,7 @@
         <td>:</td>
         <td>
             <mat-form-field class="sdw-full-size">
-                <mat-select placeholder="" formControlName="language_id" name="language_id" required>
+                <mat-select placeholder="" formControlName="language_id" name="language_id" (click)="change()" required>
                 <!-- <span *ngFor="let sdmlang of "> -->
                 <mat-option *ngFor="let language of lovLanguage.data" [value]="language.key">
                     {{language.value}}
@@ -24,9 +24,29 @@
         </td>
     </tr>
     </table>
-    <div class="float-right">
+    <!-- <div class="float-right">
         <io-form-action [action]="action" (click)="action.onReset()" ></io-form-action>
+    </div> -->
+
+
+    <div class="col-md-12 float">
+        <button mat-raised-button type="button"
+                class="sdw-btn-default float left"
+                style="background: linear-gradient(to bottom right, rgb(224, 48, 29), rgb(224, 48, 29));"
+                (click)="action.onReset()">
+            Reset
+        </button>
+        <button mat-raised-button type="button"
+                class="sdw-btn-primary float"
+                style="background: linear-gradient(to bottom right, rgb(49, 144, 221), rgb(49, 144, 221));"
+                (click)="saveLanguage()"
+                [disabled]="
+                    action?.isFormPristine() ||
+                    action?.isFormInvalid()">
+            {{action.buttonTitle}}
+        </button>
     </div>
+
     <!-- <div class="col-md-6 pos" style="float:right">
         <button mat-raised-button style="margin: 10px 0px" (click)="action.onSave()" *ngIf=" form == 1 ">Submit</button>
         <button mat-raised-button style="margin: 10px 0px" (click)="action.onEdit()" *ngIf=" form == 2 ">Update</button>
