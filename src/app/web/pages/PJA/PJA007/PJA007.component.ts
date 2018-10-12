@@ -44,6 +44,12 @@ export class PJA007Component implements OnInit {
   public lovSdm: LOVService;
   public SdmName: any;
   public KeyId: any;
+  public dataFilter: any;
+  public sdmId: any;
+  public Idsdm: string;
+  public searchBy: string;
+  public searchCheck: boolean;
+
   constructor(private _factory: CoreFactory,
               private router: Router,
               public _notif: DefaultNotificationService,
@@ -70,6 +76,7 @@ export class PJA007Component implements OnInit {
         client_name: '',
         client_mobileclient: '',
         client_picclient: '',
+        search_by: '',
       },
       validationMessages: {
         task_id: {
@@ -88,10 +95,10 @@ export class PJA007Component implements OnInit {
         limit : 10,
         filter : Comparison.EQ('client_id', '1')
       },
-      searchCriteria : [
-        { viewValue: 'Name', viewKey: 'sdm_name', type: TYPE.STRING},
-        { viewValue: 'Status', viewKey: 'hirestat_name', type: TYPE.STRING}
-      ],
+      // searchCriteria : [
+      //   { viewValue: 'Name', viewKey: 'sdm_name', type: TYPE.STRING},
+      //   { viewValue: 'Status', viewKey: 'hirestat_name', type: TYPE.STRING}
+      // ],
       tableColumns : [
         { prop: 'norut', name: 'No', flexGrow: 1, sortable: false },
         { prop: 'sdm_name', name: 'Name', flexGrow: 3, sortable: false },
@@ -148,26 +155,26 @@ export class PJA007Component implements OnInit {
     return val ? this.lovSdm.data.filter((s) => s.values.sdm_sdm_name.toLowerCase().indexOf(val.toLocaleLowerCase()) === 0) : [];
   }
   public ambilData() {
-    // const readAllApi = this._factory.api({
-    //   api : 'project/MengelolaClient/readAll',
-    //   pagingParams : {
-    //     filter : {
-    //       field : 'client_id',
-    //       operator : COMPARISON_OPERATOR.EQ,
-    //       value : this.selected
-    //     }
-    //   }
-    // });
-    // this._factory.http().get(readAllApi).subscribe((res: any) => {
-    //   // this.action.patchFormData(res.data.items[this.selected]);
-    //   this.clientPic = res.data.items[0].client_picclient;
-    //   this.clientMobile = res.data.items[0].client_mobileclient;
-    // });
-    // if (this.selected == 1) {
-    //   this.btnDisabled = true;
-    // } else {
-    //   this.btnDisabled = false;
-    // }
+    const readAllApi = this._factory.api({
+      api : 'project/MengelolaClient/readAll',
+      pagingParams : {
+        filter : {
+          field : 'client_id',
+          operator : COMPARISON_OPERATOR.EQ,
+          value : this.selected
+        }
+      }
+    });
+    this._factory.http().get(readAllApi).subscribe((res: any) => {
+      // this.action.patchFormData(res.data.items[this.selected]);
+      this.clientPic = res.data.items[0].client_picclient;
+      this.clientMobile = res.data.items[0].client_mobileclient;
+    });
+    if (this.selected == 1) {
+      this.btnDisabled = true;
+    } else {
+      this.btnDisabled = false;
+    }
   }
 
   public clearData() {
@@ -217,7 +224,7 @@ export class PJA007Component implements OnInit {
       dataTable: this.dataTable
     });
 
-     this.action.setPaginationFilter(
+    this.action.setPaginationFilter(
       Comparison.EQ('client_id', ClientId)
      );
 
@@ -278,14 +285,28 @@ export class PJA007Component implements OnInit {
   }
 
   public setSdmValue(inputForm: FormGroup, dataSdm: ListOfValue) {
-    if (dataSdm) {
-      this.lovSdm = this._factory.lov({
-        api: 'lov/sdm',
-        params: {
-          sdm_id: dataSdm.key
-        },
-        initializeData: true
-      });
+    console.log(dataSdm);
+    this.sdmId = dataSdm;
+    this.Idsdm = this.sdmId;
+    if(this.dataFilter == 'sdm_name'){
+      if (dataSdm) {
+        this.lovSdm = this._factory.lov({
+          api: 'lov/statushiring',
+          params: {
+            sdm_id: dataSdm.key
+          },
+          initializeData: true
+        });
+    } else {
+      if (dataSdm) {
+        this.lovSdm = this._factory.lov({
+          api: 'lov/statushiring',
+          params: {
+            sdm_id: dataSdm.key
+          },
+          initializeData: true
+        });
+    }
       this.SdmName = dataSdm.key;
       this.action.patchFormData({sdm_id: dataSdm.key, sdm_name: dataSdm.values.sdm_sdm_name});
       console.log(this.SdmName);
@@ -298,6 +319,32 @@ export class PJA007Component implements OnInit {
       this.SdmName = null;
       console.log('Nama: ', this.SdmName);
     }
+  }
+
+  public onSearchAnd() {
+    console.log(this.selected);
+    console.log(this.dataFilter);
+    console.log(this.SdmName);
+    console.log(this.sdmId);
+    const ClientId = this.action.getFormControlValue('client_id');
+   //  const sdmId = this.action.getFormControlValue('sdm_name');
+    const IdSdm = this.Idsdm;
+    console.log(ClientId);
+    console.log();
+    if(this.dataFilter == 'sdm_name'){
+     this.action.setPaginationFilter(
+       Conjunction.AND(
+         Comparison.EQ('client_id', ClientId),
+       Comparison.EQ('sdm_id', this.SdmName)
+      )
+      );
+   }
+
+    this.action.refreshTable();
+  }
+  public pencarian() {
+    console.log(this.dataFilter);
+    console.log('hello');
   }
 
 }
