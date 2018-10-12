@@ -37,7 +37,7 @@ export class PJA007Component implements OnInit {
   public clientPic: string;
   public clientMobile: string;
   public btnDisabled: boolean = true;
-  public selected: number = 1;
+  public selected: number;
   public filteredSdm: any;
   public sdmCtrl: FormControl;
 
@@ -81,10 +81,12 @@ export class PJA007Component implements OnInit {
         }
       }
     });
+
     this.dataTable = this._factory.dataTable({
       serverSide : false,
       pagingParams : {
-        limit : 10
+        limit : 10,
+        filter : Comparison.EQ('client_id', '1')
       },
       searchCriteria : [
         { viewValue: 'Name', viewKey: 'sdm_name', type: TYPE.STRING},
@@ -105,7 +107,6 @@ export class PJA007Component implements OnInit {
       inputForm: this.inputForm,
       dataTable: this.dataTable
     });
-
     this.lovClients = this._factory.lov({
       api: 'lov/clients',
       pagingParams: {
@@ -134,39 +135,39 @@ export class PJA007Component implements OnInit {
       })
     ).subscribe((res: any) => {
       // this.action.patchFormData(res.data.items[this.selected]);
+      this.selected = 1;
       this.clientPic = res.data.items[0].client_picclient;
       this.clientMobile = res.data.items[0].client_mobileclient;
     });
-    this.action.setPaginationFilter(
-      Comparison.EQ('client_id', '1')
-    );
-    this.action.refreshTable();
-
+    // this.action.setPaginationFilter(
+    //   Comparison.EQ('client_id', '1')
+    // );
+    // this.action.refreshTable();
   }
   public filterSdm(val: string) {
     return val ? this.lovSdm.data.filter((s) => s.values.sdm_sdm_name.toLowerCase().indexOf(val.toLocaleLowerCase()) === 0) : [];
   }
   public ambilData() {
-    const readAllApi = this._factory.api({
-      api : 'project/MengelolaClient/readAll',
-      pagingParams : {
-        filter : {
-          field : 'client_id',
-          operator : COMPARISON_OPERATOR.EQ,
-          value : this.selected
-        }
-      }
-    });
-    this._factory.http().get(readAllApi).subscribe((res: any) => {
-      // this.action.patchFormData(res.data.items[this.selected]);
-      this.clientPic = res.data.items[0].client_picclient;
-      this.clientMobile = res.data.items[0].client_mobileclient;
-    });
-    if (this.selected == 1) {
-      this.btnDisabled = true;
-    } else {
-      this.btnDisabled = false;
-    }
+    // const readAllApi = this._factory.api({
+    //   api : 'project/MengelolaClient/readAll',
+    //   pagingParams : {
+    //     filter : {
+    //       field : 'client_id',
+    //       operator : COMPARISON_OPERATOR.EQ,
+    //       value : this.selected
+    //     }
+    //   }
+    // });
+    // this._factory.http().get(readAllApi).subscribe((res: any) => {
+    //   // this.action.patchFormData(res.data.items[this.selected]);
+    //   this.clientPic = res.data.items[0].client_picclient;
+    //   this.clientMobile = res.data.items[0].client_mobileclient;
+    // });
+    // if (this.selected == 1) {
+    //   this.btnDisabled = true;
+    // } else {
+    //   this.btnDisabled = false;
+    // }
   }
 
   public clearData() {
@@ -186,13 +187,63 @@ export class PJA007Component implements OnInit {
   }
 
   public onSearch() {
+    this.dataTable = null;
     const ClientId = this.action.getFormControlValue('client_id');
+    this.selected = ClientId;
+    
+    this.dataTable = this._factory.dataTable({
+      serverSide : false,
+      pagingParams : {
+        limit : 10,
+        filter : Comparison.EQ('client_id', ClientId)
+      },
+      searchCriteria : [
+        { viewValue: 'Name', viewKey: 'sdm_name', type: TYPE.STRING},
+        { viewValue: 'Status', viewKey: 'hirestat_name', type: TYPE.STRING}
+      ],
+      tableColumns : [
+        { prop: 'norut', name: 'No', flexGrow: 1, sortable: false },
+        { prop: 'sdm_name', name: 'Name', flexGrow: 3, sortable: false },
+        { prop: 'sdm_phone', name: 'Contact', flexGrow: 3, sortable: false },
+        { prop: 'hirestat_name', name: 'Status', flexGrow: 3, sortable: true },
+        { prop: 'id', name: 'Action', flexGrow: 2,
+          cellTemplate: this.tableActionTemplate, sortable: false }
+      ]
+    });
 
-    this.action.setPaginationFilter(
-        Comparison.EQ('client_id', ClientId)
-    );
+    this.action = this._factory.actions({
+      api: 'project/mengelolaHiring',
+      inputForm: this.inputForm,
+      dataTable: this.dataTable
+    });
+
+     this.action.setPaginationFilter(
+      Comparison.EQ('client_id', ClientId)
+     );
 
     this.action.refreshTable();
+    const readAllApi = this._factory.api({
+      api : 'project/MengelolaClient/readAll',
+      pagingParams : {
+        filter : {
+          field : 'client_id',
+          operator : COMPARISON_OPERATOR.EQ,
+          value : this.selected
+        }
+      }
+    });
+
+    this._factory.http().get(readAllApi).subscribe((res: any) => {
+      // this.action.patchFormData(res.data.items[this.selected]);
+      this.clientPic = res.data.items[0].client_picclient;
+      this.clientMobile = res.data.items[0].client_mobileclient;
+    });
+    if (this.selected == 1) {
+      this.btnDisabled = true;
+    } else {
+      this.btnDisabled = false;
+    }
+    this.action.patchFormData({client_id : ClientId});
   }
 
   public setTrueClick() {
