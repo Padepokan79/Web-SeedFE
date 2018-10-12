@@ -95,10 +95,10 @@ export class PJA007Component implements OnInit {
         limit : 10,
         filter : Comparison.EQ('client_id', '1')
       },
-      // searchCriteria : [
-      //   { viewValue: 'Name', viewKey: 'sdm_name', type: TYPE.STRING},
-      //   { viewValue: 'Status', viewKey: 'hirestat_name', type: TYPE.STRING}
-      // ],
+      searchCriteria : [
+        { viewValue: 'Name', viewKey: 'sdm_name', type: TYPE.STRING},
+        { viewValue: 'Status', viewKey: 'hirestat_name', type: TYPE.STRING}
+      ],
       tableColumns : [
         { prop: 'norut', name: 'No', flexGrow: 1, sortable: false },
         { prop: 'sdm_name', name: 'Name', flexGrow: 3, sortable: false },
@@ -193,6 +193,10 @@ export class PJA007Component implements OnInit {
     this.router.navigate(['pages/pja/PJA008', { idClient }]);
   }
 
+  public onReset(){
+    this.action.patchFormData({client_id : 1});
+    this.onSearch();
+  }
   public onSearch() {
     this.dataTable = null;
     const ClientId = this.action.getFormControlValue('client_id');
@@ -312,7 +316,7 @@ export class PJA007Component implements OnInit {
       console.log(this.SdmName);
     }
   }
-
+  }
   public onKeySdmName(event: any) {
     this.KeyId = event.target.value;
     if (this.KeyId === '') {
