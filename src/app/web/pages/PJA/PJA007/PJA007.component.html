@@ -53,7 +53,45 @@
 
           <td></td>
         </tr>
-         <td style="width: 100px;">
+        <td style="width: 100px;">
+          <mat-form-field class="sdw-full-size">
+            <mat-select placeholder="Pilih Kategory Pencarian" [(ngModel)]="dataFilter" formControlName="search_by" name="search_by" (change)="pencarian()" required>
+            <mat-option value="sdm_name" >Nama SDM</mat-option>
+            <mat-option value="hire_stat">Status SDM</mat-option>
+          </mat-select>
+        </mat-form-field>
+        </td>
+        <!-- <td style="width: 5px; padding-right:10px">
+            <mat-label> </mat-label>
+          </td>
+        <td style="width: 100px">
+            <mat-form-field>
+            <input matInput placeholder="" [(ngModel)]="SdmName" formControlName="sdm_name" name="sdm_name" (change)="ambilData();onSearchAnd()" required>
+            <mat-hint *ngIf="action.formErrors.Sdm_name" [ngStyle]="{'color': 'red'}">
+                {{action.formErrors.sdm_name}}
+              </mat-hint>
+            </mat-form-field>
+          </td>
+          <td style="width: 100px;">
+              <mat-label>Name</mat-label>
+            </td>
+            <td style="width: 5px; padding-right:10px">
+              <mat-label>:</mat-label>
+            </td> -->
+            <td style="width: 5px; padding-right:10px">
+                <mat-label> </mat-label>
+              </td>
+            <td style="width: 100px">
+              <mat-form-field class="example-full-width" style="width : 100%">
+              <input matInput placeholder="" (keyup)="onKeySdmName($event)" [matAutocomplete]="sdmName" formControlName="sdm_name" name="sdm_name" [formControl]="sdmCtrl">
+                <mat-autocomplete #sdmName="matAutocomplete" >
+                  <mat-option *ngFor="let dataSdm of filteredSdm | async" [value]="dataSdm.values.sdm_sdm_name" (onSelectionChange)="setSdmValue(action?.formControls(), dataSdm);onSearchAnd()">
+                    {{dataSdm.values.sdm_sdm_name}}
+                  </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+            </td>
+          <!-- <td style="width: 100px;">
                 <mat-label>Name</mat-label>
               </td>
               <td style="width: 5px; padding-right:10px">
@@ -68,14 +106,12 @@
                     </mat-option>
                   </mat-autocomplete>
               </mat-form-field>
-              </td>
-              
-                <tr>
-
-                <button mat-raised-button class="action-btn nx-hiring-button" (click)="onSearchAnd()">
+              </td> --> 
+                <!-- <tr>
+                <button mat-raised-button class="action-btn nx-hiring-button" (click)="onSearchAnd">
                   <span class="glyphicon glyphicon-plus-sign" aria-hidden="true">&nbsp;</span>Cari SDM
               </button>
-            </tr>
+            </tr> -->
               
     </table>
 
