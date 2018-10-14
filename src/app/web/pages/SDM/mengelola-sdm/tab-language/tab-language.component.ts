@@ -7,6 +7,7 @@ import { InputForm } from '../../../../../core/models/input-form';
 import { COMPARISON_OPERATOR } from '../../../../../core/constant/constant';
 import { Comparison } from 'app/core/enums/comparison-operator.enum';
 import { Console } from '../../../../../../../node_modules/@angular/core/src/console';
+import { DefaultNotificationService } from '../../../../../core/services/default-notification.service';
 @Component({
   selector: 'app-tab-language',
   templateUrl: './tab-language.component.html',
@@ -32,10 +33,13 @@ export class TabLanguageComponent implements OnInit {
 
   public sdmid: number;
 
-  public listLanguage = ['', '', '', ''];
+  // public listLanguage = ['', '', '', ''];
   public listLangs = [];
+  public status = [];
+  public statusSimpan;
+  public lov;
 
-  constructor(private _factory: CoreFactory) {
+  constructor(private _factory: CoreFactory, private _notif: DefaultNotificationService) {
   }
 
   public ngOnInit() {
@@ -60,7 +64,7 @@ export class TabLanguageComponent implements OnInit {
       serverSide : true,
       pagingParams : {
         filter: Comparison.EQ('sdm_id', this.sdmid.toString()),
-        limit : 5
+        limit : 20
       },
       tableColumns : [
         { prop: 'norut', name: 'No', flexGrow: 1, sortable: true },
@@ -83,57 +87,66 @@ export class TabLanguageComponent implements OnInit {
       initializeData: false
     });
 
+    this.listLangs = [];
     this.lovLanguage.getAll().subscribe((lov) => {
-      this.removeUnionLanguage(lov);
+      this.lov = lov;
     });
   }
 
-  public onChangeLanguage(checkedData, index) {
-    this.listLanguage.splice(index, 1);
-    this.listLanguage.splice(index, 0, checkedData);
-  }
-
-  public getList() {
-    // this.listLangs = {2, 4};
+  public change() {
+      this.removeUnionLanguage(this.lov);
   }
 
   public removeUnionLanguage(lov) {
     // console.log(lov.data);
     // console.log(this.dataTable);
     // console.log(this.dataTable.rows);
+    const datatableLength = this.dataTable.rows.length;
+    const lovLength = lov.data.length;
 
     this.lovLanguage.data = lov.data;
-    // lov.data.forEach(function(langs) {
-    //   if (langs.id !== this.dataTable.rows.id) {
-    //     this.listLangs.push(langs.id);
-    //   }
-    // });
-    // console.log(this.listLangs);
-    // for (let index = 0; index < lov.data.length; index++) {
-    //   if (lov.data.id[index] !== this.dataTable.rows[index]) {
-    //     this.listLangs.push();
-    //   }
-    // }
 
-    const a = [];
-    const b = [];
-    lov.data.forEach(function(langs) {
-        a.push(langs.id);
-    });
-    this.dataTable.rows.forEach(function(langs) {
-      b.push(langs.id);
-    });
-    const list1 = lov.data.filter(this.comparer(a));
-    const list2 = this.dataTable.rows.filter(this.comparer(b));
-    console.log(list1.concat(list2));
-  }
-
-  public comparer(otherArray) {
-    return function(current){
-      return otherArray.filter(function(other){
-        return other.value === current.value && other.display === current.display;
-      }).length === 0;
+    for (let index = 0; index < lovLength; index++) {
+      for (let idx = 0; idx < datatableLength; idx++) {
+        if (lov.data[index].values.languages_language_name === this.dataTable.rows[idx].language_name) {
+          this.listLangs.push(lov.data[index].key);
+        }
+      }
     }
+    // console.log('Yang ada' + this.listLangs);
   }
 
+  public saveLanguage() {
+    const length = this.listLangs.length;
+    for (let index = 0; index < length; index++) {
+      if (this.action.getFormControlValue('language_id') === this.listLangs[index] ) {
+        // console.log('Sudah ada');
+        this.status.push(true);
+      } else {
+        // console.log('Tidak ada');
+        this.status.push(false);
+      }
+    }
+    console.log('Yang dipilih adalah' + this.action.getFormControlValue('language_id'));
+    const lengthStatus = this.status.length;
+    for (let index = 0; index < lengthStatus; index++) {
+      if (this.status[index] === true) {
+        this.statusSimpan = 1;
+        index = lengthStatus;
+      }
+    }
+
+    if (this.statusSimpan !== 1) {
+      this.action.onSave();
+      // console.log('Tersimpan');
+    } else {
+      this._notif.error({
+        message: 'Bahasa Sudah Ada'
+      });
+      // console.log('Tidak Tersimpan');
+    }
+    this.statusSimpan = 0;
+    this.status = [];
+    this.listLangs = [];
+  }
 }
