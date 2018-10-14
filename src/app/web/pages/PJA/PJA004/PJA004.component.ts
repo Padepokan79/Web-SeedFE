@@ -46,7 +46,7 @@ export class PJA004Component implements OnInit {
 
     // First Data Table Initialization
     this.dataTable = this._factory.dataTable({
-      serverSide : true,
+      serverSide : false,
       pagingParams : {
         limit : 10
       },
@@ -60,7 +60,6 @@ export class PJA004Component implements OnInit {
         { prop: 'client_mobileclient', name: 'Contact Person', flexGrow: 3, sortable: true },
         { prop: 'client_name', name: 'Action', flexGrow: 2,
           cellTemplate: this.tableActionTemplate, sortable: false }
-
       ]
     });
 

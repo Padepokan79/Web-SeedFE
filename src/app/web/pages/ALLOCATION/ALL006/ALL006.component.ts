@@ -70,6 +70,8 @@ export class ALL006Component implements OnInit {
   public unlockSkill: boolean = true;
   public unlockValue: boolean = true;
   public rows: any[] = [];
+  public indexData: number;
+  public checkData: boolean;
 
   @ViewChild('notif')
   public notif: any;
@@ -201,8 +203,21 @@ export class ALL006Component implements OnInit {
 });
  public btnFilter() {
    this.isButtonClicked = true;
+   this.checkData = true;
    const body = [];
+   this.indexData = 1;
    this.listSearchCriteria.forEach((skillSdm: SearchCriteria) => {
+     if (this.indexData === 1 ) {
+      body.push({
+       sdm_id: this.IdSdm,
+       skilltype_id: skillSdm.skilltype_id,
+       skill_id: skillSdm.skill_id,
+       sdmskill_value: skillSdm.value,
+       operator: this.operator
+     });
+     } else if (this.indexData > 1 && skillSdm.skilltype_id == null && skillSdm.skill_id == null && skillSdm.value == null) {
+      this.checkData = false;
+     } else {
      body.push({
        sdm_id: this.IdSdm,
        skilltype_id: skillSdm.skilltype_id,
@@ -210,6 +225,8 @@ export class ALL006Component implements OnInit {
        sdmskill_value: skillSdm.value,
        operator: this.operator
      });
+     }
+     this.indexData++;
     });
    console.log('POST');
    const url = `${this.apiFilter}/multiFilter`;
@@ -231,7 +248,7 @@ export class ALL006Component implements OnInit {
       this.validasiRolevalue = false;
     }
    });
-   if (this.cek === true && this.validasiRolevalue === false) {
+   if (this.cek === true && this.validasiRolevalue === false && this.checkData === true) {
     this.http.post(url, {
       listsdm: body
     }, httpOptions)
@@ -246,7 +263,11 @@ export class ALL006Component implements OnInit {
       .subscribe((res: any) => {
         this.rows = res.null;
       });
-    if ( this.validasiRolevalue === true ) {
+    if (this.checkData !== true) {
+        this._notif.error({
+          message : 'Please fill search parameter'
+         });
+      } else if ( this.validasiRolevalue === true ) {
         this._notif.error({
           message : 'Role Value Between 1 and 10'
          });
