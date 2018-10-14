@@ -312,7 +312,7 @@ export class PJA007Component implements OnInit {
       console.log(this.SdmName);
     }
   }
-
+  }
   public onKeySdmName(event: any) {
     this.KeyId = event.target.value;
     if (this.KeyId === '') {

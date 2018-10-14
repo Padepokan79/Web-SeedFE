@@ -164,7 +164,7 @@ export class PJA001Component implements OnInit {
                 },
                 initializeData: true
             });
-            this.selectNik = dataSdm.key - 1;
+            this.selectNik = dataSdm.key - 2;
             // tslint:disable-next-line:max-line-length
             this.action.patchFormData({sdm_id: dataSdm.key, sdm_name: dataSdm.values.sdm_sdm_name});
 
