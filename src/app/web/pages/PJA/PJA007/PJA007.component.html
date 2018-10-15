@@ -9,115 +9,56 @@
     </div>
   </div>
   <form class="io-form-body" [formGroup]="action?.formControls()">
-
-    <table class="nx-table-margin" style="width: 100%">
-
-        <tr>
-          <!-- client -->
-              <td style="width: 100px;">
-                <mat-label>Client</mat-label>
-              </td>
-              <td style="width: 5px; padding-right:10px">
-                <mat-label>:</mat-label>
-              </td>
-              <td style="width: 100px">
-                <mat-form-field>
-                  <mat-select placeholder="- Select -" formControlName="client_id" name="client_id" [(ngModel)]="selected" (change)="ambilData();onSearch();setTrueClick()">
-                    <mat-option *ngFor="let lov of lovClients.data" [value]="lov.key">
-                      {{lov.value}}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </td>
-
-          <!-- pic client -->
-            <td style="width: 150px; padding-left:50px">
-              <mat-label>PIC Client</mat-label>
-            </td>
-            <td style="width: 5px; padding-right:10px">
-              <mat-label>:</mat-label>
-            </td>
-            <td style="width: 200px">
-              <mat-label>{{ clientPic }}</mat-label>
-            </td>
-            <!-- client contact -->
-            <td style="width: 100px">
-              <mat-label>Client Contact</mat-label>
-            </td>
-            <td style="width: 5px; padding-right:10px">
-              <mat-label>:</mat-label>
-            </td>
-            <td style="width: 200px">
-              <mat-label>{{ clientMobile }}</mat-label>
-            </td>
-
-          <td></td>
-        </tr>
-        <td style="width: 100px;">
-          <mat-form-field class="sdw-full-size">
-            <mat-select placeholder="Pilih Kategory Pencarian" [(ngModel)]="dataFilter" formControlName="search_by" name="search_by" (change)="pencarian()" required>
+    <div class="row">
+      <div class="col-md-4">
+        <mat-label>Client</mat-label>
+        <mat-label>:</mat-label>
+        <mat-form-field>
+          <mat-select placeholder="- Select -" formControlName="client_id" name="client_id" [(ngModel)]="selected" (change)="ambilData();onSearch();setTrueClick()">
+            <mat-option *ngFor="let lov of lovClients.data" [value]="lov.key">
+              {{lov.value}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-4">
+        <!-- pic client -->
+        <mat-label>PIC Client</mat-label>
+        <mat-label>:</mat-label>
+        <mat-label>{{ clientPic }}</mat-label>
+      </div>
+      <div class="col-md-4">
+        <!-- client contact -->
+        <mat-label>Client Contact</mat-label>
+        <mat-label>:</mat-label>
+        <mat-label>{{ clientMobile }}</mat-label>
+      </div>
+    </div>
+<!-- 
+    <div class="row">
+      <div class="col-md-5" style="padding-right: 2%">
+        <mat-form-field class="sdw-full-size">
+          <mat-select placeholder="Pilih Kategory Pencarian" [(ngModel)]="dataFilter" formControlName="search_by" name="search_by" (change)="pencarian()" required>
             <mat-option value="sdm_name" >Nama SDM</mat-option>
             <mat-option value="hire_stat">Status SDM</mat-option>
           </mat-select>
         </mat-form-field>
-        </td>
-        <!-- <td style="width: 5px; padding-right:10px">
-            <mat-label> </mat-label>
-          </td>
-        <td style="width: 100px">
-            <mat-form-field>
-            <input matInput placeholder="" [(ngModel)]="SdmName" formControlName="sdm_name" name="sdm_name" (change)="ambilData();onSearchAnd()" required>
-            <mat-hint *ngIf="action.formErrors.Sdm_name" [ngStyle]="{'color': 'red'}">
-                {{action.formErrors.sdm_name}}
-              </mat-hint>
-            </mat-form-field>
-          </td>
-          <td style="width: 100px;">
-              <mat-label>Name</mat-label>
-            </td>
-            <td style="width: 5px; padding-right:10px">
-              <mat-label>:</mat-label>
-            </td> -->
-            <td style="width: 5px; padding-right:10px">
-                <mat-label> </mat-label>
-              </td>
-            <td style="width: 100px">
-              <mat-form-field class="example-full-width" style="width : 100%">
-              <input matInput placeholder="" (keyup)="onKeySdmName($event)" [matAutocomplete]="sdmName" formControlName="sdm_name" name="sdm_name" [formControl]="sdmCtrl">
-                <mat-autocomplete #sdmName="matAutocomplete" >
-                  <mat-option *ngFor="let dataSdm of filteredSdm | async" [value]="dataSdm.values.sdm_sdm_name" (onSelectionChange)="setSdmValue(action?.formControls(), dataSdm);onSearchAnd()">
-                    {{dataSdm.values.sdm_sdm_name}}
-                  </mat-option>
-                </mat-autocomplete>
-            </mat-form-field>
-            </td>
-          <!-- <td style="width: 100px;">
-                <mat-label>Name</mat-label>
-              </td>
-              <td style="width: 5px; padding-right:10px">
-                <mat-label>:</mat-label>
-              </td>
-              <td style="width: 100px">
-                <mat-form-field class="example-full-width" style="width : 100%">
-                <input matInput placeholder="" (keyup)="onKeySdmName($event)" [matAutocomplete]="sdmName" formControlName="sdm_name" name="sdm_name" [formControl]="sdmCtrl">
-                  <mat-autocomplete #sdmName="matAutocomplete" >
-                    <mat-option *ngFor="let dataSdm of filteredSdm | async" [value]="dataSdm.values.sdm_sdm_name" (onSelectionChange)="setSdmValue(action?.formControls(), dataSdm);">
-                      {{dataSdm.values.sdm_sdm_name}}
-                    </mat-option>
-                  </mat-autocomplete>
-              </mat-form-field>
-              </td> --> 
-                <!-- <tr>
-                <button mat-raised-button class="action-btn nx-hiring-button" (click)="onSearchAnd">
-                  <span class="glyphicon glyphicon-plus-sign" aria-hidden="true">&nbsp;</span>Cari SDM
-              </button>
-            </tr> -->
-              
-    </table>
+      </div>
+      <div class="col-md-5">
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="" (keyup)="onKeySdmName($event)" [matAutocomplete]="sdmName" formControlName="sdm_name" name="sdm_name" [formControl]="sdmCtrl">
+            <mat-autocomplete #sdmName="matAutocomplete" >
+              <mat-option *ngFor="let dataSdm of filteredSdm | async" [value]="dataSdm.values.sdm_sdm_name" (onSelectionChange)="setSdmValue(action?.formControls(), dataSdm);onSearchAnd()">
+                {{dataSdm.values.sdm_sdm_name}}
+              </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+      </div>
+    </div> -->
 
     <div class="row">
       <div style="float: right; padding-right: 2%">
-        <button mat-raised-button class="action-btn nx-reset-button" (click)="action.onReset();clearData()">
+        <button mat-raised-button class="action-btn nx-reset-button" (click)="onReset()">
             <span class="glyphicon glyphicon-remove-sign" aria-hidden="true">&nbsp;</span>Reset
         </button>
         <button mat-raised-button class="action-btn nx-hiring-button" [disabled]="btnDisabled" (click)="navigatePushId(selected)">
@@ -144,7 +85,7 @@
   <button type="button" matTooltip="Edit"class="btn btn-primary btn-mm btn-icon" (click)="navigateEditMenu(row.sdm_id, row.sdmhiring_id)">
     <i class="glyphicon glyphicon-edit"></i>
   </button>
-  <button type="button" matTooltip="Hapus Sdm" class="btn btn-danger btn-mm btn-icon" (click)="action.onDelete(row)">
+  <button type="button" matTooltip="Hapus Sdm" class="btn btn-danger btn-mm btn-icon" (click)="onDelete(row.sdm_id)">
     <i class="glyphicon glyphicon-trash"></i>
   </button>
 </ng-template>
