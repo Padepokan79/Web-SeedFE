@@ -52,7 +52,7 @@
             </td>
 
           <td></td>
-        </tr>
+        <!-- </tr>
         <td style="width: 100px;">
           <mat-form-field class="sdw-full-size">
             <mat-select placeholder="Pilih Kategory Pencarian" [(ngModel)]="dataFilter" formControlName="search_by" name="search_by" (change)="pencarian()" required>
@@ -60,7 +60,7 @@
             <mat-option value="hire_stat">Status SDM</mat-option>
           </mat-select>
         </mat-form-field>
-        </td>
+        </td> -->
         <!-- <td style="width: 5px; padding-right:10px">
             <mat-label> </mat-label>
           </td>
@@ -78,7 +78,7 @@
             <td style="width: 5px; padding-right:10px">
               <mat-label>:</mat-label>
             </td> -->
-            <td style="width: 5px; padding-right:10px">
+            <!-- <td style="width: 5px; padding-right:10px">
                 <mat-label> </mat-label>
               </td>
             <td style="width: 100px">
@@ -90,7 +90,7 @@
                   </mat-option>
                 </mat-autocomplete>
             </mat-form-field>
-            </td>
+            </td> -->
           <!-- <td style="width: 100px;">
                 <mat-label>Name</mat-label>
               </td>
@@ -117,7 +117,7 @@
 
     <div class="row">
       <div style="float: right; padding-right: 2%">
-        <button mat-raised-button class="action-btn nx-reset-button" (click)="action.onReset();clearData()">
+        <button mat-raised-button class="action-btn nx-reset-button" (click)="onReset()">
             <span class="glyphicon glyphicon-remove-sign" aria-hidden="true">&nbsp;</span>Reset
         </button>
         <button mat-raised-button class="action-btn nx-hiring-button" [disabled]="btnDisabled" (click)="navigatePushId(selected)">
@@ -144,7 +144,7 @@
   <button type="button" matTooltip="Edit"class="btn btn-primary btn-mm btn-icon" (click)="navigateEditMenu(row.sdm_id, row.sdmhiring_id)">
     <i class="glyphicon glyphicon-edit"></i>
   </button>
-  <button type="button" matTooltip="Hapus Sdm" class="btn btn-danger btn-mm btn-icon" (click)="action.onDelete(row)">
+  <button type="button" matTooltip="Hapus Sdm" class="btn btn-danger btn-mm btn-icon" (click)="onDelete(row.sdmhiring_id)">
     <i class="glyphicon glyphicon-trash"></i>
   </button>
 </ng-template>
