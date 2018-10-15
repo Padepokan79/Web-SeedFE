@@ -185,8 +185,8 @@ export class PJA007Component implements OnInit {
     this.action.refreshTable();
   }
 
-  public navigateEditMenu(id, sdmhiringId) {
-    this.router.navigate(['pages/pja/PJA009', { id, sdmhiringId }]);
+  public navigateEditMenu(id, sdmhiringId, cId) {
+    this.router.navigate(['pages/pja/PJA009', { id, sdmhiringId, cId }]);
   }
 
   public navigatePushId(idClient) {
