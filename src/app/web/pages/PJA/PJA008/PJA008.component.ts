@@ -1,3 +1,4 @@
+import { Comparison } from 'app/core/enums/comparison-operator.enum';
 import { CoreFactory } from '../../../../core/factory/core.factory';
 import { DataTable } from '../../../../core/models/data-table';
 import { InputForm } from '../../../../core/models/input-form';
@@ -137,6 +138,7 @@ export class PJA008Component implements OnInit {
       api: 'lov/Sdm',
       pagingParams: {
         orderby: 'sdm_name ASC',
+        filter: Comparison.LIKE('sdm_nik', '02%25')
       },
       initializeData: true
     });
@@ -144,7 +146,7 @@ export class PJA008Component implements OnInit {
     this.dataTable = this._factory.dataTable({
       serverSide: false,
       pagingParams: {
-        limit: 10
+        limit: 10,
       },
       tableColumns: [
         { prop: 'sdm_nik', name: 'NIK', flexGrow: 1, sortable: false },
