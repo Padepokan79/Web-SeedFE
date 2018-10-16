@@ -12,7 +12,7 @@
   <form class="io-form-body" [formGroup]="action?.formControls()">
     <div>
       <div class="row">
-          <div class="col-md-2" style="width: 25%;">
+          <div class="col-md-4">
             <mat-label class="panjang">Level : </mat-label>
             <mat-form-field class="sdw-full-size" style="width : 100%">
               <mat-select placeholder="Level" formControlName="sdmlvl_id" name="sdmlvl_id">
@@ -22,7 +22,7 @@
               </mat-select>
             </mat-form-field>
           </div>
-          <div class="col-md-2" style="width: 25%;">
+          <div class="col-md-4">
             <mat-label class="panjang">Name : </mat-label>
             <mat-form-field class="sdw-full-size" style="width : 100%">
               <input placeholder="Nama" matInput (keyup)="onKeySdmName($event)" [formControl]="sdmCtrl" [matAutocomplete]="auto" formControlName="sdm_name" name="sdm_name">
@@ -33,7 +33,7 @@
               </mat-autocomplete>
             </mat-form-field>
           </div>
-          <div class="col-md-2" style="width: 25%;">
+          <div class="col-md-4">
             <mat-label class="panjang">Akhir Kontrak : </mat-label>
             <mat-form-field class="sdw-full-size" style="width : 100%">
               <input matInput (keyup)="onKeySdmEndDate($event)" [matDatepicker]="picker" formControlName="sdm_endcontract" name="sdm_endcontract">

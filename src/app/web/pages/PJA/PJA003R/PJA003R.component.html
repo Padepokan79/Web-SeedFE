@@ -13,7 +13,7 @@
 
       <div>
           <div class="row">
-            <div class="col-md-2" style="width: 30%">
+            <div class="col-md-4">
               <mat-label class="panjang">Nama : </mat-label>
               <mat-form-field class="example-full-width" style="width : 100%">
                 <input matInput placeholder="" (keyup)="onKeySdmName($event)" [matAutocomplete]="sdmName" formControlName="sdm_name" name="sdm_name" [formControl]="sdmCtrl">
@@ -24,7 +24,7 @@
                   </mat-autocomplete>
               </mat-form-field>
             </div>
-            <div class="col-md-2" style="width: 30%">
+            <div class="col-md-4">
               <mat-label class="panjang" >Project Name : </mat-label>
               <mat-form-field class="example-full-width" style="width : 100%">
                 <input matInput placeholder="" (keyup)="onKeyProjectName($event)" formControlName="project_name" [matAutocomplete]="projectName" name="project_name" [formControl]="projectCtrl">
@@ -35,7 +35,7 @@
                 </mat-autocomplete>
               </mat-form-field>
             </div>
-            <div class="col-md-2" style="width: 30%">
+            <div class="col-md-4">
               <mat-label class="panjang">End Project : </mat-label>
               <mat-form-field class="example-full-width" style="width : 100%">
                 <input matInput [matDatepicker]="picker" (keyup)="onKeyProjectEndDate($event)" formControlName="project_enddate" name="project_enddate" readonly>
