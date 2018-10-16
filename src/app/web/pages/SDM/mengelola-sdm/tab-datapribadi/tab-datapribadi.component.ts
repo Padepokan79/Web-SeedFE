@@ -73,6 +73,7 @@ export class TabDatapribadiComponent implements OnInit {
   public statusContract:any = [];
   public edit = false;
   public editDev: number = 0;
+  public posisi = '';
 
   numberOnly(event): boolean {
     const charCode = (event.which) ? event.which : event.keyCode;
@@ -133,6 +134,7 @@ export class TabDatapribadiComponent implements OnInit {
           sdm_startcontract: null,
           sdm_status: '1',
           sdmlvl_id: '',
+          posisi: '',
 
           client_id: '1',
           hirestat_id: '4'
@@ -195,7 +197,7 @@ export class TabDatapribadiComponent implements OnInit {
         this._factory.http().get(readAllApi).subscribe((res: any) => {
           res.data.items[0].sdm_status = res.data.items[0].sdm_status === 'Active' ? 1 : 0;
           this.action.patchFormData(res.data.items[0]);
-           
+
           if (res.data.items[0].sdm_nik.length > 7) {
             this.editDev = res.data.items[0].sdm_nik.length;
           }
@@ -553,50 +555,65 @@ export class TabDatapribadiComponent implements OnInit {
     this.location.back();
   }
 
-  public generateNik(num){
-    var nik = this.action.getFormControlValue('sdm_nik');
-    var nik3: string;
+  public generateNik(posisi) {
+    const nik = this.action.getFormControlValue('sdm_nik');
+    let nikAkhir: number;
+    let statusBanding = false;
 
-    var datum = this.action.getFormControlValue('sdm_startcontract');
-    var month = this.datePipe.transform(datum, 'MM');
+    const date = this.action.getFormControlValue('sdm_startcontract');
+    const month = this.datePipe.transform(date, 'MM');
+    const year = this.datePipe.transform(date, 'yy');
 
-    var datum2 = this.action.getFormControlValue('sdm_startcontract');
-    var month2 = this.datePipe.transform(datum2, 'yy');
+    console.log(date);
 
-    console.log(datum);
-
-    if (datum == null) {
-      nik3 = num.concat('0000000');
-      this.action.patchFormData({sdm_nik : nik3});
+    if (date == null) {
+      nikAkhir = posisi.concat('0000000');
+      this.action.patchFormData({sdm_nik : nikAkhir});
     } else {
-      let nilaiTerbesar = 0;
       this.http.get(this._factory.api({api : 'lov/SdmNik'}))
       .subscribe((res: any) => {
-        var nilai:any = [];
-        for (var i = 0; i < res.data.length; ++i) {
-          nilai.push(res.data[i].values.sdm_sdm_nik.substring(6, 9));
+        const nilai = [];
+        const resLength = res.data.length;
+        for (let i = 0; i < resLength; i++) {
+          nilai.push(res.data[i].values.sdm_sdm_nik);
         }
 
-        console.log(nilai);
-        for (var i = 0; i < nilai.length; ++i) {
-          if (nilaiTerbesar < -nilai[i]) {
-            nilaiTerbesar = nilai[i];
+        // console.log(res.data);
+
+        nikAkhir = posisi.concat(month, year, '001');
+
+        const nilaiLenth = nilai.length;
+        for (let index = 0; index < nilaiLenth; index++) {
+          if (nikAkhir == nilai[index]) {
+            statusBanding = true;
+            // console.log('SAMA');
+            // console.log(nikAkhir);
+            nikAkhir++;
+            // console.log(nikAkhir);
+          } else {
+            // console.log('BEDA');
           }
         }
 
-        console.log(nilaiTerbesar);
-        let nilainya =  +nilaiTerbesar + 1
-        if (nilainya < 10) {
-          nik3 = num.concat(month, month2, '00', nilainya.toString());
-        } else if (nilaiTerbesar < 100 && nilainya >= 10) {
-          nik3 = num.concat(month, month2, '0', nilainya.toString());
-        } else {
-          nik3 = num.concat(month, month2, nilainya.toString());
+        const nikLength = nikAkhir.toString().length;
+        if (nikLength > 8) {
+          nikAkhir.toString().slice(5, 1);
         }
-        console.log(nilainya.toString());
-        this.action.patchFormData({sdm_nik : nik3});
-        console.log(nik3);
+
+        if (statusBanding == true) {
+          this.action.patchFormData({sdm_nik : '0' + nikAkhir});
+        } else {
+          this.action.patchFormData({sdm_nik : nikAkhir});
+        }
+        console.log(this.action.getFormControlValue('sdm_nik'));
       });
     }
+  }
+
+  public posisiStatus() {
+    this.action.patchFormData({
+      posisi: '',
+    });
+    console.log('masuk pak Eko');
   }
 }

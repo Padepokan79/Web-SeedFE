@@ -9,6 +9,7 @@ import { InputForm } from '../../../../core/models/input-form';
 import { ActionService } from '../../../../core/services/uninjectable/action.service';
 import { DefaultNotificationService } from '../../../../core/services/default-notification.service';
 import { HttpParams, HttpClient } from '../../../../../../node_modules/@angular/common/http';
+import { Comparison } from 'app/core/enums/comparison-operator.enum';
 
 @Component({
   selector: 'app-PJA009',
@@ -38,6 +39,7 @@ export class PJA009Component implements OnInit {
   public disabled: boolean= false;
   private selectedId: number;
   private selectedHiringId: number;
+  private selectedClientId: number;
 
   constructor(
     public _notif: DefaultNotificationService,
@@ -49,6 +51,7 @@ export class PJA009Component implements OnInit {
     this.route.params.subscribe((param) => {
       this.selectedId = param.id;
       this.selectedHiringId = param.sdmhiringId;
+      this.selectedClientId = param.cId;
 
     });
   }
@@ -83,10 +86,17 @@ export class PJA009Component implements OnInit {
         dataTable: this.dataTable
     });
 
-    this.lovHiring = this._factory.lov({
-        api: 'lov/StatusHiring',
-        initializeData: true
-    });
+    // this.lovHiring = this._factory.lov({
+    //     api: 'lov/StatusHiring',
+    //     pagingParams : {
+    //       filter : {
+    //         field : 'hirestat_id',
+    //         operator : COMPARISON_OPERATOR.LE,
+    //         value : 9
+    //       }
+    //     },
+    //     initializeData: true
+    // });
 
     const readAllApi = this._factory.api({
       api : 'project/mengelolaHiring/readAll',
@@ -101,7 +111,6 @@ export class PJA009Component implements OnInit {
     
     
     this._factory.http().get(readAllApi).subscribe((res: any) => {
-      
       console.log(res.data.items.length);
 
       for ( var index = 0; index < res.data.items.length; index++){
@@ -127,6 +136,7 @@ export class PJA009Component implements OnInit {
       
 
     });
+    this.lovStatus();
   }
 
   public onUpdate() {
@@ -169,5 +179,25 @@ export class PJA009Component implements OnInit {
    }
 
  }
-
+  public lovStatus(){
+    console.log("ini client id : " + this.selectedClientId);
+    if(this.selectedClientId == 1){
+      this.lovHiring = this._factory.lov({
+        api: 'lov/StatusHiring',
+        initializeData: true
+    });
+    }else{
+      this.lovHiring = this._factory.lov({
+        api: 'lov/StatusHiring',
+        pagingParams : {
+          filter : {
+            field : 'hirestat_id',
+            operator : COMPARISON_OPERATOR.LE,
+            value : 9
+          }
+        },
+        initializeData: true
+    });
+    }
+  }
 }

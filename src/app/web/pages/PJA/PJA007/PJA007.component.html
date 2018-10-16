@@ -56,6 +56,7 @@
       </div>
     </div> -->
 
+
     <div class="row">
       <div style="float: right; padding-right: 2%">
         <button mat-raised-button class="action-btn nx-reset-button" (click)="onReset()">
@@ -82,10 +83,10 @@
 </div> -->
 
 <ng-template #tableActionTemplate let-row="row" let-value="value" ngx-datatable-cell-template>
-  <button type="button" matTooltip="Edit"class="btn btn-primary btn-mm btn-icon" (click)="navigateEditMenu(row.sdm_id, row.sdmhiring_id)">
+  <button type="button" matTooltip="Edit"class="btn btn-primary btn-mm btn-icon" (click)="navigateEditMenu(row.sdm_id, row.sdmhiring_id, row.client_id)">
     <i class="glyphicon glyphicon-edit"></i>
   </button>
-  <button type="button" matTooltip="Hapus Sdm" class="btn btn-danger btn-mm btn-icon" (click)="onDelete(row.sdm_id)">
+  <button type="button" matTooltip="Hapus Sdm" class="btn btn-danger btn-mm btn-icon" (click)="onDelete(row.sdmhiring_id)">
     <i class="glyphicon glyphicon-trash"></i>
   </button>
 </ng-template>

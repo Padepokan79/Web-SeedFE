@@ -165,10 +165,7 @@ export class PJA001Component implements OnInit {
                 },
                 initializeData: true
             });
-            this.selectNik = dataSdm.key - 2 ;
-            this.selectedSdm = dataSdm.values.sdm_sdm_name;
-            console.log('ini id sdm' + dataSdm.key);
-            console.log('ini id sdm dari selected nik' + this.selectNik);
+            this.selectNik = dataSdm.key - 2;
             // tslint:disable-next-line:max-line-length
             this.action.patchFormData({sdm_id: dataSdm.key, sdm_name: dataSdm.values.sdm_sdm_name});
 

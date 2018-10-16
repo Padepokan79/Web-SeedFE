@@ -185,8 +185,8 @@ export class PJA007Component implements OnInit {
     this.action.refreshTable();
   }
 
-  public navigateEditMenu(id, sdmhiringId) {
-    this.router.navigate(['pages/pja/PJA009', { id, sdmhiringId }]);
+  public navigateEditMenu(id, sdmhiringId, cId) {
+    this.router.navigate(['pages/pja/PJA009', { id, sdmhiringId, cId }]);
   }
 
   public navigatePushId(idClient) {
@@ -269,7 +269,12 @@ export class PJA007Component implements OnInit {
       this._notif.success({
         message : 'Delete berhasil'
       });
-    });
+    }, (error: any) => {
+      this._notif.error({
+        message: 'Hiring SDM tidak bisa dihapus, masih terdata pada SDM Assignment'});
+      });
+    this.ambilData();
+    this.onSearch();
     this.action.refreshTable();
   }
 
@@ -284,7 +289,6 @@ export class PJA007Component implements OnInit {
         .afterClosed()
         .subscribe((data: any) => {
           this.onEksekusi(id);
-          this.action.refreshTable();
         });
   }
 
