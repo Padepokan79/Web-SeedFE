@@ -72,6 +72,9 @@ export class PJA008Component implements OnInit {
   public skillType: string;
   public validasiRolevalue: boolean;
   public jumlahChecked = 0;
+  public indexData: number;
+  public checkData: boolean;
+  public checkData2: boolean;
 
   constructor(private _factory: CoreFactory,
               public _notif: DefaultNotificationService,
@@ -180,17 +183,39 @@ export class PJA008Component implements OnInit {
   public btnFilter() {
     this.jumlahChecked = 0;
     this.isButtonClicked = true;
+    this.checkData = true;
+    this.indexData = 1;
+    this.checkData2 = true;
+    console.log(this.checkData);
     const body = [];
     this.listSearchCriteria.forEach((skillSdm: SearchCriteria) => {
-      body.push({
-        sdm_id: this.IdSdm,
-        skilltype_id: skillSdm.skilltype_id,
-        skill_id: skillSdm.skill_id,
-        sdmskill_value: skillSdm.value,
-        operator: this.operator
-      });
+      if (this.indexData === 1 ) {
+         if (skillSdm.skilltype_id == null && skillSdm.skill_id == null && skillSdm.value == null ) {
+           this.checkData2 = false;
+         }
+         body.push({
+          sdm_id: this.IdSdm,
+          skilltype_id: skillSdm.skilltype_id,
+          skill_id: skillSdm.skill_id,
+          sdmskill_value: skillSdm.value,
+          operator: this.operator
+        });
+      } else if (this.indexData > 1 && skillSdm.skilltype_id == null && skillSdm.skill_id == null && skillSdm.value == null ) {
+        this.checkData = false;
+      } else {
+        body.push({
+          sdm_id: this.IdSdm,
+          skilltype_id: skillSdm.skilltype_id,
+          skill_id: skillSdm.skill_id,
+          sdmskill_value: skillSdm.value,
+          operator: this.operator
+        });
+      }
+      if (this.checkData2 !== true && this.indexData > 1) {
+        this.checkData = false;
+      }
+      this.indexData++;
     });
-
     console.log('POST');
     const url = `${this.apiFilter}/multiFilter`;
     const httpOptions = {
@@ -210,9 +235,9 @@ export class PJA008Component implements OnInit {
     } else {
       this.validasiRolevalue = false;
     }
-      console.log(this.validasiRolevalue);
      });
-    if (this.cek === true && this.validasiRolevalue === false) {
+
+    if (this.cek === true && this.validasiRolevalue === false && this.checkData === true ) {
       this.http.post(url, {
         listsdm: body
       }, httpOptions)
@@ -228,7 +253,12 @@ export class PJA008Component implements OnInit {
           this.rows = res.null;
           console.log(this.rows);
         });
-      if ( this.validasiRolevalue === true ) {
+
+      if (this.checkData !== true || (this.checkData2 !== true && this.indexData > 1)) {
+          this._notif.error({
+            message : 'Please fill search parameter'
+           });
+        } else if ( this.validasiRolevalue === true ) {
           this._notif.error({
             message : 'Role Value Between 1 and 10'
            });

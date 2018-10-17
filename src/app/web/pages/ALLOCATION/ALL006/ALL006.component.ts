@@ -78,6 +78,7 @@ export class ALL006Component implements OnInit {
   public validasiRolevalue: boolean;
   public roletype: string = '1';
   public skillType: string;
+  public checkData2: boolean;
 
   // tslint:disable-next-line:member-access
   numberOnly(event): boolean {
@@ -202,38 +203,46 @@ export class ALL006Component implements OnInit {
   api: `api/masterdata/MultiFiltering`
 });
  public btnFilter() {
-   this.isButtonClicked = true;
-   this.checkData = true;
-   const body = [];
-   this.indexData = 1;
-   this.listSearchCriteria.forEach((skillSdm: SearchCriteria) => {
-     if (this.indexData === 1 ) {
-      body.push({
-       sdm_id: this.IdSdm,
-       skilltype_id: skillSdm.skilltype_id,
-       skill_id: skillSdm.skill_id,
-       sdmskill_value: skillSdm.value,
-       operator: this.operator
-     });
-     } else if (this.indexData > 1 && skillSdm.skilltype_id == null && skillSdm.skill_id == null && skillSdm.value == null) {
+  this.isButtonClicked = true;
+  this.checkData = true;
+  this.indexData = 1;
+  this.checkData2 = true;
+  console.log(this.checkData);
+  const body = [];
+  this.listSearchCriteria.forEach((skillSdm: SearchCriteria) => {
+    if (this.indexData === 1 ) {
+       if (skillSdm.skilltype_id == null && skillSdm.skill_id == null && skillSdm.value == null ) {
+         this.checkData2 = false;
+       }
+       body.push({
+        sdm_id: this.IdSdm,
+        skilltype_id: skillSdm.skilltype_id,
+        skill_id: skillSdm.skill_id,
+        sdmskill_value: skillSdm.value,
+        operator: this.operator
+      });
+    } else if (this.indexData > 1 && skillSdm.skilltype_id == null && skillSdm.skill_id == null && skillSdm.value == null ) {
       this.checkData = false;
-     } else {
-     body.push({
-       sdm_id: this.IdSdm,
-       skilltype_id: skillSdm.skilltype_id,
-       skill_id: skillSdm.skill_id,
-       sdmskill_value: skillSdm.value,
-       operator: this.operator
-     });
-     }
-     this.indexData++;
-    });
-   console.log('POST');
-   const url = `${this.apiFilter}/multiFilter`;
-   const httpOptions = {
-     params: new HttpParams()
-   };
-   this.listSearchCriteria.forEach((skillSdm: SearchCriteria) => {
+    } else {
+      body.push({
+        sdm_id: this.IdSdm,
+        skilltype_id: skillSdm.skilltype_id,
+        skill_id: skillSdm.skill_id,
+        sdmskill_value: skillSdm.value,
+        operator: this.operator
+      });
+    }
+    if (this.checkData2 !== true && this.indexData > 1) {
+      this.checkData = false;
+    }
+    this.indexData++;
+  });
+  console.log('POST');
+  const url = `${this.apiFilter}/multiFilter`;
+  const httpOptions = {
+    params: new HttpParams()
+  };
+  this.listSearchCriteria.forEach((skillSdm: SearchCriteria) => {
     console.log(' nilai skill ' + skillSdm.value);
     this.skillType = skillSdm.skilltype_id;
     if (skillSdm.value == null) {
@@ -243,12 +252,13 @@ export class ALL006Component implements OnInit {
     }
     // tslint:disable-next-line:triple-equals
     if (this.skillType == this.roletype && (skillSdm.value < 1 || skillSdm.value > 10 ) ) {
-      this.validasiRolevalue = true;
-    } else {
-      this.validasiRolevalue = false;
-    }
+    this.validasiRolevalue = true;
+  } else {
+    this.validasiRolevalue = false;
+  }
    });
-   if (this.cek === true && this.validasiRolevalue === false && this.checkData === true) {
+
+  if (this.cek === true && this.validasiRolevalue === false && this.checkData === true ) {
     this.http.post(url, {
       listsdm: body
     }, httpOptions)
@@ -262,8 +272,10 @@ export class ALL006Component implements OnInit {
     }, httpOptions)
       .subscribe((res: any) => {
         this.rows = res.null;
+        console.log(this.rows);
       });
-    if (this.checkData !== true) {
+
+    if (this.checkData !== true || (this.checkData2 !== true && this.indexData > 1)) {
         this._notif.error({
           message : 'Please fill search parameter'
          });
@@ -277,7 +289,7 @@ export class ALL006Component implements OnInit {
          });
       }
    }
-   this.cek = true;
+  this.cek = true;
   }
 
   public resetSource() {
