@@ -1,3 +1,4 @@
+import { Comparison } from './../../../../../core/enums/comparison-operator.enum';
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { ActionService } from '../../../../../core/services/uninjectable/action.service';
 import { InputForm } from '../../../../../core/models/input-form';
@@ -15,6 +16,7 @@ import { Location } from '@angular/common';
 import { SubjectSubscriber } from '../../../../../../../node_modules/rxjs/Subject';
 import { DatePipe } from '@angular/common';
 import { angularMath } from 'angular-ts-math';
+import { isUndefined } from 'util';
 
 @Component({
   selector: 'app-tab-datapribadi',
@@ -74,6 +76,11 @@ export class TabDatapribadiComponent implements OnInit {
   public edit = false;
   public editDev: number = 0;
   public posisi = '';
+
+  public valKtp: boolean;
+  public valEmail: boolean;
+  public totalKtp: number;
+  public totalEmail: number;
 
   numberOnly(event): boolean {
     const charCode = (event.which) ? event.which : event.keyCode;
@@ -250,52 +257,83 @@ export class TabDatapribadiComponent implements OnInit {
   }
 
   public onSave() {
-    let startDate = new Date(this.action.getFormControlValue('sdm_startcontract'));
-    let endDate = new Date(this.action.getFormControlValue('sdm_endcontract'));
-    if (this.uploaderFoto.queue[0]) {
-      if(this.uploaderFoto.queue[0].file.size < 500000){
-        if(startDate > endDate) {
-          this._notif.error({
-            message: 'start contract > dari akhir contract!'
-            });
-          } else {
-            const postAPI = this._factory.api({
-              api: 'sdm/mengelolaSdm/create',
-            });
-            if (endDate < this.currentDate) {
-                this.action.patchFormData({sdm_status : 0});
-              } else {
-                this.action.patchFormData({sdm_status : 1});
-              }
-            this._factory.http().post(postAPI, this.action.getFormData())
-            .subscribe((response: any) => {
-              // console.log(response.data.sdm_id);
-              this.tabEvent.emit(response.data.sdm_id);
-              this.masukanPhoto(response.data.sdm_id);
-              // console.log(response.data. contracttype_id);
-              // console.log(response.data.sdm_id);
-              if(response.data.sdm_status == 1 && response.data.contracttype_id == 3){
-                 this.insertHiring(response.data.sdm_id, response.data.contracttype_id);
-              }else if(response.data.sdm_status == 0 && response.data.contracttype_id == 3){
-                this.insertHistori(response.data.sdm_id);
-              }
-            });
-            this._notif.success({
-            message: 'Save Successfuly'
-          });
+    const noKtp = this.action.getFormControlValue('sdm_ktp');
+    const email = this.action.getFormControlValue('sdm_email');
+    // validasi 
+    this._factory.http().get(
+      this._factory.api({
+        api : 'sdm/mengelolaSdm/readAll',
+        pagingParams : {
+          filter: Comparison.EQ('sdm_ktp', noKtp)
+        }
+      })
+    ).subscribe((res: any) => {
+      this.totalKtp = 0;
+      this.totalKtp = res.data.totalItems;
+      this._factory.http().get(
+        this._factory.api({
+          api : 'sdm/mengelolaSdm/readAll',
+          pagingParams : {
+            filter: Comparison.EQ('sdm_email', email)
           }
-          this.patchFoto();
-      } else {
-        this._notif.error({
-          message: 'file lebih dari 500kb!'
-        });
-      }
-
-    } else {
-      this._notif.error({
-        message: 'Anda belum mengupload foto!'
+        })
+      ).subscribe((res2: any) => {
+        this.totalEmail = 0;
+        this.totalEmail = res2.data.totalItems;
+        let startDate = new Date(this.action.getFormControlValue('sdm_startcontract'));
+        let endDate = new Date(this.action.getFormControlValue('sdm_endcontract'));
+        if(this.totalKtp < 1 && this.totalEmail < 1) {
+          if (this.uploaderFoto.queue[0]) {
+            if(this.uploaderFoto.queue[0].file.size < 500000) {
+              if(startDate > endDate) {
+                this._notif.error({
+                  message: 'start contract > dari akhir contract!'
+                  });
+                } else {
+                  const postAPI = this._factory.api({
+                    api: 'sdm/mengelolaSdm/create',
+                  });
+                  if (endDate < this.currentDate) {
+                      this.action.patchFormData({sdm_status : 0});
+                    } else {
+                      this.action.patchFormData({sdm_status : 1});
+                    }
+                  this._factory.http().post(postAPI, this.action.getFormData())
+                  .subscribe((response: any) => {
+                    // console.log(response.data.sdm_id);
+                    this.tabEvent.emit(response.data.sdm_id);
+                    this.masukanPhoto(response.data.sdm_id);
+                    // console.log(response.data. contracttype_id);
+                    // console.log(response.data.sdm_id);
+                    if (response.data.sdm_status == 1 && response.data.contracttype_id == 3) {
+                       this.insertHiring(response.data.sdm_id, response.data.contracttype_id);
+                    } else if (response.data.sdm_status == 0 && response.data.contracttype_id == 3) {
+                      this.insertHistori(response.data.sdm_id);
+                    }
+                  });
+                  this._notif.success({
+                  message: 'Save Successfuly'
+                });
+                }
+              this.patchFoto();
+            } else {
+              this._notif.error({
+                message: 'file lebih dari 500kb!'
+              });
+            }
+          } else {
+              this._notif.error({
+                message: 'Anda belum mengupload foto!'
+              });
+          }
+        } else {
+          this._notif.error({
+            message: 'Email atau No KTP sudah ada!'
+          });
+        }
       });
-    }
+  
+    });
   }
 
   // tslint:disable-next-line:variable-name
