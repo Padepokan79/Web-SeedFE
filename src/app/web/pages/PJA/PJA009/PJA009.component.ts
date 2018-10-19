@@ -36,10 +36,12 @@ export class PJA009Component implements OnInit {
   public methodId: number;
   public hirestatId: number;
   public sdmhiringId: number;
-  public disabled: boolean= false;
+  public disabled: boolean = false;
+  public currentDate: Date = new Date();
   private selectedId: number;
   private selectedHiringId: number;
   private selectedClientId: number;
+
 
   constructor(
     public _notif: DefaultNotificationService,
@@ -68,6 +70,12 @@ export class PJA009Component implements OnInit {
         client_name: '',
         method_id: '',
         method_name: '',
+
+        //psycological
+        sdmpsycological_desc: '',
+        psycological_date: '',
+        psyco_id: '',
+        
       }
       // validationMessages: {
       //   task_id: {
@@ -176,6 +184,22 @@ export class PJA009Component implements OnInit {
       });
     });
     console.log(insertAssign);
+    const urlpsycho = this._factory.api({
+      api: `sdm/sdmPsycological/create`
+    });
+
+    const insertPsychologi = [];
+    insertPsychologi.push({
+      sdmhiring_id: this.sdmhiringId,
+      sdm_id: this.sdmId,
+      
+    });
+    this.http.post(urlpsycho, { listpsychology : insertPsychologi }, httpOption)
+    .subscribe(() => {
+      this._notif.success({
+        message: 'You have successfully Insert'
+      });
+    });
    }
 
  }
