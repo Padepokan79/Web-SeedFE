@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActionService } from '../../../../core/services/uninjectable/action.service';
 import { InputForm } from '../../../../core/models/input-form';
@@ -53,7 +54,8 @@ export class PJA007Component implements OnInit {
   constructor(private _factory: CoreFactory,
               private router: Router,
               public _notif: DefaultNotificationService,
-              private _dialog: MatDialog) {
+              private _dialog: MatDialog,
+              private http: HttpClient) {
                 this.sdmCtrl = new FormControl();
                 this.filteredSdm = this.sdmCtrl.valueChanges
     .pipe(
@@ -193,46 +195,18 @@ export class PJA007Component implements OnInit {
     this.router.navigate(['pages/pja/PJA008', { idClient }]);
   }
 
-  public onReset(){
+  public onReset() {
     this.action.patchFormData({client_id : 1});
     this.onSearch();
   }
   public onSearch() {
-    this.dataTable = null;
+    this.dataTable.rows = null;
     const ClientId = this.action.getFormControlValue('client_id');
     this.selected = ClientId;
-    
-    this.dataTable = this._factory.dataTable({
-      serverSide : false,
-      pagingParams : {
-        limit : 10,
-        filter : Comparison.EQ('client_id', ClientId)
-      },
-      searchCriteria : [
-        { viewValue: 'Name', viewKey: 'sdm_name', type: TYPE.STRING},
-        { viewValue: 'Status', viewKey: 'hirestat_name', type: TYPE.STRING}
-      ],
-      tableColumns : [
-        { prop: 'norut', name: 'No', flexGrow: 1, sortable: false },
-        { prop: 'sdm_name', name: 'Name', flexGrow: 3, sortable: false },
-        { prop: 'sdm_phone', name: 'Contact', flexGrow: 3, sortable: false },
-        { prop: 'hirestat_name', name: 'Status', flexGrow: 3, sortable: true },
-        { prop: 'id', name: 'Action', flexGrow: 2,
-          cellTemplate: this.tableActionTemplate, sortable: false }
-      ]
+    this.http.get(this._factory.api({api: 'project/mengelolaHiring'}) + '/readAll?$filter=client_id=' + ClientId).subscribe((res: any) => {
+      console.log(res.data.items);
+      this.dataTable.rows = res.data.items;
     });
-
-    this.action = this._factory.actions({
-      api: 'project/mengelolaHiring',
-      inputForm: this.inputForm,
-      dataTable: this.dataTable
-    });
-
-    this.action.setPaginationFilter(
-      Comparison.EQ('client_id', ClientId)
-     );
-
-    this.action.refreshTable();
     const readAllApi = this._factory.api({
       api : 'project/MengelolaClient/readAll',
       pagingParams : {
@@ -243,7 +217,6 @@ export class PJA007Component implements OnInit {
         }
       }
     });
-
     this._factory.http().get(readAllApi).subscribe((res: any) => {
       // this.action.patchFormData(res.data.items[this.selected]);
       this.clientPic = res.data.items[0].client_picclient;
