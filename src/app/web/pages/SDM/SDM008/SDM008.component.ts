@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { TYPE, COMPARISON_OPERATOR, CONJUNCTION_OPERATOR } from './../../../../core/constant/constant';
 import { CoreFactory } from './../../../../core/factory/core.factory';
 import { DataTable } from './../../../../core/models/data-table';
@@ -42,6 +43,9 @@ export class SDM008Component implements OnInit {
   public KeyId: any;
   public SdmName: any;
 
+  public selected: string;
+  public lovClients: LOVService;
+
   public onKeySdmName(event: any) {
     this.KeyId = event.target.value;
     if (this.KeyId === '') {
@@ -53,7 +57,8 @@ export class SDM008Component implements OnInit {
   constructor(private _factory: CoreFactory,
               private router: Router,
               public _notif: DefaultNotificationService,
-              private _dialog: MatDialog) {
+              private _dialog: MatDialog,
+              private http: HttpClient) {
     this.sdmCtrl = new FormControl();
     this.filteredSdm = this.sdmCtrl.valueChanges
     .pipe(
@@ -70,6 +75,7 @@ export class SDM008Component implements OnInit {
       formControls: {
         sdm_id: '',
         sdm_name: '',
+        client_id: '',
       },
     });
 
@@ -107,9 +113,27 @@ export class SDM008Component implements OnInit {
         initializeData: true
     });
 
+    this.lovClients = this._factory.lov({
+      api: 'lov/clients',
+      pagingParams: {
+        orderby: 'client_name ASC',
+        filter: Comparison.NE('client_id', '1')
+      },
+      initializeData: true
+    });
+
     this.lovPsychologicals = this._factory.lov({
         api: 'lov/Psychologicals',
         initializeData: true
+    });
+  }
+
+  public onSelectClient() {
+    this.dataTable.rows = null;
+    const ClientId = this.action.getFormControlValue('client_id');
+    this.http.get(this._factory.api({api: 'sdm/SdmPsycological'}) + '/readAll?client_id=' + ClientId).subscribe((res: any) => {
+      console.log(res.data.items);
+      this.dataTable.rows = res.data.items;
     });
   }
 
@@ -170,5 +194,11 @@ export class SDM008Component implements OnInit {
           this.action.refreshTable();
         });
   }
+  public onReset(){
+    this.action.refreshTable();
+    this.action.patchFormData({ client_id : '' });
+  }
 
 }
+
+
