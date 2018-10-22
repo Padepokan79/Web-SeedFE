@@ -506,62 +506,70 @@ export class TabDatapribadiComponent implements OnInit {
   }
 
   public onUpdate() {
-
-    if(this.action.getFormControlValue('sdm_name')=='' || this.action.getFormControlValue('sdm_nik')=='' || this.action.getFormControlValue('sdm_ktp')=='' ||
-       this.action.getFormControlValue('sdm_datebirth')=='' || this.action.getFormControlValue('sdm_address')=='' || this.action.getFormControlValue('sdm_phone')=='' ||
-       this.action.getFormControlValue('religion_id')=='' || this.action.getFormControlValue('health_id')=='' || this.action.getFormControlValue('sdmlvl_id')=='' ||
-       this.action.getFormControlValue('contracttype_id')=='' || this.action.getFormControlValue('sdm_contractloc')=='' || this.action.getFormControlValue('sdm_startcontract')=='' ||
-       this.action.getFormControlValue('sdm_endcontract')==''){
-        this._notif.error({
-          message: 'Field required belum terpenuhi!'
-        });
-      } else {
-      let startDate = new Date(this.action.getFormControlValue('sdm_startcontract'));
-      let endDate = new Date(this.action.getFormControlValue('sdm_endcontract'));
-      if (startDate > endDate) {
-        this._notif.error({
-          message: 'start contract > dari akhir contract!'
-          });
-        } else {
-        if (this.uploaderFoto.queue[0]) {
-            if (this.uploaderFoto.queue[0].file.size < 500000) {
-            // tslint:disable-next-line:prefer-const
-            let token = 'bearer ' + JSON.parse((localStorage.getItem('loggedInUser')))['access_token'];
-            console.log(token);
-            // tslint:disable-next-line:prefer-const
-            let URL = this._factory.api ({
-              api: 'sdm/Upload/upload',
-              params: {
-                sdm_id: this.id
-              }
-            });
-            this.uploaderFoto.setOptions({ url: URL,
-                                              authToken: token,
-                                            authTokenHeader: 'authorization'});
-            this.uploaderFoto.onBuildItemForm = (item, form) => {
+    const noKtp = this.action.getFormControlValue('sdm_ktp');
+    const email = this.action.getFormControlValue('sdm_email');
+    // validasi 
+    this.http.get(this._factory.api({api: 'sdm/mengelolaSdm'}) + '/readAll?$filter=sdm_ktp=' + noKtp
+    + ' and  sdm_id!=' + this.id).subscribe((res: any) => {
+      this.totalKtp = 0;
+      this.totalKtp = res.data.totalItems;
+      this.http.get(this._factory.api({api: 'sdm/mengelolaSdm'}) + '/readAll?$filter=sdm_email=%27' + email
+      + '%27 and  sdm_id!=' + this.id).subscribe((res2: any) => {
+        this.totalEmail = 0;
+        this.totalEmail = res2.data.totalItems;
+        if (this.totalKtp < 1 && this.totalEmail < 1) {
+          let startDate = new Date(this.action.getFormControlValue('sdm_startcontract'));
+          let endDate = new Date(this.action.getFormControlValue('sdm_endcontract'));
+          if (startDate > endDate) {
+            this._notif.error({
+              message: 'start contract > dari akhir contract!'
+              });
+            } else {
+            if (this.uploaderFoto.queue[0]) {
+                if (this.uploaderFoto.queue[0].file.size < 500000) {
                 // tslint:disable-next-line:prefer-const
-                let fileName = this.action.getFormControlValue('sdm_name') + '.'
-                              + item._file.type.replace('image/', '');
-                item.file.name = fileName.replace(' ', '_');
-              };
-            this.uploaderFoto.uploadAll();
-            this.uploaderFoto.onSuccessItem = (item, response, status, headers) => {
-                  this.action.patchFormData({sdm_image : item.file.name});
-                  this.test++;
-                  this.masukanPhotoEdit();
-              };
-              this.patchFoto();
-              } else {
-                this._notif.error({
-                  message: 'File tidak boleh melebihi 500kb'
+                let token = 'bearer ' + JSON.parse((localStorage.getItem('loggedInUser')))['access_token'];
+                console.log(token);
+                // tslint:disable-next-line:prefer-const
+                let URL = this._factory.api ({
+                  api: 'sdm/Upload/upload',
+                  params: {
+                    sdm_id: this.id
+                  }
                 });
+                this.uploaderFoto.setOptions({ url: URL,
+                                                  authToken: token,
+                                                authTokenHeader: 'authorization'});
+                this.uploaderFoto.onBuildItemForm = (item, form) => {
+                    // tslint:disable-next-line:prefer-const
+                    let fileName = this.action.getFormControlValue('sdm_name') + '.'
+                                  + item._file.type.replace('image/', '');
+                    item.file.name = fileName.replace(' ', '_');
+                  };
+                this.uploaderFoto.uploadAll();
+                this.uploaderFoto.onSuccessItem = (item, response, status, headers) => {
+                      this.action.patchFormData({sdm_image : item.file.name});
+                      this.test++;
+                      this.masukanPhotoEdit();
+                  };
+                  this.patchFoto();
+                  } else {
+                    this._notif.error({
+                      message: 'File tidak boleh melebihi 500kb'
+                    });
+                }
+              } else {
+                this.masukanPhotoEdit();
+                this.patchFoto();
+              }
             }
-          } else {
-            this.masukanPhotoEdit();
-            this.patchFoto();
-          }
+       } else {
+          this._notif.error({
+            message: 'Email atau No KTP sudah ada!'
+          });
         }
-    }
+      });
+    });
   }
 
   public handleFileInput(event) {
