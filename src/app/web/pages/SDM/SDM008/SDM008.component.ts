@@ -39,7 +39,7 @@ export class SDM008Component implements OnInit {
   public filteredSdm: any;
   public sdmCtrl: FormControl;
 
-  // Hapus
+  // Delete
   public KeyId: any;
   public SdmName: any;
 
