@@ -145,7 +145,7 @@
         <td>
             <div class="example-container">
             <mat-form-field class="sdw-full-size">
-                <input matInput placeholder="" formControlName="sdm_email" name="sdm_email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
+                <input matInput placeholder="" formControlName="sdm_email" name="sdm_email" pattern="^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
                 <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
             </mat-form-field>
             </div>
@@ -310,7 +310,7 @@
     <!-- <div class="col-md-3" *ngIf=" form == 2 ">
         <io-form-action [action]="action"></io-form-action>
     </div> -->
-    <div style="margin-bottom:16px; margin-left:700px;">
+    <div style="margin-bottom:16px; float: right;">
       <button mat-flat-button class="btn-new btn-ww" (click)="onSave()" *ngIf=" form == 1 " [disabled]="action?.formControls()?.invalid || action?.formControls()?.pristine">
         <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Save</button>
       <!-- <button mat-flat-button class="btn-new btn-ww" (click)="onUpdate()" *ngIf=" form == 2 " [disabled]="action?.formControls()?.pristine || action?.getFormControlValue('sdm_name')=='' || action?.getFormControlValue('sdm_nik')=='' || action?.getFormControlValue('sdm_ktp')=='' || action?.getFormControlValue('sdm_datebirth')=='' || action?.getFormControlValue('sdm_address')=='' || action?.getFormControlValue('sdm_phone')=='' || action?.getFormControlValue('religion_id')=='' || action?.getFormControlValue('health_id')=='' || action?.getFormControlValue('sdmlvl_id')=='' || action?.getFormControlValue('contracttype_id')=='' || action?.getFormControlValue('sdm_contractloc')=='' || action?.getFormControlValue('sdm_startcontract')=='' || action?.getFormControlValue('sdm_endcontract')=='' || action?.getFormControlValue('sdm_email')==''">
