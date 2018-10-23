@@ -96,7 +96,9 @@ export class PJA004Component implements OnInit {
         })
         .afterClosed()
         .subscribe((data: any) => {
-          this.onEksekusi(id);
+          if (data) {
+            this.onEksekusi(id);
+          }
           this.action.refreshTable();
         });
   }

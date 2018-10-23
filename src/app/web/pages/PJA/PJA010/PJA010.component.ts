@@ -231,7 +231,9 @@ public onDelete(id, deleteMassage: string = 'Are you sure to delete?') {
       })
       .afterClosed()
       .subscribe((data: any) => {
-        this.onEksekusi(id);
+        if (data) {
+          this.onEksekusi(id);
+        }
         this.action.refreshTable();
       });
 }
