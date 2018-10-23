@@ -110,7 +110,7 @@
         <button mat-raised-button style="margin: 10px 0px" (click)="validasiTahun()" *ngIf=" form == 2 ">Update</button>
         <button mat-raised-button style="margin: 10px 0px" (click)="action.onReset()">Reset</button>
     </div> -->
-    <div style="margin-bottom:16px; margin-left:825px">
+    <div style="margin-bottom:16px; float:right">
             <button mat-flat-button class="btn-new btn-mm" (click)="validasiTahun()" *ngIf=" form == 1 " [disabled]="action?.formControls()?.invalid || action?.formControls()?.pristine">
                 <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> {{action.buttonTitle}}</button>
             <button mat-flat-button class="btn-new btn-mm" (click)="validasiTahun()" *ngIf=" form == 2 " [disabled]="action?.formControls()?.invalid || action?.formControls()?.pristine">
@@ -121,7 +121,7 @@
 
 
 </form>
-
+<br><br>
 <div>
     <io-table *ngIf="action?.table()" [action]="action" style="margin-top:20px;text-align: left;">
         <div class="io-table-header">
