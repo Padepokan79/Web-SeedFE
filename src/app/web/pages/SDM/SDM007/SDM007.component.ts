@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { TYPE, COMPARISON_OPERATOR, CONJUNCTION_OPERATOR } from 'app/core/constant/constant';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActionService } from '../../../../core/services/uninjectable/action.service';
@@ -41,7 +42,8 @@ export class SDM007Component implements OnInit {
     public _notif: DefaultNotificationService,
     private _factory: CoreFactory,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private http: HttpClient
   ) {
     this.route.params.subscribe((param) => {
       this.selectedId = param.id;
@@ -91,22 +93,21 @@ export class SDM007Component implements OnInit {
         initializeData: true
     });
 
-    const readAllApi = this._factory.api ({
-      api: 'sdm/sdmPsycological/readAll',
-      pagingParams : {
-        filter : {
-          field : 'sdmpsycological_id',
-          operator : COMPARISON_OPERATOR.EQ,
-          value : this.selectedId
-        }
-      }
-    });
+    // const readAllApi = this._factory.api ({
+    //   api: 'sdm/sdmPsycological/readAll' + '?sdmpsylogical_id=' + this.selectedId,
+    // });
 
-    this._factory.http().get(readAllApi).subscribe((res: any) => {
-      // console.log(res);
+    // this._factory.http().get(readAllApi).subscribe((res: any) => {
+    //   // console.log(res);
+    //   this.action.patchFormData(res.data.items[0]);
+    //   this.sdmName = res.data.items[0].sdm_name;
+    // });
+    this.http.get(this._factory.api({api: 'sdm/sdmPsycological/readAll'}) + '?sdmpsycological_id=' + this.selectedId).subscribe((res: any) => {
+      console.log(res.data.items);
       this.action.patchFormData(res.data.items[0]);
       this.sdmName = res.data.items[0].sdm_name;
     });
+    console.log(this.action.getFormData());
   }
 
   public onUpdate() {
@@ -116,7 +117,8 @@ export class SDM007Component implements OnInit {
       //   client_id : this.selectedId
       // }
     });
-
+    console.log('update ' + this.action.getFormControlValue('psycological_date'));
+    console.log(this.action.getFormData());
     // tslint:disable-next-line:no-empty
     this._factory.http().put(updateAPI + '?sdmpsycological_id=' + this.selectedId, this.action.getFormData()).subscribe((response: any) => {
       this._notif.success({
