@@ -39,7 +39,7 @@ export class SDM008Component implements OnInit {
   public filteredSdm: any;
   public sdmCtrl: FormControl;
 
-  // Hapus
+  // Delete
   public KeyId: any;
   public SdmName: any;
 
@@ -190,11 +190,13 @@ export class SDM008Component implements OnInit {
         })
         .afterClosed()
         .subscribe((data: any) => {
-          this.onEksekusi(id);
+          if (data) {
+            this.onEksekusi(id);
+          }
           this.action.refreshTable();
         });
   }
-  public onReset(){
+  public onReset() {
     this.action.refreshTable();
     this.action.patchFormData({ client_id : '' });
   }
