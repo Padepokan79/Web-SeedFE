@@ -82,6 +82,9 @@ export class TabDatapribadiComponent implements OnInit {
   public totalKtp: number;
   public totalEmail: number;
 
+  public checkedBank = false;
+  public checkedNbank = false;
+  public BankVal: number = 0;
   numberOnly(event): boolean {
     const charCode = (event.which) ? event.which : event.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
@@ -144,7 +147,8 @@ export class TabDatapribadiComponent implements OnInit {
           posisi: '',
 
           client_id: '1',
-          hirestat_id: '4'
+          hirestat_id: '4',
+          sdm_status_bank: '',
         },
         validationMessages: {
           sdm_name: {
@@ -223,10 +227,27 @@ export class TabDatapribadiComponent implements OnInit {
               this.statusContract.push(respon.data[0]);
             }
           });
+          // console.log('status bank : ' + res.data.items[0].sdm_status_bank);
+          // if (res.data.items[0].sdm_status_bank == 1) {
+          //   this.checkedBank = true;
+          //   this.checkedNbank = false;
+          // } else if (res.data.items[0].sdm_status_bank == 2) {
+          //   this.checkedBank = false;
+          //   this.checkedNbank = true;
+          // } else if (res.data.items[0].sdm_status_bank == 3) {
+          //   this.checkedBank = true;
+          //   this.checkedNbank = true;
+          // }
+          const nikPrev = res.data.items[0].sdm_nik.toString().substr(0, 2);
+          console.log('ini niknya : ' + nikPrev);
+          if (nikPrev === '02') {
+            this.action.patchFormData({ posisi : '02' });
+          } else {
+            this.action.patchFormData({ posisi : '01' });
+          }
         });
         this.patchFoto();
       }
-
   }
 
   public patchFoto(){
@@ -290,30 +311,36 @@ export class TabDatapribadiComponent implements OnInit {
                   message: 'start contract > dari akhir contract!'
                   });
                 } else {
-                  const postAPI = this._factory.api({
-                    api: 'sdm/mengelolaSdm/create',
+                  if (this.action.getFormControlValue('sdm_status_bank') == 0) {
+                    this._notif.error({
+                      message : 'status penempatan kosong!'
+                    });
+                  } else {
+                    const postAPI = this._factory.api({
+                      api: 'sdm/mengelolaSdm/create',
+                    });
+                    if (endDate < this.currentDate) {
+                        this.action.patchFormData({sdm_status : 0});
+                      } else {
+                        this.action.patchFormData({sdm_status : 1});
+                      }
+                    this._factory.http().post(postAPI, this.action.getFormData())
+                    .subscribe((response: any) => {
+                      // console.log(response.data.sdm_id);
+                      this.tabEvent.emit(response.data.sdm_id);
+                      this.masukanPhoto(response.data.sdm_id);
+                      // console.log(response.data. contracttype_id);
+                      // console.log(response.data.sdm_id);
+                      if (response.data.sdm_status == 1 && response.data.contracttype_id == 3) {
+                         this.insertHiring(response.data.sdm_id, response.data.contracttype_id);
+                      } else if (response.data.sdm_status == 0 && response.data.contracttype_id == 3) {
+                        this.insertHistori(response.data.sdm_id);
+                      }
+                    });
+                    this._notif.success({
+                    message: 'Save Successfuly'
                   });
-                  if (endDate < this.currentDate) {
-                      this.action.patchFormData({sdm_status : 0});
-                    } else {
-                      this.action.patchFormData({sdm_status : 1});
-                    }
-                  this._factory.http().post(postAPI, this.action.getFormData())
-                  .subscribe((response: any) => {
-                    // console.log(response.data.sdm_id);
-                    this.tabEvent.emit(response.data.sdm_id);
-                    this.masukanPhoto(response.data.sdm_id);
-                    // console.log(response.data. contracttype_id);
-                    // console.log(response.data.sdm_id);
-                    if (response.data.sdm_status == 1 && response.data.contracttype_id == 3) {
-                       this.insertHiring(response.data.sdm_id, response.data.contracttype_id);
-                    } else if (response.data.sdm_status == 0 && response.data.contracttype_id == 3) {
-                      this.insertHistori(response.data.sdm_id);
-                    }
-                  });
-                  this._notif.success({
-                  message: 'Save Successfuly'
-                });
+                  }
                 }
               this.patchFoto();
             } else {
@@ -662,4 +689,20 @@ export class TabDatapribadiComponent implements OnInit {
     });
     console.log('masuk pak Eko');
   }
+
+  // public checkChangeBank() {
+  //   if (this.checkedBank === true && this.checkedNbank === false) {
+  //     this.BankVal = 1;
+  //   } else if (this.checkedBank === false && this.checkedNbank === true) {
+  //     this.BankVal = 2;
+  //   } else if (this.checkedBank === true && this.checkedNbank === true) {
+  //     this.BankVal = 3;
+  //   } else {
+  //     this.BankVal = 0;
+  //   }
+  //   this.action.patchFormData({ sdm_status_bank : this.BankVal });
+  //   this._notif.success({
+  //     message : this.BankVal.toString()
+  //   });
+  // }
 }
