@@ -53,7 +53,7 @@ Modified   : 10-08-2018 by Vikri Ramdhani -->
                     <input matInput type="number" min="1" max="10"  placeholder="Value" [(ngModel)]="searchCriteria.sdmskillValue" name="sdmskill_value{{inc}}" class="blacky" required>
                   </mat-form-field>
                 </div>
-                <div class="col-sm-1">
+                <div class="col-sm-1" style="z-index: 1">
                   <button class="btn btn-primary btn-sm" *ngIf="inc==0" (click)="addSearchCriteria()"><i class="fa fa-plus"></i></button>
                   <button class="btn btn-warning btn-sm" *ngIf="inc>0" (click)="removeSearchCriteria(inc,1)"><i class="fa fa-minus"></i></button>
                 </div>

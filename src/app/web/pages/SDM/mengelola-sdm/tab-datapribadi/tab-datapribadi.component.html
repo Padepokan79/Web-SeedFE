@@ -255,9 +255,19 @@
             </mat-radio-group>
         </td>
     </tr>
-
+    <!-- STATUS PENEMPATAN<br> -->
+    <!-- <tr>
+        <td>Status Penempatan <span style="color:red">*</span></td>
+        <td>:</td>
+        <td>
+            <section formControlName="sdm_status_bank" name="sdm_status_bank">
+                <mat-checkbox [(ngModel)]="checkedBank" [ngModelOptions]="{standalone: true}" (change)="checkChangeBank()" >Bank</mat-checkbox>
+                <mat-checkbox [(ngModel)]="checkedNbank" [ngModelOptions]="{standalone: true}" (change)="checkChangeBank()" style="margin-left:25px">Non-Bank</mat-checkbox>
+            </section>
+        </td>
+    </tr> -->
     <!-- AWAL KONTRAK -->
-    <tr>
+    <tr *ngIf="form==1">
         <td>Awal Kontrak<span style="color: red">*</span></td>
         <td>:</td>
         <td>
@@ -265,6 +275,18 @@
                 <input matInput [readonly]="true" [matDatepicker]="pickerStartDate" (click)="pickerStartDate.open();" placeholder="" formControlName="sdm_startcontract" required>
                 <mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
                 <mat-datepicker (selectedChanged)="posisiStatus()" #pickerStartDate></mat-datepicker>
+                </mat-form-field>
+        </td>
+    </tr>
+
+    <tr *ngIf="form==2">
+        <td>Awal Kontrak<span style="color: red">*</span></td>
+        <td>:</td>
+        <td>
+            <mat-form-field class="sdw-full-size">
+                <input matInput [readonly]="true" [matDatepicker]="pickerStartDate" (click)="pickerStartDate.open();" placeholder="" formControlName="sdm_startcontract" required>
+                <mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
+                <mat-datepicker #pickerStartDate></mat-datepicker>
                 </mat-form-field>
         </td>
     </tr>
@@ -294,7 +316,7 @@
         </td>
     </tr>
 
-    <tr *ngIf="editDev < 8">
+    <tr>
         <td style="padding: 10px; padding-left: 0px;">Posisi <span style="color: red">*</span></td>
         <td style="padding: 10px;"> </td>
         <td style="padding: 10px;">
