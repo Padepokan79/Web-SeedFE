@@ -191,15 +191,16 @@ export class PJA009Component implements OnInit {
     const insertPsychologi = [];
     insertPsychologi.push({
       sdmhiring_id: this.sdmhiringId,
-      sdm_id: this.sdmId,
-      
+      sdm_id: this.sdmId, 
     });
-    this.http.post(urlpsycho, { listpsychology : insertPsychologi }, httpOption)
+    if ( this.action.getFormControlValue('client_id') != 1) {
+      this.http.post(urlpsycho, { listpsychology : insertPsychologi }, httpOption)
     .subscribe(() => {
       this._notif.success({
         message: 'You have successfully Insert'
       });
     });
+    }
    }
 
  }
