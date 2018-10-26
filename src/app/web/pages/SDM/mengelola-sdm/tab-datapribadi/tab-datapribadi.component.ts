@@ -311,11 +311,12 @@ export class TabDatapribadiComponent implements OnInit {
                   message: 'start contract > dari akhir contract!'
                   });
                 } else {
-                  if (this.action.getFormControlValue('sdm_status_bank') == 0) {
-                    this._notif.error({
-                      message : 'status penempatan kosong!'
-                    });
-                  } else {
+                  //digunakan untuk validasi bank/non-bank
+                  // if (this.action.getFormControlValue('sdm_status_bank') == 0) {
+                  //   this._notif.error({
+                  //     message : 'status penempatan bank kosong!'
+                  //   });
+                  // } else {
                     const postAPI = this._factory.api({
                       api: 'sdm/mengelolaSdm/create',
                     });
@@ -340,7 +341,7 @@ export class TabDatapribadiComponent implements OnInit {
                     this._notif.success({
                     message: 'Save Successfuly'
                   });
-                  }
+                  // }
                 }
               this.patchFoto();
             } else {

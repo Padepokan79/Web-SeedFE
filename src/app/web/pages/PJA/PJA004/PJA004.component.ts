@@ -99,7 +99,8 @@ export class PJA004Component implements OnInit {
           if (data) {
             this.onEksekusi(id);
           }
-          this.action.refreshTable();
+          this.ngOnInit();
         });
+   
   }
 }
