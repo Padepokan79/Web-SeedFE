@@ -248,7 +248,6 @@ export class PJA007Component implements OnInit {
       });
     this.ambilData();
     this.onSearch();
-    this.action.refreshTable();
   }
 
   public onDelete(id, deleteMassage: string = 'Are you sure to delete?') {
