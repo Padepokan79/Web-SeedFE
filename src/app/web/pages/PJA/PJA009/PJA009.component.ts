@@ -154,7 +154,7 @@ export class PJA009Component implements OnInit {
     console.log(this.hirestatId);
     this._factory.http().put(updateAPI + '?sdmhiring_id=' + this.selectedHiringId + '&hirestat_id=' + this.hirestatId + '&client_id=' + this.clientIds, this.action.getFormData()).subscribe((response: any) => {
     this._notif.success({
-      message: 'Update Data Berhasil'
+      message: 'Update Data Berhasil boy'
     });
     setTimeout(() => this.router.navigate(['pages/pja/PJA007']), 1000);
    });
@@ -206,7 +206,7 @@ export class PJA009Component implements OnInit {
  }
   public lovStatus(){
     console.log("ini client id : " + this.selectedClientId);
-    if(this.selectedClientId == 1){
+    if(this.selectedClientId == 0){
       this.lovHiring = this._factory.lov({
         api: 'lov/StatusHiring',
         initializeData: true
