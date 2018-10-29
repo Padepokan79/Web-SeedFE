@@ -190,6 +190,15 @@
             <p>{{ action?.formControls().controls['sdm_endcontract'].value }}</p>
         </td>
     </tr>
+
+    <tr class="tr-height">
+        <td><p>Posisi</p></td>
+        <td><p>:</p></td>
+        <td>
+            <p>{{ this.teknis.substr(0, 2) == '02' ? 'Teknis (Software Develover)' : 'Non-Teknis'}}</p>
+        </td>
+    </tr>
+
     </table>
     </div>
     

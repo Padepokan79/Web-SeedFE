@@ -32,7 +32,8 @@ export class TabDetailDataPribadiComponent implements OnInit {
 
   public action: ActionService;
   public inputForm: InputForm;
-
+  public teknis: string;
+  public teknon: string;
   public lovReligion: LOVService;
   public lovHealth: LOVService;
   public lovLevel: LOVService;
@@ -146,6 +147,10 @@ export class TabDetailDataPribadiComponent implements OnInit {
       }
       // this.pathFoto = this._factory.config().staticResourceFullPath(res.data.items[0].sdm_image);
       console.log(this.pathFoto + ' ini path foto');
+      this.teknis = res.data.items[0].sdm_nik;
+      if (this.teknis === '-') {
+        this.teknis = '000000000';
+      }
     });
   }
 
