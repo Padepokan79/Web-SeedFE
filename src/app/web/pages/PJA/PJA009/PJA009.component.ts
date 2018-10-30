@@ -38,6 +38,8 @@ export class PJA009Component implements OnInit {
   public sdmhiringId: number;
   public disabled: boolean = false;
   public currentDate: Date = new Date();
+  public click: number = 0;
+  public cekStat: boolean = true;
   private selectedId: number;
   private selectedHiringId: number;
   private selectedClientId: number;
@@ -71,11 +73,9 @@ export class PJA009Component implements OnInit {
         method_id: '',
         method_name: '',
 
-        //psycological
         sdmpsycological_desc: '',
         psycological_date: '',
         psyco_id: '',
-        
       }
       // validationMessages: {
       //   task_id: {
@@ -116,12 +116,11 @@ export class PJA009Component implements OnInit {
         }
       }
     });
-    
-    
+
     this._factory.http().get(readAllApi).subscribe((res: any) => {
       console.log(res.data.items.length);
 
-      for ( var index = 0; index < res.data.items.length; index++){
+      for ( var index = 0; index < res.data.items.length; index++) {
         if(res.data.items[index].hirestat_id == 4 && res.data.items[index].client_id != 1){
           this.disabled = true;
         } 
@@ -138,10 +137,10 @@ export class PJA009Component implements OnInit {
           this.methodId = res.data.items[index].method_id;
           this.sdmhiringId = res.data.items[index].sdmhiring_id;
           this.hirestatId = res.data.items[index].hirestat_id;  
+
         }
 
       }
-      
 
     });
     this.lovStatus();
@@ -154,7 +153,7 @@ export class PJA009Component implements OnInit {
     console.log(this.hirestatId);
     this._factory.http().put(updateAPI + '?sdmhiring_id=' + this.selectedHiringId + '&hirestat_id=' + this.hirestatId + '&client_id=' + this.clientIds, this.action.getFormData()).subscribe((response: any) => {
     this._notif.success({
-      message: 'Update Data Berhasil boy'
+      message: 'Update Data Berhasil'
     });
     setTimeout(() => this.router.navigate(['pages/pja/PJA007']), 1000);
    });
@@ -191,7 +190,7 @@ export class PJA009Component implements OnInit {
     const insertPsychologi = [];
     insertPsychologi.push({
       sdmhiring_id: this.sdmhiringId,
-      sdm_id: this.sdmId, 
+      sdm_id: this.sdmId,
     });
     if ( this.action.getFormControlValue('client_id') != 1) {
       this.http.post(urlpsycho, { listpsychology : insertPsychologi }, httpOption)
@@ -204,25 +203,48 @@ export class PJA009Component implements OnInit {
    }
 
  }
-  public lovStatus(){
+  public lovStatus() {
+    this.click = this.click + 1;
     console.log("ini client id : " + this.selectedClientId);
-    if(this.selectedClientId == 0){
+    if (this.selectedClientId == 0){
       this.lovHiring = this._factory.lov({
         api: 'lov/StatusHiring',
         initializeData: true
     });
-    }else{
+    } else if (this.click >= 2 ) {
       this.lovHiring = this._factory.lov({
         api: 'lov/StatusHiring',
         pagingParams : {
           filter : {
             field : 'hirestat_id',
             operator : COMPARISON_OPERATOR.LE,
-            value : 9
+            value : 8
           }
         },
         initializeData: true
     });
+    } else {
+      this.lovHiring = this._factory.lov({
+        api: 'lov/StatusHiring',
+        // pagingParams : {
+        //   filter : {
+        //     field : 'hirestat_id',
+        //     operator : COMPARISON_OPERATOR.LE,
+        //     value : 8
+        //   }
+        // },
+        initializeData: true
+    });
     }
+    console.log('hello' + this.click);
+  }
+
+  public cekData() {
+    if (this.cekStat == true) {
+      this.cekStat = false;
+    } else {
+      this.cekStat = true;
+    }
+    console.log(this.cekStat);
   }
 }

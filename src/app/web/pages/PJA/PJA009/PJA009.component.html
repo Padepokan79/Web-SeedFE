@@ -48,9 +48,9 @@
             </td>
             <td style="width: 44%; margin-right: 10%; margin-bottom: 20%">
               <mat-form-field class="inputan" id="nx-td-l">
-                <mat-select placeholder="" formControlName="hirestat_id" name="hirestat_id" [(ngModel)]="hirestatId">
+                <mat-select placeholder="" formControlName="hirestat_id" name="hirestat_id" [(ngModel)]="hirestatId" (click)="lovStatus();cekData()" (blur)="cekData()" >
                   <mat-option *ngFor="let lov of lovHiring.data" [value]="lov.key">
-                    {{lov.value}}
+                   {{lov.value}}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
