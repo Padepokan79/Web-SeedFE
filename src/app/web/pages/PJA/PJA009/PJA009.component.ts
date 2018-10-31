@@ -155,7 +155,7 @@ export class PJA009Component implements OnInit {
     this._notif.success({
       message: 'Update Data Berhasil'
     });
-    setTimeout(() => this.router.navigate(['pages/pja/PJA007']), 1000);
+    setTimeout(() => this.navigateBack(this.selectedClientId), 1000);
    });
 
     this.hirestatId = this.action.getFormData().hirestat_id;
@@ -246,5 +246,9 @@ export class PJA009Component implements OnInit {
       this.cekStat = true;
     }
     console.log(this.cekStat);
+  }
+
+  public navigateBack(cId) {
+    this.router.navigate(['/pages/pja/PJA007', { cId }]);
   }
 }

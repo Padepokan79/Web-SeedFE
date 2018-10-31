@@ -6,7 +6,7 @@ import { DataTable } from '../../../../core/models/data-table';
 import { LOVService } from '../../../../core/services/uninjectable/lov.service';
 import { CoreFactory } from '../../../../core/factory/core.factory';
 import { TYPE, COMPARISON_OPERATOR } from '../../../../core/constant/constant';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Comparison } from '../../../../core/enums/comparison-operator.enum';
 import { Conjunction } from '../../../../core/enums/conjunction-operator.enum';
 import { DefaultNotificationService } from '../../../../core/services/default-notification.service';
@@ -37,7 +37,7 @@ export class PJA007Component implements OnInit {
   public lovClients: LOVService;
   public clientPic: string;
   public clientMobile: string;
-  public btnDisabled: boolean = true;
+  public btnDisabled: boolean;
   public selected: number;
   public filteredSdm: any;
   public sdmCtrl: FormControl;
@@ -51,17 +51,37 @@ export class PJA007Component implements OnInit {
   public searchBy: string;
   public searchCheck: boolean;
 
+  public onInitID: string;
+
   constructor(private _factory: CoreFactory,
               private router: Router,
               public _notif: DefaultNotificationService,
               private _dialog: MatDialog,
-              private http: HttpClient) {
+              private http: HttpClient,
+              private route: ActivatedRoute) {
                 this.sdmCtrl = new FormControl();
                 this.filteredSdm = this.sdmCtrl.valueChanges
-    .pipe(
-      startWith(''),
-      map((value) => this.filterSdm(value))
-    );
+                .pipe(
+                  startWith(''),
+                  map((value) => this.filterSdm(value))
+                );
+                this.route.params.subscribe((param) => {
+                  if (param) {
+                    console.log('masuk param');
+                    if (param.cId == null) {
+                      console.log('param cid null');
+                      this.onInitID = '1';
+                      console.log(this.onInitID);
+                      this.selected = Number(this.onInitID);
+                      this.btnDisabled = true;
+                    } else {
+                      this.onInitID = param.cId;
+                      console.log(this.onInitID);
+                      this.selected = Number(this.onInitID);
+                      this.btnDisabled = false;
+                    }
+                  }
+              });
               }
   public refreshTabel() {
     this.action.refreshTable();
@@ -95,7 +115,7 @@ export class PJA007Component implements OnInit {
       serverSide : false,
       pagingParams : {
         limit : 10,
-        filter : Comparison.EQ('client_id', '1')
+        filter : Comparison.EQ('client_id', this.onInitID)
       },
       searchCriteria : [
         { viewValue: 'Name', viewKey: 'sdm_name', type: TYPE.STRING},
@@ -139,12 +159,12 @@ export class PJA007Component implements OnInit {
       this._factory.api({
         api : 'project/MengelolaClient/readAll',
         pagingParams : {
-          filter: Comparison.EQ('client_id', '1')
+          filter: Comparison.EQ('client_id', this.onInitID)
         }
       })
     ).subscribe((res: any) => {
       // this.action.patchFormData(res.data.items[this.selected]);
-      this.selected = 1;
+      this.selected = Number(this.onInitID) ;
       this.clientPic = res.data.items[0].client_picclient;
       this.clientMobile = res.data.items[0].client_mobileclient;
     });

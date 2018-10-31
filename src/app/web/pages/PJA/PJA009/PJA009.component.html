@@ -62,7 +62,7 @@
             <td></td>
             <td class="nx-button-range">
               <button mat-raised-button class="action-btn nx-save-button" (click)="onUpdate()" [disabled]="disabled">Update</button>
-              <button mat-raised-button class="action-btn nx-cancel-button" [routerLink]="['/pages/pja/PJA007']">Cancel</button>  
+              <button mat-raised-button class="action-btn nx-cancel-button" (click)="navigateBack(selectedClientId)">Cancel</button>  
             </td>
           </tr>
 
