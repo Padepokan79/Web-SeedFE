@@ -1,3 +1,4 @@
+import { Comparison } from 'app/core/enums/comparison-operator.enum';
 import { TYPE, CONJUNCTION_OPERATOR, COMPARISON_OPERATOR } from '../../../../core/constant/constant';
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { ActionService } from '../../../../core/services/uninjectable/action.service';
@@ -8,7 +9,6 @@ import { LOVService } from '../../../../core/services/uninjectable/lov.service';
 import { Session } from '../../../../core/utils/session';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Conjunction } from '../../../../core/enums/conjunction-operator.enum';
-import { Comparison } from '../../../../core/enums/comparison-operator.enum';
 import { ConfirmDialogsComponent } from '../../../../core/components/confirm-dialogs/confirm-dialogs.component';
 import { DefaultNotificationService } from '../../../../core/services/default-notification.service';
 import { MatDialog } from '@angular/material';
@@ -37,7 +37,9 @@ export class PJA010Component implements OnInit {
   public clientPic: string;
   public clientMobile: string;
   public btnDisabled: boolean = true;
+  public onInitID: string;
   private selected: number;
+
   // public dataRow: any;
   // public lovUser: LOVService;
 
@@ -47,7 +49,18 @@ export class PJA010Component implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private _dialog: MatDialog
-  ) { }
+  ) { 
+    this.route.params.subscribe((param) => {
+      if (param.cId == null) {
+        this.onInitID = '';
+      } else if (param.cId == 0) {
+        this.onInitID = '';
+      } else {
+        this.onInitID = param.cId;
+        this.selected = param.cId;
+      }
+    });
+  }
   public ngOnInit() {
 
     this.inputForm = this._factory.inputForm({
@@ -76,32 +89,62 @@ export class PJA010Component implements OnInit {
       // }
     });
 
-    // First Data Table Initialization
-    this.dataTable = this._factory.dataTable({
-      serverSide : false,
-      pagingParams : {
-        limit : 10
-      },
-      searchCriteria : [
-        { viewValue: 'Name', viewKey: 'sdm_name', type: TYPE.STRING },
-        { viewValue: 'PIC Handler', viewKey: 'sdmassign_picclient', type: TYPE.STRING }
-      ],
-      tableColumns : [
-        { prop: 'norut', name: 'No', flexGrow: 1, sortable: false },
-        { prop: 'sdm_name', name: 'Name', flexGrow: 3, sortable: false },
-        { prop: 'sdm_phone', name: 'Contact', flexGrow: 2, sortable: false },
-        { prop: 'sdmassign_startdate', name: 'Start', flexGrow: 2, sortable: false },
-        { prop: 'sdmassign_enddate', name: 'End', flexGrow: 2, sortable: false },
-        { prop: 'sdmassign_loc', name: 'Location', flexGrow: 2, sortable: false },
-        { prop: 'sdmassign_picclient', name: 'PIC Handler', flexGrow: 2, sortable: false },
-        { prop: 'sdmassign_picclientphone', name: 'PIC Contact', flexGrow: 3, sortable: false },
-        { prop: 'method_name', name: 'Method', flexGrow: 2, sortable: false },
-        { prop: 'sdmassign_notification', name: 'Notification Assignment', flexGrow: 3,
-          cellTemplate: this.notif, sortable: false },
-        { prop: 'sdmassign_id', name: 'Action', flexGrow: 2,
-          cellTemplate: this.tableActionTemplate, sortable: false }
-      ]
-    });
+    // First Data Table Initialization\
+    if (this.onInitID == '') {
+      this.dataTable = this._factory.dataTable({
+        serverSide : false,
+        pagingParams : {
+          limit : 10
+        },
+        searchCriteria : [
+          { viewValue: 'Name', viewKey: 'sdm_name', type: TYPE.STRING },
+          { viewValue: 'PIC Handler', viewKey: 'sdmassign_picclient', type: TYPE.STRING }
+        ],
+        tableColumns : [
+          { prop: 'norut', name: 'No', flexGrow: 1, sortable: false },
+          { prop: 'sdm_name', name: 'Name', flexGrow: 3, sortable: false },
+          { prop: 'sdm_phone', name: 'Contact', flexGrow: 2, sortable: false },
+          { prop: 'sdmassign_startdate', name: 'Start', flexGrow: 2, sortable: false },
+          { prop: 'sdmassign_enddate', name: 'End', flexGrow: 2, sortable: false },
+          { prop: 'sdmassign_loc', name: 'Location', flexGrow: 2, sortable: false },
+          { prop: 'sdmassign_picclient', name: 'PIC Handler', flexGrow: 2, sortable: false },
+          { prop: 'sdmassign_picclientphone', name: 'PIC Contact', flexGrow: 3, sortable: false },
+          { prop: 'method_name', name: 'Method', flexGrow: 2, sortable: false },
+          { prop: 'sdmassign_notification', name: 'Notification Assignment', flexGrow: 3,
+            cellTemplate: this.notif, sortable: false },
+          { prop: 'sdmassign_id', name: 'Action', flexGrow: 2,
+            cellTemplate: this.tableActionTemplate, sortable: false }
+        ]
+      });
+    } else {
+      this.dataTable = this._factory.dataTable({
+        serverSide : false,
+        pagingParams : {
+          limit : 10,
+          filter : Comparison.EQ('client_id', this.onInitID)
+        },
+        searchCriteria : [
+          { viewValue: 'Name', viewKey: 'sdm_name', type: TYPE.STRING },
+          { viewValue: 'PIC Handler', viewKey: 'sdmassign_picclient', type: TYPE.STRING }
+        ],
+        tableColumns : [
+          { prop: 'norut', name: 'No', flexGrow: 1, sortable: false },
+          { prop: 'sdm_name', name: 'Name', flexGrow: 3, sortable: false },
+          { prop: 'sdm_phone', name: 'Contact', flexGrow: 2, sortable: false },
+          { prop: 'sdmassign_startdate', name: 'Start', flexGrow: 2, sortable: false },
+          { prop: 'sdmassign_enddate', name: 'End', flexGrow: 2, sortable: false },
+          { prop: 'sdmassign_loc', name: 'Location', flexGrow: 2, sortable: false },
+          { prop: 'sdmassign_picclient', name: 'PIC Handler', flexGrow: 2, sortable: false },
+          { prop: 'sdmassign_picclientphone', name: 'PIC Contact', flexGrow: 3, sortable: false },
+          { prop: 'method_name', name: 'Method', flexGrow: 2, sortable: false },
+          { prop: 'sdmassign_notification', name: 'Notification Assignment', flexGrow: 3,
+            cellTemplate: this.notif, sortable: false },
+          { prop: 'sdmassign_id', name: 'Action', flexGrow: 2,
+            cellTemplate: this.tableActionTemplate, sortable: false }
+        ]
+      });
+    }
+   
 
     this.action = this._factory.actions({
         api: 'project/SdmAssignment',
@@ -116,7 +159,8 @@ export class PJA010Component implements OnInit {
         },
         initializeData: true
     });
-
+    this.action.patchFormData({ client_id : Number(this.onInitID)});
+    this.selected = Number(this.onInitID);
   }
 
   public ambilData() {
@@ -194,11 +238,11 @@ export class PJA010Component implements OnInit {
       dataTable: this.dataTable
   });
     this.action.refreshTable();
-    this.action.patchFormData({client_id : ClientId})
+    this.action.patchFormData({client_id : ClientId});
   }
 
-  public navigateEditMenu(id) {
-    this.router.navigate(['/pages/pja/PJA011', { id }]);
+  public navigateEditMenu(id, cId) {
+    this.router.navigate(['/pages/pja/PJA011', { id, cId }]);
   }
 
   public navigatePushId(idClient) {
@@ -236,5 +280,10 @@ public onDelete(id, deleteMassage: string = 'Are you sure to delete?') {
         }
         this.action.refreshTable();
       });
+}
+
+public onReset() {
+  this.onInitID = '';
+  this.ngOnInit();
 }
 }

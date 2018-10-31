@@ -15,6 +15,9 @@ import { DefaultNotificationService } from '../../../../core/services/default-no
 
 export class PJA011Component implements OnInit {
 
+  public selectedSdm: number;
+  public onInitID: string;
+
   @ViewChild('viewAsDateTemplate')
   public viewAsDateTemplate: any;
   @ViewChild('tableActionTemplate')
@@ -31,7 +34,7 @@ export class PJA011Component implements OnInit {
   public maxContract: string;
   public minContract: string;
   private selectedId: number;
-  public selectedSdm: number;
+
 
   constructor(
     public _notif: DefaultNotificationService,
@@ -41,6 +44,11 @@ export class PJA011Component implements OnInit {
   ) {
     this.route.params.subscribe((param) => {
       this.selectedId = param.id;
+      if (param.cId == null) {
+        this.onInitID = '';
+      } else {
+        this.onInitID = param.cId;
+      }
     });
   }
 
@@ -95,7 +103,7 @@ export class PJA011Component implements OnInit {
       this.action.patchFormData(res.data.items[0]);
       this.sdmPhone = res.data.items[0].sdm_phone;
       this.sdmName = res.data.items[0].sdm_name;
-      this.selectedSdm= res.data.items[0].sdm_id;
+      this.selectedSdm = res.data.items[0].sdm_id;
           const readAllSDM = this._factory.api({
             api : 'sdm/MengelolaSdm/readAll',
             pagingParams : {
@@ -127,12 +135,14 @@ export class PJA011Component implements OnInit {
     // params: {
     // client_id: this.selectedId }
    });
-  this._factory.http().put(updateAPI + '?sdmassign_id=' + this.selectedId, this.action.getFormData()).subscribe((response: any) => {
-    this._notif.success({
-      message: 'Update Data Berhasil'
+    this._factory.http().put(updateAPI + '?sdmassign_id=' + this.selectedId, this.action.getFormData()).subscribe((response: any) => {
+      this._notif.success({
+        message: 'Update Data Berhasil'
+      });
+      setTimeout(() => this.navigateBack(this.onInitID), 1000);
     });
-    setTimeout(() => this.router.navigate(['pages/pja/PJA010']), 1000);
-   });
  }
-
+ public navigateBack(cId) {
+  this.router.navigate(['/pages/pja/PJA010', { cId }]);
+}
 }
