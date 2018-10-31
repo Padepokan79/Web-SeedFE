@@ -262,8 +262,9 @@ export class PJA007Component implements OnInit {
         .subscribe((data: any) => {
           if (data) {
             this.onEksekusi(id);
+            this.action.refreshTable();
           }
-          this.action.refreshTable();
+         
         });
   }
 

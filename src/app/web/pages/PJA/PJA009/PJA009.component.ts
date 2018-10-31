@@ -206,9 +206,16 @@ export class PJA009Component implements OnInit {
   public lovStatus() {
     this.click = this.click + 1;
     console.log("ini client id : " + this.selectedClientId);
-    if (this.selectedClientId == 0){
+    if (this.selectedClientId != 1){
       this.lovHiring = this._factory.lov({
         api: 'lov/StatusHiring',
+        pagingParams : {
+          filter : {
+            field : 'hirestat_id',
+            operator : COMPARISON_OPERATOR.LE,
+            value : 9
+          }
+        },
         initializeData: true
     });
     } else if (this.click >= 2 ) {
