@@ -644,43 +644,59 @@ export class TabDatapribadiComponent implements OnInit {
       nikAkhir = posisi.concat('0000000');
       this.action.patchFormData({sdm_nik : nikAkhir});
     } else {
-      this.http.get(this._factory.api({api : 'lov/SdmNik'}))
-      .subscribe((res: any) => {
-        const nilai = [];
-        const resLength = res.data.length;
-        for (let i = 0; i < resLength; i++) {
-          nilai.push(res.data[i].values.sdm_sdm_nik);
-        }
+      // this.http.get(this._factory.api({api : 'lov/SdmNik'}))
+      // .subscribe((res: any) => {
+      //   const nilai = [];
+      //   const resLength = res.data.length;
+      //   for (let i = 0; i < resLength; i++) {
+      //     nilai.push(res.data[i].values.sdm_sdm_nik);
+      //   }
 
-        // console.log(res.data);
+      //   // console.log(res.data);
 
-        nikAkhir = posisi.concat(month, year, '001');
+      //   nikAkhir = posisi.concat(month, year, '001');
 
-        const nilaiLenth = nilai.length;
-        for (let index = 0; index < nilaiLenth; index++) {
-          if (nikAkhir == nilai[index]) {
-            statusBanding = true;
-            // console.log('SAMA');
-            // console.log(nikAkhir);
-            nikAkhir++;
-            // console.log(nikAkhir);
-          } else {
-            // console.log('BEDA');
+      //   const nilaiLenth = nilai.length;
+      //   for (let index = 0; index < nilaiLenth; index++) {
+      //     if (nikAkhir == nilai[index]) {
+      //       statusBanding = true;
+      //       // console.log('SAMA');
+      //       // console.log(nikAkhir);
+      //       nikAkhir++;
+      //       // console.log(nikAkhir);
+      //     } else {
+      //       // console.log('BEDA');
+      //     }
+      //   }
+
+      //   const nikLength = nikAkhir.toString().length;
+      //   if (nikLength > 8) {
+      //     nikAkhir.toString().slice(5, 1);
+      //   }
+
+      //   if (statusBanding == true) {
+      //     this.action.patchFormData({sdm_nik : '0' + nikAkhir});
+      //   } else {
+      //     this.action.patchFormData({sdm_nik : nikAkhir});
+      //   }
+      //   console.log(this.action.getFormControlValue('sdm_nik'));
+      // });
+      this.http.get(this._factory.api({api : 'sdm/MengelolaSdm/ReadAll'})).subscribe(
+        (restotal: any) => {
+          let totalData = restotal.data.totalItems;
+          console.log('ini total data : ' + totalData);
+          console.log(totalData.toString().length);
+          if (totalData.toString().length < 3) {
+            totalData = '0' + totalData;
+          } else if (totalData.toString().length < 2) {
+            totalData = '00' + totalData;
           }
+          console.log('total ' + totalData);
+          totalData++;
+          nikAkhir = posisi.concat(month, year, totalData);
+          this.action.patchFormData({ sdm_nik : nikAkhir });
         }
-
-        const nikLength = nikAkhir.toString().length;
-        if (nikLength > 8) {
-          nikAkhir.toString().slice(5, 1);
-        }
-
-        if (statusBanding == true) {
-          this.action.patchFormData({sdm_nik : '0' + nikAkhir});
-        } else {
-          this.action.patchFormData({sdm_nik : nikAkhir});
-        }
-        console.log(this.action.getFormControlValue('sdm_nik'));
-      });
+      );
     }
   }
 
