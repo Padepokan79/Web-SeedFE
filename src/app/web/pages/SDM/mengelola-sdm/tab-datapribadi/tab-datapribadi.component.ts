@@ -681,11 +681,26 @@ export class TabDatapribadiComponent implements OnInit {
       //   }
       //   console.log(this.action.getFormControlValue('sdm_nik'));
       // });
+      // this.http.get(this._factory.api({api : 'sdm/MengelolaSdm/ReadAll'})).subscribe(
+      //   (restotal: any) => {
+      //     let totalData = restotal.data.totalItems;
+      //     console.log('ini total data : ' + totalData);
+      //     console.log(totalData.toString().length);
+      //     if (totalData.toString().length < 3) {
+      //       totalData = '0' + totalData;
+      //     } else if (totalData.toString().length < 2) {
+      //       totalData = '00' + totalData;
+      //     }
+      //     console.log('total ' + totalData);
+      //     totalData++;
+      //     nikAkhir = posisi.concat(month, year, totalData);
+      //     this.action.patchFormData({ sdm_nik : nikAkhir });
+      //   }
+      // );
       this.http.get(this._factory.api({api : 'sdm/MengelolaSdm/ReadAll'})).subscribe(
         (restotal: any) => {
-          let totalData = restotal.data.totalItems;
+          let totalData = restotal.data.items[0].last_nik;
           console.log('ini total data : ' + totalData);
-          console.log(totalData.toString().length);
           if (totalData.toString().length < 3) {
             totalData = '0' + totalData;
           } else if (totalData.toString().length < 2) {
