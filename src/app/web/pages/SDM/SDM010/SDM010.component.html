@@ -1,0 +1,30 @@
+<io-form *ngIf="action?.form()">
+  <div class="io-form-header" style="padding-top: 15px">
+    <span><i class="fa fa-home"></i></span>
+      <a [routerLink]="['/pages/dashboard']"><span>Dashboard</span></a><b> > </b>
+      <a><span>SDM</span></a><b> > </b>
+      <a [routerLink]="['/pages/sdm/SDM010']"><span>Import SDM</span></a>
+    <span class="time">{{time | date:'medium'}}</span>
+  </div>
+  <form class="io-form-body" [formGroup]="action?.formControls()">
+       
+      <div class="row">
+        <div class="col-md-10">
+            <input #uploadFile type="file" ng2FileSelect [uploader]="uploader" accept=".xls,.xlsx,.xlsm,.xlsb"/>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-md-2">
+          <button mat-flat-button type="button" (click)="onImportFile()" class="sdw-btn-primary">
+            <span class="fa fa-download"></span>
+              Import
+          </button>
+        </div>
+      </div>
+      <br>
+  </form>  
+</io-form>
+
+<io-table *ngIf="action?.table()" [action]="action" style="text-align: center">
+</io-table>

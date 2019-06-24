@@ -11,15 +11,15 @@ export const SDM_MENU = [
       }
     },
     children: [
-      // {
-      //   path: 'SDM001',
-      //   data: {
-      //     menu: {
-      //       title: 'Input SDM',
-      //       icon: 'fa fa-user-plus',
-      //     }
-      //   }
-      // },
+      {
+        path: 'SDM010',
+        data: {
+          menu: {
+            title: 'Import SDM',
+            icon: 'fa fa-file',
+          }
+        }
+      },
       {
         path: 'SDM003',
         data: {

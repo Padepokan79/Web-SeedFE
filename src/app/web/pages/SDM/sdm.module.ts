@@ -22,6 +22,7 @@ import { SDM006Component } from './SDM006/SDM006.component';
 import { SDM007Component } from './SDM007/SDM007.component';
 import { SDM008Component } from './SDM008/SDM008.component';
 import { SDM004Component } from './SDM004/SDM004.component';
+import { SDM010Component } from './SDM010/SDM010.component';
 import { PreviewCvComponent } from './mengelola-sdm/SDM003/preview-cv/preview-cv.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 
@@ -47,6 +48,7 @@ const SDM_COMPONENTS = [
     SDM007Component,
     SDM008Component,
     SDM009Component,
+    SDM010Component,
     PreviewCvComponent
 ];
 
