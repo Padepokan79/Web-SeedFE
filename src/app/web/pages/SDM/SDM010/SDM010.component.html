@@ -12,6 +12,12 @@
         <div class="col-md-10">
             <input #uploadFile type="file" ng2FileSelect [uploader]="uploader" accept=".xls,.xlsx,.xlsm,.xlsb"/>
         </div>
+        <div class="col-md-2">
+          <button mat-flat-button type="button" (click)="createExampleFile()" class="sdw-btn-primary">
+            <span class="fa fa-download"></span>
+              Contoh File
+          </button>
+        </div>
       </div>
       <br>
       <div class="row">

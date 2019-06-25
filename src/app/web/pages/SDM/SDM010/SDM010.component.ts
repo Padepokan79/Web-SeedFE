@@ -5,6 +5,7 @@ import { CoreFactory } from '../../../../core/factory/core.factory';
 import { DataTable } from '../../../../core/models/data-table';
 import { FileUploader } from 'ng2-file-upload';
 import { DefaultNotificationService } from '../../../../core/services/default-notification.service';
+import * as FileSaver from 'file-saver';
 
 @Component({
   selector: 'app-SDM010',
@@ -98,6 +99,18 @@ export class SDM010Component implements OnInit {
         message: 'No file to upload'
       });
     }
+  }
+
+  public createExampleFile() {
+    const createExampleFileApi = this._factory.api({
+      api: 'project/CetakExcelTesting/generateAsXLS',
+    });
+
+    this._factory.http()
+    .post(createExampleFileApi, null, { responseType: 'blob' })
+    .subscribe((response) => {
+      FileSaver.saveAs(response, 'contoh_file.xls');
+    });
   }
 
 }
