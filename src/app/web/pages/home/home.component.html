@@ -1,1 +1,111 @@
+<io-form>
+    <div class="io-form-body">
+        <div class="row">
+            <div class="col-md-3">
+                <mat-form-field class="sdw-full-size">
+                    <mat-select name="tahun" placeholder="Tahun" [(ngModel)]="tahun" >
+                        <mat-option *ngFor="let lov of lovTahun.data" [value]="lov.key">
+                            {{ lov.values.object_nama }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
 
+            <div class="col-md-3">
+                <mat-form-field class="sdw-full-size">
+                    <mat-select name="chartDataType" placeholder="Jenis Data" [(ngModel)]="chartDataType" >
+                        <mat-option *ngFor="let lov of lovChartDataType" [value]="lov.key">
+                            {{ lov.value }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-4">
+                <mat-form-field class="sdw-full-size">
+                    <mat-select name="chartType" placeholder="Jenis Diagram" [(ngModel)]="chartType" >
+                        <mat-option *ngFor="let lov of lovChartType" [value]="lov.key">
+                            {{ lov.value }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            
+            <div class="col-md-2">
+                <button mat-flat-button type="button" (click)="onSubmit()" class="sdw-btn-primary">
+                    Submit
+                </button>
+            </div>
+        </div>
+        <div class="row" *ngIf="chartDataType !== 5">
+            <div class="col-md-11" style="height: 500px">
+                <ngx-charts-pie-chart
+                    class="chart-container"
+                    [view]="view"
+                    [results]="pieChartData.series"
+                    [animations]="animations"
+                    [legend]="showLegend"
+                    [legendTitle]="legendTitle"
+                    [explodeSlices]="explodeSlices"
+                    [labels]="showLabels"
+                    [doughnut]="doughnut"
+                    [arcWidth]="arcWidth"
+                    [gradient]="gradient"
+                    [tooltipDisabled]="tooltipDisabled"
+                    [tooltipText]="pieTooltipText">
+                </ngx-charts-pie-chart>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="chartDataType === 5">
+            <mat-radio-group name="hireState" [(ngModel)]="hireState">
+                <div class="col-md-4">
+                    <mat-radio-button value="1">Diterima</mat-radio-button>  
+                </div>
+                <div class="col-md-2">
+                    <mat-radio-button value="2">Off</mat-radio-button>  
+                </div>
+            </mat-radio-group>
+        </div>
+
+        <div class="row" *ngIf="chartDataType === 5 && hireState === '1'">
+            <div class="col-md-11" style="height: 460px">
+                <ngx-charts-pie-chart
+                    class="chart-container"
+                    [view]="view"
+                    [results]="pieChartData.series_accept"
+                    [animations]="animations"
+                    [legend]="showLegend"
+                    [legendTitle]="legendTitle"
+                    [explodeSlices]="explodeSlices"
+                    [labels]="showLabels"
+                    [doughnut]="doughnut"
+                    [arcWidth]="arcWidth"
+                    [gradient]="gradient"
+                    [tooltipDisabled]="tooltipDisabled"
+                    [tooltipText]="pieTooltipText">
+                </ngx-charts-pie-chart>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="chartDataType === 5 && hireState === '2'">
+            <div class="col-md-11" style="height: 460px">
+                <ngx-charts-pie-chart
+                    class="chart-container"
+                    [view]="view"
+                    [results]="pieChartData.series_off"
+                    [animations]="animations"
+                    [legend]="showLegend"
+                    [legendTitle]="legendTitle"
+                    [explodeSlices]="explodeSlices"
+                    [labels]="showLabels"
+                    [doughnut]="doughnut"
+                    [arcWidth]="arcWidth"
+                    [gradient]="gradient"
+                    [tooltipDisabled]="tooltipDisabled"
+                    [tooltipText]="pieTooltipText">
+                </ngx-charts-pie-chart>
+            </div>
+        </div>
+    </div>
+</io-form>
