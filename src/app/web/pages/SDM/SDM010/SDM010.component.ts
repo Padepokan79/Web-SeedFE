@@ -6,6 +6,7 @@ import { DataTable } from '../../../../core/models/data-table';
 import { FileUploader } from 'ng2-file-upload';
 import { DefaultNotificationService } from '../../../../core/services/default-notification.service';
 import * as FileSaver from 'file-saver';
+import { TYPE } from 'app/core/constant/constant';
 
 @Component({
   selector: 'app-SDM010',
@@ -40,11 +41,21 @@ export class SDM010Component implements OnInit {
     });
 
     this.dataTable = this._factory.dataTable({
-      serverSide : true,
+      pagingParams: {
+        limit: 10
+      },
+      serverSide : false,
+      searchCriteria: [
+        { viewValue: 'NIP', viewKey: 'nip', type: TYPE.STRING },
+        { viewValue: 'Nama', viewKey: 'nama', type: TYPE.STRING },
+      ],
       tableColumns : [
-        { prop: 'sdm_name', name: 'SDM Name', width: 100, sortable: false },
-        { prop: 'psycological_date', name: 'Date', width: 100,
-          cellTemplate: this.viewAsDateTemplate, sortable: false }
+        { prop: 'nip', name: 'Nip', flexGrow: 1 },
+        { prop: 'nama', name: 'Nama SDM', flexGrow: 2 },
+        { prop: 'tgl', name: 'Tgl', flexGrow: 1,
+          cellTemplate: this.viewAsDateTemplate, sortable: false },
+        { prop: 'waktu', name: 'Waktu', flexGrow: 1, sortable: false },
+        { prop: 'stts_checkin', name: 'STTS Checkin', flexGrow: 1, sortable: false },
       ]
     });
 
@@ -56,7 +67,7 @@ export class SDM010Component implements OnInit {
 
     this.uploader = new FileUploader({
       url: this._factory.api({
-          api: 'project/UploadExcel/upload'
+          api: 'project/UploadFile/upload'
       }),
       authToken: 'bearer ' + localStorage.getItem('token'),
       authTokenHeader: 'authorization'
@@ -74,9 +85,9 @@ export class SDM010Component implements OnInit {
         this.uploader.clearQueue();
 
         const importDataFullApi = this._factory.api({
-          api: 'project/InsertDataExcel/insertDataProsesExcel',
+          api: 'project/ReadFileDAT/reads',
           params: {
-            filePath: namaFile,
+            filename: namaFile,
           }
         });
 
@@ -84,6 +95,10 @@ export class SDM010Component implements OnInit {
         .get(importDataFullApi)
         // tslint:disable-next-line:no-shadowed-variable
         .subscribe((response: any) => {
+          const list = response.data;
+          console.log(list);
+          this.action.table().count = response.data.totalItems;
+          this.action.table().rows = list.items;
           this._notif.success({
             message: response.message
           });

@@ -1,15 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActionService } from '../../../../core/services/uninjectable/action.service';
-import { DataTable } from '../../../../core/models/data-table';
-import { CoreFactory } from '../../../../core/factory/core.factory';
-import { TYPE, COMPARISON_OPERATOR } from '../../../../core/constant/constant';
+import { FormControl, FormGroup } from '../../../../../../node_modules/@angular/forms';
 import { Router } from '../../../../../../node_modules/@angular/router';
-import { FormGroup, FormControl } from '../../../../../../node_modules/@angular/forms';
-import { ListOfValue } from '../../../../core/models/list-of-value';
-import { startWith, map } from '../../../../../../node_modules/rxjs/operators';
-import { InputForm } from '../../../../core/models/input-form';
-import { LOVService } from '../../../../core/services/uninjectable/lov.service';
+import { map, startWith } from '../../../../../../node_modules/rxjs/operators';
+import { COMPARISON_OPERATOR, TYPE } from '../../../../core/constant/constant';
 import { Comparison } from '../../../../core/enums/comparison-operator.enum';
+import { CoreFactory } from '../../../../core/factory/core.factory';
+import { DataTable } from '../../../../core/models/data-table';
+import { InputForm } from '../../../../core/models/input-form';
+import { ListOfValue } from '../../../../core/models/list-of-value';
+import { ActionService } from '../../../../core/services/uninjectable/action.service';
+import { LOVService } from '../../../../core/services/uninjectable/lov.service';
 
 @Component({
   selector: 'app-SDM004',
@@ -137,6 +137,15 @@ export class SDM004Component implements OnInit {
     );
 
     this.action.refreshTable();
+  }
+
+  public test() {
+      this._factory
+      .http()
+      .get('api/sdm')
+      .subscribe((res) => {
+        console.log(res);
+      });
   }
 
   public onReset() {
